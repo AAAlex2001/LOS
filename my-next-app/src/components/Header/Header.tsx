@@ -1,35 +1,66 @@
-import React from 'react';
-import '@/styles/components/header.scss';
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import styles from '../../styles/components/Header.module.scss';
 
-const Header: React.FC = () => {
+const Header = () => {
   return (
-    <header className="header">
-      <div className="header-main" />
-      <div className="language-dropdown">
-        <div className="text">
-          <span>Выберите язык</span>
-        </div>
-        <div className="arrow">
-          <div className="expand-arrow">
-            <div className="vector" />
-          </div>
-        </div>
+    <header className={styles.header}>
+      {/* Left block: Logo */}
+      <div className={styles.logoSection}>
+        <Image
+          src="/assets/IMG_1557.png"
+          alt="Logo"
+          width={100}
+          height={100}
+          className={styles.logoImage}
+        />
+        <h1 className={styles.logoText}>Land of Soul</h1>
       </div>
-      <div className="frame-228">
-        <div className="logo" />
-        <div className="frame-163">
-          <span>Land of Soul</span>
-        </div>
+
+      {/* Center navigation buttons */}
+      <nav className={styles.nav}>
+        <Link href="#" className={`${styles.navButton} ${styles.orangeOutline}`}>
+          Аренда жилья
+        </Link>
+        <Link href="#" className={`${styles.navButton} ${styles.blueOutline}`}>
+          Доска объявлений
+        </Link>
+      </nav>
+
+      {/* Decorative image (Guy) */}
+      <div className={styles.figureWrapper}>
+        <Image
+          src="/assets/Guy11.png"
+          alt="Decorative character"
+          width={137}
+          height={137}
+          className={styles.figureImage}
+        />
       </div>
-      <div className="btn-sign-up-rent">
-        <span>Аренда жилья</span>
+
+      {/* Right block: language select */}
+      <div className={styles.languageSelect}>
+        <span className={styles.languageText}>Выберите язык</span>
+        <svg
+          className={styles.arrowIcon}
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M5 7L10 12L15 7"
+            stroke="#1129BD"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
       </div>
-      <div className="btn-sign-up-board">
-        <span>Доска объявлений</span>
-      </div>
-      <div className="guy-image" />
     </header>
   );
 };
 
-export default Header;
+export default Header; 

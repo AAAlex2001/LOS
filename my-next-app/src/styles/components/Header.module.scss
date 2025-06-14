@@ -1,0 +1,260 @@
+// Подключение глобальных переменных/миксов из styles.scss
+@import "../styles.scss";
+
+.header {
+  position: relative;
+  width: 100%;
+  max-width: 1920px;
+  height: 120px;
+  margin: 0 auto;
+  background: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  box-sizing: border-box;
+
+  // равномерный горизонтальный отступ между основными блоками (логотип, кнопки, человечек, селектор языка)
+  column-gap: 24px;
+
+  // Decorative overflow allows the mascot image to overlap header on large screens
+  overflow: visible;
+
+  // Breakpoint ≥1920px remains fixed width (strictly according to design)
+  @media (min-width: 1920px) {
+    width: 1920px;
+  }
+
+  > .logoSection {
+    margin-right: 120px;
+  }
+
+  > .nav {
+    margin-right: 16px;
+  }
+
+  > .figureWrapper {
+    margin-right: 16px;
+  }
+}
+
+/******** Left – Logo section ********/
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .logoImage {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+
+  .logoText {
+    font-family: "Inter", sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 22px;
+    color: rgba(0, 0, 0, 0.85);
+    margin: 0;
+  }
+}
+
+/******** Center – Navigation ********/
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.navButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 10px;
+  width: 285px;
+  height: 48px;
+  border: 2px solid transparent;
+  border-radius: 100px;
+  background: #ffffff;
+
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 22px;
+  color: #1129bd;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    background: rgba(17, 41, 189, 0.05);
+  }
+}
+
+.orangeOutline {
+  border-color: rgba(255, 107, 0, 0.25);
+}
+
+.blueOutline {
+  border-color: #d5daef;
+}
+
+/******** Right – Language select ********/
+.languageText {
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  color: #1129bd;
+  flex: 1;
+}
+
+.arrowIcon {
+  flex: 0 0 22px;
+}
+
+.languageSelect {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 0 13px 0 22px;
+  box-sizing: border-box;
+
+  width: 300px;
+  min-width: 170px;
+  height: 48px;
+
+  background: #ffffff;
+  border: 2px solid rgba(17, 41, 189, 0.1);
+  border-radius: 100px;
+}
+
+/******** Decorative figure (guy) ********/
+.figureWrapper {
+  position: relative;
+  top: -17px;
+  flex-shrink: 0;
+  width: 137px;
+}
+
+.figureImage {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/**************  Responsive ****************/
+// ≤1440px – medium desktop
+@media (max-width: 1440px) {
+  .header {
+    column-gap: 20px;
+
+    > .logoSection {
+      margin-right: 80px;
+    }
+
+    > .nav {
+      margin-right: 12px;
+    }
+
+    > .figureWrapper {
+      margin-right: 12px;
+    }
+  }
+
+  .nav .navButton {
+    width: 260px;
+  }
+
+  .figureWrapper {
+    width: 120px;
+  }
+}
+
+// ≤1024px – tablet & small laptop
+@media (max-width: 1024px) {
+  .header {
+    column-gap: 16px;
+    > .logoSection {
+      margin-right: 40px;
+    }
+    > .nav {
+      margin-right: 8px;
+    }
+    > .figureWrapper {
+      margin-right: 8px;
+    }
+  }
+
+  .logoSection {
+    .logoImage {
+      width: 80px;
+      height: 80px;
+    }
+    .logoText {
+      font-size: 24px;
+    }
+  }
+
+  .nav .navButton {
+    width: 220px;
+    font-size: 18px;
+  }
+
+  .languageSelect {
+    width: 240px;
+  }
+
+  .figureWrapper {
+    width: 110px;
+  }
+}
+
+// ≤768px – mobile & small tablet
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+  }
+
+  .languageSelect {
+    width: auto;
+    padding: 0 12px;
+  }
+}
+
+// ≤480px – small mobile
+@media (max-width: 480px) {
+  .header {
+    height: 80px;
+    padding: 0 16px;
+    column-gap: 16px;
+  }
+
+  .logoSection {
+    .logoImage {
+      width: 60px;
+      height: 60px;
+    }
+    .logoText {
+      font-size: 20px;
+    }
+  }
+
+  .languageSelect {
+    min-width: unset;
+  }
+
+  .languageText {
+    font-size: 16px;
+  }
+
+  .figureWrapper {
+    display: none; // Hide decorative guy on very small devices
+  }
+} 
