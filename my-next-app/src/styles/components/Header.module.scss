@@ -1,6 +1,3 @@
-// Подключение глобальных переменных/миксов из styles.scss
-@import "../styles.scss";
-
 .header {
   position: relative;
   width: 100%;
@@ -8,34 +5,31 @@
   height: 120px;
   margin: 0 auto;
   background: #ffffff;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding: 0 24px;
   box-sizing: border-box;
 
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
   // равномерный горизонтальный отступ между основными блоками (логотип, кнопки, человечек, селектор языка)
-  column-gap: 24px;
+  column-gap: 0;
 
   // Decorative overflow allows the mascot image to overlap header on large screens
   overflow: visible;
 
-  // Breakpoint ≥1920px remains fixed width (strictly according to design)
-  @media (min-width: 1920px) {
-    width: 1920px;
-  }
-
+  /* Отдельные горизонтальные интервалы, как в макете */
   > .logoSection {
-    margin-right: 120px;
+    margin-right: 305px;
   }
 
   > .nav {
-    margin-right: 16px;
+    margin-right: 99px;
+    gap: 32px;
   }
 
   > .figureWrapper {
-    margin-right: 16px;
+    margin-right: 99px;
   }
 }
 
@@ -59,6 +53,7 @@
     line-height: 22px;
     color: rgba(0, 0, 0, 0.85);
     margin: 0;
+    white-space: nowrap;
   }
 }
 
@@ -135,6 +130,8 @@
   background: #ffffff;
   border: 2px solid rgba(17, 41, 189, 0.1);
   border-radius: 100px;
+
+  margin-left: auto;
 }
 
 /******** Decorative figure (guy) ********/
@@ -156,18 +153,6 @@
 @media (max-width: 1440px) {
   .header {
     column-gap: 20px;
-
-    > .logoSection {
-      margin-right: 80px;
-    }
-
-    > .nav {
-      margin-right: 12px;
-    }
-
-    > .figureWrapper {
-      margin-right: 12px;
-    }
   }
 
   .nav .navButton {

@@ -1,0 +1,234 @@
+@import "../styles.scss";
+
+.home {
+  position: relative;
+  width: 100%;
+  max-width: 1920px; // ограничиваем по макету
+  padding: 0 24px; // боковые поля 24 px по всему макету
+  box-sizing: border-box; // чтобы ширина включала padding и не появлялся горизонтальный скролл
+  min-height: 5804px; // общая высота макета
+  margin: 0 auto;
+  /* Принудительно белый фон, чтобы не подменялся системной dark-темой */
+  background: #ffffff !important;
+}
+
+/************* Hero video *************/
+.heroSection {
+  position: relative;
+  width: 100%;
+  max-width: 1920px;
+  height: 701px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* фон секции – тот же, что и у плеера, чтобы не было черной полосы */
+  background: rgba(17, 41, 189, 0.1);
+}
+
+.videoPlaceholder {
+  width: 100%;
+  max-width: 1872px;
+  height: 701px;
+  background: transparent; /* фон уже задан у родителя */
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 200;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+/************* Tabs *************/
+.tabsSection {
+  position: relative;
+  width: 100%;
+  max-width: 1872px;
+  height: 60px;
+  margin: 32px auto 0; /* 32-px отступ после шапки */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 48px;
+}
+
+.tabItem {
+  width: 432px;
+  height: 60px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  span {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 36px;
+    text-align: center;
+    color: #000000;
+  }
+
+  .tabUnderline {
+    width: 412px; /* active variant */
+    height: 2px;
+    background: transparent;
+  }
+
+  &.active {
+    .tabUnderline {
+      background: #005bff;
+    }
+  }
+}
+
+/************* Banner 1 *************/
+.bannerSection {
+  position: relative;
+  width: 100%;
+  max-width: 1872px;
+  height: 305px;
+  /* 943-px от верхнего края макета – это расстояние после секции видео,
+     здесь используем 30-px разрыв для пиксель-перфекта */
+  margin: 30px auto 0;
+  border-radius: 15px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url('/assets/IMG_1932.jpg') center/cover no-repeat;
+}
+
+.bannerContent {
+  /* Автовысота контента по макету 200 px */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 1872px;
+  height: 200px;
+  padding: 0 30px;
+  box-sizing: border-box;
+}
+
+.bannerText {
+  width: 1812px;
+  max-width: 100%;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 38px;
+  line-height: 50px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+/************* Cities grid *************/
+.citiesSection {
+  position: relative;
+  width: 1240px;
+  margin: 1375px auto 0; // top offset per Figma
+}
+
+.sectionTitle {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 46px;
+  text-align: center;
+  color: #1129bd;
+  margin-bottom: 40px;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 400px);
+  gap: 32px 32px;
+  justify-content: center; /* центрируем сетку внутри 1240px контейнера */
+}
+
+.cityCard {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #d5daef;
+  border-radius: 15px;
+  overflow: hidden;
+  height: 398.8px;
+  background: #fff;
+}
+
+.cardImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 300.8px;
+  overflow: hidden;
+
+  img {
+    object-fit: cover;
+  }
+}
+
+.cardTextWrapper {
+  background: rgba(17, 41, 189, 0.1);
+  height: 98px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  text-align: center;
+}
+
+.cardTitle {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #1129bd;
+  margin: 0 0 4px;
+  text-transform: uppercase;
+}
+
+.cardDesc {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 22px;
+  color: #1129bd;
+  margin: 0;
+}
+
+/******** Buttons (oval) ********/
+.buttonsSection {
+  position: relative;
+  width: 1554px;
+  height: 50px;
+  margin: 5106px auto 0; // offset per Figma
+  display: flex;
+  gap: 32px;
+}
+
+.ovalButton {
+  flex: 1;
+  max-width: 285.2px;
+  height: 50px;
+  border: 1px solid #1129bd;
+  border-radius: 100px;
+  background: rgba(17, 41, 189, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 22px;
+  color: #1129bd;
+  text-decoration: none;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(17, 41, 189, 0.15);
+  }
+} 
