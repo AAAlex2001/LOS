@@ -84,6 +84,35 @@ const HomePage = () => {
           </div>
         </section>
 
+        {/* Promo Section (Group 10) */}
+        <section className={styles.group10}>
+          {/* city card */}
+          <div className={styles.group10Card}>
+            <img src="/assets/big_image.jpg" alt="promo city" className={styles.group10CardImg} />
+            <div className={styles.group10CardText}>
+              <h3 className={styles.group10Title}>Частный сектор</h3>
+              <p className={styles.group10Desc}>Гостевые дома в горах или аутентичные домики с национальным колоритом</p>
+            </div>
+          </div>
+
+          {/* btn sign up */}
+          <button className={styles.group10Btn}>
+            <span>Подобрать жильё</span>
+            <svg className={styles.group10BtnIcon} viewBox="0 0 24 100" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="12 4 4 12" />
+              <polyline points="12 4 20 12" />
+              <line x1="12" y1="5" x2="12" y2="35" />
+            </svg>
+          </button>
+
+          {/* txt tagline */}
+          <div className={styles.group10TagWrap}>
+            <p className={styles.group10Tagline}>
+              Без&nbsp;комиссий&nbsp;· Поддержка&nbsp;24/7&nbsp;· Гарантия&nbsp;заселения
+            </p>
+          </div>
+        </section>
+
         {/* Call-to-action Buttons */}
         <section className={styles.buttonsSection}>
           {Array.from({ length: 6 }).map((_, idx) => (

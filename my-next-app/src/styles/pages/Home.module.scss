@@ -312,4 +312,128 @@
 
 .highlight {
   color: #ff6b00;
+}
+
+/* ---------- Promo Section (Group 10) ---------- */
+.group10 {
+  position: absolute;
+  width: 655px;
+  height: 514px;
+  left: 633px;
+  top: 3571px;
+}
+
+/* City Card */
+.group10Card {
+  position: absolute;
+  width: 450px;
+  height: 360px;
+  left: 102px; /* 735 - 633 */
+  top: 0;
+  box-sizing: border-box;
+  border: 1px solid #d5daef;
+  border-radius: 15px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.group10CardImg {
+  width: 100%;
+  height: 262px; /* 360 - 98 */
+  object-fit: cover;
+}
+
+.group10CardText {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50% - 97px/2 + 130.5px); /* 130.5 per figma */
+  height: 97px;
+  background: rgba(17, 41, 189, 0.1);
+  border-radius: 0 0 15px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 10px 10px;
+  justify-content: center;
+  text-align: center;
+}
+
+.group10Title {
+  width: 430px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #1129bd;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.group10Desc {
+  width: 430px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 22px;
+  color: #1129bd;
+  margin: 0;
+}
+
+/* Button sign up */
+.group10Btn {
+  position: absolute;
+  width: 444px;
+  height: 48px;
+  left: calc(50% - 444px/2);
+  top: 390px; /* 3961 - 3571 */
+  background: #ff6b00;
+  border-radius: 100px;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 10px;
+  gap: 10px;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 22px;
+}
+
+.group10BtnIcon {
+  width: 22px;
+  height: 100px;
+  transform: rotate(90deg);
+  fill: #ffffff;
+}
+
+/* Tagline */
+.group10TagWrap {
+  position: absolute;
+  width: 655px;
+  height: 66px;
+  left: 0;
+  top: 448px; /* 4019 - 3571 */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+}
+
+.group10Tagline {
+  width: 635px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 46px;
+  color: #000000;
+  text-align: center;
+  margin: 0;
 } 
