@@ -64,6 +64,26 @@ const HomePage = () => {
           </div>
         </section>
 
+        {/* Заголовок перед CTA-блоком */}
+        <h2 className={`${styles.sectionTitleBlue}`}>Отдых в Абхазии — с комфортом!</h2>
+
+        {/* CTA-блок «Мандарин» */}
+        <section className={styles.ctaWrapper}>
+          {/* Decorative circle */}
+          <img src="/assets/Mand3.png" alt="decorative" className={styles.decorCircle} />
+
+          {/* Banner with background */}
+          <div className={styles.ctaBanner}>
+            <p className={styles.ctaQuestion}>
+              Вы уже вдохновились горными пейзажами, лазурным морем и гостеприимством Абхазии?
+            </p>
+            <p className={styles.ctaText}>
+              Пора забронировать уютное жильё через&nbsp;<span className={styles.highlight}>«Мандарин»</span> —
+              проверенный сервис аренды с&nbsp;лучшими вариантами!
+            </p>
+          </div>
+        </section>
+
         {/* Call-to-action Buttons */}
         <section className={styles.buttonsSection}>
           {Array.from({ length: 6 }).map((_, idx) => (

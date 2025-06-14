@@ -205,7 +205,7 @@
   position: relative;
   width: 1554px;
   height: 50px;
-  margin: 5106px auto 0; // offset per Figma
+  margin: 120px auto 0; // нормальный отступ после CTA
   display: flex;
   gap: 32px;
 }
@@ -231,4 +231,80 @@
   &:hover {
     background: rgba(17, 41, 189, 0.15);
   }
+}
+
+.sectionTitleBlue {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 46px;
+  text-align: center;
+  color: #1129bd;
+  width: 1238px;
+  max-width: 100%;
+  margin: 120px auto 0; /* расстояние до предыдущего блока */
+}
+
+/* ---------- CTA с баннером Мандарин ---------- */
+.ctaWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1920px;
+  height: 581px; /* по макету */
+  margin: 46px auto 0; /* 46-px после заголовка */
+}
+
+.decorCircle {
+  position: absolute;
+  width: 326px;
+  height: 326px;
+  left: calc(50% - 326px / 2);
+  top: 0;
+  object-fit: contain;
+}
+
+.ctaBanner {
+  position: absolute;
+  top: 226px; /* 226 px ниже верхнего края wrapper */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1872px;
+  height: 355px;
+  background: url('/assets/IMG_1932.jpg') center/cover no-repeat;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column; /* кладём тексты друг под другом */
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px 0;
+  box-sizing: border-box;
+}
+
+.ctaQuestion {
+  width: 1812px;
+  max-width: 90%;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 38px;
+  line-height: 50px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.85);
+  margin: 0;
+}
+
+.ctaText {
+  width: 1812px;
+  max-width: 90%;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 38px;
+  line-height: 50px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.85);
+  margin: 0;
+}
+
+.highlight {
+  color: #ff6b00;
 } 
