@@ -4,6 +4,8 @@
   height: 442px;
   max-width: 1920px;
   margin: 0 auto;
+  margin-top: 0;
+  margin-bottom: 0;
   background: #1129bd;
   color: #ffffff;
   font-family: "Inter", sans-serif;
@@ -73,6 +75,12 @@
   &:hover {
     opacity: 0.8;
   }
+}
+
+.socialLink img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
 }
 
 /******** Quick links ********/
@@ -158,7 +166,7 @@
   position: absolute;
   top: 380px;
   left: 24px;
-  width: 1872px;
+  width: 1845px;
   height: 0;
   border-top: 1px solid rgba(255, 255, 255, 0.5);
 }

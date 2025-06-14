@@ -6,7 +6,7 @@
   max-width: 1920px; // ограничиваем по макету
   padding: 0 24px; // боковые поля 24 px по всему макету
   box-sizing: border-box; // чтобы ширина включала padding и не появлялся горизонтальный скролл
-  min-height: 5804px; // общая высота макета
+  /* min-height убран, чтобы высота страницы формировалась динамически */
   margin: 0 auto;
   background: #ffffff !important;
 }
@@ -549,7 +549,7 @@
 
 .actionButtonsRow {
   width: 1554px;
-  margin: 40px auto 0;
+  margin: 40px auto 110px;
   display: flex;
   align-items: center;
   gap: 32px;
