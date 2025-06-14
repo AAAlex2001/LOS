@@ -1,587 +1,162 @@
 @import "../styles.scss";
-.home {
-  position: relative;
-  width: 100%;
-  max-width: 1920px; 
-  padding: 0 24px;
-  box-sizing: border-box;
-  margin: 0 auto;
-  background: #ffffff !important;
-}
-.heroSection {
-  position: relative;
-  width: 100%;
-  max-width: 1920px;
-  height: 701px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(17, 41, 189, 0.1);
-}
-.videoPlaceholder {
-  width: 100%;
-  max-width: 1872px;
-  height: 701px;
-  background: transparent; 
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Inter", sans-serif;
-  font-weight: 200;
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.85);
-}
-.tabsSection {
-  position: relative;
-  width: 100%;
-  max-width: 1872px;
-  height: 60px;
-  margin: 32px auto 0; 
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 48px;
-}
-.tabItem {
-  width: 432px;
-  height: 60px;
-  padding: 8px 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  span {
-    font-family: "Inter", sans-serif;
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 36px;
-    text-align: center;
-    color: #000000;
-  }
-  .tabUnderline {
-    width: 412px; 
-    height: 2px;
-    background: transparent;
-  }
-  &.active {
-    .tabUnderline {
-      background: #005bff;
-    }
-  }
-}
-.bannerSection {
-  position: relative;
-  width: 100%;
-  max-width: 1872px;
-  height: 305px;
-  margin: 30px auto 0;
-  border-radius: 15px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: url('/assets/IMG_1932.jpg') center/cover no-repeat;
-}
-.bannerContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 1872px;
-  height: 200px;
-  padding: 0 30px;
-  box-sizing: border-box;
-}
-.bannerText {
-  width: 1812px;
-  max-width: 100%;
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 38px;
-  line-height: 50px;
-  text-align: center;
-  color: rgba(0, 0, 0, 0.85);
-}
-.citiesSection {
-  position: relative;
-  width: 1240px; 
-  margin: 127px auto 0; 
-}
-.sectionTitle {
-  font-family: "Inter", sans-serif;
-  font-weight: 700;
-  font-size: 40px;
-  line-height: 46px;
-  text-align: center;
-  color: #1129bd;
-  margin-bottom: 40px;
-}
-.cardsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 400px);
-  gap: 32px 32px;
-  justify-content: center; 
-}
-.cityCard {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #d5daef;
-  border-radius: 15px;
-  overflow: hidden;
-  height: 398.8px;
-  background: #fff;
-}
-.cardImageWrapper {
-  position: relative;
-  width: 100%;
-  height: 300.8px;
-  overflow: hidden;
-  img {
-    object-fit: cover;
-  }
-}
-.cardTextWrapper {
-  background: rgba(17, 41, 189, 0.1);
-  height: 98px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  text-align: center;
-}
-.cardTitle {
-  font-family: "Inter", sans-serif;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 30px;
-  color: #1129bd;
-  margin: 0 0 4px;
-  text-transform: uppercase;
-}
-.cardDesc {
-  font-family: "Inter", sans-serif;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 22px;
-  color: #1129bd;
-  margin: 0;
-}
-.buttonsSection {
-  position: relative;
-  width: 1554px;
-  height: 50px;
-  margin: 120px auto 0; 
-  display: flex;
-  gap: 32px;
-}
-.ovalButton {
-  flex: 1;
-  max-width: 285.2px;
-  height: 50px;
-  border: 1px solid #1129bd;
-  border-radius: 100px;
-  background: rgba(17, 41, 189, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Inter", sans-serif;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 22px;
-  color: #1129bd;
-  text-decoration: none;
-  transition: background 0.2s ease;
-  &:hover {
-    background: rgba(17, 41, 189, 0.15);
-  }
-}
-.sectionTitleBlue {
-  position: relative; 
-  width: 1238px;
-  height: 46px;
-  font-family: "Inter", sans-serif;
-  font-weight: 700;
-  font-size: 40px;
-  line-height: 46px;
-  text-align: center;
-  color: #1129bd;
-  margin: 0 auto; 
-  margin-top: 120px;
-}
-.ctaWrapper {
-  position: relative;
-  width: 100%;
-  max-width: 1872px; 
-  height: 581px; 
-  margin: 0 auto; 
-}
-.decorCircle {
-  position: absolute;
-  width: 326px;
-  height: 326px;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 0; 
-  object-fit: contain;
-  z-index: 2; 
-}
-.ctaBanner {
-  position: absolute;
-  top: 226px; 
-  left: 0; 
-  width: 100%;
-  height: 355px;
-  background: url('/assets/IMG_1932.jpg') center/cover no-repeat;
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column; 
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
-  padding: 20px 0;
-  box-sizing: border-box;
-  z-index: 1; 
-}
-.ctaQuestion {
-  width: 1812px;
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 38px;
-  line-height: 50px;
-  text-align: center;
-  color: rgba(0, 0, 0, 0.85);
-  margin: 0;
-}
-.ctaText {
-  width: 1812px;
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 38px;
-  line-height: 50px;
-  text-align: center;
-  color: rgba(0, 0, 0, 0.85);
-  margin: 0;
-}
-.highlight {
-  color: #ff6b00;
-}
-.group10 {
-  position: relative;
-  width: 655px;
-  height: 514px;
-  margin: 65px auto 0;
-}
-.group10Card {
-  position: absolute;
-  width: 450px;
-  height: 360px;
-  left: 102px; 
-  top: 0;
-  box-sizing: border-box;
-  border: 1px solid #d5daef;
-  border-radius: 15px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-.group10CardImg {
-  width: 100%;
-  height: 262px; 
-  object-fit: cover;
-}
-.group10CardText {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(50% - 97px/2 + 130.5px); 
-  height: 97px;
-  background: rgba(17, 41, 189, 0.1);
-  border-radius: 0 0 15px 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 10px 10px;
-  justify-content: center;
-  text-align: center;
-}
-.group10Title {
-  width: 430px;
-  font-family: "Inter", sans-serif;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 30px;
-  color: #1129bd;
-  text-transform: uppercase;
-  margin: 0;
-}
-.group10Desc {
-  width: 430px;
-  font-family: "Inter", sans-serif;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 22px;
-  color: #1129bd;
-  margin: 0;
-}
-.group10Btn {
-  position: absolute;
-  width: 444px;
-  height: 48px;
-  left: calc(50% - 444px/2);
-  top: 390px; 
-  background: #ff6b00;
-  border-radius: 100px;
-  border: none;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 12px 10px;
-  gap: 10px;
-  cursor: pointer;
-  color: #ffffff;
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 22px;
-}
-.group10BtnIcon {
-  width: 22px;
-  height: 100px;
-  transform: rotate(90deg);
-  fill: #ffffff;
-}
-.group10TagWrap {
-  position: absolute;
-  width: 655px;
-  height: 66px;
-  left: 0;
-  top: 448px; 
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  gap: 10px;
-}
-.group10Tagline {
-  width: 635px;
-  font-family: "Inter", sans-serif;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 46px;
-  color: #000000;
-  text-align: center;
-  margin: 0;
-}
-.exploreSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 60px;
-  width: 100%;
-  max-width: 1872px; 
-  margin: 120px auto 0; 
-}
-.exploreTitle {
-  width: 100%;
-  max-width: 1872px;
-  font-family: "Inter", sans-serif;
-  font-weight: 700;
-  font-size: 40px;
-  line-height: 46px;
-  text-align: center;
-  color: #1129bd;
-}
-.exploreBanner {
-  width: 100%;
-  max-width: 1872px;
-  height: 252px;
-  background: url('/assets/IMG_1932.jpg') center/cover no-repeat;
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
-}
-.exploreBannerText {
-  width: 1812px;
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 38px;
-  line-height: 50px;
-  text-align: center;
-  color: rgba(0, 0, 0, 0.85);
-  padding: 0 30px;
-  margin: 0;
-}
-.activitiesCardsRow {
-  width: 100%;
-  max-width: 1428px; 
-  height: 363px; 
-  margin: 65px auto 0; 
-  display: flex;
-  gap: 20px; 
-}
-.activityCard {
-  width: 342px;
-  height: 363px;
-  display: flex;
-  flex-direction: column;
-}
-.activityCardImg {
-  width: 342px;
-  height: 300.8px;
-  object-fit: cover;
-  border: 1px solid #d5daef;
-  border-bottom: none;
-  border-radius: 15px 15px 0 0;
-}
-.activityCardTextWrapper {
-  width: 342px;
-  height: 62px;
-  background: rgba(17, 41, 189, 0.1);
-  border: 1px solid #d5daef;
-  border-top: none;
-  border-radius: 0 0 15px 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  box-sizing: border-box;
-}
-.activityCardTitle {
-  font-family: "Inter", sans-serif;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 22px;
-  color: #1129bd;
-  text-transform: uppercase;
-  text-align: center;
-  margin: 0;
-}
-.actionButtonsTitle {
-  width: 1554px;
-  max-width: 100%;
-  font-family: "Inter", sans-serif;
-  font-weight: 700;
-  font-size: 40px;
-  line-height: 46px;
-  color: #1129bd;
-  text-align: center;
-  margin: 120px auto 0;
-}
-.actionButtonsRow {
-  width: 1554px;
-  margin: 40px auto 110px;
-  display: flex;
-  align-items: center;
-  gap: 32px;
-}
-.actionOvalBtn {
-  flex: 1;
-  max-width: 285.2px;
-  height: 50px;
-  background: rgba(17, 41, 189, 0.1);
-  border: 1px solid #1129bd;
-  border-radius: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Inter", sans-serif;
-  font-size: 20px;
-  line-height: 22px;
-  color: #1129bd;
-  text-decoration: none;
-  padding: 14px 0;
-}
-/* 576-1919px — общие правила (избавляемся от дубликатов) */
-@media (min-width: 576px) and (max-width: 1919px) {
-  .citiesSection { width: 100%; }
-  .cardsGrid {
-    padding: 0 16px;
-    box-sizing: border-box;
-  }
-  .activitiesCardsRow {
-    overflow-x: visible;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+
+// -----------------------------------------------------------------------------
+// Variables
+// -----------------------------------------------------------------------------
+$primary         : #1129bd;
+$primary-light   : rgba(17, 41, 189, .1);
+$accent          : #ff6b00;
+$border-light    : #d5daef;
+$txt-85          : rgba(0,0,0,.85);
+$max-container   : 1872px;
+
+// Break-points
+$break-sm : 576px;
+$break-md : 768px;
+$break-lg : 1024px;
+$break-xl : 1440px;
+$break-xxl: 1920px;
+
+// -----------------------------------------------------------------------------
+// Helpers
+// -----------------------------------------------------------------------------
+%flex-center { display:flex; align-items:center; justify-content:center; }
+%font        { font-family:"Inter",sans-serif; }
+%card        { border:1px solid $border-light; border-radius:15px; overflow:hidden; background:#fff; }
+
+@mixin font($size,$weight:400,$line:null,$color:$txt-85,$upper:false){
+  @extend %font;
+  font-size:$size; font-weight:$weight; color:$color;
+  @if $line { line-height:$line; }
+  @if $upper{ text-transform:uppercase; }
 }
 
-/* 576-767px — крупные телефоны / мелкие планшеты */
-@media (min-width: 576px) and (max-width: 767px) {
-  .cardsGrid { grid-template-columns: repeat(2, 1fr); }
+@mixin full($w:100%,$max:$max-container){ width:$w; max-width:$max; margin:0 auto; }
+
+// -----------------------------------------------------------------------------
+// Base layout
+// -----------------------------------------------------------------------------
+.home        { @include full($max:$break-xxl); padding:0 24px; background:#fff !important; }
+.heroSection { @extend %flex-center; @include full; height:701px; background:$primary-light; }
+.videoPlaceholder{ @extend %flex-center; border:none; background:transparent; border-radius:15px; height:100%; @include font(14px,200,14px); }
+
+// -----------------------------------------------------------------------------
+// Tabs
+// -----------------------------------------------------------------------------
+.tabsSection{ @extend %flex-center; @include full; height:60px; gap:40px; justify-content:flex-start; margin-top:32px; }
+.tabItem{
+  width:432px;height:60px;padding:8px 10px;@extend %flex-center;flex-direction:column;gap:8px;
+  span{@include font(30px,700,36px,#000);}
+  .tabUnderline{width:412px;height:2px;background:transparent;}
+  &.active .tabUnderline{background:$primary;}
 }
 
-/* 768-1023px — планшеты (portrait) */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .home { padding: 0 20px; }
-  .heroSection { height: 420px; }
-  .cardsGrid { grid-template-columns: repeat(2, 1fr); }
-  .actionButtonsRow { flex-wrap: wrap; gap: 24px; width: 100%; }
+// -----------------------------------------------------------------------------
+// Banner
+// -----------------------------------------------------------------------------
+.bannerSection{ @extend %flex-center; @include full; height:305px; margin:30px 0; border-radius:15px; background:url('/assets/IMG_1932.jpg') center/cover no-repeat; }
+.bannerText{ @include font(38px,600,50px); width:100%; max-width:1812px; text-align:center; }
+
+// -----------------------------------------------------------------------------
+// Cities grid
+// -----------------------------------------------------------------------------
+.citiesSection{ width:1240px; margin:127px auto 0; }
+.sectionTitle { @include font(40px,700,46px,$primary); text-align:center; margin-bottom:40px; }
+
+.cardsGrid   { display:grid; grid-template-columns:repeat(3,400px); gap:32px; justify-content:center; }
+.cityCard    { @extend %card; height:398.8px; display:flex; flex-direction:column; }
+.cardImageWrapper{ width:100%; height:300.8px; overflow:hidden; img{ object-fit:cover; display:block; } }
+.cardTextWrapper { @extend %flex-center; background:$primary-light; height:98px; flex-direction:column; padding:10px; text-align:center; }
+.cardTitle        { @include font(20px,700,30px,$primary,true); margin:0 0 4px; }
+.cardDesc         { @include font(20px,400,22px,$primary); margin:0; }
+
+// -----------------------------------------------------------------------------
+// Generic oval buttons
+// -----------------------------------------------------------------------------
+.buttonsSection{ @extend %flex-center; width:1554px; height:50px; margin:120px auto 0; gap:32px; }
+.ovalButton{ flex:1; max-width:285.2px; height:50px; border:1px solid $primary; border-radius:100px; background:$primary-light;
+  @extend %flex-center; @include font(20px,400,22px,$primary); text-decoration:none; transition:background .2s;
+  &:hover{ background:rgba(17,41,189,.15); }
 }
 
-/* 1024-1439px — крупные планшеты / ноутбуки */
-@media (min-width: 1024px) and (max-width: 1439px) {
-  .heroSection { height: 560px; }
-  .cardsGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .actionButtonsRow { gap: 24px; }
+// -----------------------------------------------------------------------------
+// CTA section
+// -----------------------------------------------------------------------------
+.sectionTitleBlue{ @include font(40px,700,46px,$primary); text-align:center; margin:120px auto 0; width:100%; max-width:1238px; }
+.ctaWrapper { @include full($max:$max-container); height:581px; position:relative; }
+.decorCircle{ @extend %flex-center; position:absolute; width:326px;height:326px; left:50%; top:0; transform:translateX(-50%); object-fit:contain; z-index:2; }
+
+.ctaBanner{ position:absolute; top:226px; @include full; height:355px; background:url('/assets/IMG_1932.jpg') center/cover no-repeat; border-radius:15px;
+  @extend %flex-center; flex-direction:column; gap:40px; padding:20px 0; z-index:1; }
+
+.ctaQuestion,.ctaText{ @include font(38px,600,50px); max-width:1812px; text-align:center; padding:0 30px; margin:0; }
+.highlight{ color:$accent; }
+
+// -----------------------------------------------------------------------------
+// Group-10 card
+// -----------------------------------------------------------------------------
+.group10{ @include full($max:655px); height:514px; margin:65px auto 0; position:relative; }
+.group10Card{ @extend %card; position:absolute; width:450px; height:360px; left:102px; top:0; display:flex; flex-direction:column; }
+.group10CardImg{ width:100%; height:262px; object-fit:cover; display:block; }
+.group10CardText{ @extend %flex-center; flex-direction:column; background:$primary-light; height:97px; padding:0 10px; text-align:center; margin-top:-1px; }
+.group10Title{ @include font(20px,700,30px,$primary,true); margin:0; width:100%; }
+.group10Desc { @include font(20px,400,22px,$primary); margin:0; width:100%; }
+.group10Btn  { position:absolute; left:50%; top:390px; transform:translateX(-50%); width:444px; height:48px; background:$accent; border:none; border-radius:100px;
+  @extend %flex-center; gap:10px; @include font(24px,500,22px,#fff); cursor:pointer; }
+.group10BtnIcon{ width:22px; height:100px; transform:rotate(90deg); fill:#fff; }
+.group10TagWrap{ @extend %flex-center; position:absolute; width:655px; top:448px; padding:10px; gap:10px; }
+.group10Tagline{ @include font(20px,400,46px,#000); text-align:center; margin:0; }
+
+// -----------------------------------------------------------------------------
+// Explore section
+// -----------------------------------------------------------------------------
+.exploreSection{ @extend %flex-center; flex-direction:column; gap:60px; @include full; margin:120px auto 0; }
+.exploreTitle   { @include font(40px,700,46px,$primary); text-align:center; }
+.exploreBanner  { @extend %flex-center; @include full; height:252px; background:url('/assets/IMG_1932.jpg') center/cover no-repeat; border-radius:15px; flex-direction:column; gap:40px; }
+.exploreBannerText{ @include font(38px,600,50px); max-width:1812px; text-align:center; padding:0 30px; }
+
+// -----------------------------------------------------------------------------
+// Activities row
+// -----------------------------------------------------------------------------
+.activitiesCardsRow{ @include full($max:1428px); height:363px; margin:65px auto 0; display:flex; gap:20px; flex-wrap:wrap; justify-content:center; }
+.activityCard{ width:342px; height:363px; display:flex; flex-direction:column; }
+.activityCardImg        { width:342px; height:300.8px; object-fit:cover; border:1px solid $border-light; border-bottom:none; border-radius:15px 15px 0 0; }
+.activityCardTextWrapper{ @extend %flex-center; width:342px; height:62px; background:$primary-light; border:1px solid $border-light; border-top:none; border-radius:0 0 15px 15px; padding:10px; box-sizing:border-box; }
+.activityCardTitle      { @include font(24px,700,22px,$primary,true); margin:0; text-align:center; }
+
+// -----------------------------------------------------------------------------
+// Action buttons
+// -----------------------------------------------------------------------------
+.actionButtonsTitle{ @include font(40px,700,46px,$primary); width:1554px; max-width:100%; text-align:center; margin:120px auto 0; }
+.actionButtonsRow  { width:1554px; margin:40px auto 110px; display:flex; align-items:center; gap:32px; flex-wrap:wrap; }
+.actionOvalBtn     { @extend %flex-center; flex:1; max-width:285.2px; height:50px; background:$primary-light; border:1px solid $primary; border-radius:100px; @include font(20px,400,22px,$primary); text-decoration:none; padding:14px 0; }
+
+// -----------------------------------------------------------------------------
+// Responsive tweaks
+// -----------------------------------------------------------------------------
+@media (max-width:$break-sm){
+  .home{ padding:0 16px; }
+  .heroSection{ height:260px; }
+  .tabsSection{ gap:24px; overflow-x:auto; &::-webkit-scrollbar{ display:none; } }
+  .bannerSection{ height:180px; }
+  .bannerText{ font-size:24px; line-height:32px; }
+  .cardsGrid{ grid-template-columns:1fr; gap:20px; padding:0 16px; }
+  .group10,.exploreSection{ margin:60px auto 0; }
+  .activitiesCardsRow{ overflow-x:auto; gap:12px; .activityCard{ flex:0 0 260px; } }
+  .actionButtonsTitle{ font-size:28px; }
+  .actionButtonsRow{ gap:16px; margin:32px auto 80px; }
 }
 
-/* 1440-1919px — десктопы */
-@media (min-width: 1440px) and (max-width: 1919px) {
-  .heroSection { height: 560px; }
-  .cardsGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .actionButtonsRow { gap: 24px; }
+@media (min-width:$break-sm) and (max-width:#{ $break-md - 1 }){ .cardsGrid{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:$break-md) and (max-width:#{ $break-lg - 1 }){
+  .heroSection{ height:420px; }
+  .cardsGrid{ grid-template-columns:repeat(2,1fr); }
+  .actionButtonsRow{ gap:24px; }
 }
-@media (max-width: 575px) {
-  .home { padding: 0 16px; }
-  .heroSection { height: 260px; }
-  .tabsSection {
-    gap: 24px;
-    overflow-x: auto;
-    height: auto;
-    &::-webkit-scrollbar { display: none; }
-  }
-  .bannerSection { height: 180px; }
-  .bannerText    { font-size: 24px; line-height: 32px; width: 100%; }
-  .citiesSection { width: 100%; }
-  .cardsGrid     { grid-template-columns: 1fr; gap: 20px; padding: 0 16px; }
-  .group10, .exploreSection { margin: 60px auto 0; }
-  .activitiesCardsRow {
-    overflow-x: auto;
-    gap: 12px;
-    height: auto;
-    .activityCard { flex: 0 0 260px; }
-  }
-  .actionButtonsTitle { width: 100%; font-size: 28px; }
-  .actionButtonsRow   {
-    flex-wrap: wrap;
-    gap: 16px;
-    width: 100%;
-    margin: 32px auto 80px;
-  }
-  .cardsGrid { padding: 0 16px; }
-  .cityCard  { max-width: 100%; }
-}
-@media (min-width: 1920px) {
-  .home { max-width: 1872px; }
-} 
-@media (max-width: 1279px) {
-  .cardsGrid {
-    grid-template-columns: 1fr;
-    padding: 0 24px;
-    box-sizing: border-box;
-    justify-items: center;
-  }
-  .cityCard {
-    width: 100%;
-    max-width: 650px;
-    margin: 0 auto;
-  }
+@media (min-width:$break-lg) and (max-width:#{ $break-xl - 1 }){ .heroSection{ height:560px; } }
+@media (min-width:$break-xl){ .heroSection{ height:560px; } }
+@media (min-width:$break-xxl){ .home{ max-width:$max-container; } }
+
+@media (max-width:1279px){
+  .cardsGrid{ grid-template-columns:1fr; padding:0 24px; justify-items:center; .cityCard{ max-width:650px; } }
 }
