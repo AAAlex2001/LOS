@@ -278,4 +278,11 @@
   .legalLink {
     position: static;
   }
+}
+
+/******** Additional small-mobile adjustments ********/
+@media (max-width: 575px) {
+  .footer {
+    padding: 32px 16px;
+  }
 } 

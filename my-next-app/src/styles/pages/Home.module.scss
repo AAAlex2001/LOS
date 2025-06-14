@@ -571,4 +571,154 @@
   color: #1129bd;
   text-decoration: none;
   padding: 14px 0;
+}
+
+/* ---------- Responsive (Mobile-first overrides) ---------- */
+
+/* 0-575px — мобильные телефоны */
+@media (max-width: 575px) {
+  .home { padding: 0 16px; }
+
+  .heroSection { height: 260px; }
+
+  .tabsSection {
+    gap: 24px;
+    overflow-x: auto;
+    height: auto;
+    &::-webkit-scrollbar { display: none; }
+  }
+
+  .bannerSection { height: 180px; }
+  .bannerText    { font-size: 24px; line-height: 32px; width: 100%; }
+
+  .citiesSection { width: 100%; }
+  .cardsGrid     { grid-template-columns: 1fr; gap: 20px; padding: 0 16px; }
+
+  .group10, .exploreSection { margin: 60px auto 0; }
+
+  .activitiesCardsRow {
+    overflow-x: auto;
+    gap: 12px;
+    height: auto;
+    .activityCard { flex: 0 0 260px; }
+  }
+
+  .actionButtonsTitle { width: 100%; font-size: 28px; }
+  .actionButtonsRow   {
+    flex-wrap: wrap;
+    gap: 16px;
+    width: 100%;
+    margin: 32px auto 80px;
+  }
+
+  .cardsGrid { padding: 0 16px; }
+  .cityCard  { max-width: 100%; }
+}
+
+/* 576-767px — крупные телефоны / мелкие планшеты */
+@media (min-width: 576px) and (max-width: 767px) {
+  /* Stretch the section to full width and add the same side paddings as on smaller mobiles */
+  .citiesSection {
+    width: 100%;
+  }
+
+  /* Keep the grid behaviour we already have, but add equal paddings so cards do not stick to the edges */
+  .cardsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .activitiesCardsRow {
+    overflow-x: visible;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* 768-1023px — планшеты (portrait) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .home { padding: 0 20px; }
+  .heroSection { height: 420px; }
+
+  /* Full-width section to avoid horizontal scroll */
+  .citiesSection { width: 100%; }
+
+  /* Maintain equal side paddings for the card grid */
+  .cardsGrid {
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  /* Keep cards readable on tablets */
+  .activitiesCardsRow {
+    overflow-x: visible;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cardsGrid   { grid-template-columns: repeat(2, 1fr); }
+  .actionButtonsRow { flex-wrap: wrap; gap: 24px; width: 100%; }
+}
+
+/* 1024-1439px — крупные планшеты / ноутбуки */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .citiesSection { width: 100%; }
+
+  .heroSection { height: 560px; }
+
+  .cardsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .activitiesCardsRow {
+    overflow-x: visible;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .actionButtonsRow { gap: 24px; }
+}
+
+/* 1440-1919px — десктопы */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .heroSection { height: 560px; }
+
+  .citiesSection { width: 100%; }
+
+  .cardsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .activitiesCardsRow {
+    overflow-x: visible;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .actionButtonsRow { gap: 24px; }
+}
+
+/* ≤1280px — городские карточки одной колонкой */
+@media (max-width: 1279px) {
+  .cardsGrid {
+    grid-template-columns: 1fr;
+    padding: 0 24px;
+    box-sizing: border-box;
+    justify-items: center;
+  }
+  .cityCard {
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+}
+
+/* ≥1920px  — большие экраны, фиксируем контент */
+@media (min-width: 1920px) {
+  .home { max-width: 1872px; }
 } 
