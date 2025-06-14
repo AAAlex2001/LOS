@@ -234,41 +234,47 @@
 }
 
 .sectionTitleBlue {
+  position: relative; // positioned in normal flow but we need exact coordinates
+  width: 1238px;
+  height: 46px;
   font-family: "Inter", sans-serif;
   font-weight: 700;
   font-size: 40px;
   line-height: 46px;
   text-align: center;
   color: #1129bd;
-  width: 1238px;
-  max-width: 100%;
-  margin: 120px auto 0; /* расстояние до предыдущего блока */
+  margin: 0 auto; /* horizontally center */
+  /* Специфический отступ сверху согласно макету (2884 px от начала страницы)
+     Высчитывается динамически как расстояние от предыдущего контента,
+     поэтому фиксируем 120 px, а затем уточняем 46 px между элементами */
+  margin-top: 120px;
 }
 
 /* ---------- CTA с баннером Мандарин ---------- */
 .ctaWrapper {
   position: relative;
   width: 100%;
-  max-width: 1920px;
+  max-width: 1872px; /* фиксированная по макету, но адаптируется */
   height: 581px; /* по макету */
-  margin: 46px auto 0; /* 46-px после заголовка */
+  margin: 0 auto; /* примыкает сразу к заголовку */
 }
 
 .decorCircle {
   position: absolute;
   width: 326px;
   height: 326px;
-  left: calc(50% - 326px / 2);
-  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0; /* круг полностью начинается от верхней границы wrapper и на 100px заходит на баннер */
   object-fit: contain;
+  z-index: 2; /* поверх баннера и текста */
 }
 
 .ctaBanner {
   position: absolute;
   top: 226px; /* 226 px ниже верхнего края wrapper */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1872px;
+  left: 0; /* начинаем от левого края wrapper */
+  width: 100%;
   height: 355px;
   background: url('/assets/IMG_1932.jpg') center/cover no-repeat;
   border-radius: 15px;
@@ -276,14 +282,14 @@
   flex-direction: column; /* кладём тексты друг под другом */
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 40px;
   padding: 20px 0;
   box-sizing: border-box;
+  z-index: 1; /* под декоративным кругом */
 }
 
 .ctaQuestion {
   width: 1812px;
-  max-width: 90%;
   font-family: "Inter", sans-serif;
   font-weight: 600;
   font-size: 38px;
@@ -295,7 +301,6 @@
 
 .ctaText {
   width: 1812px;
-  max-width: 90%;
   font-family: "Inter", sans-serif;
   font-weight: 600;
   font-size: 38px;
