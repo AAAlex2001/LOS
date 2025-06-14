@@ -11,7 +11,7 @@ $txt-85          : rgba(0,0,0,.85);
 $max-container   : 1872px;
 
 // Break-points
-$break-sm : 576px;
+$break-sm : 560px;
 $break-md : 768px;
 $break-lg : 1024px;
 $break-xl : 1440px;
@@ -142,9 +142,14 @@ $break-xxl: 1920px;
   .bannerText{ font-size:24px; line-height:32px; }
   .cardsGrid{ grid-template-columns:1fr; gap:20px; padding:0 16px; }
   .group10,.exploreSection{ margin:60px auto 0; }
-  .activitiesCardsRow{ overflow-x:auto; gap:12px; .activityCard{ flex:0 0 260px; } }
+  .activitiesCardsRow{ margin-top:32px; }
   .actionButtonsTitle{ font-size:28px; }
   .actionButtonsRow{ gap:16px; margin:32px auto 80px; }
+  .citiesSection{ width:100%; padding:0 16px; box-sizing:border-box; }
+  .sectionTitle { font-size:32px; line-height:38px; }
+  .exploreBanner{ gap:24px; }
+  .exploreBannerText{ font-size:24px; line-height:32px; padding:0 16px; }
+  .activitiesCardsRow{ overflow-x:auto; gap:12px; .activityCard{ flex:0 0 260px; } }
 }
 
 @media (min-width:$break-sm) and (max-width:#{ $break-md - 1 }){ .cardsGrid{ grid-template-columns:repeat(2,1fr); } }
@@ -153,10 +158,29 @@ $break-xxl: 1920px;
   .cardsGrid{ grid-template-columns:repeat(2,1fr); }
   .actionButtonsRow{ gap:24px; }
 }
-@media (min-width:$break-lg) and (max-width:#{ $break-xl - 1 }){ .heroSection{ height:560px; } }
+@media (min-width:$break-lg) and (max-width:#{ $break-xl - 1 }){
+  .heroSection{ height:560px; }
+  .citiesSection{ width:100%; padding:0 24px; box-sizing:border-box; }
+  .cardsGrid{ grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .actionButtonsRow{ gap:24px; }
+}
 @media (min-width:$break-xl){ .heroSection{ height:560px; } }
 @media (min-width:$break-xxl){ .home{ max-width:$max-container; } }
 
 @media (max-width:1279px){
   .cardsGrid{ grid-template-columns:1fr; padding:0 24px; justify-items:center; .cityCard{ max-width:650px; } }
+}
+
+@media (min-width:$break-md) and (max-width:#{ $break-lg - 1 }){
+  .citiesSection{ width:100%; padding:0 20px; box-sizing:border-box; }
+  .cardsGrid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+  .cardTextWrapper{ height:auto; }
+  .activitiesCardsRow{ flex-wrap:wrap; justify-content:center; gap:16px; margin-top:32px; }
+}
+
+@media (min-width:$break-sm) and (max-width:#{ $break-md - 1 }){
+  .citiesSection{ width:100%; padding:0 16px; box-sizing:border-box; }
+  .cardsGrid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+  .cardTextWrapper{ height:auto; }
+  .activitiesCardsRow{ flex-wrap:wrap; justify-content:center; gap:12px; margin-top:24px; }
 }
