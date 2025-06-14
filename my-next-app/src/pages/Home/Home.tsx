@@ -38,18 +38,18 @@ const HomePage = () => {
 
         {/* Cities Grid */}
         <section className={styles.citiesSection}>
-          <h2 className={styles.sectionTitle}>Популярные города</h2>
+          <h2 className={styles.sectionTitle}>Незабываемые виды Абхазии</h2>
           <div className={styles.cardsGrid}>
             {[
-              { img: '/assets/city1.jpg', title: 'Гагра', desc: 'Жемчужина Абхазии с пальмовой набережной, замками и крепостями' },
-              { img: '/assets/city2.jpg', title: 'Сухум', desc: 'Курортный центр с богатой историей и живописными видами' },
-              { img: '/assets/city3.jpg', title: 'Новый Афон', desc: 'Монастырь, гроты и удивительная природа' },
-              { img: '/assets/city4.jpg', title: 'Пицунда', desc: 'Пляжи, сосновый бор и тёплое море' },
-              { img: '/assets/city5.jpg', title: 'Цандрыпш', desc: 'Курорт у самой границы с уникальной атмосферой' },
-              { img: '/assets/city6.jpg', title: 'Гудаута', desc: 'Тихий отдых вдали от шума' },
-              { img: '/assets/city7.jpg', title: 'Очамчира', desc: 'Древний город на побережье с богатой историей' },
-              { img: '/assets/city8.jpg', title: 'Ткварчели', desc: 'Горный город среди живописных склонов' },
-              { img: '/assets/city9.jpg', title: 'Батум', desc: 'Курорт с уникальной архитектурой и ночной жизнью' },
+              { img: '/assets/city_gagra.jpg', title: 'Гагра', desc: 'Жемчужина Абхазии с пальмовой набережной, замками и крепостями' },
+              { img: '/assets/city_sukhum.jpg', title: 'Сухум', desc: 'Солнечная столица с Ботаническим садом и колониальными особняками' },
+              { img: '/assets/city_gudauta.jpg', title: 'Гудаута', desc: 'Уютный городок с мандариновыми садами и чистейшими пляжами' },
+              { img: '/assets/city_newafon.jpg', title: 'Новый Афон', desc: 'Духовный центр с древними пещерами и Несторовой горой' },
+              { img: '/assets/city_pitsunda.jpg', title: 'Пицунда', desc: 'Царство реликтовых сосен и золотистых галечных пляжей' },
+              { img: '/assets/city_ochamchira.jpg', title: 'Очамчира', desc: 'Тихий приморский город с атмосферой старинного порта' },
+              { img: '/assets/city_gal.png', title: 'Гал', desc: 'Край чайных плантаций, зелёных холмов и гостеприимных жителей' },
+              { img: '/assets/city_gulripsh.jpg', title: 'Гулрыпш', desc: 'Горное селение с водопадами и панорамными видами' },
+              { img: '/assets/city_tkuarchal.jpg', title: 'Ткуарчал', desc: 'Город шахтёров в окружении живописных горных хребтов' },
             ].map((card) => (
               <div key={card.title} className={styles.cityCard}>
                 <div className={styles.cardImageWrapper}>

@@ -128,8 +128,8 @@
 /************* Cities grid *************/
 .citiesSection {
   position: relative;
-  width: 1240px;
-  margin: 1375px auto 0; // top offset per Figma
+  width: 1240px; /* фиксировано по макету */
+  margin: 127px auto 0; /* расстояние от нижнего края баннера до H2 (Figma) */
 }
 
 .sectionTitle {
