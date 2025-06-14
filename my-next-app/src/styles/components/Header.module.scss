@@ -216,15 +216,69 @@
   }
 }
 
-// ≤768px – mobile & small tablet
+// ≤900px – small laptop
+@media (max-width: 900px) {
+  .header {
+    column-gap: 12px;
+    > .logoSection {
+      margin-right: 24px;
+    }
+    > .nav {
+      margin-right: 8px;
+    }
+  }
+
+  .logoSection {
+    .logoImage {
+      width: 70px;
+      height: 70px;
+    }
+    .logoText {
+      font-size: 22px;
+    }
+  }
+
+  .nav .navButton {
+    width: 180px;
+    font-size: 16px;
+  }
+
+  .figureWrapper {
+    width: 90px;
+  }
+
+  .languageSelect {
+    width: 210px;
+  }
+}
+
+// ≤820px – wide tablet just above 768
+@media (max-width: 820px) {
+  .header {
+    column-gap: 8px;
+  }
+  .nav .navButton {
+    width: 160px;
+  }
+}
+
+// Update ≤768px section
 @media (max-width: 768px) {
   .nav {
     display: none;
   }
 
+  .figureWrapper {
+    display: none; // скрываем человечка чтобы всё помещалось
+  }
+
   .languageSelect {
     width: auto;
     padding: 0 12px;
+  }
+
+  .header {
+    column-gap: 16px;
   }
 }
 
