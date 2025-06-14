@@ -1,102 +1,100 @@
+'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from '../../styles/components/Footer.module.scss';
+
+const socialIcons = [
+  { src: '/assets/telegram.svg', alt: 'Telegram', w: 35, h: 30 },
+  { src: '/assets/instagram.svg', alt: 'Instagram', w: 32, h: 30 },
+  { src: '/assets/twitter.svg', alt: 'Twitter', w: 32, h: 32 },
+  { src: '/assets/facebook.svg', alt: 'Facebook', w: 30, h: 30 },
+  { src: '/assets/youtube.svg', alt: 'YouTube', w: 40, h: 30 },
+  { src: '/assets/rutube.svg', alt: 'Rutube', w: 44, h: 48 },
+];
+
+const quickLinks = [
+  'Города',
+  'Ваш доктор',
+  'Жильё',
+  'Связь',
+  'Важно знать',
+  'Развлечения',
+  'Такси',
+  'Об Абхазии',
+  'Банки',
+];
 
 const Footer = () => {
   return (
     <footer className={styles.footer}>
-      {/* Main content wrapper (24px horizontal padding to respect 1920→1872 grid) */}
-      <div className={styles.contentWrapper}>
-        {/* Branding & description */}
-        <div className={styles.brandSection}>
-          <h2 className={styles.brandTitle}>Land of Soul&nbsp;Abkhazia</h2>
+      {/* Top area */}
+      <div className={styles.topRow}>
+        {/* Branding */}
+        <div className={styles.brand}>
+          <h2 className={styles.brandTitle}>Land of Soul Abkhazia</h2>
+          <h3 className={styles.brandSubtitle}>О сервисе</h3>
           <p className={styles.brandDescription}>
-            Пейзажи, которые захватывают дух, богатая история и вкусная еда, Абхазия
-            не просто удивит — она покорит вас! Готовы к путешествию, которое
-            останется в сердце навсегда?
+            Ваш гид по&nbsp;Абхазии с&nbsp;проверенными рекомендациями и&nbsp;эксклюзивными
+            маршрутами.
           </p>
-          {/* Social icons */}
           <div className={styles.socials}>
-            {/* NOTE: use your own svg/png icons in /public/assets/socials folder */}
-            {[
-              { src: '/assets/socials/telegram.svg', alt: 'Telegram', w: 35, h: 30 },
-              { src: '/assets/socials/instagram.svg', alt: 'Instagram', w: 32, h: 30 },
-              { src: '/assets/socials/twitter.svg', alt: 'Twitter', w: 32, h: 32 },
-              { src: '/assets/socials/facebook.svg', alt: 'Facebook', w: 30, h: 30 },
-              { src: '/assets/socials/youtube.svg', alt: 'YouTube', w: 40, h: 30 },
-              { src: '/assets/socials/rutube.svg', alt: 'Rutube', w: 44, h: 48 },
-            ].map((icon) => (
+            {socialIcons.map((icon) => (
               <Link href="#" key={icon.alt} aria-label={icon.alt} className={styles.socialLink}>
-                <img src={icon.src} width={icon.w} height={icon.h} alt={icon.alt} />
+                <Image src={icon.src} width={icon.w} height={icon.h} alt={icon.alt} />
               </Link>
             ))}
           </div>
         </div>
 
-        {/* Links section – two columns */}
-        <div className={styles.linksSection}>
-          <div className={styles.linkColumn}>
-            <h3 className={styles.columnTitle}>footer</h3>
-            <ul className={styles.linksList}>
-              <li>
-                <Link href="#">О проекте</Link>
-              </li>
-              <li>
-                <Link href="#">Услуги</Link>
-              </li>
-              <li>
-                <Link href="#">Контакты</Link>
-              </li>
-              <li>
-                <Link href="#">Поддержка</Link>
-              </li>
-            </ul>
-          </div>
-          <div className={styles.linkColumn}>
-            <h3 className={styles.columnTitle}>footer</h3>
-            <ul className={styles.linksList}>
-              <li>
-                <Link href="#">Privacy</Link>
-              </li>
-              <li>
-                <Link href="#">Terms &amp; Conditions</Link>
-              </li>
-              <li>
-                <Link href="#">Accessibility</Link>
-              </li>
-            </ul>
-          </div>
+        {/* Quick links block */}
+        <div className={styles.quickLinksBlock}>
+          <h3 className={styles.quickLinksTitle}>Быстрые ссылки</h3>
+          <nav className={styles.quickLinks}>
+            {quickLinks.map((link) => (
+              <Link href="#" key={link} className={styles.quickLinkItem}>
+                {link}
+              </Link>
+            ))}
+          </nav>
         </div>
 
-        {/* Store badges */}
-        <div className={styles.appsSection}>
-          <img
-            src="/assets/appstore.svg"
-            alt="Download on App Store"
-            className={styles.storeBadge}
-            width={180}
-            height={52}
-          />
-          <img
-            src="/assets/googleplay.svg"
-            alt="Get it on Google Play"
-            className={styles.storeBadge}
-            width={180}
-            height={52}
-          />
+        {/* Download badges block */}
+        <div className={styles.appBlock}>
+          <h3 className={styles.appBlockTitle}>Скачайте мобильное приложение</h3>
+          <div className={styles.appBadges}>
+            <Image
+              src="/assets/appstore.svg"
+              alt="Download on App Store"
+              width={180}
+              height={52}
+            />
+            <Image
+              src="/assets/googleplay.svg"
+              alt="Get it on Google Play"
+              width={180}
+              height={52}
+            />
+          </div>
         </div>
       </div>
 
       {/* Divider */}
       <div className={styles.divider} />
 
-      {/* Bottom row */}
+      {/* Bottom line */}
       <div className={styles.bottomRow}>
-        <span className={styles.rights}>© 2024 Land of Soul. All rights reserved.</span>
-        <nav className={styles.bottomLinks}>
-          <Link href="#">Privacy</Link>
-          <Link href="#">Terms and Conditions</Link>
-          <Link href="#">Accessibility</Link>
+        <nav className={styles.legalLinks}>
+          <Link href="#" className={styles.legalLink}>
+            Privacy Policy
+          </Link>
+          <Link href="#" className={styles.legalLink}>
+            Terms and Conditions
+          </Link>
+          <Link href="#" className={styles.legalLink}>
+            Accessibility
+          </Link>
         </nav>
+        <span className={styles.rights}>© 2025 Land of soul Abkhazia. Все права защищены.</span>
       </div>
     </footer>
   );

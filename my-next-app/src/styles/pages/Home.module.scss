@@ -481,4 +481,94 @@
   color: rgba(0, 0, 0, 0.85);
   padding: 0 30px;
   margin: 0;
+}
+
+/* ---------- Activities Cards Section ---------- */
+.activitiesCardsRow {
+  width: 100%;
+  max-width: 1428px; /* фиксировано по макету */
+  height: 363px; /* высота карт */
+  margin: 65px auto 0; /* после explore */
+  display: flex;
+  gap: 20px; /* рассчитанное пустое между 4 картами (1428 - 4*342) / 3 = 20 */
+}
+
+.activityCard {
+  width: 342px;
+  height: 363px;
+  display: flex;
+  flex-direction: column;
+}
+
+.activityCardImg {
+  width: 342px;
+  height: 300.8px;
+  object-fit: cover;
+  border: 1px solid #d5daef;
+  border-bottom: none;
+  border-radius: 15px 15px 0 0;
+}
+
+.activityCardTextWrapper {
+  width: 342px;
+  height: 62px;
+  background: rgba(17, 41, 189, 0.1);
+  border: 1px solid #d5daef;
+  border-top: none;
+  border-radius: 0 0 15px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.activityCardTitle {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 22px;
+  color: #1129bd;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0;
+}
+
+/* ---------- Action Buttons Section ---------- */
+.actionButtonsTitle {
+  width: 1554px;
+  max-width: 100%;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 46px;
+  color: #1129bd;
+  text-align: center;
+  margin: 120px auto 0;
+}
+
+.actionButtonsRow {
+  width: 1554px;
+  margin: 40px auto 0;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.actionOvalBtn {
+  flex: 1;
+  max-width: 285.2px;
+  height: 50px;
+  background: rgba(17, 41, 189, 0.1);
+  border: 1px solid #1129bd;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  line-height: 22px;
+  color: #1129bd;
+  text-decoration: none;
+  padding: 14px 0;
 } 

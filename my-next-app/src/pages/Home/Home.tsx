@@ -121,6 +121,35 @@ const HomePage = () => {
             <p className={styles.exploreBannerText}>От горных троп до шумных вечеринок — каждый день будет особенным!</p>
           </div>
         </section>
+
+        {/* Activities Cards Row */}
+        <section className={styles.activitiesCardsRow}>
+          {[
+            { img: '/assets/activity_vecherinki.png', title: 'вечеринки' },
+            { img: '/assets/activity_gornye_marshruty.jpg', title: 'горные маршруты' },
+            { img: '/assets/activity_ekskursii.jpg', title: 'экскурсии' },
+            { img: '/assets/activity_goryachie_istochniki.png', title: 'горячие источники' },
+          ].map((card) => (
+            <div key={card.title} className={styles.activityCard}>
+              <img src={card.img} alt={card.title} className={styles.activityCardImg} />
+              <div className={styles.activityCardTextWrapper}>
+                <span className={styles.activityCardTitle}>{card.title.toUpperCase()}</span>
+              </div>
+            </div>
+          ))}
+        </section>
+
+        {/* Action Buttons Title */}
+        <h2 className={styles.actionButtonsTitle}>Здесь собрано всё, что избавит вас от лишних переживаний в поездке</h2>
+
+        {/* Action Buttons Row */}
+        <div className={styles.actionButtonsRow}>
+          {['Ваш доктор', 'Связь и интернет', 'Службы такси', 'Банки', 'Важно знать'].map((label) => (
+            <a key={label} href="#" className={styles.actionOvalBtn}>
+              {label}
+            </a>
+          ))}
+        </div>
       </main>
       <Footer />
     </>
