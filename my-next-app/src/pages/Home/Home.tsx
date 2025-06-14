@@ -113,13 +113,13 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* Call-to-action Buttons */}
-        <section className={styles.buttonsSection}>
-          {Array.from({ length: 6 }).map((_, idx) => (
-            <Link href="#" key={idx} className={styles.ovalButton}>
-              <span>Ваш&nbsp;доктор</span>
-            </Link>
-          ))}
+        {/* Explore Banner Section */}
+        <section className={styles.exploreSection}>
+          <h2 className={styles.exploreTitle}>Развлечения в Абхазии: создайте свой идеальный отдых!</h2>
+          <div className={styles.exploreBanner}>
+            <p className={styles.exploreBannerText}>Не просто отдых — эмоции, которые запомнятся навсегда.</p>
+            <p className={styles.exploreBannerText}>От горных троп до шумных вечеринок — каждый день будет особенным!</p>
+          </div>
         </section>
       </main>
       <Footer />

@@ -8,7 +8,6 @@
   box-sizing: border-box; // чтобы ширина включала padding и не появлялся горизонтальный скролл
   min-height: 5804px; // общая высота макета
   margin: 0 auto;
-  /* Принудительно белый фон, чтобы не подменялся системной dark-темой */
   background: #ffffff !important;
 }
 
@@ -316,11 +315,10 @@
 
 /* ---------- Promo Section (Group 10) ---------- */
 .group10 {
-  position: absolute;
+  position: relative;
   width: 655px;
   height: 514px;
-  left: 633px;
-  top: 3571px;
+  margin: 65px auto 0;
 }
 
 /* City Card */
@@ -435,5 +433,52 @@
   line-height: 46px;
   color: #000000;
   text-align: center;
+  margin: 0;
+}
+
+/* ---------- Explore Banner Section (after Group 10) ---------- */
+.exploreSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  width: 100%;
+  max-width: 1872px; /* Fixed width in desktop */
+  margin: 120px auto 0; /* появится после блока жилья */
+}
+
+.exploreTitle {
+  width: 100%;
+  max-width: 1872px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 46px;
+  text-align: center;
+  color: #1129bd;
+}
+
+.exploreBanner {
+  width: 100%;
+  max-width: 1872px;
+  height: 252px;
+  background: url('/assets/IMG_1932.jpg') center/cover no-repeat;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.exploreBannerText {
+  width: 1812px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 38px;
+  line-height: 50px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.85);
+  padding: 0 30px;
   margin: 0;
 } 
