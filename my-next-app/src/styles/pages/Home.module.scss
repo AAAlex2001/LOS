@@ -1,17 +1,13 @@
 @import "../styles.scss";
-
 .home {
   position: relative;
   width: 100%;
-  max-width: 1920px; // ограничиваем по макету
-  padding: 0 24px; // боковые поля 24 px по всему макету
-  box-sizing: border-box; // чтобы ширина включала padding и не появлялся горизонтальный скролл
-  /* min-height убран, чтобы высота страницы формировалась динамически */
+  max-width: 1920px; 
+  padding: 0 24px;
+  box-sizing: border-box;
   margin: 0 auto;
   background: #ffffff !important;
 }
-
-/************* Hero video *************/
 .heroSection {
   position: relative;
   width: 100%;
@@ -21,15 +17,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* фон секции – тот же, что и у плеера, чтобы не было черной полосы */
   background: rgba(17, 41, 189, 0.1);
 }
-
 .videoPlaceholder {
   width: 100%;
   max-width: 1872px;
   height: 701px;
-  background: transparent; /* фон уже задан у родителя */
+  background: transparent; 
   border-radius: 15px;
   display: flex;
   align-items: center;
@@ -39,20 +33,17 @@
   font-size: 14px;
   color: rgba(0, 0, 0, 0.85);
 }
-
-/************* Tabs *************/
 .tabsSection {
   position: relative;
   width: 100%;
   max-width: 1872px;
   height: 60px;
-  margin: 32px auto 0; /* 32-px отступ после шапки */
+  margin: 32px auto 0; 
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 48px;
 }
-
 .tabItem {
   width: 432px;
   height: 60px;
@@ -61,7 +52,6 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
-
   span {
     font-family: "Inter", sans-serif;
     font-weight: 700;
@@ -70,28 +60,22 @@
     text-align: center;
     color: #000000;
   }
-
   .tabUnderline {
-    width: 412px; /* active variant */
+    width: 412px; 
     height: 2px;
     background: transparent;
   }
-
   &.active {
     .tabUnderline {
       background: #005bff;
     }
   }
 }
-
-/************* Banner 1 *************/
 .bannerSection {
   position: relative;
   width: 100%;
   max-width: 1872px;
   height: 305px;
-  /* 943-px от верхнего края макета – это расстояние после секции видео,
-     здесь используем 30-px разрыв для пиксель-перфекта */
   margin: 30px auto 0;
   border-radius: 15px;
   overflow: hidden;
@@ -100,9 +84,7 @@
   justify-content: center;
   background: url('/assets/IMG_1932.jpg') center/cover no-repeat;
 }
-
 .bannerContent {
-  /* Автовысота контента по макету 200 px */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,7 +94,6 @@
   padding: 0 30px;
   box-sizing: border-box;
 }
-
 .bannerText {
   width: 1812px;
   max-width: 100%;
@@ -123,14 +104,11 @@
   text-align: center;
   color: rgba(0, 0, 0, 0.85);
 }
-
-/************* Cities grid *************/
 .citiesSection {
   position: relative;
-  width: 1240px; /* фиксировано по макету */
-  margin: 127px auto 0; /* расстояние от нижнего края баннера до H2 (Figma) */
+  width: 1240px; 
+  margin: 127px auto 0; 
 }
-
 .sectionTitle {
   font-family: "Inter", sans-serif;
   font-weight: 700;
@@ -140,14 +118,12 @@
   color: #1129bd;
   margin-bottom: 40px;
 }
-
 .cardsGrid {
   display: grid;
   grid-template-columns: repeat(3, 400px);
   gap: 32px 32px;
-  justify-content: center; /* центрируем сетку внутри 1240px контейнера */
+  justify-content: center; 
 }
-
 .cityCard {
   display: flex;
   flex-direction: column;
@@ -157,18 +133,15 @@
   height: 398.8px;
   background: #fff;
 }
-
 .cardImageWrapper {
   position: relative;
   width: 100%;
   height: 300.8px;
   overflow: hidden;
-
   img {
     object-fit: cover;
   }
 }
-
 .cardTextWrapper {
   background: rgba(17, 41, 189, 0.1);
   height: 98px;
@@ -179,7 +152,6 @@
   padding: 10px;
   text-align: center;
 }
-
 .cardTitle {
   font-family: "Inter", sans-serif;
   font-weight: 700;
@@ -189,7 +161,6 @@
   margin: 0 0 4px;
   text-transform: uppercase;
 }
-
 .cardDesc {
   font-family: "Inter", sans-serif;
   font-weight: 400;
@@ -198,17 +169,14 @@
   color: #1129bd;
   margin: 0;
 }
-
-/******** Buttons (oval) ********/
 .buttonsSection {
   position: relative;
   width: 1554px;
   height: 50px;
-  margin: 120px auto 0; // нормальный отступ после CTA
+  margin: 120px auto 0; 
   display: flex;
   gap: 32px;
 }
-
 .ovalButton {
   flex: 1;
   max-width: 285.2px;
@@ -226,14 +194,12 @@
   color: #1129bd;
   text-decoration: none;
   transition: background 0.2s ease;
-
   &:hover {
     background: rgba(17, 41, 189, 0.15);
   }
 }
-
 .sectionTitleBlue {
-  position: relative; // positioned in normal flow but we need exact coordinates
+  position: relative; 
   width: 1238px;
   height: 46px;
   font-family: "Inter", sans-serif;
@@ -242,51 +208,43 @@
   line-height: 46px;
   text-align: center;
   color: #1129bd;
-  margin: 0 auto; /* horizontally center */
-  /* Специфический отступ сверху согласно макету (2884 px от начала страницы)
-     Высчитывается динамически как расстояние от предыдущего контента,
-     поэтому фиксируем 120 px, а затем уточняем 46 px между элементами */
+  margin: 0 auto; 
   margin-top: 120px;
 }
-
-/* ---------- CTA с баннером Мандарин ---------- */
 .ctaWrapper {
   position: relative;
   width: 100%;
-  max-width: 1872px; /* фиксированная по макету, но адаптируется */
-  height: 581px; /* по макету */
-  margin: 0 auto; /* примыкает сразу к заголовку */
+  max-width: 1872px; 
+  height: 581px; 
+  margin: 0 auto; 
 }
-
 .decorCircle {
   position: absolute;
   width: 326px;
   height: 326px;
   left: 50%;
   transform: translateX(-50%);
-  top: 0; /* круг полностью начинается от верхней границы wrapper и на 100px заходит на баннер */
+  top: 0; 
   object-fit: contain;
-  z-index: 2; /* поверх баннера и текста */
+  z-index: 2; 
 }
-
 .ctaBanner {
   position: absolute;
-  top: 226px; /* 226 px ниже верхнего края wrapper */
-  left: 0; /* начинаем от левого края wrapper */
+  top: 226px; 
+  left: 0; 
   width: 100%;
   height: 355px;
   background: url('/assets/IMG_1932.jpg') center/cover no-repeat;
   border-radius: 15px;
   display: flex;
-  flex-direction: column; /* кладём тексты друг под другом */
+  flex-direction: column; 
   align-items: center;
   justify-content: center;
   gap: 40px;
   padding: 20px 0;
   box-sizing: border-box;
-  z-index: 1; /* под декоративным кругом */
+  z-index: 1; 
 }
-
 .ctaQuestion {
   width: 1812px;
   font-family: "Inter", sans-serif;
@@ -297,7 +255,6 @@
   color: rgba(0, 0, 0, 0.85);
   margin: 0;
 }
-
 .ctaText {
   width: 1812px;
   font-family: "Inter", sans-serif;
@@ -308,25 +265,20 @@
   color: rgba(0, 0, 0, 0.85);
   margin: 0;
 }
-
 .highlight {
   color: #ff6b00;
 }
-
-/* ---------- Promo Section (Group 10) ---------- */
 .group10 {
   position: relative;
   width: 655px;
   height: 514px;
   margin: 65px auto 0;
 }
-
-/* City Card */
 .group10Card {
   position: absolute;
   width: 450px;
   height: 360px;
-  left: 102px; /* 735 - 633 */
+  left: 102px; 
   top: 0;
   box-sizing: border-box;
   border: 1px solid #d5daef;
@@ -335,18 +287,16 @@
   display: flex;
   flex-direction: column;
 }
-
 .group10CardImg {
   width: 100%;
-  height: 262px; /* 360 - 98 */
+  height: 262px; 
   object-fit: cover;
 }
-
 .group10CardText {
   position: absolute;
   left: 0;
   right: 0;
-  top: calc(50% - 97px/2 + 130.5px); /* 130.5 per figma */
+  top: calc(50% - 97px/2 + 130.5px); 
   height: 97px;
   background: rgba(17, 41, 189, 0.1);
   border-radius: 0 0 15px 15px;
@@ -357,7 +307,6 @@
   justify-content: center;
   text-align: center;
 }
-
 .group10Title {
   width: 430px;
   font-family: "Inter", sans-serif;
@@ -368,7 +317,6 @@
   text-transform: uppercase;
   margin: 0;
 }
-
 .group10Desc {
   width: 430px;
   font-family: "Inter", sans-serif;
@@ -378,14 +326,12 @@
   color: #1129bd;
   margin: 0;
 }
-
-/* Button sign up */
 .group10Btn {
   position: absolute;
   width: 444px;
   height: 48px;
   left: calc(50% - 444px/2);
-  top: 390px; /* 3961 - 3571 */
+  top: 390px; 
   background: #ff6b00;
   border-radius: 100px;
   border: none;
@@ -402,21 +348,18 @@
   font-size: 24px;
   line-height: 22px;
 }
-
 .group10BtnIcon {
   width: 22px;
   height: 100px;
   transform: rotate(90deg);
   fill: #ffffff;
 }
-
-/* Tagline */
 .group10TagWrap {
   position: absolute;
   width: 655px;
   height: 66px;
   left: 0;
-  top: 448px; /* 4019 - 3571 */
+  top: 448px; 
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -424,7 +367,6 @@
   padding: 10px;
   gap: 10px;
 }
-
 .group10Tagline {
   width: 635px;
   font-family: "Inter", sans-serif;
@@ -435,18 +377,15 @@
   text-align: center;
   margin: 0;
 }
-
-/* ---------- Explore Banner Section (after Group 10) ---------- */
 .exploreSection {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 60px;
   width: 100%;
-  max-width: 1872px; /* Fixed width in desktop */
-  margin: 120px auto 0; /* появится после блока жилья */
+  max-width: 1872px; 
+  margin: 120px auto 0; 
 }
-
 .exploreTitle {
   width: 100%;
   max-width: 1872px;
@@ -457,7 +396,6 @@
   text-align: center;
   color: #1129bd;
 }
-
 .exploreBanner {
   width: 100%;
   max-width: 1872px;
@@ -470,7 +408,6 @@
   justify-content: center;
   gap: 40px;
 }
-
 .exploreBannerText {
   width: 1812px;
   font-family: "Inter", sans-serif;
@@ -482,24 +419,20 @@
   padding: 0 30px;
   margin: 0;
 }
-
-/* ---------- Activities Cards Section ---------- */
 .activitiesCardsRow {
   width: 100%;
-  max-width: 1428px; /* фиксировано по макету */
-  height: 363px; /* высота карт */
-  margin: 65px auto 0; /* после explore */
+  max-width: 1428px; 
+  height: 363px; 
+  margin: 65px auto 0; 
   display: flex;
-  gap: 20px; /* рассчитанное пустое между 4 картами (1428 - 4*342) / 3 = 20 */
+  gap: 20px; 
 }
-
 .activityCard {
   width: 342px;
   height: 363px;
   display: flex;
   flex-direction: column;
 }
-
 .activityCardImg {
   width: 342px;
   height: 300.8px;
@@ -508,7 +441,6 @@
   border-bottom: none;
   border-radius: 15px 15px 0 0;
 }
-
 .activityCardTextWrapper {
   width: 342px;
   height: 62px;
@@ -522,7 +454,6 @@
   padding: 10px;
   box-sizing: border-box;
 }
-
 .activityCardTitle {
   font-family: "Inter", sans-serif;
   font-weight: 700;
@@ -533,8 +464,6 @@
   text-align: center;
   margin: 0;
 }
-
-/* ---------- Action Buttons Section ---------- */
 .actionButtonsTitle {
   width: 1554px;
   max-width: 100%;
@@ -546,7 +475,6 @@
   text-align: center;
   margin: 120px auto 0;
 }
-
 .actionButtonsRow {
   width: 1554px;
   margin: 40px auto 110px;
@@ -554,7 +482,6 @@
   align-items: center;
   gap: 32px;
 }
-
 .actionOvalBtn {
   flex: 1;
   max-width: 285.2px;
@@ -572,37 +499,66 @@
   text-decoration: none;
   padding: 14px 0;
 }
+/* 576-1919px — общие правила (избавляемся от дубликатов) */
+@media (min-width: 576px) and (max-width: 1919px) {
+  .citiesSection { width: 100%; }
+  .cardsGrid {
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+  .activitiesCardsRow {
+    overflow-x: visible;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
 
-/* ---------- Responsive (Mobile-first overrides) ---------- */
+/* 576-767px — крупные телефоны / мелкие планшеты */
+@media (min-width: 576px) and (max-width: 767px) {
+  .cardsGrid { grid-template-columns: repeat(2, 1fr); }
+}
 
-/* 0-575px — мобильные телефоны */
+/* 768-1023px — планшеты (portrait) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .home { padding: 0 20px; }
+  .heroSection { height: 420px; }
+  .cardsGrid { grid-template-columns: repeat(2, 1fr); }
+  .actionButtonsRow { flex-wrap: wrap; gap: 24px; width: 100%; }
+}
+
+/* 1024-1439px — крупные планшеты / ноутбуки */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .heroSection { height: 560px; }
+  .cardsGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .actionButtonsRow { gap: 24px; }
+}
+
+/* 1440-1919px — десктопы */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .heroSection { height: 560px; }
+  .cardsGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .actionButtonsRow { gap: 24px; }
+}
 @media (max-width: 575px) {
   .home { padding: 0 16px; }
-
   .heroSection { height: 260px; }
-
   .tabsSection {
     gap: 24px;
     overflow-x: auto;
     height: auto;
     &::-webkit-scrollbar { display: none; }
   }
-
   .bannerSection { height: 180px; }
   .bannerText    { font-size: 24px; line-height: 32px; width: 100%; }
-
   .citiesSection { width: 100%; }
   .cardsGrid     { grid-template-columns: 1fr; gap: 20px; padding: 0 16px; }
-
   .group10, .exploreSection { margin: 60px auto 0; }
-
   .activitiesCardsRow {
     overflow-x: auto;
     gap: 12px;
     height: auto;
     .activityCard { flex: 0 0 260px; }
   }
-
   .actionButtonsTitle { width: 100%; font-size: 28px; }
   .actionButtonsRow   {
     flex-wrap: wrap;
@@ -610,100 +566,12 @@
     width: 100%;
     margin: 32px auto 80px;
   }
-
   .cardsGrid { padding: 0 16px; }
   .cityCard  { max-width: 100%; }
 }
-
-/* 576-767px — крупные телефоны / мелкие планшеты */
-@media (min-width: 576px) and (max-width: 767px) {
-  /* Stretch the section to full width and add the same side paddings as on smaller mobiles */
-  .citiesSection {
-    width: 100%;
-  }
-
-  /* Keep the grid behaviour we already have, but add equal paddings so cards do not stick to the edges */
-  .cardsGrid {
-    grid-template-columns: repeat(2, 1fr);
-    padding: 0 16px;
-    box-sizing: border-box;
-  }
-
-  .activitiesCardsRow {
-    overflow-x: visible;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-}
-
-/* 768-1023px — планшеты (portrait) */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .home { padding: 0 20px; }
-  .heroSection { height: 420px; }
-
-  /* Full-width section to avoid horizontal scroll */
-  .citiesSection { width: 100%; }
-
-  /* Maintain equal side paddings for the card grid */
-  .cardsGrid {
-    padding: 0 16px;
-    box-sizing: border-box;
-  }
-
-  /* Keep cards readable on tablets */
-  .activitiesCardsRow {
-    overflow-x: visible;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .cardsGrid   { grid-template-columns: repeat(2, 1fr); }
-  .actionButtonsRow { flex-wrap: wrap; gap: 24px; width: 100%; }
-}
-
-/* 1024-1439px — крупные планшеты / ноутбуки */
-@media (min-width: 1024px) and (max-width: 1439px) {
-  .citiesSection { width: 100%; }
-
-  .heroSection { height: 560px; }
-
-  .cardsGrid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    padding: 0 16px;
-    box-sizing: border-box;
-  }
-
-  .activitiesCardsRow {
-    overflow-x: visible;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .actionButtonsRow { gap: 24px; }
-}
-
-/* 1440-1919px — десктопы */
-@media (min-width: 1440px) and (max-width: 1919px) {
-  .heroSection { height: 560px; }
-
-  .citiesSection { width: 100%; }
-
-  .cardsGrid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    padding: 0 16px;
-    box-sizing: border-box;
-  }
-
-  .activitiesCardsRow {
-    overflow-x: visible;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .actionButtonsRow { gap: 24px; }
-}
-
-/* ≤1280px — городские карточки одной колонкой */
+@media (min-width: 1920px) {
+  .home { max-width: 1872px; }
+} 
 @media (max-width: 1279px) {
   .cardsGrid {
     grid-template-columns: 1fr;
@@ -717,8 +585,3 @@
     margin: 0 auto;
   }
 }
-
-/* ≥1920px  — большие экраны, фиксируем контент */
-@media (min-width: 1920px) {
-  .home { max-width: 1872px; }
-} 
