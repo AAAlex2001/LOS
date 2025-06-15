@@ -117,15 +117,21 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  position: relative;
+  padding-left: 24px;
+  font-size: 18px;
+  line-height: 22px;
 
   &::before {
     content: '';
-    width: 6px;
-    height: 6px;
-    border: 1.5px solid #ffffff;
-    border-width: 0 1.5px 1.5px 0;
-    transform: rotate(-45deg);
-    flex: 0 0 auto;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border: 2px solid #ffffff;
+    border-width: 0 2px 2px 0;
+    transform: translateY(-50%) rotate(-45deg);
   }
 }
 
@@ -211,78 +217,251 @@
   }
 }
 
-/******** Quick links enhancements ********/
-.quickLinkItem {
-  position: relative;
-  padding-left: 24px;
+/******** Responsive adjustments ---------- */
 
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 8px;
-    height: 8px;
-    border: 2px solid #ffffff;
-    border-width: 0 2px 2px 0;
-    transform: translateY(-50%) rotate(-45deg);
+// 1440px - 1919px
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .quickLinksBlock {
+    left: 550px;
+  }
+  
+  .appBlock {
+    left: 1150px;
+  }
+
+  .divider {
+    width: calc(100% - 48px);
   }
 }
 
-/******** Responsive adjustments ---------- */
-@media (max-width: 1280px) {
-  .footer {
-    position: static;
-    height: auto;
-    padding: 40px 20px;
+// 1240px - 1439px
+@media (min-width: 1240px) and (max-width: 1439px) {
+  .quickLinksBlock {
+    left: 450px;
+  }
+  
+  .appBlock {
+    left: 950px;
   }
 
-  .topRow,
-  .quickLinks,
-  .appBadges,
-  .divider,
-  .bottomRow,
-  .legalLinks .legalLink {
-    position: static;
+  .divider {
+    width: calc(100% - 48px);
+  }
+}
+
+// 768px - 1239px
+@media (min-width: 768px) and (max-width: 1239px) {
+  .footer {
+    height: auto;
+    padding: 60px 40px 40px;
   }
 
   .topRow {
+    position: static;
     flex-direction: column;
-    gap: 40px;
+    gap: 60px;
   }
 
-  .quickLinks,
-  .appBadges {
+  .brand,
+  .quickLinksBlock,
+  .appBlock {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+
+  .brandTitle,
+  .brandDescription,
+  .appBlockTitle {
     width: 100%;
   }
 
   .quickLinks {
-    gap: 15px;
+    position: static;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .badgesWrapper {
-    justify-content: flex-start;
+  .appBadges {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .divider {
+    position: static;
+    width: 100%;
+    margin: 40px 0 20px;
   }
 
   .bottomRow {
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
+    position: static;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
   }
 
-  .legalLinks {
-    display: flex;
-    gap: 30px;
-  }
-
-  .legalLink {
+  .legalLinks,
+  .rights {
     position: static;
   }
 }
 
-/******** Additional small-mobile adjustments ********/
-@media (max-width: 575px) {
+// 320px - 767px
+@media (max-width: 767px) {
   .footer {
-    padding: 32px 16px;
+    height: auto;
+    padding: 40px 24px 24px;
+  }
+
+  .topRow {
+    position: static;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .brand,
+  .quickLinksBlock,
+  .appBlock {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+
+  .brand {
+    gap: 24px;
+  }
+
+  .brandTitle {
+    width: 100%;
+    font-size: 28px;
+    white-space: normal;
+  }
+
+  .brandDescription {
+    width: 100%;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .brandSubtitle {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .quickLinksTitle,
+  .appBlockTitle {
+    width: 100%;
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .quickLinks {
+    position: static;
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .quickLinkItem {
+    font-size: 16px;
+  }
+
+  .appBlock {
+    padding-left: 0;
+  }
+
+  .appBadges {
+    width: 100%;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .divider {
+    position: static;
+    width: 100%;
+    margin: 32px 0 16px;
+  }
+
+  .bottomRow {
+    position: static;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    height: auto;
+  }
+
+  .legalLinks {
+    position: static;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .legalLink,
+  .rights {
+    position: static;
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
+
+// Extra small mobile
+@media (max-width: 480px) {
+  .footer {
+    padding: 32px 16px 16px;
+  }
+
+  .topRow {
+    gap: 32px;
+  }
+
+  .brand {
+    gap: 20px;
+  }
+
+  .brandTitle {
+    font-size: 24px;
+  }
+
+  .brandDescription {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .brandSubtitle {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .socials {
+    gap: 16px;
+  }
+
+  .socialLink img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .quickLinksTitle,
+  .appBlockTitle {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .quickLinkItem {
+    font-size: 14px;
+  }
+
+  .legalLink,
+  .rights {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .divider {
+    margin: 32px 0 16px;
   }
 } 
