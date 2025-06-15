@@ -13,7 +13,6 @@ const HomePage = () => {
           {['Об Абхазии', 'Чем заняться', 'Запланируйте поездку', 'Необходимо в поездке'].map((label, idx) => (
             <div key={label} className={`${styles.tabItem} ${idx === 0 ? styles.active : ''}`}>
               <span>{label}</span>
-              <div className={styles.tabUnderline} />
             </div>
           ))}
         </section>

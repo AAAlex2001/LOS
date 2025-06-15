@@ -43,12 +43,65 @@ $break-xxl: 1920px;
 // -----------------------------------------------------------------------------
 // Tabs
 // -----------------------------------------------------------------------------
-.tabsSection{ @extend %flex-center; @include full; height:60px; gap:40px; justify-content:flex-start; margin-top:32px; }
+.tabsSection{ 
+  @extend %flex-center; 
+  @include full; 
+  height:auto; 
+  gap:40px; 
+  justify-content:space-between; 
+  margin-top:32px;
+  flex-wrap:wrap;
+}
+
 .tabItem{
-  width:432px;height:60px;padding:8px 10px;@extend %flex-center;flex-direction:column;gap:8px;
-  span{@include font(30px,700,36px,#000);}
-  .tabUnderline{width:412px;height:2px;background:transparent;}
-  &.active .tabUnderline{background:$primary;}
+  position:relative;
+  height:60px; 
+  padding:8px 10px; 
+  @extend %flex-center; 
+  flex-direction:column; 
+  cursor:pointer;
+  
+  span{ 
+    @include font(30px,700,36px,#000); 
+  }
+  
+  &::after{
+    display: none;
+  }
+  
+  &.active span {
+    color: #000;
+  }
+}
+
+// Media queries for tabs
+@media (max-width:$break-lg){
+  .tabsSection{
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    text-align:center;
+  }
+  
+  .tabItem{
+    height:auto;
+    padding:4px 0;
+    width:auto;
+    align-items:center;
+    
+    span{
+      font-size:20px;
+      line-height:26px;
+    }
+  }
+}
+
+@media (min-width:$break-lg){
+  .tabItem span{
+    font-size:26px;
+    line-height:32px;
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -148,9 +201,15 @@ $break-xxl: 1920px;
 @media (max-width:$break-sm){
   .home{ padding:0 16px; }
   .heroSection{ height:260px; }
-  .tabsSection{ gap:24px; overflow-x:auto; &::-webkit-scrollbar{ display:none; } }
-  .bannerSection{ height:180px; }
-  .bannerText{ font-size:24px; line-height:32px; }
+  .tabsSection{
+    flex-direction:column;
+    height:auto;
+    gap:12px;
+    justify-content:center;
+  }
+  .tabItem{ width:auto; padding:4px 12px; span{ font-size:18px; line-height:24px; } .tabUnderline{ width:100%; } }
+  .bannerSection{ height:auto; padding:24px 0; }
+  .bannerText{ font-size:22px; line-height:30px; }
   .cardsGrid{ grid-template-columns:1fr; gap:20px; }
   .group10,.exploreSection{ margin:60px auto 0; }
   .activitiesCardsRow{ margin-top:32px; }
@@ -172,27 +231,34 @@ $break-xxl: 1920px;
   .group10TagWrap{ position:static; width:100%; margin-top:12px; padding:0; flex-wrap:wrap; }
 }
 
-@media (min-width:$break-sm) and (max-width:#{ $break-md - 1 }){
-  .cardsGrid{ grid-template-columns:1fr; gap:20px; }
-  .ctaWrapper{ height:auto !important; position:relative; padding-top:110px; }
-  .decorCircle{ position:absolute !important; width:220px; height:220px; top:0; left:50%; transform:translateX(-50%); z-index:2; }
-  .ctaBanner{ position:relative !important; top:0 !important; height:auto !important; padding:24px; gap:24px; margin-top:70px; z-index:1; }
-  .ctaQuestion,.ctaText{ font-size:28px; line-height:36px; }
-  .group10{ position:static; height:auto; width:100%; max-width:none; margin:60px auto 0; }
-  .group10Card{ position:static; width:100%; max-width:480px; height:auto; margin:0 auto; }
+@media (min-width:$break-sm) and (max-width:#{$break-lg - 1}){
+  /* Banner section with long text */
+  .bannerSection{ height:auto; padding:32px 16px; }
+  .bannerText{ font-size:24px; line-height:32px; }
+
+  /* CTA block */
+  .ctaWrapper{ height:auto !important; padding-top:90px; }
+  .decorCircle{ position:absolute !important; width:200px; height:200px; }
+  .ctaBanner{ position:relative !important; top:0 !important; height:auto !important; padding:24px 16px; margin-top:60px; }
+  .ctaQuestion,.ctaText{ font-size:24px !important; line-height:32px !important; }
+
+  /* Group-10 (private sector) */
+  .group10{ position:static; height:auto; width:100%; margin:60px auto 0; }
+  .group10Card{ position:static; width:100%; max-width:none; height:auto; }
   .group10CardImg{ height:240px; }
-  .group10Btn{ position:static; width:100%; max-width:480px; margin:20px auto 0; transform:none; }
-  .group10TagWrap{ position:static; width:100%; max-width:480px; margin:12px auto 0; }
+  .group10Btn{ position:static; width:100%; max-width:none; margin:20px 0 0; transform:none; }
+  .group10TagWrap{ position:static; width:100%; margin:12px 0 0; }
 }
-@media (min-width:$break-md) and (max-width:#{ $break-lg - 1 }){
-  .heroSection{ height:420px; }
-  .actionButtonsRow{ gap:24px; }
+
+@media (min-width:$break-md){
+  .tabItem{ width:auto !important; max-width:none; flex:0 0 auto; padding:8px 18px; span{ font-size:26px; line-height:32px; } .tabUnderline{ width:100%; } }
 }
+
 @media (min-width:$break-lg) and (max-width:#{ $break-xl - 1 }){
-  .heroSection{ height:560px; }
-  .citiesSection{ width:100%; padding:0 24px; box-sizing:border-box; }
-  .actionButtonsRow{ gap:24px; }
+  .tabsSection{ gap:32px; justify-content:center; }
+  .tabItem{ padding:8px 18px; span{ font-size:26px; line-height:32px; } }
 }
+
 @media (min-width:$break-xl){ .heroSection{ height:560px; } }
 @media (min-width:$break-xxl){ .home{ max-width:$max-container; } }
 
