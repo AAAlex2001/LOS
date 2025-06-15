@@ -63,10 +63,10 @@ $break-xxl: 1920px;
 .citiesSection{ width:1240px; margin:127px auto 0; }
 .sectionTitle { @include font(40px,700,46px,$primary); text-align:center; margin-bottom:40px; }
 
-.cardsGrid   { display:grid; grid-template-columns:repeat(3,400px); gap:32px; justify-content:center; }
+.cardsGrid   { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:32px; justify-content:center; }
 .cityCard    { @extend %card; height:398.8px; display:flex; flex-direction:column; }
 .cardImageWrapper{ width:100%; height:300.8px; overflow:hidden; img{ object-fit:cover; display:block; } }
-.cardTextWrapper { @extend %flex-center; background:$primary-light; height:98px; flex-direction:column; padding:10px; text-align:center; }
+.cardTextWrapper { @extend %flex-center; background:$primary-light; min-height:150px; height:auto; flex-direction:column; padding:10px; text-align:center; }
 .cardTitle        { @include font(20px,700,30px,$primary,true); margin:0 0 4px; }
 .cardDesc         { @include font(20px,400,22px,$primary); margin:0; }
 
@@ -118,7 +118,7 @@ $break-xxl: 1920px;
 // -----------------------------------------------------------------------------
 // Activities row
 // -----------------------------------------------------------------------------
-.activitiesCardsRow{ @include full($max:1428px); height:363px; margin:65px auto 0; display:flex; gap:20px; flex-wrap:wrap; justify-content:center; }
+.activitiesCardsRow{ @include full($max:1428px); margin:65px auto 0; display:flex; gap:20px; flex-wrap:wrap; justify-content:center; height:auto; }
 .activityCard{ width:342px; height:363px; display:flex; flex-direction:column; }
 .activityCardImg        { width:342px; height:300.8px; object-fit:cover; border:1px solid $border-light; border-bottom:none; border-radius:15px 15px 0 0; }
 .activityCardTextWrapper{ @extend %flex-center; width:342px; height:62px; background:$primary-light; border:1px solid $border-light; border-top:none; border-radius:0 0 15px 15px; padding:10px; box-sizing:border-box; }
@@ -128,8 +128,8 @@ $break-xxl: 1920px;
 // Action buttons
 // -----------------------------------------------------------------------------
 .actionButtonsTitle{ @include font(40px,700,46px,$primary); width:1554px; max-width:100%; text-align:center; margin:120px auto 0; }
-.actionButtonsRow  { width:1554px; margin:40px auto 110px; display:flex; align-items:center; gap:32px; flex-wrap:wrap; }
-.actionOvalBtn     { @extend %flex-center; flex:1; max-width:285.2px; height:50px; background:$primary-light; border:1px solid $primary; border-radius:100px; @include font(20px,400,22px,$primary); text-decoration:none; padding:14px 0; }
+.actionButtonsRow  { @include full($max:1554px); margin:40px auto 110px; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:32px; }
+.actionOvalBtn     { @extend %flex-center; width:100%; height:50px; background:$primary-light; border:1px solid $primary; border-radius:100px; @include font(20px,400,22px,$primary); text-decoration:none; padding:14px 0; }
 
 // -----------------------------------------------------------------------------
 // Responsive tweaks
@@ -144,18 +144,39 @@ $break-xxl: 1920px;
   .group10,.exploreSection{ margin:60px auto 0; }
   .activitiesCardsRow{ margin-top:32px; }
   .actionButtonsTitle{ font-size:28px; }
-  .actionButtonsRow{ gap:16px; margin:32px auto 80px; }
+  .actionButtonsRow{ grid-template-columns:1fr; gap:16px; margin:32px auto 80px; }
   .citiesSection{ width:100%; padding:0 16px; box-sizing:border-box; }
   .sectionTitle { font-size:32px; line-height:38px; }
   .exploreBanner{ gap:24px; }
   .exploreBannerText{ font-size:24px; line-height:32px; padding:0 16px; }
   .activitiesCardsRow{ overflow-x:auto; gap:12px; .activityCard{ flex:0 0 260px; } }
+  .ctaWrapper{ height:auto; position:relative; }
+  .decorCircle{
+    position:static; width:180px; height:180px; transform:none; margin:0 auto 16px; }
+  .ctaBanner{ position:static; height:auto; padding:24px 16px; gap:24px; margin-top:0; }
+  .ctaQuestion,.ctaText{ font-size:24px; line-height:32px; padding:0 8px; }
+  .group10{ position:static; height:auto; width:100%; margin:60px auto 0; padding:0 0; }
+  .group10Card{ position:static; width:100%; max-width:none; height:auto; }
+  .group10CardImg{ height:200px; }
+  .group10Btn{ position:static; width:100%; max-width:none; margin:16px 0 0; transform:none; }
+  .group10TagWrap{ position:static; width:100%; margin-top:12px; padding:0; flex-wrap:wrap; }
 }
 
-@media (min-width:$break-sm) and (max-width:#{ $break-md - 1 }){ .cardsGrid{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:$break-sm) and (max-width:#{ $break-md - 1 }){
+  .cardsGrid{ grid-template-columns:1fr; gap:20px; padding:0 16px; }
+  .ctaWrapper{ height:auto; }
+  .decorCircle{ width:220px; height:220px; position:static; transform:none; margin:0 auto 20px; }
+  .ctaBanner{ position:static; height:auto; padding:24px; gap:24px; margin-top:0; }
+  .ctaQuestion,.ctaText{ font-size:28px; line-height:36px; }
+  .group10{ position:static; height:auto; width:100%; max-width:none; margin:60px auto 0; }
+  .group10Card{ position:static; width:100%; max-width:480px; height:auto; margin:0 auto; }
+  .group10CardImg{ height:240px; }
+  .group10Btn{ position:static; width:100%; max-width:480px; margin:20px auto 0; transform:none; }
+  .group10TagWrap{ position:static; width:100%; max-width:480px; margin:12px auto 0; }
+}
 @media (min-width:$break-md) and (max-width:#{ $break-lg - 1 }){
   .heroSection{ height:420px; }
-  .cardsGrid{ grid-template-columns:repeat(2,1fr); }
+  .cardsGrid{ grid-template-columns:1fr; gap:24px; }
   .actionButtonsRow{ gap:24px; }
 }
 @media (min-width:$break-lg) and (max-width:#{ $break-xl - 1 }){
@@ -168,19 +189,32 @@ $break-xxl: 1920px;
 @media (min-width:$break-xxl){ .home{ max-width:$max-container; } }
 
 @media (max-width:1279px){
-  .cardsGrid{ grid-template-columns:1fr; padding:0 24px; justify-items:center; .cityCard{ max-width:650px; } }
+  .cardsGrid{
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    padding:0 24px;
+    gap:24px;
+  }
+  .cardsGrid .cityCard{ max-width:100%; }
 }
 
-@media (min-width:$break-md) and (max-width:#{ $break-lg - 1 }){
-  .citiesSection{ width:100%; padding:0 20px; box-sizing:border-box; }
-  .cardsGrid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
-  .cardTextWrapper{ height:auto; }
-  .activitiesCardsRow{ flex-wrap:wrap; justify-content:center; gap:16px; margin-top:32px; }
+@media (min-width:$break-md) and (max-width:1279px){
+  /* CTA Mandarin refined */
+  .ctaWrapper{ position:relative; padding-top:130px; }
+  .decorCircle{ position:absolute; width:220px; height:220px; top:0; left:50%; transform:translateX(-50%); z-index:2; }
+  .ctaBanner{ position:relative; margin-top:-70px; padding:32px 24px; gap:32px; }
+  .ctaQuestion,.ctaText{ font-size:28px; line-height:36px; }
 }
 
-@media (min-width:$break-sm) and (max-width:#{ $break-md - 1 }){
-  .citiesSection{ width:100%; padding:0 16px; box-sizing:border-box; }
-  .cardsGrid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
-  .cardTextWrapper{ height:auto; }
-  .activitiesCardsRow{ flex-wrap:wrap; justify-content:center; gap:12px; margin-top:24px; }
+/* override for small/medium widths <=767 */
+@media (max-width:#{ $break-md - 1 }){
+  /* ensure CTA circle overlaps banner */
+  .ctaWrapper{ position:relative; padding-top:100px; }
+  .decorCircle{ position:absolute; width:180px; height:180px; top:0; left:50%; transform:translateX(-50%); z-index:2; }
+  .ctaBanner{ position:relative; margin-top:-60px; padding:24px 16px; gap:24px; }
+}
+
+@media (max-width:872px) and (min-width:$break-sm){
+  /* Explore banner fix */
+  .exploreBanner{ height:auto; gap:24px; padding:24px 16px; }
+  .exploreBannerText{ font-size:24px; line-height:32px; padding:0 8px; }
 }
