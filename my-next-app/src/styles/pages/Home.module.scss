@@ -108,6 +108,12 @@ $break-xxl: 1920px;
 // Banner
 // -----------------------------------------------------------------------------
 .bannerSection{ @extend %flex-center; @include full; height:305px; margin:30px 0; border-radius:15px; background:url('/assets/IMG_1932.jpg') center/cover no-repeat; }
+.bannerContent {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
 .bannerText{ @include font(38px,600,50px); width:100%; max-width:1812px; text-align:center; }
 
 // -----------------------------------------------------------------------------
@@ -162,7 +168,7 @@ $break-xxl: 1920px;
 .group10{ @include full($max:655px); height:514px; margin:65px auto 0; position:relative; }
 .group10Card{ @extend %card; position:absolute; width:450px; height:360px; left:102px; top:0; display:flex; flex-direction:column; }
 .group10CardImg{ width:100%; height:262px; object-fit:cover; display:block; }
-.group10CardText{ @extend %flex-center; flex-direction:column; background:$primary-light; height:97px; padding:0 10px; text-align:center; margin-top:-1px; }
+.group10CardText{ @extend %flex-center; flex-direction:column; background:$primary-light; height:97px; padding:24px; text-align:center; margin-top:-1px; }
 .group10Title{ @include font(20px,700,30px,$primary,true); margin:0; width:100%; }
 .group10Desc { @include font(20px,400,22px,$primary); margin:0; width:100%; }
 .group10Btn  { position:absolute; left:50%; top:390px; transform:translateX(-50%); width:444px; height:48px; background:$accent; border:none; border-radius:100px;

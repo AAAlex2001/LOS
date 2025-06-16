@@ -27,11 +27,13 @@ const HomePage = () => {
         {/* Banner */}
         <section className={styles.bannerSection}>
           <div className={styles.bannerContent}>
-            <h2 className={styles.bannerText}>
+            <p className={styles.bannerText}>
               Пейзажи, которые захватывают дух, богатая история и&nbsp;вкусная еда, Абхазия не&nbsp;просто
-              удивит&nbsp;— она&nbsp;покорит&nbsp;вас!<br />Готовы к&nbsp;путешествию, которое останется в&nbsp;сердце
-              навсегда?
-            </h2>
+              удивит&nbsp;— она&nbsp;покорит&nbsp;вас!
+            </p>
+            <p className={styles.bannerText}>
+              Готовы к&nbsp;путешествию, которое останется в&nbsp;сердце навсегда?
+            </p>
           </div>
         </section>
 
@@ -45,7 +47,7 @@ const HomePage = () => {
               { img: '/assets/city_gudauta.jpg', title: 'Гудаута', desc: 'Уютный городок с мандариновыми садами и чистейшими пляжами' },
               { img: '/assets/city_newafon.jpg', title: 'Новый Афон', desc: 'Духовный центр с древними пещерами и Несторовой горой' },
               { img: '/assets/city_pitsunda.jpg', title: 'Пицунда', desc: 'Царство реликтовых сосен и золотистых галечных пляжей' },
-              { img: '/assets/city_ochamchira.jpg', title: 'Очамчира', desc: 'Тихий приморский город с атмосферой старинного порта' },
+              { img: '/assets/city_ochamchira.jpg', title: 'Очамчыра', desc: 'Тихий приморский город с атмосферой старинного порта' },
               { img: '/assets/city_gal.png', title: 'Гал', desc: 'Край чайных плантаций, зелёных холмов и гостеприимных жителей' },
               { img: '/assets/city_gulripsh.jpg', title: 'Гулрыпш', desc: 'Горное селение с водопадами и панорамными видами' },
               { img: '/assets/city_tkuarchal.jpg', title: 'Ткуарчал', desc: 'Город шахтёров в окружении живописных горных хребтов' },

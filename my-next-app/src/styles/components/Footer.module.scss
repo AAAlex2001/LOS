@@ -1,69 +1,69 @@
+// Breakpoints consistent with Header
+$break-md: 768px;
+$break-lg: 1024px;
+$break-xl: 1440px;
+$break-xxl: 1920px;
+
+// --- Base Styles (Mobile First) ---
 .footer {
-  position: relative;
   width: 100%;
-  height: 442px;
   max-width: 1920px;
   margin: 0 auto;
-  margin-top: 0;
-  margin-bottom: 0;
   background: #1129bd;
   color: #ffffff;
   font-family: "Inter", sans-serif;
-  overflow: hidden;
+  padding: 40px 16px 24px;
+  box-sizing: border-box;
+  height: auto; // Ensure height is dynamic
 }
 
-/* ---------- Top section (branding + links + app badges) ---------- */
 .topRow {
-  position: absolute;
-  top: 51px;
-  left: 24px;
-  right: 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-/******** Branding ********/
-.brand {
-  position: absolute;
-  top: 0px;
-  left: 5px;
   display: flex;
   flex-direction: column;
-  gap: 37px;
-  width: 391px;
-  height: 276px;
+  gap: 40px;
+}
+
+// --- Column Blocks ---
+.brand,
+.quickLinksBlock,
+.appBlock {
+  width: 100%;
+}
+
+// Branding Section
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .brandTitle {
-  width: 391px;
   font-weight: 700;
-  font-size: 36px;
-  line-height: 22px;
+  font-size: 28px;
+  line-height: 1.2;
   margin: 0;
-  white-space: nowrap;
-}
-
-.brandDescription {
-  width: 370px;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 22px;
-  margin: 0;
+  white-space: normal; // Allow wrapping
 }
 
 .brandSubtitle {
   font-weight: 700;
-  font-size: 24px;
-  line-height: 29px;
+  font-size: 20px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.brandDescription {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.4;
   margin: 0;
 }
 
 .socials {
   display: flex;
-  gap: 20px;
-  width: 313px;
-  height: 48px;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap; // Allow wrapping on small screens
 }
 
 .socialLink {
@@ -71,397 +71,238 @@
   align-items: center;
   justify-content: center;
   transition: opacity 0.2s ease;
-
   &:hover {
     opacity: 0.8;
   }
 }
 
-.socialLink img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-}
-
-/******** Quick links ********/
+// Quick Links Section
 .quickLinksBlock {
-  position: absolute;
-  top: 0px;
-  left: 659px;
-  width: 476px;
-  height: 276px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .quickLinksTitle {
-  width: 209px;
-  height: 29px;
   font-weight: 700;
-  font-size: 24px;
-  line-height: 29px;
-  margin: 0 0 20px;
+  font-size: 20px;
+  line-height: 1.2;
+  margin: 0;
 }
 
 .quickLinks {
-  position: absolute;
-  top: 49px;
-  left: 0;
-  width: 476px;
-  height: 157px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 20px;
-  row-gap: 20px;
+  grid-template-columns: 1fr;
+  gap: 16px;
 }
 
 .quickLinkItem {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   position: relative;
-  padding-left: 24px;
-  font-size: 18px;
-  line-height: 22px;
+  font-size: 16px;
+  line-height: 1.4;
+  text-decoration: none;
+  color: #fff;
 
   &::before {
     content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
+    flex-shrink: 0;
     width: 8px;
     height: 8px;
     border: 2px solid #ffffff;
     border-width: 0 2px 2px 0;
-    transform: translateY(-50%) rotate(-45deg);
+    transform: rotate(-45deg);
   }
 }
 
-/******** App badges ********/
+// App Download Section
 .appBlock {
-  position: absolute;
-  top: 0px;
-  left: 1370px;
-  width: 413px;
-  height: 276px;
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  padding-left: 24px;
-  box-sizing: border-box;
+  gap: 20px;
 }
 
 .appBlockTitle {
-  width: 413px;
-  height: 29px;
   font-weight: 700;
-  font-size: 24px;
-  line-height: 29px;
+  font-size: 20px;
+  line-height: 1.2;
   margin: 0;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .appBadges {
-  width: 367px;
-  height: 52px;
   display: flex;
-  gap: 10px;
-  margin-top: 0px;
+  flex-direction: column; // Stack on mobile
+  align-items: flex-start;
+  gap: 12px;
 }
 
-/******** Divider ********/
+// Divider
 .divider {
-  position: absolute;
-  top: 380px;
-  left: 24px;
-  width: 1845px;
-  height: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.5);
+  margin: 32px 0;
 }
 
-/******** Bottom row (rights + legal links) ********/
+// Bottom Row
 .bottomRow {
-  position: absolute;
-  top: 389px;
-  left: 0;
-  right: 0;
-  height: 22px;
   display: flex;
-  align-items: center;
-}
-
-.rights {
-  position: absolute;
-  right: 24px;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 22px;
-  color: rgba(255, 255, 255, 0.5);
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
 }
 
 .legalLinks {
-  position: absolute;
-  left: 24px;
-  top: 0;
   display: flex;
-  gap: 30px;
+  flex-direction: column; // Stack on mobile
+  gap: 12px;
+  align-items: flex-start;
 }
 
 .legalLink {
   font-weight: 400;
-  font-size: 18px;
-  line-height: 22px;
+  font-size: 14px;
   color: rgba(255, 255, 255, 0.5);
   text-decoration: none;
-
   &:hover {
     text-decoration: underline;
   }
 }
 
-/******** Responsive adjustments ---------- */
-
-// 1440px - 1919px
-@media (min-width: 1440px) and (max-width: 1919px) {
-  .quickLinksBlock {
-    left: 550px;
-  }
-  
-  .appBlock {
-    left: 1150px;
-  }
-
-  .divider {
-    width: calc(100% - 48px);
-  }
+.rights {
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
 }
 
-// 1240px - 1439px
-@media (min-width: 1240px) and (max-width: 1439px) {
-  .quickLinksBlock {
-    left: 450px;
-  }
-  
-  .appBlock {
-    left: 950px;
-  }
-
-  .divider {
-    width: calc(100% - 48px);
-  }
-}
-
-// 768px - 1239px
-@media (min-width: 768px) and (max-width: 1239px) {
+// --- Tablet and Up ---
+@media (min-width: $break-md) {
+  // 768px+
   .footer {
-    height: auto;
-    padding: 60px 40px 40px;
-  }
-
-  .topRow {
-    position: static;
-    flex-direction: column;
-    gap: 60px;
-  }
-
-  .brand,
-  .quickLinksBlock,
-  .appBlock {
-    position: static;
-    width: 100%;
-    height: auto;
-  }
-
-  .brandTitle,
-  .brandDescription,
-  .appBlockTitle {
-    width: 100%;
+    padding: 60px 24px 40px;
   }
 
   .quickLinks {
-    position: static;
-    width: 100%;
     grid-template-columns: repeat(2, 1fr);
   }
 
   .appBadges {
-    width: 100%;
+    flex-direction: row; // Side-by-side
     flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 12px;
-  }
-
-  .divider {
-    position: static;
-    width: 100%;
-    margin: 40px 0 20px;
   }
 
   .bottomRow {
-    position: static;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: auto;
-  }
-
-  .legalLinks,
-  .rights {
-    position: static;
-  }
-}
-
-// 320px - 767px
-@media (max-width: 767px) {
-  .footer {
-    height: auto;
-    padding: 40px 24px 24px;
-  }
-
-  .topRow {
-    position: static;
-    flex-direction: column;
-    gap: 40px;
-  }
-
-  .brand,
-  .quickLinksBlock,
-  .appBlock {
-    position: static;
-    width: 100%;
-    height: auto;
-  }
-
-  .brand {
-    gap: 24px;
-  }
-
-  .brandTitle {
-    width: 100%;
-    font-size: 28px;
-    white-space: normal;
-  }
-
-  .brandDescription {
-    width: 100%;
-    font-size: 16px;
-    line-height: 20px;
-  }
-
-  .brandSubtitle {
-    font-size: 20px;
-    line-height: 24px;
-  }
-
-  .quickLinksTitle,
-  .appBlockTitle {
-    width: 100%;
-    font-size: 20px;
-    line-height: 24px;
-  }
-
-  .quickLinks {
-    position: static;
-    width: 100%;
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .quickLinkItem {
-    font-size: 16px;
-  }
-
-  .appBlock {
-    padding-left: 0;
-  }
-
-  .appBadges {
-    width: 100%;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 12px;
-  }
-
-  .divider {
-    position: static;
-    width: 100%;
-    margin: 32px 0 16px;
-  }
-
-  .bottomRow {
-    position: static;
-    flex-direction: column;
-    gap: 16px;
-    align-items: flex-start;
-    height: auto;
   }
 
   .legalLinks {
-    position: static;
-    flex-wrap: wrap;
-    gap: 16px;
+    flex-direction: row;
+    gap: 24px;
   }
 
   .legalLink,
   .rights {
-    position: static;
     font-size: 16px;
-    line-height: 20px;
   }
 }
 
-// Extra small mobile
-@media (max-width: 480px) {
-  .footer {
-    padding: 32px 16px 16px;
-  }
-
+// --- Desktop and Up ---
+@media (min-width: $break-lg) {
+  // 1024px+
   .topRow {
-    gap: 32px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
   }
 
   .brand {
-    gap: 20px;
+    flex: 2; // Takes more space
+    min-width: 300px;
+  }
+
+  .quickLinksBlock {
+    flex: 2;
+    min-width: 300px;
+  }
+
+  .appBlock {
+    flex: 1;
+    min-width: 200px;
+    padding-left: 0;
+  }
+
+  .quickLinks {
+    grid-template-columns: repeat(2, 1fr); // Keep 2 cols, looks less cramped
   }
 
   .brandTitle {
-    font-size: 24px;
+    font-size: 32px;
   }
 
-  .brandDescription {
-    font-size: 14px;
-    line-height: 18px;
-  }
-
-  .brandSubtitle {
-    font-size: 18px;
-    line-height: 22px;
-  }
-
-  .socials {
-    gap: 16px;
-  }
-
-  .socialLink img {
-    width: 28px;
-    height: 28px;
-  }
-
+  .brandSubtitle,
   .quickLinksTitle,
   .appBlockTitle {
-    font-size: 18px;
-    line-height: 22px;
+    font-size: 22px;
   }
 
+  .brandDescription,
   .quickLinkItem {
-    font-size: 14px;
+    font-size: 18px;
+  }
+}
+
+// --- Large Desktop ---
+@media (min-width: $break-xl) {
+  // 1440px+
+  .footer {
+    padding: 60px 40px 40px;
   }
 
-  .legalLink,
-  .rights {
-    font-size: 14px;
-    line-height: 18px;
+  .topRow {
+    gap: 60px;
   }
 
-  .divider {
-    margin: 32px 0 16px;
+  .quickLinks {
+    grid-template-columns: repeat(3, 1fr); // 3 columns on large screens
+  }
+
+  .brandTitle {
+    font-size: 36px;
+  }
+
+  .brandSubtitle,
+  .quickLinksTitle,
+  .appBlockTitle {
+    font-size: 24px;
+  }
+}
+
+// --- XXL Desktop ---
+@media (min-width: $break-xxl) {
+  // 1920px+
+  .footer {
+    padding: 51px 24px 30px;
+  }
+
+  .topRow {
+    justify-content: space-between;
+    // Use flex-basis for precise control on the largest screens
+    .brand {
+      flex: 0 1 391px;
+    }
+
+    .quickLinksBlock {
+      flex: 0 1 476px;
+    }
+
+    .appBlock {
+      flex: 0 1 413px;
+    }
   }
 } 
