@@ -13,13 +13,13 @@ const Header = () => {
     <>
       {/* Overlay */}
       <div
-        className={`${styles.mobileMenuOverlay} ${menuOpen ? 'active' : ''}`}
+        className={`${styles.mobileMenuOverlay} ${menuOpen ? styles.active : ''}`}
         onClick={closeMenu}
       />
 
       {/* Mobile menu */}
-      <div className={`${styles.mobileMenu} ${menuOpen ? 'active' : ''}`}>
-        <nav className="mobileNavList">
+      <div className={`${styles.mobileMenu} ${menuOpen ? styles.active : ''}`}>
+        <nav className={styles.mobileNavList}>
           <Link href="#" className={styles.mobileNavButton} onClick={closeMenu}>
             Аренда жилья
           </Link>
@@ -27,6 +27,16 @@ const Header = () => {
             Доска объявлений
           </Link>
         </nav>
+
+        <div className={styles.figureWrapper}>
+          <Image
+            src="/assets/Guy11.png"
+            alt="Decorative character"
+            width={100}
+            height={100}
+            className={styles.figureImage}
+          />
+        </div>
 
         <div className={styles.mobileLanguageSelect} onClick={closeMenu}>
           <span className={styles.languageText}>Выберите язык</span>
@@ -105,7 +115,7 @@ const Header = () => {
         </div>
 
         {/* Burger button */}
-        <button className={`${styles.burgerButton} ${menuOpen ? 'active' : ''}`} onClick={toggleMenu} aria-label="Menu">
+        <button className={`${styles.burgerButton} ${menuOpen ? styles.active : ''}`} onClick={toggleMenu} aria-label="Menu">
           <span />
           <span />
           <span />
