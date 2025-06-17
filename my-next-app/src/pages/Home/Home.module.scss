@@ -40,6 +40,11 @@ $color-border: #d5daef;
     display: flex;
     justify-content: space-between;
     margin-bottom: 40px;
+
+    .tabItemWrapper {
+      position: relative;
+    }
+
     .tabItem {
       padding: 8px 10px;
       font-size: 30px;
@@ -60,10 +65,6 @@ $color-border: #d5daef;
         background-color: $color-primary;
         transform: scaleX(0);
         transition: transform 0.3s ease;
-      }
-
-      &:hover::after {
-        transform: scaleX(1);
       }
     }
   }

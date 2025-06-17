@@ -1,7 +1,10 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
+import Popup from '@/components/Popup/Popup';
 import styles from './Home.module.scss';
 
 const cities = [
@@ -25,7 +28,37 @@ const activities = [
 
 const actionButtons = ['Ваш доктор', 'Связь и интернет', 'Службы такси', 'Банки', 'Важно знать'];
 
+const popupData = {
+  about: [
+    { label: 'Государственное устройство', href: '/government-structure' },
+    { label: 'Транспортное сообщение', href: '/transport-communications' },
+    { label: 'История и культура', href: '/history-and-culture' },
+    { label: 'Абхазская кухня', href: '/abkhazian-cuizine' },
+    { label: 'Абхазские обычаи', href: '#' },
+    { label: 'Элементарный словарь', href: '#' }
+  ],
+  activities: [
+    { label: 'Вечеринки и яркие впечатления', href: '#' },
+    { label: 'Горные маршруты', href: '#' },
+    { label: 'Экскурсии', href: '#' },
+    { label: 'Горячие источники', href: '#' }
+  ],
+  booking: [
+    { label: 'Города Абхазии', href: '#' },
+    { label: 'Аренда жилья', href: '#' },
+    { label: 'Связь', href: '#' },
+    { label: 'Такси', href: '#' },
+    { label: 'Банки', href: '#' }
+  ],
+  essentials: [
+    { label: 'Ваш доктор', href: '#' },
+    { label: 'Важно знать', href: '#' }
+  ],
+};
+
 const HomePage = () => {
+  const [activePopup, setActivePopup] = useState<string | null>(null);
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
@@ -34,10 +67,38 @@ const HomePage = () => {
         {/* Section 1: Main Tabs and Hero */}
         <section className={styles.heroSection}>
             <nav className={styles.tabsContainer}>
-                <a href="#about" className={styles.tabItem}>Об Абхазии</a>
-                <a href="#activities" className={styles.tabItem}>Чем заняться</a>
-                <a href="#booking" className={styles.tabItem}>Запланируйте поездку</a>
-                <a href="#essentials" className={styles.tabItem}>Необходимо в поездке</a>
+                <div 
+                  className={styles.tabItemWrapper}
+                  onMouseEnter={() => setActivePopup('about')}
+                  onMouseLeave={() => setActivePopup(null)}
+                >
+                  <div className={styles.tabItem}>Об Абхазии</div>
+                  {activePopup === 'about' && <Popup items={popupData.about} />}
+                </div>
+                <div 
+                  className={styles.tabItemWrapper}
+                  onMouseEnter={() => setActivePopup('activities')}
+                  onMouseLeave={() => setActivePopup(null)}
+                >
+                  <div className={styles.tabItem}>Чем заняться</div>
+                  {activePopup === 'activities' && <Popup items={popupData.activities} />}
+                </div>
+                <div 
+                  className={styles.tabItemWrapper}
+                  onMouseEnter={() => setActivePopup('booking')}
+                  onMouseLeave={() => setActivePopup(null)}
+                >
+                  <div className={styles.tabItem}>Запланируйте поездку</div>
+                  {activePopup === 'booking' && <Popup items={popupData.booking} />}
+                </div>
+                <div 
+                  className={styles.tabItemWrapper}
+                  onMouseEnter={() => setActivePopup('essentials')}
+                  onMouseLeave={() => setActivePopup(null)}
+                >
+                  <div className={styles.tabItem}>Необходимо в поездке</div>
+                  {activePopup === 'essentials' && <Popup items={popupData.essentials} />}
+                </div>
             </nav>
             <div className={styles.heroVideo}>
                 <span>Видеоряд сменяющийся</span>

@@ -1,0 +1,146 @@
+// Break-points & Variables consistent with other pages
+$break-xl: 1440px;
+$break-lg: 1024px;
+$break-md: 768px;
+$break-sm: 560px;
+$font-family: 'Inter', sans-serif;
+$color-primary: #1129bd;
+$color-text: #000000;
+$color-background: #ffffff;
+
+.pageWrapper {
+  background-color: $color-background;
+}
+
+.mainContent {
+  width: 100%;
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+  box-sizing: border-box;
+}
+
+.mainTitle {
+  font-family: $font-family;
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 44px;
+  text-align: center;
+  color: $color-primary;
+  margin: 0 auto 60px;
+}
+
+.heroImageContainer {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 80px;
+}
+
+.heroImage {
+  width: 680px;
+  height: 680px;
+  max-width: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.textContent {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.textBlock {
+  margin-bottom: 40px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.sectionTitle {
+  font-family: $font-family;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 39px;
+  color: $color-primary;
+  margin-bottom: 20px;
+}
+
+.textBlock p {
+  font-family: $font-family;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  color: $color-text;
+  margin: 0;
+}
+
+.mainDishesList {
+  p {
+    margin-bottom: 16px;
+    font-weight: 400; // Reset font-weight to normal for the paragraph
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    strong {
+      font-weight: 700; // Bold for dish names
+    }
+  }
+}
+
+// --- Responsive ---
+
+@media (max-width: $break-lg) {
+    .mainContent {
+        padding-top: 60px;
+    }
+    .heroImage {
+        width: 500px;
+        height: 500px;
+    }
+    .sectionTitle {
+        font-size: 28px;
+    }
+    .textBlock p {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: $break-md) {
+    .mainContent {
+        padding: 40px 15px 60px;
+    }
+    .mainTitle {
+        font-size: 32px;
+        margin-bottom: 40px;
+    }
+    .heroImageContainer {
+        margin-bottom: 60px;
+    }
+    .heroImage {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        border-radius: 15px;
+    }
+    .sectionTitle {
+        font-size: 26px;
+    }
+    .textBlock p {
+        font-size: 20px;
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: $break-sm) {
+    .mainTitle {
+        font-size: 28px;
+    }
+    .sectionTitle {
+        font-size: 22px;
+    }
+    .textBlock p {
+        font-size: 18px;
+    }
+} 
