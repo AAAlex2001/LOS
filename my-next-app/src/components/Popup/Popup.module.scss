@@ -14,7 +14,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  width: 370px;
+  width: 250px;
   padding: 20px;
   background: #ffffff;
   border-top: 2px solid #1129bd;
@@ -42,6 +42,10 @@
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(17, 41, 189, 0.05);
+  }
 }
 
 .popupText {
@@ -54,5 +58,41 @@
 
   &.subtle {
     color: rgba(0, 0, 0, 0.85);
+  }
+}
+
+@media (max-width: 1024px) {
+  .popup {
+    width: 320px;
+  }
+}
+
+@media (max-width: 768px) {
+  .popup {
+    width: 280px;
+    padding: 16px;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 560px) {
+  .popup {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: calc(100vw - 32px);
+    max-width: 360px;
+    padding: 14px;
+    gap: 12px;
+    border-radius: 8px;
+  }
+  .inactive {
+    padding: 10px 14px;
+  }
+  .popupText {
+    font-size: 14px;
+    line-height: 17px;
   }
 } 

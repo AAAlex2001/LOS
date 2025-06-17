@@ -43,6 +43,7 @@ $color-border: #d5daef;
 
     .tabItemWrapper {
       position: relative;
+      width: 100%;
     }
 
     .tabItem {
@@ -388,7 +389,15 @@ $color-border: #d5daef;
     .mainContent { padding: 20px 15px 60px; }
     .sectionTitle { font-size: 26px; }
      .heroSection {
-        .tabsContainer { flex-wrap: wrap; justify-content: space-around; .tabItem { flex-basis: 45%; font-size: 18px; }}
+        .tabsContainer {
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+
+            .tabItem {
+                font-size: 18px;
+            }
+        }
         .heroVideo { height: 300px; }
         .heroBanner p, .activitiesBannerText p, .ctaSection .promoBanner .promoBannerText p { font-size: 22px; }
     }
