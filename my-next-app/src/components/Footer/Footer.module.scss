@@ -14,7 +14,7 @@ $break-xxl: 1920px;
   font-family: "Inter", sans-serif;
   padding: 40px 16px 24px;
   box-sizing: border-box;
-  height: auto; // Ensure height is dynamic
+  height: auto;
 }
 
 .topRow {
@@ -34,7 +34,7 @@ $break-xxl: 1920px;
 .brand {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 30px;
 }
 
 .brandTitle {
@@ -42,7 +42,7 @@ $break-xxl: 1920px;
   font-size: 28px;
   line-height: 1.2;
   margin: 0;
-  white-space: normal; // Allow wrapping
+  white-space: pre-wrap;
 }
 
 .brandSubtitle {
@@ -63,7 +63,7 @@ $break-xxl: 1920px;
   display: flex;
   gap: 16px;
   align-items: center;
-  flex-wrap: wrap; // Allow wrapping on small screens
+  flex-wrap: wrap;
 }
 
 .socialLink {
@@ -93,7 +93,7 @@ $break-xxl: 1920px;
 .quickLinks {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 35px;
 }
 
 .quickLinkItem {
@@ -129,12 +129,12 @@ $break-xxl: 1920px;
   font-size: 20px;
   line-height: 1.2;
   margin: 0;
-  white-space: normal;
+  white-space: pre-wrap;
 }
 
 .appBadges {
   display: flex;
-  flex-direction: column; // Stack on mobile
+  flex-direction: column;
   align-items: flex-start;
   gap: 12px;
 }
@@ -286,6 +286,11 @@ $break-xxl: 1920px;
 // --- XXL Desktop ---
 @media (min-width: $break-xxl) {
   // 1920px+
+  .appBlockTitle,
+  .brandTitle {
+    white-space: nowrap;
+  }
+
   .footer {
     padding: 51px 24px 30px;
   }
