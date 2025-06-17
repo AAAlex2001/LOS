@@ -8,6 +8,10 @@ body {
   color: #000;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 // You can place common variables or mixins below
 $primary-blue: #1129bd;
 $text-color: #333333; 
