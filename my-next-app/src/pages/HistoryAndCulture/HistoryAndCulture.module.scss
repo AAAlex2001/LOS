@@ -68,6 +68,9 @@ $color-text: #000000;
   cursor: pointer;
   text-decoration: none;
   white-space: pre-wrap;
+  background: none;
+  border: none;
+  outline: none;
 
   &::after {
     content: '';
