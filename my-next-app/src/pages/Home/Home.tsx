@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
-import styles from '../../styles/pages/Home.module.scss';
+import styles from './Home.module.scss';
 
 const HomePage = () => {
   return (

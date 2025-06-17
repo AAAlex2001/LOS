@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import styles from '../../styles/components/Footer.module.scss';
+import styles from './Footer.module.scss';
 
 const socialIcons = [
   { src: '/assets/telegram.svg', alt: 'Telegram', w: 35, h: 30 },

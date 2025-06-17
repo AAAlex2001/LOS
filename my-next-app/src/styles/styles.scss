@@ -1,9 +1,13 @@
-// Глобальные переменные, миксины и сбросы могут быть определены здесь
+/* Global project-wide SCSS variables, mixins and base resets */
 
-// Базовый фон страницы — белый, чтобы не появлялась чёрная полоса между блоками
+// Example reset
 body {
-  margin: 0; // сбрасываем системные отступы
+  margin: 0;
   background: #ffffff;
+  font-family: 'Inter', sans-serif;
+  color: #000;
 }
 
-// (Component/page SCSS-modules are imported inside their own files.)
+// You can place common variables or mixins below
+$primary-blue: #1129bd;
+$text-color: #333333; 

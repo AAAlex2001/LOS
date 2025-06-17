@@ -1,0 +1,106 @@
+// Base Font
+$font-family: 'Inter', sans-serif;
+
+// Colors
+$color-primary: #1129bd;
+$color-text: #000000;
+$color-background: #ffffff;
+
+.pageWrapper {
+  background-color: $color-background;
+}
+
+.mainContent {
+  width: 100%;
+  max-width: 1238px;
+  margin: 0 auto;
+  padding: 20px 20px 80px; // Top padding from figma, horizontal/bottom padding for safety
+  box-sizing: border-box;
+}
+
+.mainTitle {
+  font-family: $font-family;
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 24px;
+  text-align: center;
+  color: $color-primary;
+  margin: 0 auto 60px; // Centered with bottom margin
+}
+
+.imageContainer {
+  text-align: center;
+  margin-bottom: 60px;
+  .image {
+    max-width: 100%;
+    height: auto;
+    display: inline-block;
+  }
+}
+
+.textSection {
+  max-width: 1218px; // As per figma text width
+  margin: 0 auto 60px;
+  
+  .sectionTitle {
+    font-family: $font-family;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 39px;
+    color: $color-primary;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-family: $font-family;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 34px;
+    color: $color-text;
+    margin: 0;
+  }
+}
+
+// --- Responsive Adjustments ---
+@media (max-width: 1024px) {
+  .mainContent {
+    padding-top: 80px;
+  }
+  .textSection {
+    p {
+      font-size: 24px;
+      line-height: 1.5;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .mainTitle {
+    font-size: 32px;
+  }
+  .textSection {
+    .sectionTitle {
+      font-size: 28px;
+    }
+    p {
+      font-size: 20px;
+    }
+  }
+}
+
+@media (max-width: 560px) {
+    .mainContent {
+        padding: 60px 15px 40px;
+    }
+    .mainTitle {
+        font-size: 28px;
+    }
+    .textSection {
+        .sectionTitle {
+            font-size: 24px;
+        }
+        p {
+            font-size: 18px;
+        }
+    }
+} 
