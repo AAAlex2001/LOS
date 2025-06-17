@@ -43,7 +43,6 @@ $color-border: #d5daef;
 
     .tabItemWrapper {
       position: relative;
-      width: 100%;
     }
 
     .tabItem {
@@ -51,6 +50,7 @@ $color-border: #d5daef;
       font-size: 30px;
       font-weight: 700;
       text-align: center;
+      display: inline-block;
       cursor: pointer;
       position: relative;
       text-decoration: none;
@@ -394,8 +394,14 @@ $color-border: #d5daef;
             align-items: center;
             gap: 8px;
 
+            .tabItemWrapper {
+                width: 100%;
+                text-align: center;
+            }
+
             .tabItem {
                 font-size: 18px;
+                width: 100%;
             }
         }
         .heroVideo { height: 300px; }

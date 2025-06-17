@@ -72,32 +72,40 @@ const HomePage = () => {
                   onMouseEnter={() => setActivePopup('about')}
                   onMouseLeave={() => setActivePopup(null)}
                 >
-                  <div className={styles.tabItem}>Об Абхазии</div>
-                  {activePopup === 'about' && <Popup items={popupData.about} />}
+                  <div className={styles.tabItem}>
+                    Об Абхазии
+                    {activePopup === 'about' && <Popup items={popupData.about} />}
+                  </div>
                 </div>
                 <div 
                   className={styles.tabItemWrapper}
                   onMouseEnter={() => setActivePopup('activities')}
                   onMouseLeave={() => setActivePopup(null)}
                 >
-                  <div className={styles.tabItem}>Чем заняться</div>
-                  {activePopup === 'activities' && <Popup items={popupData.activities} />}
+                  <div className={styles.tabItem}>
+                    Чем заняться
+                    {activePopup === 'activities' && <Popup items={popupData.activities} />}
+                  </div>
                 </div>
                 <div 
                   className={styles.tabItemWrapper}
                   onMouseEnter={() => setActivePopup('booking')}
                   onMouseLeave={() => setActivePopup(null)}
                 >
-                  <div className={styles.tabItem}>Запланируйте поездку</div>
-                  {activePopup === 'booking' && <Popup items={popupData.booking} />}
+                  <div className={styles.tabItem}>
+                    Запланируйте поездку
+                    {activePopup === 'booking' && <Popup items={popupData.booking} />}
+                  </div>
                 </div>
                 <div 
                   className={styles.tabItemWrapper}
                   onMouseEnter={() => setActivePopup('essentials')}
                   onMouseLeave={() => setActivePopup(null)}
                 >
-                  <div className={styles.tabItem}>Необходимо в поездке</div>
-                  {activePopup === 'essentials' && <Popup items={popupData.essentials} />}
+                  <div className={styles.tabItem}>
+                    Необходимо в поездке
+                    {activePopup === 'essentials' && <Popup items={popupData.essentials} />}
+                  </div>
                 </div>
             </nav>
             <div className={styles.heroVideo}>
