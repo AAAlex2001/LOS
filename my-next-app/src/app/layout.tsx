@@ -4,7 +4,7 @@ import "./globals.css";
 import "../styles/styles.scss";
 import ScrollToTop from "@/components/ScrollToTop/ScrollToTop";
 import "@/components/ScrollToTop/ScrollToTop.scss";
-import RouteLoader from '@/components/Loader/RouteLoader';
+import ClientWrapper from "@/components/Loader/ClientWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,8 +34,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <RouteLoader />
-        {children}
+        <ClientWrapper>
+          {children}
+        </ClientWrapper>
         <ScrollToTop />
       </body>
     </html>

@@ -39,6 +39,7 @@
 .inactive {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   padding: 12px 16px;
   width: 100%;
   cursor: pointer;
@@ -57,6 +58,7 @@
   font-size: 16px;
   line-height: 19px;
   color: #000000;
+  text-align: left;
 
   &.subtle {
     color: rgba(0, 0, 0, 0.85);
