@@ -4,8 +4,6 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './Home.module.scss';
 
-const mainTabs = ['Об Абхазии', 'Чем заняться', 'Запланируйте поездку', 'Необходимо в поездке'];
-
 const cities = [
   { img: '/assets/city_gagra.jpg', title: 'Гагра', desc: 'Жемчужина Абхазии с пальмовой набережной, замками и крепостями' },
   { img: '/assets/city_sukhum.jpg', title: 'Сухум', desc: 'Солнечная столица с Ботаническим садом и колониальными особняками' },
@@ -138,4 +136,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage; 
+export default HomePage;
