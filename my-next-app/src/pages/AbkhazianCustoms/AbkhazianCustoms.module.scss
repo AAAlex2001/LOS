@@ -1,0 +1,224 @@
+// Break-points & Variables
+$break-sm : 560px;
+$break-md : 768px;
+$break-lg : 1024px;
+$break-xl : 1440px;
+$font-family: 'Inter', sans-serif;
+$color-primary: #1129bd;
+$color-text: #000000;
+$color-background: #ffffff;
+$color-text-light: rgba(0, 0, 0, 0.85);
+
+.pageWrapper {
+  background-color: $color-background;
+}
+
+.mainContent {
+  width: 100%;
+  max-width: 1554px;
+  margin: 0 auto;
+  padding: 20px 24px 80px;
+  box-sizing: border-box;
+}
+
+.mainTitle {
+  font-family: $font-family;
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 44px;
+  text-align: center;
+  color: $color-primary;
+  margin: 0 auto 60px;
+  max-width: 812px;
+}
+
+.texBanner {
+  height: 305px;
+  border-radius: 15px;
+  background: url('/assets/IMG_1932.jpg') no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  box-sizing: border-box;
+  p {
+    font-size: 38px;
+    font-weight: 600;
+    line-height: 50px;
+    text-align: center;
+    color: $color-text-light;
+  }
+}
+
+.mainImage {
+  width: 100%;
+  max-width: 665px;
+  margin: 60px auto;
+  text-align: center;
+  
+  .image {
+    border-radius: 15px;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.textSectionsContainer {
+  max-width: 1238px;
+  margin: 0 auto;
+}
+
+.textSection {
+  margin-bottom: 60px;
+  width: 100%;
+  
+  .sectionTitle {
+    font-family: $font-family;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 39px;
+    color: $color-primary;
+    margin-bottom: 32px;
+    text-align: left;
+    padding: 10px;
+  }
+
+  p {
+    font-family: $font-family;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+    color: $color-text;
+    margin: 0;
+    padding: 0 10px 10px;
+    text-align: left;
+  }
+}
+
+// --- Responsive Adjustments ---
+@media (min-width: $break-xl) {
+  // Стили для больших экранов (1440px - 1920px)
+  .texBanner {
+    height: 305px; // Фиксированная высота для больших экранов
+    p {
+      font-size: 38px;
+      line-height: 50px;
+    }
+  }
+}
+
+@media (max-width: $break-xl) and (min-width: $break-lg) {
+  // Стили для средних экранов (1024px - 1440px)
+  .texBanner {
+    height: auto;
+    min-height: 320px; // Увеличенная высота для средних экранов
+    p {
+      font-size: 38px;
+      line-height: 50px;
+    }
+  }
+}
+
+@media (max-width: $break-lg) {
+  .mainContent {
+    padding-top: 100px;
+  }
+
+  .texBanner {
+    height: auto;
+    min-height: 340px;
+    p {
+      font-size: 32px;
+      line-height: 42px;
+    }
+  }
+  
+  .textSection {
+    p {
+      font-size: 22px;
+      line-height: 28px;
+    }
+  }
+}
+
+@media (max-width: $break-md) {
+  .mainContent {
+    padding-top: 80px;
+  }
+  
+  .mainTitle {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .texBanner {
+    min-height: 380px;
+    p {
+      font-size: 28px;
+      line-height: 38px;
+    }
+  }
+  
+  .textSection {
+    .sectionTitle {
+      font-size: 28px;
+      line-height: 34px;
+    }
+    
+    p {
+      font-size: 20px;
+      line-height: 26px;
+    }
+  }
+}
+
+@media (max-width: $break-sm) {
+  .mainContent {
+    padding: 60px 15px 40px;
+  }
+  
+  .mainTitle {
+    font-size: 28px;
+    line-height: 34px;
+    margin-bottom: 40px;
+  }
+
+  .texBanner {
+    min-height: 420px;
+    p {
+      font-size: 22px;
+      line-height: 32px;
+    }
+  }
+  
+  .mainImage {
+    margin-bottom: 40px;
+  }
+  
+  .textSection {
+    margin-bottom: 40px;
+    
+    .sectionTitle {
+      font-size: 24px;
+      line-height: 30px;
+      margin-bottom: 20px;
+    }
+    
+    p {
+      font-size: 18px;
+      line-height: 24px;
+    }
+  }
+}
+
+@media (max-width: 375px) {
+  .texBanner {
+    min-height: 480px;
+    p {
+      font-size: 20px;
+      line-height: 28px;
+    }
+  }
+}
+
+
