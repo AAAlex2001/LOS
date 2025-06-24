@@ -1,0 +1,137 @@
+@use '@/styles/styles.scss' as *;
+
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.mainContent {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 1228px;
+  margin: 0 auto;
+  padding: 120px 16px 60px;
+}
+
+.mainTitle {
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 800;
+  color: #1129BD;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.sectionsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.sectionBlock {
+  width: 100%;
+  max-width: 604px;
+}
+
+.sectionBlockFullWidth {
+  width: 100%;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 800;
+  color: #1129BD;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dictionaryTable {
+  width: 100%;
+  max-width: 604px;
+  margin: 0 auto;
+  border: 1px solid #B9B9B9;
+  border-radius: 15px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+
+  &:nth-child(even) {
+    background: rgba(255, 255, 255, 0.002);
+  }
+
+  &:not(:first-child) {
+    .cell {
+      border-top: 1px solid #B9B9B9;
+    }
+  }
+}
+
+.headerRow {
+  .cell {
+    background: #0A1977;
+    font-weight: 800;
+    color: #fff;
+  }
+}
+
+.cell {
+  flex: 1 1 50%;
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 17px;
+  border-right: 1px solid #B9B9B9;
+  &:last-child {
+    border-right: none;
+  }
+}
+
+.cellHeader {
+  @extend .cell;
+  background: #0A1977;
+  font-weight: 800;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .mainTitle {
+    font-size: 28px;
+  }
+
+  .sectionTitle {
+    font-size: 18px;
+  }
+
+  .dictionaryTable {
+    max-width: 100%;
+  }
+}
+
+.tablesRow {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 1300px) {
+  .mainContent {
+    max-width: 1300px;
+  }
+
+  .tablesRow {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 48px;
+    align-items: flex-start;
+  }
+  .sectionBlock {
+    width: calc(50% - 24px);
+  }
+} 
