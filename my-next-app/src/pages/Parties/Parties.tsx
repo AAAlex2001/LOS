@@ -14,7 +14,7 @@ const Parties: React.FC = () => {
         {/* Neon party icon */}
         <div className={styles.centerIcon}>
           <Image
-            src="/assets/activity_vecherinki.png"
+            src="/assets/parties1.png"
             alt="Party icon"
             width={150}
             height={150}
@@ -42,35 +42,35 @@ const Parties: React.FC = () => {
             className={styles.bannerBackground}
           />
           <Image
-            src="/assets/abhazy2.jpg"
+            src="/assets/parties2.jpg"
             alt="Decor 1"
             width={160}
             height={160}
             className={styles.decorTopLeft}
           />
           <Image
-            src="/assets/abhazy1.jpg"
+            src="/assets/parties3.jpg"
             alt="Decor 3"
             width={160}
             height={160}
             className={styles.decorBottomLeft}
           />
           <Image
-            src="/assets/abhazy3.jpg"
+            src="/assets/parties4.jpg"
             alt="Decor 4"
             width={160}
             height={160}
             className={styles.decorBottomCenter}
           />
           <Image
-            src="/assets/abhazy5.jpg"
+            src="/assets/parties5.png"
             alt="Decor 5"
             width={160}
             height={160}
             className={styles.decorTopRight}
           />
           <Image
-            src="/assets/abhazy4.jpg"
+            src="/assets/parties6.jpg"
             alt="Decor 6"
             width={160}
             height={160}
