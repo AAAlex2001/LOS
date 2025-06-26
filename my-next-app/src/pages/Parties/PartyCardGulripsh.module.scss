@@ -1,0 +1,514 @@
+.partyCard {
+  width: 1238px;
+  min-height: 1461px;
+  margin: 60px auto 0;
+  position: relative;
+  background: #ffffff;
+}
+
+/* City Image Section */
+.cityImageSection {
+  position: relative;
+  width: 100%;
+  height: 665px; /* ~45.5% of total height */
+  background: url('/assets/city_gulripsh.jpg') no-repeat center center/cover;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Main Content */
+.contentSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 17px;
+  margin-top: 17px;
+}
+
+/* City Title */
+.cityTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  width: 100%;
+  height: 59px;
+  box-sizing: border-box;
+}
+
+.cityTitleText {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 39px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #1129bd;
+  flex-grow: 1;
+}
+
+/* Events Container */
+.eventsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 10px; /* Reduced gap between events and ads */
+  width: 100%;
+}
+
+/* Individual Event */
+.eventItem {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Event Header with arrow and title */
+.eventHeader {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  gap: 20px;
+  width: 100%;
+  height: 60px; /* Reduced height */
+}
+
+.eventArrow {
+  width: 40px;
+  height: 40px; /* Reduced height */
+  flex-shrink: 0;
+  background: url('/assets/VectorParties1.svg') no-repeat center;
+  background-size: 36px 36px;
+}
+
+.eventTitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 39px;
+  color: rgba(0, 0, 0, 0.85);
+  flex-grow: 1;
+  margin: 0;
+}
+
+/* Event Date */
+.eventDate {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  gap: 20px;
+  width: 100%;
+  height: 40px;
+}
+
+.calendarIcon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  background: url('/assets/VectorParties2.svg') no-repeat center;
+  background-size: 36px 36px;
+}
+
+.dateText {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000;
+  flex-grow: 1;
+}
+
+/* Event Location */
+.eventLocation {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  gap: 20px;
+  width: 100%;
+  height: 40px;
+}
+
+.locationIcon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  background: url('/assets/VectorParties3.svg') no-repeat center;
+  background-size: 36px 36px;
+}
+
+.locationText {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000;
+  flex-grow: 1;
+}
+
+/* Event Description Section */
+.eventDescription {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 15px;
+  width: 100%;
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.descriptionTitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 39px;
+  color: #000000;
+  width: 100%;
+  margin: 0;
+  text-align: left;
+}
+
+.descriptionText {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000;
+  width: 100%;
+  min-height: 150px; /* Reduced min-height */
+  margin: 0;
+  text-align: left;
+}
+
+/* Event Link */
+.eventLink {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0;
+  width: 100%;
+  height: 29px;
+  margin-bottom: 20px;
+}
+
+.linkText {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  color: #000000;
+  width: 100%;
+  text-align: left;
+  text-decoration: none;
+}
+
+.linkLabel {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.linkUrl {
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+/* Ad Block */
+.adBlock {
+  width: 100%;
+  height: 165px;
+  border-radius: 15px;
+  background: rgba(17, 41, 189, 0.1);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.adContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  width: 392px;
+  height: 54px;
+}
+
+.adText {
+  font-family: 'Inter', sans-serif;
+  font-weight: 200;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.85);
+  flex-grow: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 1440px) {
+  .partyCard {
+    width: 95%;
+    max-width: 1200px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .partyCard {
+    width: 90%;
+    max-width: 900px;
+  }
+  
+  .cityImageSection {
+    height: 400px;
+  }
+  
+  .cityTitleText {
+    font-size: 28px;
+    line-height: 34px;
+  }
+  
+  .eventTitle {
+    font-size: 28px;
+    line-height: 34px;
+  }
+  
+  .descriptionTitle {
+    font-size: 28px;
+    line-height: 34px;
+  }
+}
+
+@media (max-width: 768px) {
+  .partyCard {
+    width: 95%;
+    margin: 40px auto 0;
+  }
+  
+  .cityImageSection {
+    height: 300px;
+  }
+  
+  .cityTitleText {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  
+  .eventHeader {
+    height: 50px;
+  }
+  
+  .eventTitle {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  
+  .dateText,
+  .locationText {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  
+  .descriptionTitle {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  
+  .descriptionText {
+    font-size: 18px;
+    line-height: 22px;
+    min-height: 120px;
+  }
+  
+  .linkText {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  
+  .eventArrow,
+  .calendarIcon,
+  .locationIcon {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .eventArrow {
+    background-size: 24px 24px;
+  }
+  
+  .calendarIcon {
+    background-size: 24px 24px;
+  }
+  
+  .locationIcon {
+    background-size: 24px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .partyCard {
+    width: 100%;
+    margin: 30px auto 0;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+  
+  .cityImageSection {
+    height: 250px;
+    border-radius: 10px;
+  }
+  
+  .cityTitleText {
+    font-size: 20px;
+    line-height: 26px;
+  }
+  
+  .eventHeader {
+    gap: 10px;
+    height: 40px;
+  }
+  
+  .eventArrow,
+  .calendarIcon,
+  .locationIcon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .eventArrow {
+    background-size: 22px 22px;
+  }
+  
+  .calendarIcon {
+    background-size: 22px 22px;
+  }
+  
+  .locationIcon {
+    background-size: 22px 22px;
+  }
+  
+  .eventTitle {
+    font-size: 20px;
+    line-height: 26px;
+  }
+  
+  .eventDate,
+  .eventLocation {
+    gap: 10px;
+    height: 35px;
+  }
+  
+  .dateText,
+  .locationText {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  
+  .descriptionTitle {
+    font-size: 20px;
+    line-height: 26px;
+  }
+  
+  .descriptionText {
+    font-size: 16px;
+    line-height: 20px;
+    min-height: 100px;
+  }
+  
+  .linkText {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  
+  .adBlock {
+    height: 120px;
+    border-radius: 10px;
+  }
+  
+  .adContent {
+    width: 300px;
+    height: 45px;
+  }
+  
+  .adText {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+
+/* Extra small screens - 333px and below */
+@media (max-width: 333px) {
+  .eventDescription {
+    gap: 20px; /* Increased gap to prevent text overlap */
+  }
+  
+  .descriptionText {
+    min-height: 80px; /* Reduced min-height for very small screens */
+    font-size: 14px;
+    line-height: 18px;
+  }
+  
+  .linkText {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  
+  .eventLink {
+    margin-bottom: 25px; /* Extra space before ad blocks */
+  }
+  
+  .calendarIcon {
+    background-size: 20px 20px; /* Smaller calendar icon */
+  }
+  
+  .locationIcon {
+    background-size: 20px 20px; /* Smaller location icon */
+  }
+  
+  .eventArrow {
+    background-size: 20px 20px; /* Smaller arrow icon */
+  }
+  
+  .eventHeader {
+    gap: 8px;
+    height: 35px;
+  }
+  
+  .eventDate,
+  .eventLocation {
+    gap: 8px;
+    height: 30px;
+  }
+  
+  .eventArrow,
+  .calendarIcon,
+  .locationIcon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .dateText,
+  .locationText {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  
+  .eventTitle {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  
+  .descriptionTitle {
+    font-size: 18px;
+    line-height: 22px;
+  }
+} 
