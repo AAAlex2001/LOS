@@ -1,17 +1,17 @@
 import React from 'react';
-import cardStyles from './HotSpringsCard.module.scss';
+import cardStyles from './KyndykCard.module.scss';
 
-const HotSpringsCard: React.FC = () => {
+const KyndykCard: React.FC = () => {
   return (
-    <section className={cardStyles.hotSpringsCard}>
-      {/* Hot Springs Image */}
+    <section className={cardStyles.kyndykCard}>
+      {/* Image */}
       <div className={cardStyles.imageSection}></div>
 
       {/* Title Section */}
       <div className={cardStyles.titleSection}>
         <h2 className={cardStyles.titleText}>
-          <span className={cardStyles.titleDesktop}>Термальные источники в селе Кындыг</span>
-          <span className={cardStyles.titleMobile}>Термальные источники<br/>в селе Кындыг</span>
+          <span className={cardStyles.titleDesktop}>Кындыг</span>
+          <span className={cardStyles.titleMobile}>Кындыг</span>
         </h2>
       </div>
 
@@ -98,4 +98,4 @@ const HotSpringsCard: React.FC = () => {
   );
 };
 
-export default HotSpringsCard;
+export default KyndykCard; 

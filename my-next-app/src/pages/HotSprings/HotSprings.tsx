@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './HotSprings.module.scss';
-import HotSpringsCard from './HotSpringsCard';
+import KyndykCard from './KyndykCard';
 import TskuaraCard from './TskuaraCard';
 import BabusharaCard from './BabusharaCard';
 import MarkheulCard from './MarkheulCard';
@@ -45,7 +45,7 @@ const HotSprings: React.FC = () => {
 
         {/* Hot Springs Cards Container */}
         <div className={styles.cardsContainer}>
-          <HotSpringsCard />
+          <KyndykCard />
           <TskuaraCard />
           <BabusharaCard />
           <MarkheulCard />
