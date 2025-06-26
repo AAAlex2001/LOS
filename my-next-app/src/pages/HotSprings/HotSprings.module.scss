@@ -80,7 +80,17 @@
   hyphens: auto;
 }
 
-/* Content section removed - now using HotSpringsCard component */
+/* Hot Springs Cards */
+.cardsContainer {
+  width: 100%;
+  margin: 60px auto 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardsContainer > *:not(:last-child) {
+  margin-bottom: 80px;
+}
 
 /* Responsive Design - Фиксированные отступы для каждого диапазона */
 

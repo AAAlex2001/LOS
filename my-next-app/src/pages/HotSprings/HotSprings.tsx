@@ -6,6 +6,7 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './HotSprings.module.scss';
 import HotSpringsCard from './HotSpringsCard';
+import TskuaraCard from './TskuaraCard';
 
 const HotSprings: React.FC = () => {
   return (
@@ -37,8 +38,11 @@ const HotSprings: React.FC = () => {
           />
         </section>
 
-        {/* Hot Springs Card */}
-        <HotSpringsCard />
+        {/* Hot Springs Cards Container */}
+        <div className={styles.cardsContainer}>
+          <HotSpringsCard />
+          <TskuaraCard />
+        </div>
       </main>
       <Footer />
     </div>

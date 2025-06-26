@@ -1,11 +1,11 @@
-.hotSpringsCard {
+.tskuaraCard {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0;
   gap: 7px;
   width: 1238px;
-  min-height: 2724px;
+  min-height: 3018px;
   margin: 0 auto;
   position: relative;
   background: #ffffff;
@@ -77,7 +77,7 @@
   padding: 40px 10px;
   gap: 20px;
   width: 1238px;
-  min-height: 1966px;
+  min-height: 2260px;
   flex: none;
   order: 2;
   align-self: stretch;
@@ -86,7 +86,7 @@
 
 .textContent {
   width: 1218px;
-  min-height: 1946px;
+  min-height: 2240px;
   flex: none;
   order: 0;
   align-self: stretch;
@@ -119,7 +119,7 @@
 
 /* Responsive Design */
 @media (max-width: 1440px) {
-  .hotSpringsCard {
+  .tskuaraCard {
     width: 95%;
     max-width: 1200px;
   }
@@ -142,7 +142,7 @@
 }
 
 @media (max-width: 1024px) {
-  .hotSpringsCard {
+  .tskuaraCard {
     width: calc(100vw - 124px);
     max-width: 900px;
   }
@@ -163,13 +163,13 @@
 }
 
 @media (max-width: 900px) {
-  .hotSpringsCard {
+  .tskuaraCard {
     width: calc(100vw - 40px);
   }
 }
 
 @media (max-width: 768px) {
-  .hotSpringsCard {
+  .tskuaraCard {
     width: calc(100vw - 40px);
   }
   
@@ -203,7 +203,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1300px) {
   .titleDesktop {
     display: none;
   }
@@ -214,7 +214,7 @@
 }
 
 @media (max-width: 480px) {
-  .hotSpringsCard {
+  .tskuaraCard {
     width: calc(100vw - 20px);
     padding: 0;
     box-sizing: border-box;
