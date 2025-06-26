@@ -1,0 +1,109 @@
+.besletkaCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  gap: 7px;
+  width: 100%;
+  max-width: 1238px;
+  margin: 0 auto;
+  background: #ffffff;
+}
+
+.imageSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  gap: 10px;
+  width: 1238px;
+  height: 665px;
+  background: url('/assets/Besletka.png') no-repeat center center/cover;
+  border-radius: 15px;
+}
+
+.titleSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 10px;
+  width: 1238px;
+  height: auto;
+}
+
+.titleText {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 39px;
+  text-align: center;
+  text-decoration: underline;
+  color: #1129BD;
+  margin: 0;
+  width: 100%;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+}
+
+.titleDesktop { display: inline !important; }
+.titleMobile  { display: none !important; }
+
+.contentSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 10px 0 10px;
+  gap: 20px;
+  width: 1238px;
+}
+
+.textContent { width: 100%; }
+.textBlock { margin-bottom: 40px; }
+.textBlock:last-child { margin-bottom: 0; }
+
+.contentText {
+  font-family: 'Inter', sans-serif;
+  font-size: 28px;
+  line-height: 34px;
+  color: #000;
+  margin: 0 0 30px 0;
+  text-align: left;
+}
+.contentText:last-child { margin-bottom: 0; }
+
+.contentText br {
+  display: block;
+  height: 10px;
+  content: "";
+}
+
+@media (max-width: 1440px) {
+  .besletkaCard { width: 100%; }
+  .imageSection,
+  .titleSection,
+  .contentSection { width: 100%; }
+  .textContent { width: 100%; }
+}
+@media (max-width: 900px) {
+  .imageSection { height: 400px; }
+  .titleText { font-size: 28px; line-height: 34px; }
+  .contentText { font-size: 24px; line-height: 30px; }
+}
+@media (max-width: 768px) {
+  .imageSection { height: 300px; }
+  .titleText { font-size: 24px; line-height: 30px; }
+  .contentSection { padding: 15px 10px 0 10px; }
+  .contentText { font-size: 20px; line-height: 26px; margin-bottom: 15px; }
+}
+@media (max-width: 480px) {
+  .imageSection { height: 250px; border-radius: 10px; }
+  .titleText { font-size: 18px; line-height: 24px; }
+  .contentSection { padding: 10px 10px 0 10px; }
+  .contentText { font-size: 16px; line-height: 22px; margin-bottom: 12px; }
+}
+@media (max-width: 320px) {
+  .titleText { font-size: 16px; line-height: 22px; }
+  .contentText { font-size: 14px; line-height: 20px; margin-bottom: 10px; }
+  .textBlock { margin-bottom: 25px; }
+} 

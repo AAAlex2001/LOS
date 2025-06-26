@@ -7,6 +7,11 @@ import Footer from '@/components/Footer/Footer';
 import styles from './HotSprings.module.scss';
 import HotSpringsCard from './HotSpringsCard';
 import TskuaraCard from './TskuaraCard';
+import BabusharaCard from './BabusharaCard';
+import MarkheulCard from './MarkheulCard';
+import GagraCard from './GagraCard';
+import BesletkaCard from './BesletkaCard';
+import TkuarchalCard from './TkuarchalCard';
 
 const HotSprings: React.FC = () => {
   return (
@@ -42,6 +47,11 @@ const HotSprings: React.FC = () => {
         <div className={styles.cardsContainer}>
           <HotSpringsCard />
           <TskuaraCard />
+          <BabusharaCard />
+          <MarkheulCard />
+          <GagraCard />
+          <BesletkaCard />
+          <TkuarchalCard />
         </div>
       </main>
       <Footer />

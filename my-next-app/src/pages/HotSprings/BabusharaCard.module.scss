@@ -1,4 +1,4 @@
-.hotSpringsCard {
+.babusharaCard {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,7 +22,7 @@
   gap: 10px;
   width: 1238px;
   height: 665px;
-  background: url('/assets/Kyndik.png') no-repeat center center/cover;
+  background: url('/assets/Babushara.png') no-repeat center center/cover;
   border-radius: 15px;
   flex: none;
   order: 0;
@@ -39,9 +39,7 @@
   padding: 20px 10px;
   gap: 10px;
   width: 1238px;
-  /* Allow title to wrap without being clipped */
   height: auto;
-  min-height: unset;
   flex: none;
   order: 1;
   align-self: stretch;
@@ -66,25 +64,12 @@
   overflow-wrap: anywhere;
 }
 
-/* Ensure the full title variant is always visible */
+/* Show desktop title always */
 .titleDesktop {
   display: inline !important;
 }
 .titleMobile {
   display: none !important;
-}
-
-/* At <=1300px, switch to shorter title with manual line break */
-@media (max-width: 1300px) {
-  /* Keep full title but allow auto wrapping */
-  .titleDesktop {
-    display: inline !important;
-    white-space: normal !important;
-    word-break: break-word;
-  }
-  .titleMobile {
-    display: none !important;
-  }
 }
 
 /* Content Section */
@@ -115,7 +100,6 @@
 .textBlock {
   margin-bottom: 40px;
 }
-
 .textBlock:last-child {
   margin-bottom: 0;
 }
@@ -131,59 +115,38 @@
   text-align: left;
   display: block;
 }
-
 .contentText:last-child {
   margin-bottom: 0;
 }
 
-/* Ensure last elements never add extra bottom space at any breakpoint */
 .textBlock:last-child,
 .contentText:last-child {
   margin-bottom: 0 !important;
 }
 
-/* Responsive Design */
+/* Responsive styles copied from HotSpringsCard */
 @media (max-width: 1440px) {
-  /* Keep card full width of container */
-  .hotSpringsCard {
+  .babusharaCard {
     width: 100%;
   }
-  
-  .imageSection {
-    width: 100%;
-  }
-  
-  .titleSection {
-    width: 100%;
-  }
-  
+  .imageSection,
+  .titleSection,
   .contentSection {
     width: 100%;
   }
-  
   .textContent {
     width: 100%;
   }
 }
 
 @media (max-width: 900px) {
-  .titleDesktop {
-    display: none;
-  }
-  
-  .titleMobile {
-    display: inline;
-  }
-  
   .imageSection {
     height: 400px;
   }
-  
   .titleText {
     font-size: 28px;
     line-height: 34px;
   }
-  
   .contentText {
     font-size: 24px;
     line-height: 30px;
@@ -194,26 +157,16 @@
   .imageSection {
     height: 300px;
   }
-  
   .titleSection {
     padding: 15px 10px;
-    height: auto;
-    min-height: unset;
   }
-  
   .titleText {
     font-size: 24px;
     line-height: 30px;
   }
-  
   .contentSection {
     padding: 15px 10px 0 10px;
   }
-  
-  .textContent {
-    width: 100%;
-  }
-  
   .contentText {
     font-size: 20px;
     line-height: 26px;
@@ -226,26 +179,16 @@
     height: 250px;
     border-radius: 10px;
   }
-  
   .titleSection {
     padding: 10px 5px;
-    height: auto;
-    min-height: unset;
   }
-  
   .titleText {
     font-size: 18px;
     line-height: 24px;
   }
-  
   .contentSection {
     padding: 10px 10px 0 10px;
   }
-  
-  .textContent {
-    width: 100%;
-  }
-  
   .contentText {
     font-size: 16px;
     line-height: 22px;
@@ -258,13 +201,11 @@
     font-size: 16px;
     line-height: 22px;
   }
-  
   .contentText {
     font-size: 14px;
     line-height: 20px;
     margin-bottom: 10px;
   }
-  
   .textBlock {
     margin-bottom: 25px;
   }
