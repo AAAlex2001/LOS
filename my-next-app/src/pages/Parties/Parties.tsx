@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './Parties.module.scss';
+import tabStyles from './MainTabs.module.scss';
 
 const Parties: React.FC = () => {
   return (
@@ -76,6 +77,37 @@ const Parties: React.FC = () => {
             height={160}
             className={styles.decorBottomRight}
           />
+        </section>
+
+        {/* Main Tabs */}
+        <section className={tabStyles.mainTabs}>
+          <div className={tabStyles.tabItem}>
+            <div className={tabStyles.tabLabel}>Сухум</div>
+          </div>
+          <div className={tabStyles.tabItem}>
+            <div className={tabStyles.tabLabel}>Гагра</div>
+          </div>
+          <div className={tabStyles.tabItem}>
+            <div className={tabStyles.tabLabel}>Пицунда</div>
+          </div>
+          <div className={tabStyles.tabItem}>
+            <div className={tabStyles.tabLabel}>Гудаута</div>
+          </div>
+          <div className={tabStyles.tabItem}>
+            <div className={`${tabStyles.tabLabel} ${tabStyles.tabLabelMultiline}`}>Новый Афон</div>
+          </div>
+          <div className={tabStyles.tabItem}>
+            <div className={tabStyles.tabLabel}>Гулрипш</div>
+          </div>
+          <div className={tabStyles.tabItem}>
+            <div className={tabStyles.tabLabel}>Очамчыра</div>
+          </div>
+          <div className={tabStyles.tabItem}>
+            <div className={tabStyles.tabLabel}>Ткуарчал</div>
+          </div>
+          <div className={tabStyles.tabItem}>
+            <div className={tabStyles.tabLabel}>Гал</div>
+          </div>
         </section>
       </main>
       <Footer />
