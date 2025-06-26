@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './HotSprings.module.scss';
+import HotSpringsCard from './HotSpringsCard';
 
 const HotSprings: React.FC = () => {
   return (
@@ -36,10 +37,8 @@ const HotSprings: React.FC = () => {
           />
         </section>
 
-        {/* Content sections will be added here later */}
-        <section className={styles.contentSection}>
-          {/* Additional content for hot springs will be added here */}
-        </section>
+        {/* Hot Springs Card */}
+        <HotSpringsCard />
       </main>
       <Footer />
     </div>

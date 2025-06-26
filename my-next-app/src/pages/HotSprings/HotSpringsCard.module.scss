@@ -1,0 +1,280 @@
+.hotSpringsCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  gap: 7px;
+  width: 1238px;
+  min-height: 2724px;
+  margin: 60px auto 0;
+  position: relative;
+  background: #ffffff;
+}
+
+/* Image Section */
+.imageSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  gap: 10px;
+  width: 1238px;
+  height: 665px;
+  background: url('/assets/activity_goryachie_istochniki.png') no-repeat center center/cover;
+  border-radius: 15px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+/* Title Section */
+.titleSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 10px;
+  gap: 10px;
+  width: 1238px;
+  height: 79px;
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.titleText {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 39px;
+  text-align: center;
+  text-decoration-line: underline;
+  color: #1129BD;
+  margin: 0;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.titleDesktop {
+  display: inline;
+}
+
+.titleMobile {
+  display: none;
+}
+
+/* Content Section */
+.contentSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 40px 10px;
+  gap: 20px;
+  width: 1238px;
+  min-height: 1966px;
+  flex: none;
+  order: 2;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.textContent {
+  width: 1218px;
+  min-height: 1946px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.textBlock {
+  margin-bottom: 40px;
+}
+
+.textBlock:last-child {
+  margin-bottom: 0;
+}
+
+.contentText {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 34px;
+  color: #000000;
+  margin: 0 0 30px 0;
+  text-align: left;
+  display: block;
+}
+
+.contentText:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1440px) {
+  .hotSpringsCard {
+    width: 95%;
+    max-width: 1200px;
+  }
+  
+  .imageSection {
+    width: 100%;
+  }
+  
+  .titleSection {
+    width: 100%;
+  }
+  
+  .contentSection {
+    width: 100%;
+  }
+  
+  .textContent {
+    width: calc(100% - 20px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .hotSpringsCard {
+    width: 90%;
+    max-width: 900px;
+  }
+  
+  .imageSection {
+    height: 400px;
+  }
+  
+  .titleText {
+    font-size: 28px;
+    line-height: 34px;
+  }
+  
+  .titleText {
+    font-size: 28px;
+    line-height: 34px;
+  }
+  
+  .contentText {
+    font-size: 24px;
+    line-height: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hotSpringsCard {
+    width: 95%;
+    margin: 40px auto 0;
+  }
+  
+  .imageSection {
+    height: 300px;
+  }
+  
+  .titleSection {
+    padding: 15px 10px;
+    height: auto;
+    min-height: 60px;
+  }
+  
+  .titleText {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  
+  .titleText {
+    font-size: 22px;
+    line-height: 28px;
+  }
+  
+  .contentSection {
+    padding: 15px;
+  }
+  
+  .textContent {
+    width: calc(100% - 30px);
+  }
+  
+  .contentText {
+    font-size: 20px;
+    line-height: 26px;
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 590px) {
+  .titleDesktop {
+    display: none;
+  }
+  
+  .titleMobile {
+    display: inline;
+  }
+  
+  .titleText {
+    font-size: 20px;
+    line-height: 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hotSpringsCard {
+    width: 100%;
+    margin: 30px auto 0;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+  
+  .imageSection {
+    height: 250px;
+    border-radius: 10px;
+  }
+  
+  .titleSection {
+    padding: 10px 5px;
+    height: auto;
+    min-height: 50px;
+  }
+  
+  .titleText {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  
+  .contentSection {
+    padding: 10px;
+  }
+  
+  .textContent {
+    width: calc(100% - 20px);
+  }
+  
+  .contentText {
+    font-size: 16px;
+    line-height: 22px;
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 320px) {
+  .titleText {
+    font-size: 16px;
+    line-height: 22px;
+  }
+  
+  .contentText {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .textBlock {
+    margin-bottom: 25px;
+  }
+} 
