@@ -5,6 +5,7 @@ import Footer from '@/components/Footer/Footer';
 import styles from './Parties.module.scss';
 import tabStyles from './MainTabs.module.scss';
 import cardStyles from './PartyCardSuhum.module.scss';
+import cardStylesGagra from './PartyCardGagra.module.scss';
 
 const Parties: React.FC = () => {
   return (
@@ -227,6 +228,128 @@ const Parties: React.FC = () => {
               <div className={cardStyles.adBlock}>
                 <div className={cardStyles.adContent}>
                   <span className={cardStyles.adText}>Сменяющийся видеоряд/картинка с видом Абхазии/реклама</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Party Card Gagra */}
+        <section className={cardStylesGagra.partyCard}>
+          {/* City Image */}
+          <div className={cardStylesGagra.cityImageSection}></div>
+
+          {/* Content Section */}
+          <div className={cardStylesGagra.contentSection}>
+            {/* City Title */}
+            <div className={cardStylesGagra.cityTitle}>
+              <h2 className={cardStylesGagra.cityTitleText}>Гагра</h2>
+            </div>
+
+            {/* Events Container */}
+            <div className={cardStylesGagra.eventsContainer}>
+              {/* Event 1: Караоке-бар */}
+              <div className={cardStylesGagra.eventItem}>
+                <div className={cardStylesGagra.eventHeader}>
+                  <div className={cardStylesGagra.eventArrow}></div>
+                  <h3 className={cardStylesGagra.eventTitle}>Караоке-бар "Space"</h3>
+                </div>
+                <div className={cardStylesGagra.eventDate}>
+                  <div className={cardStylesGagra.calendarIcon}></div>
+                  <span className={cardStylesGagra.dateText}>27 декабря 2024 – 30 июня 2025 вт–вс 12:00–20:00</span>
+                </div>
+                <div className={cardStylesGagra.eventLocation}>
+                  <div className={cardStylesGagra.locationIcon}></div>
+                  <span className={cardStylesGagra.locationText}>г. Гагра, Рижский проспект, дом 3</span>
+                </div>
+                <div className={cardStylesGagra.eventDescription}>
+                  <h4 className={cardStylesGagra.descriptionTitle}>О событии</h4>
+                  <p className={cardStylesGagra.descriptionText}>
+                    Lorem ipsum dolor sit amet consectetur. Pretium mauris pellentesque id nisl pretium. Egestas leo sed est at velit diam aliquet. Bibendum pellentesque sit posuere quam orci. Pretium nibh id amet dolor massa malesuada augue elementum. Nulla vestibulum tortor lobortis tincidunt id non. Ac a at faucibus habitasse vitae gravida arcu ut. Magna et dignissim non facilisi faucibus. Ultricies praesent sit nullam arcu tempus neque odio bibendum.
+                  </p>
+                  <div className={cardStylesGagra.eventLink}>
+                    <span className={cardStylesGagra.linkText}>
+                      <span className={cardStylesGagra.linkLabel}>Ссылка на мероприятие: </span>
+                      <span className={cardStylesGagra.linkUrl}>Pellentesque in vitae pellentesque</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Ad Block 1 */}
+              <div className={cardStylesGagra.adBlock}>
+                <div className={cardStylesGagra.adContent}>
+                  <span className={cardStylesGagra.adText}>Сменяющийся видеоряд/картинка с видом Абхазии/реклама</span>
+                </div>
+              </div>
+
+              {/* Event 2: Пляж */}
+              <div className={cardStylesGagra.eventItem}>
+                <div className={cardStylesGagra.eventHeader}>
+                  <div className={cardStylesGagra.eventArrow}></div>
+                  <h3 className={cardStylesGagra.eventTitle}>Пляж "Мокко"</h3>
+                </div>
+                <div className={cardStylesGagra.eventDate}>
+                  <div className={cardStylesGagra.calendarIcon}></div>
+                  <span className={cardStylesGagra.dateText}>27 декабря 2024 – 30 июня 2025 вт–вс 12:00–20:00</span>
+                </div>
+                <div className={cardStylesGagra.eventLocation}>
+                  <div className={cardStylesGagra.locationIcon}></div>
+                  <span className={cardStylesGagra.locationText}>г. Гагра, Рижский проспект, дом 3</span>
+                </div>
+                <div className={cardStylesGagra.eventDescription}>
+                  <h4 className={cardStylesGagra.descriptionTitle}>О событии</h4>
+                  <p className={cardStylesGagra.descriptionText}>
+                    Lorem ipsum dolor sit amet consectetur. Pretium mauris pellentesque id nisl pretium. Egestas leo sed est at velit diam aliquet. Bibendum pellentesque sit posuere quam orci. Pretium nibh id amet dolor massa malesuada augue elementum. Nulla vestibulum tortor lobortis tincidunt id non. Ac a at faucibus habitasse vitae gravida arcu ut.
+                  </p>
+                  <div className={cardStylesGagra.eventLink}>
+                    <span className={cardStylesGagra.linkText}>
+                      <span className={cardStylesGagra.linkLabel}>Ссылка на мероприятие: </span>
+                      <span className={cardStylesGagra.linkUrl}>Pellentesque in vitae pellentesque</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Ad Block 2 */}
+              <div className={cardStylesGagra.adBlock}>
+                <div className={cardStylesGagra.adContent}>
+                  <span className={cardStylesGagra.adText}>Сменяющийся видеоряд/картинка с видом Абхазии/реклама</span>
+                </div>
+              </div>
+
+              {/* Event 3: Ресторан */}
+              <div className={cardStylesGagra.eventItem}>
+                <div className={cardStylesGagra.eventHeader}>
+                  <div className={cardStylesGagra.eventArrow}></div>
+                  <h3 className={cardStylesGagra.eventTitle}>Ресторан «Нартаа»</h3>
+                </div>
+                <div className={cardStylesGagra.eventDate}>
+                  <div className={cardStylesGagra.calendarIcon}></div>
+                  <span className={cardStylesGagra.dateText}>30 июня 2025 18:00–20:00</span>
+                </div>
+                <div className={cardStylesGagra.eventLocation}>
+                  <div className={cardStylesGagra.locationIcon}></div>
+                  <span className={cardStylesGagra.locationText}>г. Гагра, Рижский проспект, дом 3</span>
+                </div>
+                <div className={cardStylesGagra.eventDescription}>
+                  <h4 className={cardStylesGagra.descriptionTitle}>О событии</h4>
+                  <p className={cardStylesGagra.descriptionText}>
+                    Lorem ipsum dolor sit amet consectetur. Pretium mauris pellentesque id nisl pretium. Egestas leo sed est at velit diam aliquet. Bibendum pellentesque sit posuere quam orci. Pretium nibh id amet dolor massa malesuada augue elementum. Nulla vestibulum tortor lobortis tincidunt id non. Ac a at faucibus habitasse vitae gravida arcu ut.
+                  </p>
+                  <div className={cardStylesGagra.eventLink}>
+                    <span className={cardStylesGagra.linkText}>
+                      <span className={cardStylesGagra.linkLabel}>Ссылка на мероприятие: </span>
+                      <span className={cardStylesGagra.linkUrl}>Pellentesque in vitae pellentesque</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Final Ad Block */}
+              <div className={cardStylesGagra.adBlock}>
+                <div className={cardStylesGagra.adContent}>
+                  <span className={cardStylesGagra.adText}>Сменяющийся видеоряд/картинка с видом Абхазии/реклама</span>
                 </div>
               </div>
             </div>
