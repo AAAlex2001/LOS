@@ -1,0 +1,235 @@
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.mainContent {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 24px 60px;
+  position: relative;
+}
+
+.mainTitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 44px;
+  color: #1129bd;
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 5;
+  padding: 10px 10px 32px;
+}
+
+/* Banner Section */
+.bannerSection {
+  position: relative;
+  width: 100%;
+  max-width: 1872px;
+  min-height: 374px;
+  border-radius: 15px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+}
+
+.bannerBackground {
+  object-fit: cover;
+  z-index: 0;
+}
+
+.bannerContent {
+  position: relative;
+  z-index: 1;
+  max-width: 1812px;
+  width: 100%;
+  min-height: 200px;
+  padding: 60px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.bannerTextContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  max-width: 1812px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.bannerText {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 38px;
+  line-height: 50px;
+  color: rgba(0, 0, 0, 0.85);
+  text-align: center;
+  margin: 0;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+.contentSection {
+  width: 100%;
+  max-width: 1872px;
+  margin-top: 60px;
+  padding: 0 24px;
+}
+
+/* Responsive Design - Фиксированные отступы для каждого диапазона */
+
+/* 1441px и выше - Большие экраны */
+@media (min-width: 1441px) {
+  .bannerContent {
+    padding: 75px 40px;
+  }
+  .bannerText {
+    font-size: 38px;
+    line-height: 50px;
+  }
+}
+
+/* 1062px - 1440px - Средние экраны */
+@media (max-width: 1440px) and (min-width: 1062px) {
+  .bannerSection {
+    max-width: 95vw;
+  }
+  .bannerContent {
+    padding: 68px 35px;
+  }
+  .bannerText {
+    font-size: 32px;
+    line-height: 44px;
+  }
+}
+
+/* 900px - 1061px - Средние планшеты */
+@media (max-width: 1061px) and (min-width: 900px) {
+  .mainContent {
+    padding: 50px 20px 40px;
+  }
+  .mainTitle {
+    font-size: 30px;
+    line-height: 38px;
+    margin-bottom: 60px;
+  }
+  .bannerSection {
+    max-width: 90vw;
+  }
+  .bannerContent {
+    padding: 75px 30px;
+  }
+  .bannerText {
+    font-size: 28px;
+    line-height: 38px;
+  }
+  .bannerTextContainer {
+    gap: 30px;
+  }
+}
+
+/* 769px - 899px - Планшеты */
+@media (max-width: 899px) and (min-width: 769px) {
+  .mainContent {
+    padding: 60px 20px 40px;
+  }
+  .mainTitle {
+    font-size: 32px;
+    line-height: 40px;
+    margin-bottom: 70px;
+  }
+  .bannerSection {
+    max-width: 90vw;
+  }
+  .bannerContent {
+    padding: 68px 25px;
+  }
+  .bannerText {
+    font-size: 26px;
+    line-height: 36px;
+  }
+}
+
+/* 601px - 768px - Маленькие планшеты */
+@media (max-width: 768px) and (min-width: 601px) {
+  .mainTitle {
+    font-size: 28px;
+    line-height: 36px;
+    margin-bottom: 60px;
+  }
+  .bannerSection {
+    border-radius: 10px;
+  }
+  .bannerContent {
+    padding: 70px 20px;
+  }
+  .bannerText {
+    font-size: 22px;
+    line-height: 32px;
+  }
+}
+
+/* 481px - 600px - Большие мобильные */
+@media (max-width: 600px) and (min-width: 481px) {
+  .mainContent {
+    padding: 40px 15px 30px;
+  }
+  .mainTitle {
+    font-size: 24px;
+    line-height: 32px;
+    margin-bottom: 50px;
+    padding: 10px;
+  }
+  .bannerSection {
+    border-radius: 8px;
+  }
+  .bannerContent {
+    padding: 60px 15px;
+  }
+  .bannerText {
+    font-size: 18px;
+    line-height: 28px;
+  }
+  .bannerTextContainer {
+    gap: 25px;
+  }
+}
+
+/* 320px - 480px - Маленькие мобильные */
+@media (max-width: 480px) and (min-width: 320px) {
+  .bannerContent {
+    padding: 70px 12px;
+  }
+  .bannerText {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .bannerTextContainer {
+    gap: 20px;
+  }
+}
+
+/* Менее 320px - Очень маленькие экраны */
+@media (max-width: 319px) {
+  .bannerContent {
+    padding: 55px 10px;
+  }
+  .bannerText {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  .bannerTextContainer {
+    gap: 15px;
+  }
+} 
