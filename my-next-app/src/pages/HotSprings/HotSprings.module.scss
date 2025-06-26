@@ -86,10 +86,8 @@
   margin: 60px auto 0;
   display: flex;
   flex-direction: column;
-}
-
-.cardsContainer > *:not(:last-child) {
-  margin-bottom: 80px;
+  row-gap: 150px;
+  padding: 0 24px;
 }
 
 /* Responsive Design - Фиксированные отступы для каждого диапазона */
