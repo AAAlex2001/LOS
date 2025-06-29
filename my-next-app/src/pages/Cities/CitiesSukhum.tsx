@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './CitiesSukhum.module.scss';
 
 // Полное описание города – жирный текст согласно ТЗ
@@ -32,6 +33,19 @@ const highlightItems: string[] = [
 ];
 
 const CitiesSukhum: React.FC = () => {
+  const router = useRouter();
+
+  const handleItemClick = (item: string) => {
+    switch (item) {
+      case 'Административные здания':
+        router.push('/administrative-buildings/Sukhum');
+        break;
+      // Добавить другие категории по мере необходимости
+      default:
+        break;
+    }
+  };
+
   return (
     <div className={styles.pageWrapper}>
       <main className={styles.mainContent}>
@@ -61,7 +75,11 @@ const CitiesSukhum: React.FC = () => {
         <section className={styles.listSection}>
           <ul className={styles.list}>
             {highlightItems.map((item) => (
-              <li key={item} className={styles.listItem}>
+              <li 
+                key={item} 
+                className={`${styles.listItem} ${item === 'Административные здания' ? styles.clickableItem : ''}`}
+                onClick={() => handleItemClick(item)}
+              >
                 <span className={styles.arrowIcon} />
                 <span className={styles.itemText}>{item}</span>
               </li>
