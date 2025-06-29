@@ -49,6 +49,9 @@ const CitiesSukhum: React.FC = () => {
       case 'Заправки':
         router.push('/gas-stations/Sukhum');
         break;
+      case 'Культурные достопримечательности':
+        router.push('/cultural-attractions/Sukhum');
+        break;
       // Добавить другие категории по мере необходимости
       default:
         break;
@@ -86,7 +89,7 @@ const CitiesSukhum: React.FC = () => {
             {highlightItems.map((item) => (
               <li 
                 key={item} 
-                className={`${styles.listItem} ${(item === 'Административные здания' || item === 'Аптеки' || item === 'Винодельни' || item === 'Заправки') ? styles.clickableItem : ''}`}
+                className={`${styles.listItem} ${(item === 'Административные здания' || item === 'Аптеки' || item === 'Винодельни' || item === 'Заправки' || item === 'Культурные достопримечательности') ? styles.clickableItem : ''}`}
                 onClick={() => handleItemClick(item)}
               >
                 <span className={styles.arrowIcon} />
