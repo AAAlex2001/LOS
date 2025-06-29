@@ -84,6 +84,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  margin-left: 50px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -143,6 +144,8 @@
   font-size: 16px;
   line-height: 19px;
   color: rgba(0, 0, 0, 0.85);
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Description section for Gal */
@@ -202,6 +205,9 @@
     font-size: 16px;
     line-height: 22px;
   }
+  .galList {
+    margin-left: 100px;
+  }
   .galListItem {
     width: 48%;
   }
@@ -220,6 +226,9 @@
   .galText {
     font-size: 15px;
     line-height: 20px;
+  }
+  .galList {
+    margin-left: 100px;
   }
   .galListItem {
     width: 48%;
@@ -249,6 +258,7 @@
     gap: 20px;
     align-items: flex-start;
     justify-content: flex-start;
+    margin-left: 100px;
   }
   .galListItem {
     width: 100%;
@@ -268,6 +278,7 @@
     gap: 20px;
     align-items: flex-start;
     justify-content: flex-start;
+    margin-left: 30px;
   }
   .galListItem {
     width: 100%;
