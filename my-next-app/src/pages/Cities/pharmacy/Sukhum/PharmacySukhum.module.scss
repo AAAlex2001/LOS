@@ -189,13 +189,13 @@
 /* Tablet Large (900px - 1199px) */
 @media (max-width: 1199px) and (min-width: 900px) {
   .mainContent {
-    padding: 80px 4% 40px;
+    padding: 100px 4% 40px;
     gap: 60px;
   }
   
   .mainTitle {
     font-size: 32px;
-    line-height: 40px;
+    line-height: 27px;
   }
   
   .titleSection {
@@ -234,7 +234,7 @@
 /* Tablet (769px - 899px) */
 @media (max-width: 899px) and (min-width: 769px) {
   .mainContent {
-    padding: 60px 3% 30px;
+    padding: 100px 3% 30px;
     gap: 50px;
   }
   
@@ -278,7 +278,7 @@
 /* Mobile Large (481px - 768px) */
 @media (max-width: 768px) and (min-width: 481px) {
   .mainContent {
-    padding: 50px 4% 25px;
+    padding: 100px 4% 25px;
     gap: 40px;
   }
   
@@ -327,7 +327,7 @@
 /* Mobile (320px - 480px) */
 @media (max-width: 480px) {
   .mainContent {
-    padding: 40px 5% 20px;
+    padding: 100px 5% 20px;
     gap: 30px;
   }
   
@@ -380,7 +380,7 @@
 /* Mobile Small (< 320px) */
 @media (max-width: 319px) {
   .mainContent {
-    padding: 30px 3% 15px;
+    padding: 100px 3% 15px;
   }
   
   .mainTitle {
