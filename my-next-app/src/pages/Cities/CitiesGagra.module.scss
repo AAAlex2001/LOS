@@ -86,7 +86,8 @@
   margin: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 20px 56px;
+  justify-content: space-between;
+  row-gap: 20px;
   align-items: center;
   align-content: flex-start;
 }
@@ -228,15 +229,22 @@
 /* 481px - 600px */
 @media (max-width: 600px) and (min-width: 481px) {
   .gagraContent {
-    padding: 40px 15px 30px;
+    padding: 100px 15px 30px;
   }
   .gagraTitle {
     font-size: 22px;
     line-height: 28px;
   }
+  .gagraList {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
   .gagraBanner {
     height: 350px;
     border-radius: 8px;
+    width: 100%;
   }
   .gagraText {
     font-size: 14px;
@@ -249,8 +257,17 @@
 
 /* <=480px */
 @media (max-width: 480px) {
+  .gagraContent {
+    padding: 100px 24px 60px;
+  }
   .gagraText {
     font-size: 13px;
+  }
+  .gagraList {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
   .gagraListItem {
     width: 100%;

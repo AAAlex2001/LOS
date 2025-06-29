@@ -86,7 +86,8 @@
   margin: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 20px 56px;
+  justify-content: space-between;
+  row-gap: 20px;
   align-items: center;
   align-content: flex-start;
 }
@@ -228,7 +229,7 @@
 /* 481px - 600px */
 @media (max-width: 600px) and (min-width: 481px) {
   .pitsundaContent {
-    padding: 40px 15px 30px;
+    padding: 100px 15px 30px;
   }
   .pitsundaTitle {
     font-size: 22px;
@@ -237,10 +238,17 @@
   .pitsundaBanner {
     height: 350px;
     border-radius: 8px;
+    width: 100%;
   }
   .pitsundaText {
     font-size: 14px;
     line-height: 18px;
+  }
+  .pitsundaList {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
   .pitsundaListItem {
     width: 100%;
@@ -249,8 +257,17 @@
 
 /* <=480px */
 @media (max-width: 480px) {
+  .pitsundaContent {
+    padding: 100px 24px 60px;
+  }
   .pitsundaText {
     font-size: 13px;
+  }
+  .pitsundaList {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
   .pitsundaListItem {
     width: 100%;
