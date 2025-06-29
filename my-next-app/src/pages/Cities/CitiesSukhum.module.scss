@@ -89,6 +89,7 @@
   padding: 0;
   padding-right: 2px;
   margin: 0;
+  margin-left: 100px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -161,6 +162,8 @@
   font-size: 16px;
   line-height: 19px;
   color: rgba(0, 0, 0, 0.85);
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Responsive breakpoints */
@@ -329,7 +332,7 @@
     align-items: flex-start;
     justify-content: flex-start;
     padding-right: 15px;
-    margin-left: -5px;
+    margin-left: 30px;
   }
   .description {
     font-size: 13px;
