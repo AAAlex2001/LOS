@@ -8,6 +8,7 @@ import CitiesSukhum from './CitiesSukhum';
 import CitiesGagra from './CitiesGagra';
 import CitiesPitsunda from './CitiesPitsunda';
 import CitiesGudauta from './CitiesGudauta';
+import CitiesNewafon from './CitiesNewafon';
 import styles from './Cities.module.scss';
 
 const Cities: React.FC = () => {
@@ -29,6 +30,9 @@ const Cities: React.FC = () => {
         
         {/* Контент города Гудаута */}
         <CitiesGudauta />
+        
+        {/* Контент города Новый Афон */}
+        <CitiesNewafon />
       </main>
 
       <Footer />
