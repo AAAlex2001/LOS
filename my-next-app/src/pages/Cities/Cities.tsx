@@ -9,6 +9,10 @@ import CitiesGagra from './CitiesGagra';
 import CitiesPitsunda from './CitiesPitsunda';
 import CitiesGudauta from './CitiesGudauta';
 import CitiesNewafon from './CitiesNewafon';
+import CitiesGulripsh from './CitiesGulripsh';
+import CitiesOchamchira from './CitiesOchamchira';
+import CitiesTkuarchal from './CitiesTkuarchal';
+import CitiesGal from './CitiesGal';
 import styles from './Cities.module.scss';
 
 const Cities: React.FC = () => {
@@ -33,6 +37,18 @@ const Cities: React.FC = () => {
         
         {/* Контент города Новый Афон */}
         <CitiesNewafon />
+        
+        {/* Контент города Гулрыпш */}
+        <CitiesGulripsh />
+        
+        {/* Контент города Очамчыра */}
+        <CitiesOchamchira />
+        
+        {/* Контент города Ткуарчал */}
+        <CitiesTkuarchal />
+        
+        {/* Контент города Гал */}
+        <CitiesGal />
       </main>
 
       <Footer />

@@ -1,0 +1,277 @@
+// Container styles for Ochamchira
+.ochamchiraWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main content wrapper for Ochamchira */
+.ochamchiraContent {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 24px 60px;
+  position: relative;
+}
+
+/* Title for Ochamchira */
+.ochamchiraTitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 39px;
+  color: #1129bd;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 21px;
+  padding: 10px;
+  position: relative;
+  z-index: 5;
+}
+
+/* Banner section for Ochamchira */
+.ochamchiraBanner {
+  position: relative;
+  width: 100%;
+  max-width: 1228px;
+  height: 665px;
+  border-radius: 15px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ochamchiraImage {
+  object-fit: cover;
+  z-index: 0;
+}
+
+.ochamchiraText {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000;
+  text-align: left;
+  max-width: 1168px;
+  word-wrap: break-word;
+  hyphens: auto;
+  margin: 0;
+  padding-left: 25px;
+  padding-right: 20px;
+  margin-bottom: 18px;
+}
+
+.ochamchiraParagraph {
+  @extend .ochamchiraText;
+  margin-bottom: 24px;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* List section for Ochamchira */
+.ochamchiraListSection {
+  width: 100%;
+  max-width: 1228px;
+  margin-top: 80px;
+}
+
+.ochamchiraList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 56px;
+  align-items: center;
+  align-content: flex-start;
+}
+
+.ochamchiraListItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 262px;
+  cursor: pointer;
+  position: relative;
+
+  /* underline effect */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 23px;
+    width: calc(100% - 23px);
+    height: 2px;
+    background-color: #1129bd;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  &:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+.ochamchiraArrow {
+  width: 11px;
+  height: 22px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.ochamchiraArrow::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 11px;
+  border-right: 2px solid #000;
+  border-bottom: 2px solid #000;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.ochamchiraItemText {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+/* Description section for Ochamchira */
+.ochamchiraDescription {
+  max-width: 1228px;
+  width: 100%;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Responsive breakpoints for Ochamchira */
+
+/* >=1441px */
+@media (min-width: 1441px) {
+  .ochamchiraText {
+    font-size: 22px;
+    line-height: 28px;
+  }
+}
+
+/* 1062px - 1440px */
+@media (max-width: 1440px) and (min-width: 1062px) {
+  .ochamchiraBanner {
+    max-width: 95vw;
+  }
+  .ochamchiraText {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
+/* 900px - 1061px */
+@media (max-width: 1061px) and (min-width: 900px) {
+  .ochamchiraContent {
+    padding: 50px 20px 40px;
+  }
+  .ochamchiraTitle {
+    font-size: 28px;
+    line-height: 34px;
+  }
+  .ochamchiraBanner {
+    height: 520px;
+  }
+  .ochamchiraText {
+    font-size: 17px;
+  }
+}
+
+/* 769px - 899px */
+@media (max-width: 899px) and (min-width: 769px) {
+  .ochamchiraBanner {
+    height: 480px;
+  }
+  .ochamchiraText {
+    font-size: 16px;
+    line-height: 22px;
+  }
+  .ochamchiraListItem {
+    width: 48%;
+  }
+}
+
+/* 601px - 768px */
+@media (max-width: 768px) and (min-width: 601px) {
+  .ochamchiraTitle {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  .ochamchiraBanner {
+    height: 400px;
+    border-radius: 10px;
+  }
+  .ochamchiraText {
+    font-size: 15px;
+    line-height: 20px;
+  }
+  .ochamchiraListItem {
+    width: 48%;
+  }
+}
+
+/* 481px - 600px */
+@media (max-width: 600px) and (min-width: 481px) {
+  .ochamchiraContent {
+    padding: 40px 15px 30px;
+  }
+  .ochamchiraTitle {
+    font-size: 22px;
+    line-height: 28px;
+  }
+  .ochamchiraBanner {
+    height: 350px;
+    border-radius: 8px;
+  }
+  .ochamchiraText {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .ochamchiraListItem {
+    width: 100%;
+  }
+}
+
+/* <=480px */
+@media (max-width: 480px) {
+  .ochamchiraText {
+    font-size: 13px;
+  }
+  .ochamchiraListItem {
+    width: 100%;
+  }
+  .ochamchiraBanner {
+    height: 300px;
+  }
+}
+
+/* 320px - 480px */
+@media (max-width: 480px) and (min-width: 320px) {
+  .ochamchiraBanner {
+    height: 280px;
+    max-height: 50vw;
+  }
+}
+
+/* Менее 320px */
+@media (max-width: 319px) {
+  .ochamchiraBanner {
+    height: 250px;
+    max-height: 50vw;
+  }
+} 
