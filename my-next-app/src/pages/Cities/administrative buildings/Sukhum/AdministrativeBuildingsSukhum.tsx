@@ -17,7 +17,7 @@ const administrativeBuildings = [
     address: 'Сухум, наб. Махаджиров, 32',
     addressLink: 'https://yandex.com/maps/-/CDTxuCIy',
     contacts: '+7 840 229-70-14',
-    image: '/assets/SukhumAdministrativeBuildings1.png'
+    image: '/assets/AdministrativeBuildingsSukhum1.jpg'
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const administrativeBuildings = [
     workingHours: 'с 09:00 до 18:00',
     address: 'Сухум, просп. Леона, 17',
     contacts: '8 840 226-42-66',
-    image: '/assets/SukhumAdministrativeBuildings2.png'
+    image: '/assets/AdministrativeBuildingsSukhum2.jpg'
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ const administrativeBuildings = [
     address: 'Сухум, ул. Академика Марра, 35',
     addressLink: 'https://yandex.com/maps/-/CDT3EMoK',
     contacts: '+7 (840) 222-53-79\n+7 (840) 229-73-00',
-    image: '/assets/SukhumAdministrativeBuildings3.png'
+    image: '/assets/AdministrativeBuildingsSukhum3.jpg'
   },
   {
     id: 4,
@@ -44,7 +44,7 @@ const administrativeBuildings = [
     address: 'Сухум, Абазинская ул., 5',
     addressLink: 'https://yandex.com/maps/-/CDT3Q4zY',
     contacts: '+7 (940) 992-22-20',
-    image: '/assets/SukhumAdministrativeBuildings4.png'
+    image: '/assets/AdministrativeBuildingsSukhum4.jpg'
   },
   {
     id: 5,
@@ -53,7 +53,7 @@ const administrativeBuildings = [
     address: 'Сухум, ул. Гулиа, 38',
     addressLink: 'https://yandex.com/maps/-/CDT34Cnt',
     contacts: '+7 (840) 226‒37‒86',
-    image: '/assets/SukhumAdministrativeBuildings5.png'
+    image: '/assets/AdministrativeBuildingsSukhum5.jpg'
   },
   {
     id: 6,
@@ -62,7 +62,7 @@ const administrativeBuildings = [
     address: 'Сухум, ул. Конфедератов, 4',
     addressLink: 'https://yandex.com/maps/-/CDT~qLik',
     contacts: '+7 (940) 999-94-00',
-    image: '/assets/SukhumAdministrativeBuildings6.png'
+    image: '/assets/AdministrativeBuildingsSukhum6.png'
   },
   {
     id: 7,
@@ -70,7 +70,7 @@ const administrativeBuildings = [
     workingHours: 'понедельник – четверг с 09:00 до 18:00\nпятница – с 09:00 до 16:45',
     address: 'г. Сухум, ул. Лакоба, д. 45',
     contacts: 'тел. +78402263693, факс +78402265693\nЭл. почта rusembsukhum@mid.ru',
-    image: '/assets/SukhumAdministrativeBuildings7.png'
+    image: '/assets/AdministrativeBuildingsSukhum7.jpg'
   },
   {
     id: 8,
@@ -78,7 +78,7 @@ const administrativeBuildings = [
     address: 'г. Сухум проспект Леона, 29',
     addressLink: 'https://yandex.ru/maps/10281/suhum/geo/2474961838/',
     contacts: 'Тел. +78402297300',
-    image: '/assets/SukhumAdministrativeBuildings8.png'
+    image: '/assets/AdministrativeBuildingsSukhum8.jpg'
   }
 ];
 
