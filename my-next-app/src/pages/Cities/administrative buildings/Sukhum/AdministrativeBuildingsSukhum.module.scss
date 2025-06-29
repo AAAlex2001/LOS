@@ -112,6 +112,16 @@
       opacity: 0.8;
     }
   }
+  
+  a {
+    text-decoration: underline;
+    cursor: pointer;
+    color: inherit;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 }
 
 // Info block
@@ -147,11 +157,9 @@
   white-space: pre-line; // Для переносов строк в контактах
   
   &.addressLink {
-    text-decoration: underline;
     cursor: pointer;
-    
-    &:hover {
-      opacity: 0.8;
+    a {
+      text-decoration: underline;
     }
   }
 }

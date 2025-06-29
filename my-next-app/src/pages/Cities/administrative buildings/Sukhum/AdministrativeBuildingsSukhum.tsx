@@ -12,74 +12,73 @@ const administrativeBuildings = [
   {
     id: 1,
     name: 'Администрация Президента',
+    nameLink: 'http://presidentofabkhazia.org/',
     workingHours: 'с 09:00 до 18:00',
     address: 'Сухум, наб. Махаджиров, 32',
-    contacts: '+7 (840) 229-70-14',
-    image: '/assets/SukhumAdministrativeBuildings1.png',
-    isClickable: true
+    addressLink: 'https://yandex.com/maps/-/CDTxuCIy',
+    contacts: '+7 840 229-70-14',
+    image: '/assets/SukhumAdministrativeBuildings1.png'
   },
   {
     id: 2,
     name: 'Администрация Города',
+    nameLink: 'https://www.sukhumcity.ru/',
     workingHours: 'с 09:00 до 18:00',
-    address: 'Сухум, пр-кт Леона, 17',
-    contacts: '+7 (840) 226-42-66',
-    image: '/assets/SukhumAdministrativeBuildings2.png',
-    isClickable: true
+    address: 'Сухум, просп. Леона, 17',
+    contacts: '8 840 226-42-66',
+    image: '/assets/SukhumAdministrativeBuildings2.png'
   },
   {
     id: 3,
     name: 'МВД Абхазии',
     workingHours: 'пн-пт 10:00-18:00, перерыв 13:00-14:00',
     address: 'Сухум, ул. Академика Марра, 35',
-    contacts: '+7 (840) 222-53-79 / +7 (840) 229-73-00',
-    image: '/assets/SukhumAdministrativeBuildings3.png',
-    isClickable: false
+    addressLink: 'https://yandex.com/maps/-/CDT3EMoK',
+    contacts: '+7 (840) 222-53-79\n+7 (840) 229-73-00',
+    image: '/assets/SukhumAdministrativeBuildings3.png'
   },
   {
     id: 4,
     name: 'Городская Прокуратура',
-    workingHours: 'не указан',
+    nameLink: 'https://genproc.apsny.land/',
     address: 'Сухум, Абазинская ул., 5',
-    contacts: '+7 (840) 992-22-20',
-    image: '/assets/SukhumAdministrativeBuildings4.png',
-    isClickable: false
+    addressLink: 'https://yandex.com/maps/-/CDT3Q4zY',
+    contacts: '+7 (940) 992-22-20',
+    image: '/assets/SukhumAdministrativeBuildings4.png'
   },
   {
     id: 5,
     name: 'Генеральная прокуратура Республики Абхазия',
-    workingHours: 'не указан',
+    nameLink: 'https://genproc.apsny.land/',
     address: 'Сухум, ул. Гулиа, 38',
-    contacts: '+7 (840) 226-37-86',
-    image: '/assets/SukhumAdministrativeBuildings5.png',
-    isClickable: true
+    addressLink: 'https://yandex.com/maps/-/CDT34Cnt',
+    contacts: '+7 (840) 226‒37‒86',
+    image: '/assets/SukhumAdministrativeBuildings5.png'
   },
   {
     id: 6,
     name: 'Государственный таможенный комитет Республики Абхазия',
-    workingHours: 'не указан',
+    nameLink: 'http://customsra.com/',
     address: 'Сухум, ул. Конфедератов, 4',
+    addressLink: 'https://yandex.com/maps/-/CDT~qLik',
     contacts: '+7 (940) 999-94-00',
-    image: '/assets/SukhumAdministrativeBuildings6.png',
-    isClickable: true
+    image: '/assets/SukhumAdministrativeBuildings6.png'
   },
   {
     id: 7,
     name: 'Посольство Российской Федерации в Республики Абхазия',
-    workingHours: 'пн-чт 9:00-18:00, пт 9:00-16:45',
+    workingHours: 'понедельник – четверг с 09:00 до 18:00\nпятница – с 09:00 до 16:45',
     address: 'г. Сухум, ул. Лакоба, д. 45',
-    contacts: 'тел. +78402263693, факс +78402265693\nЭл. почта: rusembsukhum@mid.ru',
-    image: '/assets/SukhumAdministrativeBuildings7.png',
-    isClickable: true
+    contacts: 'тел. +78402263693, факс +78402265693\nЭл. почта rusembsukhum@mid.ru',
+    image: '/assets/SukhumAdministrativeBuildings7.png'
   },
   {
     id: 8,
     name: 'УВД по г. Сухум',
-    workingHours: 'не указан',
-    address: 'г. Сухум, пр-кт Леона, д. 29',
-    contacts: '+7 (840) 229-73-00',
-    image: '/assets/SukhumAdministrativeBuildings8.png',
-    isClickable: false
+    address: 'г. Сухум проспект Леона, 29',
+    addressLink: 'https://yandex.ru/maps/10281/suhum/geo/2474961838/',
+    contacts: 'Тел. +78402297300',
+    image: '/assets/SukhumAdministrativeBuildings8.png'
   }
 ];
 
@@ -110,19 +109,33 @@ const AdministrativeBuildingsSukhum: React.FC = () => {
 
               {/* Информация */}
               <div className={styles.infoContainer}>
-                <h2 className={`${styles.buildingName} ${building.isClickable ? styles.clickable : ''}`}>
-                  {building.name}
+                <h2 className={styles.buildingName}>
+                  {building.nameLink ? (
+                    <a href={building.nameLink} target="_blank" rel="noopener noreferrer">
+                      {building.name}
+                    </a>
+                  ) : (
+                    building.name
+                  )}
                 </h2>
                 
                 <div className={styles.infoBlock}>
-                  <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Режим работы:</span>
-                    <span className={styles.infoValue}>{building.workingHours}</span>
-                  </div>
+                  {building.workingHours && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{building.workingHours}</span>
+                    </div>
+                  )}
                   
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Адрес:</span>
-                    <span className={`${styles.infoValue} ${styles.addressLink}`}>{building.address}</span>
+                    <span className={`${styles.infoValue} ${building.addressLink ? styles.addressLink : ''}`}>
+                      {building.addressLink ? (
+                        <a href={building.addressLink} target="_blank" rel="noopener noreferrer">{building.address}</a>
+                      ) : (
+                        building.address
+                      )}
+                    </span>
                   </div>
                   
                   <div className={styles.infoItem}>
