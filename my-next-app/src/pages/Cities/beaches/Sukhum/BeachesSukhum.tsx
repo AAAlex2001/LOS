@@ -59,7 +59,7 @@ const BeachesSukhum: React.FC = () => {
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Пляжи Сухума</h1>
+          <h1 className={styles.mainTitle}>Сухум: пляжи</h1>
         </section>
 
         <section className={styles.cardsSection}>
