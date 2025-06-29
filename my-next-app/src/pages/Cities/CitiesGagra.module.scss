@@ -1,12 +1,12 @@
-// Container styles
-.pageWrapper {
+// Container styles for Gagra
+.gagraWrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* Main content wrapper */
-.mainContent {
+/* Main content wrapper for Gagra */
+.gagraContent {
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
@@ -15,8 +15,8 @@
   position: relative;
 }
 
-/* Title */
-.pageTitle {
+/* Title for Gagra */
+.gagraTitle {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 32px;
@@ -30,8 +30,8 @@
   z-index: 5;
 }
 
-/* Banner section */
-.bannerSection {
+/* Banner section for Gagra */
+.gagraBanner {
   position: relative;
   width: 100%;
   max-width: 1228px;
@@ -43,18 +43,14 @@
   align-items: center;
 }
 
-.bannerBackground {
+.gagraImage {
   object-fit: cover;
   z-index: 0;
 }
 
-.contentSection {
-  /* оставлен для обратной совместимости, не используется после рефакторинга */
-}
-
-.description {
+.gagraText {
   font-family: 'Inter', sans-serif;
-  font-weight: 400; /* bold text */
+  font-weight: 600;
   font-size: 20px;
   line-height: 24px;
   color: #000;
@@ -68,8 +64,8 @@
   margin-bottom: 18px;
 }
 
-.descriptionParagraph {
-  @extend .description;
+.gagraParagraph {
+  @extend .gagraText;
   margin-bottom: 24px;
   
   &:last-child {
@@ -77,14 +73,14 @@
   }
 }
 
-/* List section */
-.listSection {
+/* List section for Gagra */
+.gagraListSection {
   width: 100%;
   max-width: 1228px;
   margin-top: 80px;
 }
 
-.list {
+.gagraList {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -95,7 +91,7 @@
   align-content: flex-start;
 }
 
-.listItem {
+.gagraListItem {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -108,7 +104,7 @@
     content: '';
     position: absolute;
     bottom: -2px;
-    left: 23px; /* начало после стрелки */
+    left: 23px;
     width: calc(100% - 23px);
     height: 2px;
     background-color: #1129bd;
@@ -121,14 +117,14 @@
   }
 }
 
-.arrowIcon {
+.gagraArrow {
   width: 11px;
   height: 22px;
   flex-shrink: 0;
   position: relative;
 }
 
-.arrowIcon::before {
+.gagraArrow::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -140,7 +136,7 @@
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
-.itemText {
+.gagraItemText {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 16px;
@@ -148,14 +144,21 @@
   color: rgba(0, 0, 0, 0.85);
 }
 
-/* Responsive breakpoints */
+/* Description section for Gagra */
+.gagraDescription {
+  max-width: 1228px;
+  width: 100%;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Responsive breakpoints for Gagra */
 
 /* >=1441px */
 @media (min-width: 1441px) {
-  .contentSection {
-    padding: 60px 40px;
-  }
-  .description {
+  .gagraText {
     font-size: 22px;
     line-height: 28px;
   }
@@ -163,13 +166,10 @@
 
 /* 1062px - 1440px */
 @media (max-width: 1440px) and (min-width: 1062px) {
-  .bannerSection {
+  .gagraBanner {
     max-width: 95vw;
   }
-  .contentSection {
-    padding: 55px 35px;
-  }
-  .description {
+  .gagraText {
     font-size: 18px;
     line-height: 24px;
   }
@@ -177,89 +177,92 @@
 
 /* 900px - 1061px */
 @media (max-width: 1061px) and (min-width: 900px) {
-  .mainContent {
+  .gagraContent {
     padding: 50px 20px 40px;
   }
-  .pageTitle {
+  .gagraTitle {
     font-size: 28px;
     line-height: 34px;
   }
-  .bannerSection {
+  .gagraBanner {
     height: 520px;
   }
-  .description {
+  .gagraText {
     font-size: 17px;
   }
 }
 
 /* 769px - 899px */
 @media (max-width: 899px) and (min-width: 769px) {
-  .bannerSection {
+  .gagraBanner {
     height: 480px;
   }
-  .description {
+  .gagraText {
     font-size: 16px;
     line-height: 22px;
   }
-  .listItem {
+  .gagraListItem {
     width: 48%;
   }
 }
 
 /* 601px - 768px */
 @media (max-width: 768px) and (min-width: 601px) {
-  .pageTitle {
+  .gagraTitle {
     font-size: 24px;
     line-height: 30px;
   }
-  .bannerSection {
+  .gagraBanner {
     height: 400px;
     border-radius: 10px;
   }
-  .description {
+  .gagraText {
     font-size: 15px;
     line-height: 20px;
   }
-  .listItem {
+  .gagraListItem {
     width: 48%;
   }
 }
 
 /* 481px - 600px */
 @media (max-width: 600px) and (min-width: 481px) {
-  .mainContent {
+  .gagraContent {
     padding: 40px 15px 30px;
   }
-  .pageTitle {
+  .gagraTitle {
     font-size: 22px;
     line-height: 28px;
   }
-  .bannerSection {
+  .gagraBanner {
     height: 350px;
     border-radius: 8px;
   }
-  .description {
+  .gagraText {
     font-size: 14px;
     line-height: 18px;
   }
-  .listItem {
+  .gagraListItem {
     width: 100%;
+  }
+}
+
+/* <=480px */
+@media (max-width: 480px) {
+  .gagraText {
+    font-size: 13px;
+  }
+  .gagraListItem {
+    width: 100%;
+  }
+  .gagraBanner {
+    height: 300px;
   }
 }
 
 /* 320px - 480px */
 @media (max-width: 480px) and (min-width: 320px) {
-  .bannerContent {
-    padding: 70px 12px;
-  }
-  .bannerText {
-    font-size: 16px;
-    line-height: 24px;
-  }
-  .bannerTextContainer {
-    gap: 20px;
-  }
-  .bannerSection {
+  .gagraBanner {
     height: 280px;
     max-height: 50vw;
   }
@@ -267,44 +270,8 @@
 
 /* Менее 320px */
 @media (max-width: 319px) {
-  .bannerContent {
-    padding: 55px 10px;
-  }
-  .bannerText {
-    font-size: 14px;
-    line-height: 22px;
-  }
-  .bannerTextContainer {
-    gap: 15px;
-  }
-  .bannerSection {
+  .gagraBanner {
     height: 250px;
     max-height: 50vw;
   }
-}
-
-/* <=480px */
-@media (max-width: 480px) {
-  .contentSection {
-    padding: 40px 12px;
-  }
-  .description {
-    font-size: 13px;
-  }
-  .listItem {
-    width: 100%;
-  }
-  .bannerSection {
-    height: 300px;
-  }
-}
-
-// New section for description placed below banner
-.descriptionSection {
-  max-width: 1228px;
-  width: 100%;
-  margin-top: 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
 } 

@@ -5,6 +5,7 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import CitiesSukhum from './CitiesSukhum';
+import CitiesGagra from './CitiesGagra';
 import styles from './Cities.module.scss';
 
 const Cities: React.FC = () => {
@@ -17,6 +18,9 @@ const Cities: React.FC = () => {
 
         {/* Контент города Сухум */}
         <CitiesSukhum />
+        
+        {/* Контент города Гагра */}
+        <CitiesGagra />
       </main>
 
       <Footer />
