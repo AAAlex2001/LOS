@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './CitiesGulripsh.module.scss';
 
 // Полное описание города Гулрыпш
@@ -17,7 +18,7 @@ const gulripshDescription = `Гулрыпш — небольшой курорт�
 
 Из Гулрыпша легко добраться до Сухума или Нового Афона на маршрутке. Посёлок связан с Россией через Сочи, куда ходят автобусы, а ближайший аэропорт — «Бабушара» в Сухуме. Внутри Гулрыпша передвигаться удобнее пешком или на такси, так как территория компактная, а основные места отдыха находятся рядом.`;
 
-// Список категорий для Гулрыпша
+// Список ключевых преимуществ/категорий для блока с иконкой-стрелкой
 const gulripshItems: string[] = [
   'Административные здания',
   'Аптеки',
@@ -36,6 +37,19 @@ const gulripshItems: string[] = [
 ];
 
 const CitiesGulripsh: React.FC = () => {
+  const router = useRouter();
+
+  const handleItemClick = (item: string) => {
+    switch (item) {
+      case 'Административные здания':
+        router.push('/administrative-buildings/Gulripsh');
+        break;
+      // Добавить другие категории по мере необходимости
+      default:
+        break;
+    }
+  };
+
   return (
     <div className={styles.gulripshWrapper}>
       <main className={styles.gulripshContent}>
@@ -65,7 +79,13 @@ const CitiesGulripsh: React.FC = () => {
         <section className={styles.gulripshListSection}>
           <ul className={styles.gulripshList}>
             {gulripshItems.map((item) => (
-              <li key={item} className={styles.gulripshListItem}>
+              <li 
+                key={item} 
+                className={`${styles.gulripshListItem} ${(
+                  item === 'Административные здания'
+                ) ? styles.clickableItem : ''}`}
+                onClick={() => handleItemClick(item)}
+              >
                 <span className={styles.gulripshArrow} />
                 <span className={styles.gulripshItemText}>{item}</span>
               </li>
