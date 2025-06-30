@@ -77,11 +77,9 @@ const CitiesGal: React.FC = () => {
         <section className={styles.galListSection}>
           <ul className={styles.galList}>
             {galItems.map((item) => (
-              <li
-                key={item}
-                className={`${styles.galListItem} ${
-                  item === 'Административные здания' ? styles.clickableItem : ''
-                }`}
+              <li 
+                key={item} 
+                className={`${styles.galListItem} ${(item === 'Административные здания') ? styles.clickableItem : ''}`}
                 onClick={() => handleItemClick(item)}
               >
                 <span className={styles.galArrow} />

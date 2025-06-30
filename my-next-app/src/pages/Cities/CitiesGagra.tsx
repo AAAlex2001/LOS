@@ -77,11 +77,9 @@ const CitiesGagra: React.FC = () => {
         <section className={styles.gagraListSection}>
           <ul className={styles.gagraList}>
             {gagraItems.map((item) => (
-              <li
-                key={item}
-                className={`${styles.gagraListItem} ${
-                  item === 'Административные здания' ? styles.clickableItem : ''
-                }`}
+              <li 
+                key={item} 
+                className={`${styles.gagraListItem} ${(item === 'Административные здания') ? styles.clickableItem : ''}`}
                 onClick={() => handleItemClick(item)}
               >
                 <span className={styles.gagraArrow} />
