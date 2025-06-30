@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './CitiesGagra.module.scss';
 
 // Полное описание города Гагра
@@ -34,6 +35,19 @@ const gagraItems: string[] = [
 ];
 
 const CitiesGagra: React.FC = () => {
+  const router = useRouter();
+
+  const handleItemClick = (item: string) => {
+    switch (item) {
+      case 'Административные здания':
+        router.push('/administrative-buildings/Gagra');
+        break;
+      // Добавить другие категории по мере необходимости
+      default:
+        break;
+    }
+  };
+
   return (
     <div className={styles.gagraWrapper}>
       <main className={styles.gagraContent}>
@@ -63,7 +77,13 @@ const CitiesGagra: React.FC = () => {
         <section className={styles.gagraListSection}>
           <ul className={styles.gagraList}>
             {gagraItems.map((item) => (
-              <li key={item} className={styles.gagraListItem}>
+              <li
+                key={item}
+                className={`${styles.gagraListItem} ${
+                  item === 'Административные здания' ? styles.clickableItem : ''
+                }`}
+                onClick={() => handleItemClick(item)}
+              >
                 <span className={styles.gagraArrow} />
                 <span className={styles.gagraItemText}>{item}</span>
               </li>
