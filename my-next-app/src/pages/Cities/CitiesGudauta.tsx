@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './CitiesGudauta.module.scss';
 
 // Полное описание города Гудаута
@@ -17,7 +18,7 @@ const gudautaDescription = `Гудаута — уютный город на че
 
 Из Гудауты можно доехать до Сухума, Гагры или Нового Афона на автобусе или маршрутке. Город связан с Россией через Сочи, куда ходят регулярные рейсы, а ближайший аэропорт — «Бабушара» в Сухуме. Внутри Гудауты передвигаться удобно пешком или на такси, так как город небольшой и компактный.`;
 
-// Список категорий для Гудауты
+// Список ключевых преимуществ/категорий для блока с иконкой-стрелкой
 const gudautaItems: string[] = [
   'Административные здания',
   'Аптеки',
@@ -36,6 +37,19 @@ const gudautaItems: string[] = [
 ];
 
 const CitiesGudauta: React.FC = () => {
+  const router = useRouter();
+
+  const handleItemClick = (item: string) => {
+    switch (item) {
+      case 'Административные здания':
+        router.push('/administrative-buildings/Gudauta');
+        break;
+      // Добавить другие категории по мере необходимости
+      default:
+        break;
+    }
+  };
+
   return (
     <div className={styles.gudautaWrapper}>
       <main className={styles.gudautaContent}>
@@ -65,7 +79,13 @@ const CitiesGudauta: React.FC = () => {
         <section className={styles.gudautaListSection}>
           <ul className={styles.gudautaList}>
             {gudautaItems.map((item) => (
-              <li key={item} className={styles.gudautaListItem}>
+              <li 
+                key={item} 
+                className={`${styles.gudautaListItem} ${(
+                  item === 'Административные здания'
+                ) ? styles.clickableItem : ''}`}
+                onClick={() => handleItemClick(item)}
+              >
                 <span className={styles.gudautaArrow} />
                 <span className={styles.gudautaItemText}>{item}</span>
               </li>
