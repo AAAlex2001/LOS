@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './CitiesNewafon.module.scss';
 
 // Полное описание города Новый Афон
@@ -36,6 +37,19 @@ const newafonItems: string[] = [
 ];
 
 const CitiesNewafon: React.FC = () => {
+  const router = useRouter();
+
+  const handleItemClick = (item: string) => {
+    switch (item) {
+      case 'Административные здания':
+        router.push('/administrative-buildings/NewAfon');
+        break;
+      default:
+        // Для остальных категорий пока нет страниц
+        break;
+    }
+  };
+
   return (
     <div className={styles.newafonWrapper}>
       <main className={styles.newafonContent}>
@@ -65,7 +79,15 @@ const CitiesNewafon: React.FC = () => {
         <section className={styles.newafonListSection}>
           <ul className={styles.newafonList}>
             {newafonItems.map((item) => (
-              <li key={item} className={styles.newafonListItem}>
+              <li 
+                key={item} 
+                className={`${styles.newafonListItem} ${
+                  item === 'Административные здания' 
+                    ? styles.clickable 
+                    : ''
+                }`}
+                onClick={() => handleItemClick(item)}
+              >
                 <span className={styles.newafonArrow} />
                 <span className={styles.newafonItemText}>{item}</span>
               </li>
