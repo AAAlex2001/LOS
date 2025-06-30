@@ -113,7 +113,21 @@ const CitiesSukhum: React.FC = () => {
             {highlightItems.map((item) => (
               <li 
                 key={item} 
-                className={`${styles.listItem} ${(item === 'Административные здания' || item === 'Аптеки' || item === 'Винодельни' || item === 'Заправки' || item === 'Культурные достопримечательности' || item === 'Мойки' || item === 'Магазины и рынки' || item === 'Отели' || item === 'Парковки' || item === 'Пляжи' || item === 'Салоны красоты' || item === 'Церкви' || item === 'Рестораны') ? styles.clickableItem : ''}`}
+                className={`${styles.listItem} ${(
+                  item === 'Административные здания' || 
+                  item === 'Аптеки' || 
+                  item === 'Винодельни' || 
+                  item === 'Заправки' || 
+                  item === 'Культурные достопримечательности' || 
+                  item === 'Мойки' || 
+                  item === 'Магазины и рынки' || 
+                  item === 'Отели' || 
+                  item === 'Парковки' || 
+                  item === 'Пляжи' || 
+                  item === 'Салоны красоты' || 
+                  item === 'Церкви' || 
+                  item === 'Рестораны'
+                ) ? styles.clickableItem : ''}`}
                 onClick={() => handleItemClick(item)}
               >
                 <span className={styles.arrowIcon} />
