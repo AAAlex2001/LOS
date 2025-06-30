@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './CitiesOchamchira.module.scss';
 
 // Полное описание города Очамчыра
@@ -36,6 +37,19 @@ const ochamchiraItems: string[] = [
 ];
 
 const CitiesOchamchira: React.FC = () => {
+  const router = useRouter();
+
+  const handleItemClick = (item: string) => {
+    switch (item) {
+      case 'Административные здания':
+        router.push('/administrative-buildings/Ochamchira');
+        break;
+      default:
+        // Для остальных категорий пока нет страниц
+        break;
+    }
+  };
+
   return (
     <div className={styles.ochamchiraWrapper}>
       <main className={styles.ochamchiraContent}>
@@ -65,7 +79,15 @@ const CitiesOchamchira: React.FC = () => {
         <section className={styles.ochamchiraListSection}>
           <ul className={styles.ochamchiraList}>
             {ochamchiraItems.map((item) => (
-              <li key={item} className={styles.ochamchiraListItem}>
+              <li 
+                key={item} 
+                className={`${styles.ochamchiraListItem} ${
+                  item === 'Административные здания' 
+                    ? styles.clickable 
+                    : ''
+                }`}
+                onClick={() => handleItemClick(item)}
+              >
                 <span className={styles.ochamchiraArrow} />
                 <span className={styles.ochamchiraItemText}>{item}</span>
               </li>

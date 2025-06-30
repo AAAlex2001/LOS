@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './CitiesPitsunda.module.scss';
 
 // Полное описание города Пицунда
@@ -36,6 +37,19 @@ const pitsundaItems: string[] = [
 ];
 
 const CitiesPitsunda: React.FC = () => {
+  const router = useRouter();
+
+  const handleItemClick = (item: string) => {
+    switch (item) {
+      case 'Административные здания':
+        router.push('/administrative-buildings/Pitsunda');
+        break;
+      default:
+        // Для остальных категорий пока нет страниц
+        break;
+    }
+  };
+
   return (
     <div className={styles.pitsundaWrapper}>
       <main className={styles.pitsundaContent}>
@@ -65,7 +79,15 @@ const CitiesPitsunda: React.FC = () => {
         <section className={styles.pitsundaListSection}>
           <ul className={styles.pitsundaList}>
             {pitsundaItems.map((item) => (
-              <li key={item} className={styles.pitsundaListItem}>
+              <li 
+                key={item} 
+                className={`${styles.pitsundaListItem} ${
+                  item === 'Административные здания' 
+                    ? styles.clickable 
+                    : ''
+                }`}
+                onClick={() => handleItemClick(item)}
+              >
                 <span className={styles.pitsundaArrow} />
                 <span className={styles.pitsundaItemText}>{item}</span>
               </li>

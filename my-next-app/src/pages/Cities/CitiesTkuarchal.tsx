@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './CitiesTkuarchal.module.scss';
 
 // Полное описание города Ткуарчал
@@ -34,6 +35,19 @@ const tkuarchalItems: string[] = [
 ];
 
 const CitiesTkuarchal: React.FC = () => {
+  const router = useRouter();
+
+  const handleItemClick = (item: string) => {
+    switch (item) {
+      case 'Административные здания':
+        router.push('/administrative-buildings/Tkuarchal');
+        break;
+      default:
+        // Для остальных категорий пока нет страниц
+        break;
+    }
+  };
+
   return (
     <div className={styles.tkuarchalWrapper}>
       <main className={styles.tkuarchalContent}>
@@ -63,7 +77,15 @@ const CitiesTkuarchal: React.FC = () => {
         <section className={styles.tkuarchalListSection}>
           <ul className={styles.tkuarchalList}>
             {tkuarchalItems.map((item) => (
-              <li key={item} className={styles.tkuarchalListItem}>
+              <li 
+                key={item} 
+                className={`${styles.tkuarchalListItem} ${
+                  item === 'Административные здания' 
+                    ? styles.clickable 
+                    : ''
+                }`}
+                onClick={() => handleItemClick(item)}
+              >
                 <span className={styles.tkuarchalArrow} />
                 <span className={styles.tkuarchalItemText}>{item}</span>
               </li>
