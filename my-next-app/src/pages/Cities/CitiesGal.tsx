@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './CitiesGal.module.scss';
 
 // Полное описание города Гал
@@ -34,6 +35,19 @@ const galItems: string[] = [
 ];
 
 const CitiesGal: React.FC = () => {
+  const router = useRouter();
+
+  const handleItemClick = (item: string) => {
+    switch (item) {
+      case 'Административные здания':
+        router.push('/administrative-buildings/Gal');
+        break;
+      // Добавить другие категории по мере необходимости
+      default:
+        break;
+    }
+  };
+
   return (
     <div className={styles.galWrapper}>
       <main className={styles.galContent}>
@@ -63,7 +77,13 @@ const CitiesGal: React.FC = () => {
         <section className={styles.galListSection}>
           <ul className={styles.galList}>
             {galItems.map((item) => (
-              <li key={item} className={styles.galListItem}>
+              <li
+                key={item}
+                className={`${styles.galListItem} ${
+                  item === 'Административные здания' ? styles.clickableItem : ''
+                }`}
+                onClick={() => handleItemClick(item)}
+              >
                 <span className={styles.galArrow} />
                 <span className={styles.galItemText}>{item}</span>
               </li>
