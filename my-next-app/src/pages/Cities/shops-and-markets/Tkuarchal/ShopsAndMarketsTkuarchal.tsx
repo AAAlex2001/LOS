@@ -5,89 +5,29 @@ import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
-import styles from './ShopsAndMarketsGudauta.module.scss';
+import styles from './ShopsAndMarketsTkuarchal.module.scss';
 
 const shopsAndMarkets = [
   {
     id: 1,
-    name: 'Premium market',
-    workingHours: 'с 09:00 до 22:30',
-    address: 'Гудаута, ул. Дзидзария, 34',
-    addressLink: 'https://yandex.com/maps/-/CDxGvRLE',
-    contacts: '+7 (940) 910-39-59',
-    image: '/assets/ShopAndMarketsGudauta1.jpg',
-    nameLink: 'http://instagram.com/premium_abkhazia',
-  },
-  {
-    id: 2,
-    name: 'Городской рынок',
-    workingHours: 'с 08: 00 до 17:00',
-    address: 'Гудаута, ул. 23 Июля 25',
-    addressLink: 'https://yandex.com/maps/-/CDxGv0ph',
+    name: 'Магазин «У светофора»',
+    workingHours: 'круглосуточно',
+    address: 'г.Ткуарчал ул.Г.Квеквескири 16',
+    addressLink: 'https://yandex.ru/maps/105966/tkvarcheli/category/grocery/184108031/',
     contacts: null,
-    image: '/assets/ShopAndMarketsGudauta2.jpg',
-    nameLink: null,
-  },
-  {
-    id: 3,
-    name: 'Premium market',
-    workingHours: 'с 09:00 до 22:30',
-    address: 'Гудаута, ул. Чанба 6',
-    addressLink: 'https://yandex.com/maps/-/CDxKIWiT',
-    contacts: null,
-    image: '/assets/ShopAndMarketsGudauta3.jpg',
-    nameLink: null,
-  },
-  {
-    id: 4,
-    name: 'Foodmarket',
-    workingHours: 'с 09:00 до 22:00',
-    address: 'Гудаута, ул. 4 Марта, 8',
-    addressLink: 'https://yandex.com/maps/-/CDxKI-7J',
-    contacts: null,
-    image: '/assets/ShopAndMarketsGudauta4.jpg',
-    nameLink: null,
-  },
-  {
-    id: 5,
-    name: 'Вавилон',
-    workingHours: 'с 09:00 до 19:00',
-    address: 'Гудаута, ул. Тарнава, 16',
-    addressLink: 'https://yandex.com/maps/-/CDxKQE0D',
-    contacts: '+7 (940) 920-62-00',
-    image: '/assets/ShopAndMarketsGudauta5.jpg',
-    nameLink: 'https://vavilongu.ru/',
-  },
-  {
-    id: 6,
-    name: 'Нарт',
-    workingHours: 'с 08:00 до 22:00',
-    address: 'Гудаута, ул. Трапш, 20',
-    addressLink: 'https://yandex.com/maps/-/CDxKQJp1',
-    contacts: null,
-    image: '/assets/ShopAndMarketsGudauta6.jpg',
-    nameLink: null,
-  },
-  {
-    id: 7,
-    name: 'Пятерочка',
-    workingHours: 'с 09:00 до 22:00',
-    address: 'Гудаутский район',
-    addressLink: 'https://yandex.com/maps/-/CDxKQW~v',
-    contacts: null,
-    image: '/assets/ShopAndMarketsGudauta7.jpg',
+    image: '/assets/ShopAndMarketsTkuarchal1.jpg',
     nameLink: null,
   },
 ];
 
-const ShopsAndMarketsGudauta: React.FC = () => {
+const ShopsAndMarketsTkuarchal: React.FC = () => {
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Гудаута: Магазины, рынки</h1>
+          <h1 className={styles.mainTitle}>Ткуарчал: Магазины, рынки</h1>
         </section>
 
         <section className={styles.cardsSection}>
@@ -153,4 +93,4 @@ const ShopsAndMarketsGudauta: React.FC = () => {
   );
 };
 
-export default ShopsAndMarketsGudauta;
+export default ShopsAndMarketsTkuarchal; 
