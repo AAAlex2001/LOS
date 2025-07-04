@@ -130,7 +130,7 @@ const CulturalAttractionsGudauta: React.FC = () => {
               <div className={styles.attractionDescription}>
                 {typeof attraction.description === 'string'
                   ? attraction.description.split('\n\n').map((paragraph, index) => (
-                      <p key={index}>{paragraph}</p>
+                  <p key={index}>{paragraph}</p>
                     ))
                   : <p>{(attraction.description as DescriptionPart[]).map((part, index) =>
                       part.text === '\n\n' ? <br key={index} /> : 
@@ -142,11 +142,11 @@ const CulturalAttractionsGudauta: React.FC = () => {
               <p className={styles.attractionAddress}>
                 {attraction.address && (
                   <>
-                    <strong>Адрес: </strong>
+                <strong>Адрес: </strong>
                     {attraction.addressLink ? (
-                      <a href={attraction.addressLink} target="_blank" rel="noopener noreferrer">
-                        {attraction.address}
-                      </a>
+                <a href={attraction.addressLink} target="_blank" rel="noopener noreferrer">
+                  {attraction.address}
+                </a>
                     ) : (
                       attraction.address
                     )}

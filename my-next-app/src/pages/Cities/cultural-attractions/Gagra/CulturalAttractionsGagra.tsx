@@ -234,7 +234,7 @@ const CulturalAttractionsGagra: React.FC = () => {
               </div>
               <p className={styles.attractionAddress}>
                 <strong>Адрес: </strong>
-                {attraction.address}
+                  {attraction.address}
               </p>
             </article>
           ))}

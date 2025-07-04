@@ -76,16 +76,16 @@ const CulturalAttractionsOchamchira: React.FC = () => {
                 dangerouslySetInnerHTML={{ __html: attraction.description }}
               />
               {attraction.address && (
-                <p className={styles.attractionAddress}>
-                  <strong>Адрес: </strong>
+              <p className={styles.attractionAddress}>
+                <strong>Адрес: </strong>
                   {attraction.addressLink ? (
-                    <a href={attraction.addressLink} target="_blank" rel="noopener noreferrer">
-                      {attraction.address}
-                    </a>
+                <a href={attraction.addressLink} target="_blank" rel="noopener noreferrer">
+                  {attraction.address}
+                </a>
                   ) : (
                     attraction.address
                   )}
-                </p>
+              </p>
               )}
             </article>
           ))}
