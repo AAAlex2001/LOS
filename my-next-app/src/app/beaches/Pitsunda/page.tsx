@@ -1,5 +1,5 @@
-import BeachesPitsundra from '@/pages/Cities/beaches/Pitsundra/BeachesPitsundra';
+import BeachesPitsunda from '@/pages/Cities/beaches/Pitsunda/BeachesPitsunda';
 
 export default function Page() {
-  return <BeachesPitsundra />;
+  return <BeachesPitsunda />;
 } 
