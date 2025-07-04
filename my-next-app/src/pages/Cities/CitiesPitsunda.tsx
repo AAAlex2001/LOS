@@ -36,16 +36,67 @@ const pitsundaItems: string[] = [
   'Церкви',
 ];
 
+const activeCategories: string[] = [
+  'Административные здания',
+  'Аптеки',
+  'Винодельни',
+  'Заправки',
+  'Культурные достопримечательности',
+  'Магазины и рынки',
+  'Мойки',
+  'Отели',
+  'Пляжи',
+  'Рестораны',
+  'Салоны красоты',
+  'Церкви',
+];
+
 const CitiesPitsunda: React.FC = () => {
   const router = useRouter();
 
   const handleItemClick = (item: string) => {
+    if (!activeCategories.includes(item)) {
+      return;
+    }
+
     switch (item) {
       case 'Административные здания':
         router.push('/administrative-buildings/Pitsunda');
         break;
+      case 'Аптеки':
+        router.push('/pharmacy/Pitsunda');
+        break;
+      case 'Винодельни':
+        router.push('/wineries/Pitsunda');
+        break;
+      case 'Заправки':
+        router.push('/gas-stations/Pitsunda');
+        break;
+      case 'Культурные достопримечательности':
+        router.push('/cultural-attractions/Pitsunda');
+        break;
+      case 'Магазины и рынки':
+        router.push('/shops-and-markets/Pitsunda');
+        break;
+      case 'Мойки':
+        router.push('/car-washes/Pitsunda');
+        break;
+      case 'Отели':
+        router.push('/hotels/Pitsunda');
+        break;
+      case 'Пляжи':
+        router.push('/beaches/Pitsunda');
+        break;
+      case 'Рестораны':
+        router.push('/restaurants/Pitsunda');
+        break;
+      case 'Салоны красоты':
+        router.push('/beauty-salons/Pitsunda');
+        break;
+      case 'Церкви':
+        router.push('/churches/Pitsunda');
+        break;
       default:
-        // Для остальных категорий пока нет страниц
         break;
     }
   };
@@ -78,20 +129,21 @@ const CitiesPitsunda: React.FC = () => {
         {/* Список категорий */}
         <section className={styles.pitsundaListSection}>
           <ul className={styles.pitsundaList}>
-            {pitsundaItems.map((item) => (
-              <li 
-                key={item} 
-                className={`${styles.pitsundaListItem} ${
-                  item === 'Административные здания' 
-                    ? styles.clickable 
-                    : ''
-                }`}
-                onClick={() => handleItemClick(item)}
-              >
-                <span className={styles.pitsundaArrow} />
-                <span className={styles.pitsundaItemText}>{item}</span>
-              </li>
-            ))}
+            {pitsundaItems.map((item) => {
+              const isClickable = activeCategories.includes(item);
+              return (
+                <li
+                  key={item}
+                  className={`${styles.pitsundaListItem} ${
+                    isClickable ? styles.clickable : styles.disabled
+                  }`}
+                  onClick={() => handleItemClick(item)}
+                >
+                  <span className={styles.pitsundaArrow} />
+                  <span className={styles.pitsundaItemText}>{item}</span>
+                </li>
+              );
+            })}
           </ul>
         </section>
       </main>
