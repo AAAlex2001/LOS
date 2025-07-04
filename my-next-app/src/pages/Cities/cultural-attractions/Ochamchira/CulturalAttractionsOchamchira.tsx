@@ -62,6 +62,7 @@ const CulturalAttractionsOchamchira: React.FC = () => {
         <section className={styles.attractionsSection}>
           {attractions.map((attraction) => (
             <article key={attraction.id} className={styles.attractionCard}>
+              <h2 className={styles.attractionName}>{attraction.name}</h2>
               <div className={styles.imageContainer}>
                 <Image
                   src={attraction.image}
@@ -70,7 +71,6 @@ const CulturalAttractionsOchamchira: React.FC = () => {
                   className={styles.attractionImage}
                 />
               </div>
-              <h2 className={styles.attractionName}>{attraction.name}</h2>
               <div 
                 className={styles.attractionDescription}
                 dangerouslySetInnerHTML={{ __html: attraction.description }}
