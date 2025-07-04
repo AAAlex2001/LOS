@@ -32,6 +32,9 @@ const highlightItems: string[] = [
   'Церкви',
 ];
 
+// Все категории для Сухума активны
+const activeCategories: string[] = [...highlightItems];
+
 const CitiesSukhum: React.FC = () => {
   const router = useRouter();
 
@@ -110,30 +113,19 @@ const CitiesSukhum: React.FC = () => {
         {/* Список категорий */}
         <section className={styles.listSection}>
           <ul className={styles.list}>
-            {highlightItems.map((item) => (
-              <li 
-                key={item} 
-                className={`${styles.listItem} ${(
-                  item === 'Административные здания' || 
-                  item === 'Аптеки' || 
-                  item === 'Винодельни' || 
-                  item === 'Заправки' || 
-                  item === 'Культурные достопримечательности' || 
-                  item === 'Мойки' || 
-                  item === 'Магазины и рынки' || 
-                  item === 'Отели' || 
-                  item === 'Парковки' || 
-                  item === 'Пляжи' || 
-                  item === 'Салоны красоты' || 
-                  item === 'Церкви' || 
-                  item === 'Рестораны'
-                ) ? styles.clickableItem : ''}`}
-                onClick={() => handleItemClick(item)}
-              >
-                <span className={styles.arrowIcon} />
-                <span className={styles.itemText}>{item}</span>
-              </li>
-            ))}
+            {highlightItems.map((item) => {
+              const isClickable = activeCategories.includes(item);
+              return (
+                <li
+                  key={item}
+                  className={`${styles.listItem} ${isClickable ? styles.clickable : styles.disabled}`}
+                  onClick={() => handleItemClick(item)}
+                >
+                  <span className={styles.arrowIcon} />
+                  <span className={styles.itemText}>{item}</span>
+                </li>
+              );
+            })}
           </ul>
         </section>
       </main>

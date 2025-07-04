@@ -353,4 +353,29 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+.clickable {
+  cursor: pointer;
+  
+  &:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+.disabled {
+  cursor: default;
+
+  .itemText {
+    color: #888;
+  }
+
+  .arrowIcon::before {
+    border-right-color: #888;
+    border-bottom-color: #888;
+  }
+  
+  &:hover::after {
+    transform: scaleX(0);
+  }
 } 

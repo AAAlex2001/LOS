@@ -36,16 +36,63 @@ const ochamchiraItems: string[] = [
   'Церкви',
 ];
 
+const activeCategories: string[] = [
+  'Административные здания',
+  'Аптеки',
+  'Пляжи',
+  'Мойки',
+  'Культурные достопримечательности',
+  'Заправки',
+  'Отели',
+  'Рестораны',
+  'Салоны красоты',
+  'Магазины и рынки',
+  'Церкви',
+];
+
 const CitiesOchamchira: React.FC = () => {
   const router = useRouter();
 
   const handleItemClick = (item: string) => {
+    if (!activeCategories.includes(item)) {
+      return;
+    }
+
     switch (item) {
       case 'Административные здания':
         router.push('/administrative-buildings/Ochamchira');
         break;
+      case 'Аптеки':
+        router.push('/pharmacy/Ochamchira');
+        break;
+      case 'Пляжи':
+        router.push('/beaches/Ochamchira');
+        break;
+      case 'Мойки':
+        router.push('/car-washes/Ochamchira');
+        break;
+      case 'Культурные достопримечательности':
+        router.push('/cultural-attractions/Ochamchira');
+        break;
+      case 'Заправки':
+        router.push('/gas-stations/Ochamchira');
+        break;
+      case 'Отели':
+        router.push('/hotels/Ochamchira');
+        break;
+      case 'Рестораны':
+        router.push('/restaurants/Ochamchira');
+        break;
+      case 'Салоны красоты':
+        router.push('/beauty-salons/Ochamchira');
+        break;
+      case 'Магазины и рынки':
+        router.push('/shops-and-markets/Ochamchira');
+        break;
+      case 'Церкви':
+        router.push('/churches/Ochamchira');
+        break;
       default:
-        // Для остальных категорий пока нет страниц
         break;
     }
   };
@@ -78,20 +125,21 @@ const CitiesOchamchira: React.FC = () => {
         {/* Список категорий */}
         <section className={styles.ochamchiraListSection}>
           <ul className={styles.ochamchiraList}>
-            {ochamchiraItems.map((item) => (
-              <li 
-                key={item} 
-                className={`${styles.ochamchiraListItem} ${
-                  item === 'Административные здания' 
-                    ? styles.clickable 
-                    : ''
-                }`}
-                onClick={() => handleItemClick(item)}
-              >
-                <span className={styles.ochamchiraArrow} />
-                <span className={styles.ochamchiraItemText}>{item}</span>
-              </li>
-            ))}
+            {ochamchiraItems.map((item) => {
+              const isClickable = activeCategories.includes(item);
+              return (
+                <li
+                  key={item}
+                  className={`${styles.ochamchiraListItem} ${
+                    isClickable ? styles.clickable : styles.disabled
+                  }`}
+                  onClick={() => handleItemClick(item)}
+                >
+                  <span className={styles.ochamchiraArrow} />
+                  <span className={styles.ochamchiraItemText}>{item}</span>
+                </li>
+              );
+            })}
           </ul>
         </section>
       </main>
