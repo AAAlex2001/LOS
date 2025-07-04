@@ -70,7 +70,7 @@ const hotels = [
     addressLink: 'https://yandex.ru/maps/-/CDBWBDma',
     contacts: '+7 (940) 723-00-55',
     price: '3800р за ночь для двух гостей',
-    image: '/assets/HotelsGudauta7.jpg',
+    image: '/assets/HotelsGudauta7.png',
   },
 ];
 

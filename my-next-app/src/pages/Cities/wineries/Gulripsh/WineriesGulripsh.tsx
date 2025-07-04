@@ -16,7 +16,7 @@ const wineries = [
     address: 'Гулрыпшский район, поселок Тхубын, 4-й тупик Абжуйского шоссе, 41',
     addressLink: 'https://yandex.com/maps/-/CDxHiIP9',
     contacts: '+7(940)733-13-57\n+7 (940) 777-17-31',
-    image: '/assets/WineriesGulripsh1.jpg',
+    image: '/assets/WineriesGulripsh.jpg',
     nameLink: 'https://www.instagram.com/craft_product_abkhazia',
   }
 ];

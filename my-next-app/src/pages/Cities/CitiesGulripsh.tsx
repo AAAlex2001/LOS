@@ -36,15 +36,66 @@ const gulripshItems: string[] = [
   'Церкви',
 ];
 
+const activeCategories: string[] = [
+  'Административные здания',
+  'Аптеки',
+  'Винодельни',
+  'Заправки',
+  'Культурные достопримечательности',
+  'Магазины и рынки',
+  'Мойки',
+  'Отели',
+  'Пляжи',
+  'Рестораны',
+  'Салоны красоты',
+  'Церкви',
+];
+
 const CitiesGulripsh: React.FC = () => {
   const router = useRouter();
 
   const handleItemClick = (item: string) => {
+    if (!activeCategories.includes(item)) {
+      return;
+    }
+
     switch (item) {
       case 'Административные здания':
         router.push('/administrative-buildings/Gulripsh');
         break;
-      // Добавить другие категории по мере необходимости
+      case 'Аптеки':
+        router.push('/pharmacy/Gulripsh');
+        break;
+      case 'Винодельни':
+        router.push('/wineries/Gulripsh');
+        break;
+      case 'Заправки':
+        router.push('/gas-stations/Gulripsh');
+        break;
+      case 'Культурные достопримечательности':
+        router.push('/cultural-attractions/Gulripsh');
+        break;
+      case 'Магазины и рынки':
+        router.push('/shops-and-markets/Gulripsh');
+        break;
+      case 'Мойки':
+        router.push('/car-washes/Gulripsh');
+        break;
+      case 'Отели':
+        router.push('/hotels/Gulripsh');
+        break;
+      case 'Пляжи':
+        router.push('/beaches/Gulripsh');
+        break;
+      case 'Рестораны':
+        router.push('/restaurants/Gulripsh');
+        break;
+      case 'Салоны красоты':
+        router.push('/beauty-salons/Gulripsh');
+        break;
+      case 'Церкви':
+        router.push('/churches/Gulripsh');
+        break;
       default:
         break;
     }
@@ -78,18 +129,21 @@ const CitiesGulripsh: React.FC = () => {
         {/* Список категорий */}
         <section className={styles.gulripshListSection}>
           <ul className={styles.gulripshList}>
-            {gulripshItems.map((item) => (
-              <li 
-                key={item} 
-                className={`${styles.gulripshListItem} ${(
-                  item === 'Административные здания'
-                ) ? styles.clickableItem : ''}`}
-                onClick={() => handleItemClick(item)}
-              >
-                <span className={styles.gulripshArrow} />
-                <span className={styles.gulripshItemText}>{item}</span>
-              </li>
-            ))}
+            {gulripshItems.map((item) => {
+              const isClickable = activeCategories.includes(item);
+              return (
+                <li
+                  key={item}
+                  className={`${styles.gulripshListItem} ${
+                    isClickable ? styles.clickable : styles.disabled
+                  }`}
+                  onClick={() => handleItemClick(item)}
+                >
+                  <span className={styles.gulripshArrow} />
+                  <span className={styles.gulripshItemText}>{item}</span>
+                </li>
+              );
+            })}
           </ul>
         </section>
       </main>

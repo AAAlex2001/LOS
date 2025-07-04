@@ -36,15 +36,66 @@ const gudautaItems: string[] = [
   'Церкви',
 ];
 
+const activeCategories: string[] = [
+  'Административные здания',
+  'Аптеки',
+  'Винодельни',
+  'Заправки',
+  'Культурные достопримечательности',
+  'Магазины и рынки',
+  'Мойки',
+  'Отели',
+  'Пляжи',
+  'Рестораны',
+  'Салоны красоты',
+  'Церкви',
+];
+
 const CitiesGudauta: React.FC = () => {
   const router = useRouter();
 
   const handleItemClick = (item: string) => {
+    if (!activeCategories.includes(item)) {
+      return;
+    }
+
     switch (item) {
       case 'Административные здания':
         router.push('/administrative-buildings/Gudauta');
         break;
-      // Добавить другие категории по мере необходимости
+      case 'Аптеки':
+        router.push('/pharmacy/Gudauta');
+        break;
+      case 'Винодельни':
+        router.push('/wineries/Gudauta');
+        break;
+      case 'Заправки':
+        router.push('/gas-stations/Gudauta');
+        break;
+      case 'Культурные достопримечательности':
+        router.push('/cultural-attractions/Gudauta');
+        break;
+      case 'Магазины и рынки':
+        router.push('/shops-and-markets/Gudauta');
+        break;
+      case 'Мойки':
+        router.push('/car-washes/Gudauta');
+        break;
+      case 'Отели':
+        router.push('/hotels/Gudauta');
+        break;
+      case 'Пляжи':
+        router.push('/beaches/Gudauta');
+        break;
+      case 'Рестораны':
+        router.push('/restaurants/Gudauta');
+        break;
+      case 'Салоны красоты':
+        router.push('/beauty-salons/Gudauta');
+        break;
+      case 'Церкви':
+        router.push('/churches/Gudauta');
+        break;
       default:
         break;
     }
@@ -78,18 +129,21 @@ const CitiesGudauta: React.FC = () => {
         {/* Список категорий */}
         <section className={styles.gudautaListSection}>
           <ul className={styles.gudautaList}>
-            {gudautaItems.map((item) => (
-              <li 
-                key={item} 
-                className={`${styles.gudautaListItem} ${(
-                  item === 'Административные здания'
-                ) ? styles.clickableItem : ''}`}
-                onClick={() => handleItemClick(item)}
-              >
-                <span className={styles.gudautaArrow} />
-                <span className={styles.gudautaItemText}>{item}</span>
-              </li>
-            ))}
+            {gudautaItems.map((item) => {
+              const isClickable = activeCategories.includes(item);
+              return (
+                <li
+                  key={item}
+                  className={`${styles.gudautaListItem} ${
+                    isClickable ? styles.clickable : styles.disabled
+                  }`}
+                  onClick={() => handleItemClick(item)}
+                >
+                  <span className={styles.gudautaArrow} />
+                  <span className={styles.gudautaItemText}>{item}</span>
+                </li>
+              );
+            })}
           </ul>
         </section>
       </main>
