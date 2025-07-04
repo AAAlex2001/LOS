@@ -5,136 +5,128 @@ import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
-import styles from './HotelsSukhum.module.scss';
+import styles from './HotelsGagra.module.scss';
 
 // Данные отелей
 const hotels = [
   {
     id: 1,
-    name: 'Отель Диоскурия',
-    address: 'ул. Генерала В.Г. Аршба, 45',
-    addressLink: 'https://yandex.ru/maps/-/CDBWJJMn',
-    contacts: '+7(940)934-41-41',
-    price: '4500р за ночь для двух гостей',
-    image: '/assets/HotelsSukhum1.jpg',
+    name: 'Гранд Отель Абхазия',
+    address: 'г. Гагра, просп. Ардзинба, 237, Абхазия',
+    addressLink: 'https://yandex.ru/maps/-/CDBKVV35',
+    contacts: '+7-940-734-65-64',
+    price: '3500р За ночь для 2 гостей',
+    image: '/assets/HotelsGagra1.jpg',
   },
   {
     id: 2,
-    name: 'Garuda Boutique Hotel',
-    address: 'ул. Бубновой, 33',
-    addressLink: 'https://yandex.ru/maps/-/CDBWJC36',
-    contacts: '+7 (940) 799-00-00',
-    price: '6000р за ночь для двух гостей',
-    image: '/assets/HotelsSukhum2.jpg',
+    name: 'Amran(gagra), Klubny Hotel',
+    address: 'Пионерская ул., 5, Гагра',
+    addressLink: 'https://yandex.ru/maps/-/CDBKVG4p',
+    contacts: '+7 (940) 962-54-46',
+    price: '4200р За 1 ночь для двух гостей',
+    image: '/assets/HotelsGagra2.jpg',
   },
   {
     id: 3,
-    name: 'Leon Boutique Hotel',
-    address: 'Читанава, 6',
-    addressLink: 'https://yandex.ru/maps/-/CDBWNE6N',
-    contacts: '+7 (940) 720-11-00\n+7 (940) 962-11-00',
-    price: '3500р за ночь для двух гостей',
-    image: '/assets/HotelsSukhum3.jpg',
+    name: 'Отель Абаата',
+    address: 'проспект Ардзинба, 115',
+    addressLink: 'https://yandex.ru/maps/-/CDBKVG1e',
+    contacts: '+7(940)935-72-41',
+    price: '6800р За ночь для двух гостей',
+    image: '/assets/HotelsGagra3.jpg',
   },
   {
     id: 4,
-    name: 'Anana Hotel',
-    address: 'г. Сухум, ул.Пате-Ипа 14',
-    addressLink: 'https://yandex.ru/maps/-/CDBWNXzW',
-    contacts: '+7 (940) 764-44-46',
-    price: '11000р за ночь для двух гостей',
-    image: '/assets/HotelsSukhum4.jpg',
+    name: 'Отель Garden Resort',
+    address: 'просп. Ардзинба, 1, Гагра',
+    addressLink: 'https://yandex.ru/maps/-/CDBKVK9v',
+    contacts: '+79409328855',
+    price: '17600p за 2 ночи для двух гостей',
+    image: '/assets/HotelsGagra4.jpg',
   },
   {
     id: 5,
-    name: 'Отель ДЭМ',
-    address: 'набережная Махаджиров, 4',
-    addressLink: 'https://yandex.ru/maps/-/CDBWV4lm',
-    contacts: '+7 (940) 911-99-00\n+7 (940) 999-39-59',
-    price: '9900р за ночь для двух гостей',
-    image: '/assets/HotelsSukhum5.jpg',
+    name: 'Отель Taminik',
+    address: 'улица Адыгаа, 149А',
+    addressLink: 'https://yandex.ru/maps/-/CDBKVSyY',
+    contacts: '+79407100044',
+    price: '1800 за ночь для двух гостей',
+    image: '/assets/HotelsGagra5.jpg',
   },
   {
     id: 6,
-    name: 'Boutigue hotel Amra',
-    address: 'ул. Конфедератов, 28',
-    addressLink: 'https://yandex.ru/maps/-/CDBWV6OY',
-    contacts: '+7 (940) 935-00-55',
-    price: '5500р за ночь для двух гостей',
-    image: '/assets/HotelsSukhum6.jpg',
+    name: 'Мини-Отель Тихий Дон',
+    address: 'проспект Ардзинба, 161',
+    addressLink: 'https://yandex.ru/maps/-/CDBKVW9W',
+    contacts: '+7 (940) 996-15-55',
+    price: '4500Р за ночь для двух гостей',
+    image: '/assets/HotelsGagra6.jpg',
   },
   {
     id: 7,
-    name: 'Дом Москвы',
-    address: 'ул. Когония, 63',
-    addressLink: 'https://yandex.ru/maps/-/CDBWVO4q',
-    contacts: '+7 (940) 721-88-00',
-    price: '5800р за ночь для двух гостей',
-    image: '/assets/HotelsSukhum7.png',
+    name: 'Отель Apsuana Rosе',
+    address: 'ул. Апсха Леона, 33., Гагра',
+    addressLink: 'https://yandex.ru/maps/-/CDBKV0yU',
+    contacts: '+7 (940) 938-27-27',
+    price: '6050р за ночь для двух гостей',
+    image: '/assets/HotelsGagra7.jpg',
   },
   {
     id: 8,
-    name: 'Отель Рица',
-    address: 'просп. Леона, 2',
-    addressLink: 'https://yandex.ru/maps/-/CDBWVD3l',
-    contacts: '+7 (940) 915-32-42 (WhatsApp)',
-    price: '5500р за ночь для двух гостей',
-    image: '/assets/HotelsSukhum8.png',
+    name: 'Вилла Леона',
+    address: 'Гагрипшское ущелье',
+    addressLink: 'https://yandex.ru/maps/-/CDBKVD3z',
+    contacts: '+7 (940) 779-79-67',
+    price: '4500p за ночь для двух гостей',
+    image: '/assets/HotelsGagra8.jpg',
   },
   {
     id: 9,
-    name: 'Hotel & Suite AinLan',
-    address: 'ул. Агумава, 44, Сухум',
-    addressLink: 'https://yandex.ru/maps/-/CDBWV-PE',
-    contacts: '+7 (940) 990-28-49',
-    price: '10000р за ночь для двух гостей',
-    image: '/assets/HotelsSukhum9.jpg',
+    name: 'Отель Гега',
+    address: 'ул. Демерджипа, 130А, Гагра',
+    addressLink: 'https://yandex.ru/maps/-/CDBKVL5I',
+    contacts: '+7 (940) 710-77-00',
+    price: '8400р за ночь для двух гостей',
+    image: '/assets/HotelsGagra9.jpg',
   },
   {
     id: 10,
-    name: 'Мини-отель Rodnik Village&Spa',
-    address: 'Гулрыпшский район, село Пщап',
-    addressLink: 'https://yandex.ru/maps/-/CDBWZS4P',
-    contacts: '+7 (940) 700-26-26\n+7 (940) 711-07-20',
-    price: '5000р за ночь для двух гостей',
-    image: '/assets/HotelsSukhum10.jpg',
+    name: 'Бутик-Отель Bazalt Club',
+    address: 'улица Октябрьская, д. 271/8, Цандрыпш',
+    addressLink: 'https://yandex.ru/maps/-/CDBKVPzc',
+    contacts: '+7 (940)776-79-29',
+    price: '10947p за ночь для двух гостей',
+    image: '/assets/HotelsGagra10.jpg',
   },
   {
     id: 11,
-    name: 'Отель Апсилиа',
-    address: 'село Мачара, 124',
-    addressLink: 'https://yandex.ru/maps/-/CDBWZHop',
-    contacts: '+79409595444 (WhatsApp)',
+    name: 'Гостевой дом Абхазский берег',
+    address: 'ул. Горького, 15, Цандрыпш',
+    addressLink: 'https://yandex.ru/maps/-/CDBKVT4r',
+    contacts: '+7 (940) 935-62-80',
     price: '6500р за ночь для двух гостей',
-    image: '/assets/HotelsSukhum11.jpg',
+    image: '/assets/HotelsGagra11.jpg',
   },
   {
     id: 12,
-    name: 'Black Sea',
-    address: 'Погрузочный тупик, 21, Сухум',
-    addressLink: 'https://yandex.ru/maps/-/CDBWZXZx',
-    contacts: '+7 (940) 714-65-55',
-    price: '8500р за ночь для двух гостей',
-    image: '/assets/HotelsSukhum12.jpg',
-  },
-  {
-    id: 13,
-    name: 'Спа – отель Грейс Аква Вилла',
-    address: 'г. Сухум , ул.Казачья,пр.1 дом 30',
-    contacts: 'тел.  +78007078566',
-    price: '6513р за ночь для двух гостей',
-    image: '/assets/HotelsSukhum13.jpg',
+    name: 'Отель Европа',
+    address: 'г. Гагра, ул. Авидзба, д. 1.',
+    addressLink: 'https://yandex.ru/maps/-/CDBKVT8s',
+    contacts: '+7 (940) 742-33-00',
+    price: '4300р за ночь для двух гостей',
+    image: '/assets/HotelsGagra12.jpg',
   },
 ];
 
-const HotelsSukhum: React.FC = () => {
+const HotelsGagra: React.FC = () => {
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Сухум: отели</h1>
+          <h1 className={styles.mainTitle}>Гагра: отели</h1>
         </section>
 
         <section className={styles.cardsSection}>
@@ -190,4 +182,4 @@ const HotelsSukhum: React.FC = () => {
   );
 };
 
-export default HotelsSukhum; 
+export default HotelsGagra; 
