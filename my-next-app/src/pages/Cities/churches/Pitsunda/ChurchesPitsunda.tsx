@@ -5,43 +5,31 @@ import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
-import styles from './ChurchesSukhum.module.scss';
+import styles from './ChurchesPitsunda.module.scss';
 
 const churches = [
   {
     id: 1,
-    name: 'Сухумский Кафедральный собор Благовещения Пресвятой Богородицы',
-    address: 'Сухум, ул. Фазиля Искандера, 53',
-    addressLink: 'https://yandex.com/maps/-/CDxrU24~',
-    workingHours: 'с 09:00 до 20:00',
-    image: '/assets/ChurchesSukhum1.png',
-  },
-  {
-    id: 2,
-    name: 'Храм святого Иоанна Златоуста',
-    address: 'Сухумский район, урочище Каман',
-    addressLink: 'https://yandex.com/maps/-/CDxr4QzE',
-    workingHours: 'с 10:00 до 17:00',
-    image: '/assets/ChurchesSukhum2.png',
-  },
-  {
-    id: 3,
-    name: 'Церковь Спаса Преображения',
-    address: 'Сухумский район, село Яштуха, Михайловское кладбище',
-    addressLink: 'https://yandex.com/maps/-/CHAzEZoO',
-    workingHours: 'с 08:00 до 18:00',
-    image: '/assets/ChurchesSukhum3.jpg',
+    name: 'Храм-часовня Пицундских Святых',
+    address: 'Гагрский район, Пицунда ул. Гицба, 8',
+    addressLink: 'https://yandex.com/maps/-/CDTxUNNZ',
+    phone: '+7 (940) 743-14-14',
+    website: 'http://hrampitsunda.tilda.ws/',
+    websiteLink: 'http://hrampitsunda.tilda.ws/',
+    workingHours: 'ежедневно с 10:00 до 18:00',
+    moreInfo: 'Время концертов в 17:00 (в пик сезона 20:00)\nБилеты в кассах органного зала продаются в день концерта с 13:00\nСтоимость билета: экскурсия по музею 50- 100руб., дети до 5 лет – бесплатно.\nБилет для взрослых на органный концерт – 1300руб., дети от 6 до 12 лет -500руб.',
+    image: '/assets/ChurchesPitsunda1.jpg',
   },
 ];
 
-const ChurchesSukhum: React.FC = () => {
+const ChurchesPitsunda: React.FC = () => {
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Сухум: церкви и храмы</h1>
+          <h1 className={styles.mainTitle}>Пицунда: церкви и храмы</h1>
         </section>
 
         <section className={styles.cardsSection}>
@@ -71,10 +59,33 @@ const ChurchesSukhum: React.FC = () => {
                     </span>
                   </div>
 
+                  {church.phone && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoValue}>{church.phone}</span>
+                    </div>
+                  )}
+
+                  {church.website && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Сайт:</span>
+                      <span className={`${styles.infoValue} ${styles.addressLink}`}>
+                        <a href={church.websiteLink} target="_blank" rel="noopener noreferrer">{church.website}</a>
+                      </span>
+                    </div>
+                  )}
+
                   {church.workingHours && (
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>Часы работы:</span>
                       <span className={styles.infoValue}>{church.workingHours}</span>
+                    </div>
+                  )}
+
+                  {church.moreInfo && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Дополнительно:</span>
+                      <span className={styles.infoValue} style={{ whiteSpace: 'pre-wrap' }}>{church.moreInfo}</span>
                     </div>
                   )}
                 </div>
@@ -90,4 +101,4 @@ const ChurchesSukhum: React.FC = () => {
   );
 };
 
-export default ChurchesSukhum; 
+export default ChurchesPitsunda; 

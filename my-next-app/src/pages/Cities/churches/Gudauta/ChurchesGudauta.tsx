@@ -5,43 +5,34 @@ import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
-import styles from './ChurchesSukhum.module.scss';
+import styles from './ChurchesGudauta.module.scss';
 
 const churches = [
   {
     id: 1,
-    name: 'Сухумский Кафедральный собор Благовещения Пресвятой Богородицы',
-    address: 'Сухум, ул. Фазиля Искандера, 53',
-    addressLink: 'https://yandex.com/maps/-/CDxrU24~',
+    name: 'Церковь Покрова Пресвятой Богородицы',
+    address: 'ул. Харазия, 26, Гудаута',
+    addressLink: 'https://yandex.com/maps/-/CDxK5MOO',
     workingHours: 'с 09:00 до 20:00',
-    image: '/assets/ChurchesSukhum1.png',
+    image: '/assets/ChurchesGudauta1.jpg',
   },
   {
     id: 2,
-    name: 'Храм святого Иоанна Златоуста',
-    address: 'Сухумский район, урочище Каман',
-    addressLink: 'https://yandex.com/maps/-/CDxr4QzE',
-    workingHours: 'с 10:00 до 17:00',
-    image: '/assets/ChurchesSukhum2.png',
-  },
-  {
-    id: 3,
-    name: 'Церковь Спаса Преображения',
-    address: 'Сухумский район, село Яштуха, Михайловское кладбище',
-    addressLink: 'https://yandex.com/maps/-/CHAzEZoO',
-    workingHours: 'с 08:00 до 18:00',
-    image: '/assets/ChurchesSukhum3.jpg',
+    name: 'Храм Успения Пресвятой Богородицы',
+    address: 'Гудаутский район, село Лыхны, Лыхны Агу',
+    addressLink: 'https://yandex.com/maps/-/CDxKBUKH',
+    image: '/assets/ChurchesGudauta2.jpg',
   },
 ];
 
-const ChurchesSukhum: React.FC = () => {
+const ChurchesGudauta: React.FC = () => {
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Сухум: церкви и храмы</h1>
+          <h1 className={styles.mainTitle}>Гудаута: церкви и храмы</h1>
         </section>
 
         <section className={styles.cardsSection}>
@@ -90,4 +81,4 @@ const ChurchesSukhum: React.FC = () => {
   );
 };
 
-export default ChurchesSukhum; 
+export default ChurchesGudauta; 
