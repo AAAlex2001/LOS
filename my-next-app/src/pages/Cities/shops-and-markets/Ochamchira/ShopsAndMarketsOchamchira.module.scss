@@ -1,0 +1,443 @@
+// Main container
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.mainContent {
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 120px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+  margin-top: -80px;
+  
+  @media (min-width: 1200px) {
+    padding: 120px 344px 60px;
+  }
+}
+
+// Title section
+.titleSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 10px 32px;
+  width: 100%;
+  max-width: 920px;
+  min-height: 130px;
+}
+
+.mainTitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 44px;
+  text-align: center;
+  color: #1129bd;
+  width: 100%;
+  margin: 0;
+}
+
+// Cards section
+.cardsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  max-width: 1232px;
+}
+
+// Shop card
+.shopCard {
+  display: grid;
+  grid-template-columns: 49.19% 50.81%;
+  column-gap: 32px;
+  width: 100%;
+  min-height: 390px;
+  position: relative;
+}
+
+// Image container (left side)
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 390px;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.shopImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+// Info container (right side)
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 40px;
+  gap: 24px;
+  width: 100%;
+  min-height: 390px;
+  background: rgba(17, 41, 189, 0.1);
+  border: 1px solid #d5daef;
+  border-radius: 15px;
+  box-sizing: border-box;
+}
+
+// Shop name
+.shopName {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 39px;
+  color: #1129bd;
+  margin: 0;
+  width: 100%;
+  overflow-wrap: break-word;
+  
+  &.clickable {
+    text-decoration: underline;
+    cursor: pointer;
+    
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  
+  a {
+    text-decoration: underline;
+    cursor: pointer;
+    color: inherit;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+// Info block
+.infoBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.infoLabel {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 31px;
+  color: #1129bd;
+  margin: 0;
+}
+
+.infoValue {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 31px;
+  color: #1129bd;
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  
+  &.addressLink {
+    cursor: pointer;
+    a {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* Responsive Design */
+
+/* Large Desktop (1441px+) */
+@media (min-width: 1441px) {
+  .mainContent {
+    padding: 120px calc((100vw - 1232px) / 2) 60px;
+  }
+}
+
+/* Desktop (1200px - 1440px) */
+@media (max-width: 1440px) and (min-width: 1200px) {
+  .mainContent {
+    padding: 100px 5% 50px;
+  }
+  
+  .titleSection {
+    width: 100%;
+    max-width: 920px;
+    height: auto;
+  }
+  
+  .cardsSection {
+    width: 100%;
+    max-width: 1232px;
+  }
+  
+  .shopCard {
+    width: 100%;
+  }
+}
+
+/* Tablet Large (900px - 1199px) */
+@media (max-width: 1199px) and (min-width: 900px) {
+  .mainContent {
+    padding: 100px 4% 40px;
+    gap: 60px;
+  }
+  
+  .mainTitle {
+    font-size: 32px;
+    line-height: 27px;
+  }
+  
+  .titleSection {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+  }
+  
+  .cardsSection {
+    width: 100%;
+    gap: 30px;
+  }
+  
+  .shopCard {
+    grid-template-columns: 49.19% 50.81%;
+    min-height: 350px;
+  }
+  
+  .imageContainer,
+  .infoContainer {
+    min-height: 350px;
+  }
+  
+  .shopName {
+    font-size: 28px;
+    line-height: 34px;
+  }
+  
+  .infoLabel, .infoValue {
+    font-size: 22px;
+    line-height: 27px;
+  }
+}
+
+/* Tablet (769px - 899px) */
+@media (max-width: 899px) and (min-width: 769px) {
+  .mainContent {
+    padding: 100px 3% 30px;
+    gap: 50px;
+  }
+  
+  .mainTitle {
+    font-size: 28px;
+    line-height: 36px;
+  }
+  
+  .shopCard {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .imageContainer {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    border-radius: 15px;
+    aspect-ratio: 1/1;
+  }
+  
+  .infoContainer {
+    width: 100%;
+    border-radius: 15px;
+    padding: 30px;
+    min-height: auto;
+  }
+  
+  .shopName {
+    font-size: 26px;
+    line-height: 32px;
+  }
+  
+  .infoLabel, .infoValue {
+    font-size: 20px;
+    line-height: 25px;
+  }
+}
+
+/* Mobile Large (481px - 768px) */
+@media (max-width: 768px) and (min-width: 481px) {
+  .mainContent {
+    padding: 100px 4% 25px;
+    gap: 40px;
+  }
+  
+  .mainTitle {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  
+  .cardsSection {
+    gap: 25px;
+  }
+  
+  .shopCard {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+    gap: 15px;
+  }
+  
+  .imageContainer {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    border-radius: 15px;
+    aspect-ratio: 1/1;
+  }
+  
+  .infoContainer {
+    width: 100%;
+    padding: 25px;
+    gap: 20px;
+    border-radius: 15px;
+    min-height: auto;
+  }
+  
+  .shopName {
+    font-size: 22px;
+    line-height: 28px;
+  }
+  
+  .infoLabel, .infoValue {
+    font-size: 18px;
+    line-height: 23px;
+  }
+}
+
+/* Mobile (320px - 480px) */
+@media (max-width: 480px) {
+  .mainContent {
+    padding: 100px 5% 20px;
+    gap: 30px;
+  }
+  
+  .mainTitle {
+    font-size: 20px;
+    line-height: 26px;
+  }
+  
+  .cardsSection {
+    gap: 20px;
+  }
+  
+  .shopCard {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+    gap: 12px;
+  }
+  
+  .imageContainer {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    border-radius: 15px;
+    aspect-ratio: 1/1;
+  }
+  
+  .infoContainer {
+    width: 100%;
+    padding: 20px;
+    gap: 16px;
+    border-radius: 15px;
+    min-height: auto;
+  }
+  
+  .shopName {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  
+  .infoLabel, .infoValue {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  
+  .infoBlock {
+    gap: 2px;
+  }
+}
+
+/* Mobile Small (< 320px) */
+@media (max-width: 319px) {
+  .mainContent {
+    padding: 100px 3% 15px;
+  }
+  
+  .mainTitle {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  
+  .shopCard {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+    gap: 10px;
+  }
+  
+  .imageContainer {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    border-radius: 15px;
+    aspect-ratio: 1/1;
+  }
+  
+  .infoContainer {
+    width: 100%;
+    border-radius: 15px;
+    padding: 15px;
+    gap: 12px;
+    min-height: auto;
+  }
+  
+  .shopName {
+    font-size: 16px;
+    line-height: 22px;
+  }
+  
+  .infoLabel, .infoValue {
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+// Preserve full-width layout on ultra-wide screens
+@media (min-width: 1920px) {
+  .mainContent {
+    padding: 120px 20px 60px;
+  }
+} 
