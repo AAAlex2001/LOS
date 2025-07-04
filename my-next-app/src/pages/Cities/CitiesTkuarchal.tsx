@@ -34,16 +34,51 @@ const tkuarchalItems: string[] = [
   'Церкви',
 ];
 
+const activeCategories: string[] = [
+  'Административные здания',
+  'Аптеки',
+  'Винодельни',
+  'Культурные достопримечательности',
+  'Магазины и рынки',
+  'Отели',
+  'Рестораны',
+  'Церкви',
+];
+
 const CitiesTkuarchal: React.FC = () => {
   const router = useRouter();
 
   const handleItemClick = (item: string) => {
+    if (!activeCategories.includes(item)) {
+      return;
+    }
+
     switch (item) {
       case 'Административные здания':
         router.push('/administrative-buildings/Tkuarchal');
         break;
+      case 'Аптеки':
+        router.push('/pharmacy/Tkuarchal');
+        break;
+      case 'Винодельни':
+        router.push('/wineries/Tkuarchal');
+        break;
+      case 'Культурные достопримечательности':
+        router.push('/cultural-attractions/Tkuarchal');
+        break;
+      case 'Магазины и рынки':
+        router.push('/shops-and-markets/Tkuarchal');
+        break;
+      case 'Отели':
+        router.push('/hotels/Tkuarchal');
+        break;
+      case 'Рестораны':
+        router.push('/restaurants/Tkuarchal');
+        break;
+      case 'Церкви':
+        router.push('/churches/Tkuarchal');
+        break;
       default:
-        // Для остальных категорий пока нет страниц
         break;
     }
   };
@@ -76,20 +111,21 @@ const CitiesTkuarchal: React.FC = () => {
         {/* Список категорий */}
         <section className={styles.tkuarchalListSection}>
           <ul className={styles.tkuarchalList}>
-            {tkuarchalItems.map((item) => (
-              <li 
-                key={item} 
-                className={`${styles.tkuarchalListItem} ${
-                  item === 'Административные здания' 
-                    ? styles.clickable 
-                    : ''
-                }`}
-                onClick={() => handleItemClick(item)}
-              >
-                <span className={styles.tkuarchalArrow} />
-                <span className={styles.tkuarchalItemText}>{item}</span>
-              </li>
-            ))}
+            {tkuarchalItems.map((item) => {
+              const isClickable = activeCategories.includes(item);
+              return (
+                <li
+                  key={item}
+                  className={`${styles.tkuarchalListItem} ${
+                    isClickable ? styles.clickable : styles.disabled
+                  }`}
+                  onClick={() => handleItemClick(item)}
+                >
+                  <span className={styles.tkuarchalArrow} />
+                  <span className={styles.tkuarchalItemText}>{item}</span>
+                </li>
+              );
+            })}
           </ul>
         </section>
       </main>
