@@ -5,56 +5,36 @@ import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
-import styles from './CarWashesSukhum.module.scss';
+import styles from './CarWashesNewAfon.module.scss';
 
-// Данные автомоек
-const carWashes = [
+const carWashes: {
+  id: number;
+  name: string;
+  nameLink?: string;
+  workingHours?: string;
+  address: string;
+  addressLink?: string;
+  contacts?: string;
+  image: string;
+}[] = [
   {
     id: 1,
-    name: 'М-1',
-    nameLink: 'https://instagram.com/mo1ka_m1?igshid=MWZjMTM2ODFkZg==',
+    name: 'Самомой',
     workingHours: 'круглосуточно',
-    address: 'Сухум, ул. Аидгылара, 2',
-    addressLink: 'https://yandex.com/maps/-/CDhUn-~H',
-    contacts: '+7 (940) 945-01-01',
+    address: 'Гудаутский район, Новый Афон',
+    addressLink: 'https://yandex.com/maps/-/CDxc5H~d',
     image: '/assets/CarWashesNewAfon1.jpg'
-  },
-  {
-    id: 2,
-    name: 'Автомойка АЗИД',
-    workingHours: 'с 09:00 до 21:00',
-    address: 'Сухум, Маяцкий район',
-    addressLink: 'https://yandex.com/maps/-/CDhUvY4z',
-    contacts: '+7 (940) 226-34-04',
-    image: '/assets/CarWashesSukhum2.png'
-  },
-  {
-    id: 3,
-    name: 'Мойка AquaRalli',
-    workingHours: 'круглосуточно',
-    address: 'Сухум, ул. Эшба, 147',
-    addressLink: 'https://yandex.com/maps/-/CDhUvL0U',
-    contacts: '+7 (940) 772-39-33',
-    image: '/assets/CarWashesSukhum3.png'
-  },
-  {
-    id: 4,
-    name: 'Автомойка Сухум',
-    workingHours: '09:00 до 21:00',
-    address: 'улица Бейгуа',
-    addressLink: 'https://yandex.com/maps/-/CDhUzUIi',
-    image: '/assets/CarWashesSukhum4.png'
   }
 ];
 
-const CarWashesSukhum: React.FC = () => {
+const CarWashesNewAfon: React.FC = () => {
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Сухум: автомойки</h1>
+          <h1 className={styles.mainTitle}>Новый Афон: автомойки</h1>
         </section>
 
         <section className={styles.cardsSection}>
@@ -118,4 +98,4 @@ const CarWashesSukhum: React.FC = () => {
   );
 };
 
-export default CarWashesSukhum; 
+export default CarWashesNewAfon; 
