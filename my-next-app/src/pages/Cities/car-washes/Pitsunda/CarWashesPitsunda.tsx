@@ -17,7 +17,7 @@ const carWashes = [
     address: 'Сухум, ул. Аидгылара, 2',
     addressLink: 'https://yandex.com/maps/-/CDhUn-~H',
     contacts: '+7 (940) 945-01-01',
-    image: '/assets/CarWashesSukhum1.png'
+    image: '/assets/CarWashesPitsunda1.jpg'
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const carWashes = [
     address: 'Сухум, Маяцкий район',
     addressLink: 'https://yandex.com/maps/-/CDhUvY4z',
     contacts: '+7 (940) 226-34-04',
-    image: '/assets/CarWashesSukhum2.png'
+    image: '/assets/CarWashesPitsunda2.jpg'
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ const carWashes = [
     address: 'Сухум, ул. Эшба, 147',
     addressLink: 'https://yandex.com/maps/-/CDhUvL0U',
     contacts: '+7 (940) 772-39-33',
-    image: '/assets/CarWashesSukhum3.png'
+    image: '/assets/CarWashesPitsunda3.jpg'
   },
   {
     id: 4,

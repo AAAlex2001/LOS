@@ -17,7 +17,7 @@ const carWashes = [
     address: 'Сухум, ул. Аидгылара, 2',
     addressLink: 'https://yandex.com/maps/-/CDhUn-~H',
     contacts: '+7 (940) 945-01-01',
-    image: '/assets/CarWashesSukhum1.png'
+    image: '/assets/CarWashesOchamchira1.jpg'
   },
   {
     id: 2,
