@@ -15,7 +15,7 @@ const beaches = [
     name: 'Родина',
     address: 'Гудаутский район, Новый Афон',
     addressLink: 'https://yandex.com/maps/-/CDxcBELU',
-    image: '/assets/NewAfon1.png',
+    image: '/assets/BeachesNewAfon1.jpg',
   },
 ];
 

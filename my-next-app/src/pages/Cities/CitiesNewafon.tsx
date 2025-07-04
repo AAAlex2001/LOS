@@ -36,16 +36,63 @@ const newafonItems: string[] = [
   'Церкви',
 ];
 
+const activeCategories: string[] = [
+  'Административные здания',
+  'Аптеки',
+  'Пляжи',
+  'Мойки',
+  'Культурные достопримечательности',
+  'Отели',
+  'Парковки',
+  'Рестораны',
+  'Салоны красоты',
+  'Магазины и рынки',
+  'Церкви',
+];
+
 const CitiesNewafon: React.FC = () => {
   const router = useRouter();
 
   const handleItemClick = (item: string) => {
+    if (!activeCategories.includes(item)) {
+      return;
+    }
+
     switch (item) {
       case 'Административные здания':
         router.push('/administrative-buildings/NewAfon');
         break;
+      case 'Аптеки':
+        router.push('/pharmacy/NewAfon');
+        break;
+      case 'Пляжи':
+        router.push('/beaches/NewAfon');
+        break;
+      case 'Мойки':
+        router.push('/car-washes/NewAfon');
+        break;
+      case 'Культурные достопримечательности':
+        router.push('/cultural-attractions/NewAfon');
+        break;
+      case 'Отели':
+        router.push('/hotels/NewAfon');
+        break;
+      case 'Парковки':
+        router.push('/parking-lots/NewAfon');
+        break;
+      case 'Рестораны':
+        router.push('/restaurants/NewAfon');
+        break;
+      case 'Салоны красоты':
+        router.push('/beauty-salons/NewAfon');
+        break;
+      case 'Магазины и рынки':
+        router.push('/shops-and-markets/NewAfon');
+        break;
+      case 'Церкви':
+        router.push('/churches/NewAfon');
+        break;
       default:
-        // Для остальных категорий пока нет страниц
         break;
     }
   };
@@ -78,20 +125,21 @@ const CitiesNewafon: React.FC = () => {
         {/* Список категорий */}
         <section className={styles.newafonListSection}>
           <ul className={styles.newafonList}>
-            {newafonItems.map((item) => (
-              <li 
-                key={item} 
-                className={`${styles.newafonListItem} ${
-                  item === 'Административные здания' 
-                    ? styles.clickable 
-                    : ''
-                }`}
-                onClick={() => handleItemClick(item)}
-              >
-                <span className={styles.newafonArrow} />
-                <span className={styles.newafonItemText}>{item}</span>
-              </li>
-            ))}
+            {newafonItems.map((item) => {
+              const isClickable = activeCategories.includes(item);
+              return (
+                <li
+                  key={item}
+                  className={`${styles.newafonListItem} ${
+                    isClickable ? styles.clickable : styles.disabled
+                  }`}
+                  onClick={() => handleItemClick(item)}
+                >
+                  <span className={styles.newafonArrow} />
+                  <span className={styles.newafonItemText}>{item}</span>
+                </li>
+              );
+            })}
           </ul>
         </section>
       </main>
