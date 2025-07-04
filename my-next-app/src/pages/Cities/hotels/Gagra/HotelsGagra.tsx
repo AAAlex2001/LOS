@@ -106,7 +106,7 @@ const hotels = [
     addressLink: 'https://yandex.ru/maps/-/CDBKVT4r',
     contacts: '+7 (940) 935-62-80',
     price: '6500р за ночь для двух гостей',
-    image: '/assets/HotelsGagra11.jpg',
+    image: '/assets/HotelsGagra11.png',
   },
   {
     id: 12,
@@ -115,7 +115,7 @@ const hotels = [
     addressLink: 'https://yandex.ru/maps/-/CDBKVT8s',
     contacts: '+7 (940) 742-33-00',
     price: '4300р за ночь для двух гостей',
-    image: '/assets/HotelsGagra12.jpg',
+    image: '/assets/HotelsGagra12.png',
   },
 ];
 

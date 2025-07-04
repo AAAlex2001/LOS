@@ -34,15 +34,70 @@ const gagraItems: string[] = [
   'Церкви',
 ];
 
+const activeCategories: string[] = [
+  'Административные здания',
+  'Аптеки',
+  'Винодельни',
+  'Заправки',
+  'Культурные достопримечательности',
+  'Магазины и рынки',
+  'Мойки',
+  'Отели',
+  'Парковки',
+  'Пляжи',
+  'Рестораны',
+  'Салоны красоты',
+  'Церкви',
+];
+
 const CitiesGagra: React.FC = () => {
   const router = useRouter();
 
   const handleItemClick = (item: string) => {
+    if (!activeCategories.includes(item)) {
+      return;
+    }
+
     switch (item) {
       case 'Административные здания':
         router.push('/administrative-buildings/Gagra');
         break;
-      // Добавить другие категории по мере необходимости
+      case 'Аптеки':
+        router.push('/pharmacy/Gagra');
+        break;
+      case 'Винодельни':
+        router.push('/wineries/Gagra');
+        break;
+      case 'Заправки':
+        router.push('/gas-stations/Gagra');
+        break;
+      case 'Культурные достопримечательности':
+        router.push('/cultural-attractions/Gagra');
+        break;
+      case 'Магазины и рынки':
+        router.push('/shops-and-markets/Gagra');
+        break;
+      case 'Мойки':
+        router.push('/car-washes/Gagra');
+        break;
+      case 'Отели':
+        router.push('/hotels/Gagra');
+        break;
+      case 'Парковки':
+        router.push('/parking-lots/Gagra');
+        break;
+      case 'Пляжи':
+        router.push('/beaches/Gagra');
+        break;
+      case 'Рестораны':
+        router.push('/restaurants/Gagra');
+        break;
+      case 'Салоны красоты':
+        router.push('/beauty-salons/Gagra');
+        break;
+      case 'Церкви':
+        router.push('/churches/Gagra');
+        break;
       default:
         break;
     }
@@ -76,18 +131,21 @@ const CitiesGagra: React.FC = () => {
         {/* Список категорий */}
         <section className={styles.gagraListSection}>
           <ul className={styles.gagraList}>
-            {gagraItems.map((item) => (
-              <li 
-                key={item} 
-                className={`${styles.gagraListItem} ${(
-                  item === 'Административные здания'
-                ) ? styles.clickableItem : ''}`}
-                onClick={() => handleItemClick(item)}
-              >
-                <span className={styles.gagraArrow} />
-                <span className={styles.gagraItemText}>{item}</span>
-              </li>
-            ))}
+            {gagraItems.map((item) => {
+              const isClickable = activeCategories.includes(item);
+              return (
+                <li
+                  key={item}
+                  className={`${styles.gagraListItem} ${
+                    isClickable ? styles.clickable : styles.disabled
+                  }`}
+                  onClick={() => handleItemClick(item)}
+                >
+                  <span className={styles.gagraArrow} />
+                  <span className={styles.gagraItemText}>{item}</span>
+                </li>
+              );
+            })}
           </ul>
         </section>
       </main>

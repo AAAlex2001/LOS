@@ -32,7 +32,7 @@ const carWashes: {
     address: 'Гагра, Железнодорожная улица',
     addressLink: 'https://yandex.ru/maps/-/CDS-aBKZ',
     contacts: '+79409603366',
-    image: '/assets/CarWashesGagra2.jpg'
+    image: '/assets/CarWashesGagra2.webp'
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ const carWashes: {
     address: 'Гагра, улица Гулия',
     addressLink: 'https://yandex.ru/maps/-/CDS-aFKu',
     contacts: '+7 (940) 966-66-06',
-    image: '/assets/CarWashesGagra3.jpg'
+    image: '/assets/CarWashesGagra3.webp'
   },
   {
     id: 4,

@@ -34,15 +34,38 @@ const galItems: string[] = [
   'Церкви',
 ];
 
+const activeCategories: string[] = [
+  'Магазины и рынки',
+  'Рестораны',
+  'Культурные достопримечательности',
+  'Церкви',
+  'Административные здания',
+];
+
 const CitiesGal: React.FC = () => {
   const router = useRouter();
 
   const handleItemClick = (item: string) => {
+    if (!activeCategories.includes(item)) {
+      return;
+    }
+
     switch (item) {
       case 'Административные здания':
         router.push('/administrative-buildings/Gal');
         break;
-      // Добавить другие категории по мере необходимости
+      case 'Магазины и рынки':
+        router.push('/shops-and-markets/Gal');
+        break;
+      case 'Рестораны':
+        router.push('/restaurants/Gal');
+        break;
+      case 'Культурные достопримечательности':
+        router.push('/cultural-attractions/Gal');
+        break;
+      case 'Церкви':
+        router.push('/churches/Gal');
+        break;
       default:
         break;
     }
@@ -76,18 +99,21 @@ const CitiesGal: React.FC = () => {
         {/* Список категорий */}
         <section className={styles.galListSection}>
           <ul className={styles.galList}>
-            {galItems.map((item) => (
-              <li 
-                key={item} 
-                className={`${styles.galListItem} ${(
-                  item === 'Административные здания'
-                ) ? styles.clickableItem : ''}`}
-                onClick={() => handleItemClick(item)}
-              >
-                <span className={styles.galArrow} />
-                <span className={styles.galItemText}>{item}</span>
-              </li>
-            ))}
+            {galItems.map((item) => {
+              const isClickable = activeCategories.includes(item);
+              return (
+                <li
+                  key={item}
+                  className={`${styles.galListItem} ${
+                    isClickable ? styles.clickable : styles.disabled
+                  }`}
+                  onClick={() => handleItemClick(item)}
+                >
+                  <span className={styles.galArrow} />
+                  <span className={styles.galItemText}>{item}</span>
+                </li>
+              );
+            })}
           </ul>
         </section>
       </main>

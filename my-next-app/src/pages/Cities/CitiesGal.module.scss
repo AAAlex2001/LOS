@@ -302,4 +302,29 @@
     height: 250px;
     max-height: 50vw;
   }
+}
+
+.clickable {
+  cursor: pointer;
+  
+  &:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+.disabled {
+  cursor: default;
+
+  .galItemText {
+    color: #888;
+  }
+
+  .galArrow::before {
+    border-right-color: #888;
+    border-bottom-color: #888;
+  }
+  
+  &:hover::after {
+    transform: scaleX(0);
+  }
 } 
