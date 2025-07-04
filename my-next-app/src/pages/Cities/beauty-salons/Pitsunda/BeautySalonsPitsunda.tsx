@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
-import styles from './BeautySalonsPitsundra.module.scss';
+import styles from './BeautySalonsPitsunda.module.scss';
 
 // TODO: Add actual images for Pitsunda beauty salons
 const beautySalons: {

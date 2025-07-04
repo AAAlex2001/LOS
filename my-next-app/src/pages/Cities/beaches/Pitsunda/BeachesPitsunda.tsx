@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
-import styles from './BeachesPitsundra.module.scss';
+import styles from './BeachesPitsunda.module.scss';
 
 // Данные пляжей
 // TODO: Replace with actual images for Pitsunda beaches
