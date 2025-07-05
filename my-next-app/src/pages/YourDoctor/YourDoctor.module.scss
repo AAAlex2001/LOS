@@ -1,0 +1,118 @@
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.mainContent {
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 120px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  margin-top: -80px;
+}
+
+.titleSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  height: 100px;
+  margin-top: 40px;
+  margin-bottom: 37px;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  background-color: #f0f0f0; // Placeholder
+  border-radius: 50%; // Placeholder
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  flex-shrink: 0;
+}
+
+.titleTextContainer {
+  display: flex;
+  align-items: center;
+  height: 64px;
+}
+
+.mainTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 44px;
+  color: #1129bd;
+  white-space: nowrap;
+}
+
+.tabContent {
+  padding: 40px 20px;
+  width: 100%;
+  max-width: 1232px;
+  text-align: center;
+  min-height: 300px;
+
+  &.hasImageCard {
+    padding: 0;
+    min-height: auto;
+    /* The image itself creates a large gap, so we can reduce the gap from the main content flex container */
+    margin-bottom: -40px; 
+  }
+}
+
+.tabContent:first-of-type {
+    margin-top: 0;
+}
+
+.imageCard {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.cardImage {
+  border-radius: 15px;
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mainContent {
+    padding-top: 100px;
+    gap: 30px;
+  }
+  .titleSection {
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .mainTitle {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+    .mainContent {
+        margin-top: -60px;
+    }
+  .titleSection {
+    margin-top: 20px;
+  }
+  .logo {
+    width: 80px;
+    height: 80px;
+  }
+  .mainTitle {
+    font-size: 24px;
+  }
+} 
