@@ -8,6 +8,7 @@ import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './YourDoctor.module.scss';
 import tabStyles from './MainTabs.module.scss';
 import YourDoctorHospitals from './YourDoctorHospitals';
+import YourDoctorPrivateClinics from './YourDoctorPrivateClinics';
 
 const YourDoctor: React.FC = () => {
   const tabs = [
@@ -73,6 +74,8 @@ const YourDoctor: React.FC = () => {
                 </div>
                 <YourDoctorHospitals />
               </>
+            ) : tab.id === 'private-clinics' ? (
+              <YourDoctorPrivateClinics />
             ) : (
               <div style={{ minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <h2>Контент для раздела "{tab.name}" будет здесь.</h2>
