@@ -7,6 +7,7 @@ import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './YourDoctor.module.scss';
 import tabStyles from './MainTabs.module.scss';
+import YourDoctorHospitals from './YourDoctorHospitals';
 
 const YourDoctor: React.FC = () => {
   const tabs = [
@@ -45,7 +46,9 @@ const YourDoctor: React.FC = () => {
               className={tabStyles.tabItem}
               onClick={() => scrollToSection(tab.id)}
             >
-              <div className={tabStyles.tabLabel}>{tab.name}</div>
+              <div className={tabStyles.tabLabel}>
+                <span>{tab.name}</span>
+              </div>
             </div>
           ))}
         </section>
@@ -56,16 +59,23 @@ const YourDoctor: React.FC = () => {
             id={tab.id}
             className={`${styles.tabContent} ${index === 0 ? styles.hasImageCard : ''}`}
           >
-            {index === 0 && (
-              <div className={styles.imageCard}>
-                <Image
-                  src="/assets/city_sukhum.jpg"
-                  alt="Сухум"
-                  layout="responsive"
-                  width={1872}
-                  height={1248}
-                  className={styles.cardImage}
-                />
+            {tab.id === 'hospitals' ? (
+              <>
+                <div className={styles.imageCard}>
+                  <Image
+                    src="/assets/city_sukhum.jpg"
+                    alt="Сухум"
+                    layout="responsive"
+                    width={1872}
+                    height={1248}
+                    className={styles.cardImage}
+                  />
+                </div>
+                <YourDoctorHospitals />
+              </>
+            ) : (
+              <div style={{ minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <h2>Контент для раздела "{tab.name}" будет здесь.</h2>
               </div>
             )}
           </div>

@@ -35,6 +35,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 8px 10px;
   gap: 8px;
   width: 181.33px;
@@ -46,22 +47,7 @@
   transition: all 0.3s ease;
   position: relative;
 
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%) scaleX(0);
-    width: 80%;
-    height: 2px;
-    background-color: #1129bd;
-    transition: transform 0.3s ease;
-  }
-
   &:hover {
-    &::after {
-      transform: translateX(-50%) scaleX(1);
-    }
     .tabLabel {
       color: #1129bd;
     }
@@ -81,6 +67,27 @@
   flex: none;
   align-self: stretch;
   transition: color 0.3s ease;
+
+  span {
+    position: relative;
+    display: inline-block;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -8px;
+      width: 0;
+      height: 4px;
+      background-color: #1129bd;
+      transition: width 0.3s ease;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+.tabItem:hover .tabLabel span::after {
+  width: 100%;
 }
 
 .tabLabelMultiline {
@@ -167,13 +174,6 @@
     border-radius: 0;
     background: transparent;
     border-bottom: 1px solid #e0e0e0;
-
-    &::after {
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      transform: scaleX(0);
-    }
 
     &:hover::after {
       transform: scaleX(1);
