@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 60px 24px 60px;
+  padding: 30px 24px 60px;
   position: relative;
 }
 
@@ -30,7 +30,7 @@
   position: relative;
   width: 100%;
   max-width: 1872px;
-  margin: 150px auto 80px auto;
+  margin: 70px auto 80px auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -112,13 +112,20 @@
 }
 .decorBottomCenter {
   left: 50%;
-  bottom: -160px;
+  bottom: -150px;
   transform: translateX(-50%) rotate(8deg);
 }
 .decorBottomRight {
   right: 2vw;
   bottom: -130px;
   transform: rotate(-8deg);
+}
+
+/* Center (neon) party icon wrapper */
+.centerIconWrapper {
+  position: relative;
+  width: 160px;
+  height: 160px;
 }
 
 /* Responsive adjustments */
@@ -164,17 +171,17 @@
   .decorBottomLeft {
     bottom: -70px;
   }
-  .decorBottomRight {
+  .decorBottomCenter {
     bottom: -70px;
   }
-  .decorBottomCenter {
-    bottom: -80px;
+  .decorBottomRight {
+    bottom: -70px;
   }
 }
 
 @media (max-width: 1024px) {
   .mainContent {
-    padding: 60px 20px 40px;
+    padding: 40px 20px 40px;
   }
   .mainTitle {
     font-size: 32px;
@@ -182,8 +189,7 @@
     margin-bottom: 10px;
   }
   .centerIcon {
-    margin-top: -70px;
-    margin-bottom: -20px;
+    margin: 0;
   }
   .backgroundImageSection {
     min-height: 250px;
@@ -220,8 +226,8 @@
     top: -35px;
   }
   .decorBottomLeft { bottom: -60px; }
+  .decorBottomCenter { bottom: -60px; }
   .decorBottomRight { bottom: -60px; }
-  .decorBottomCenter { bottom: -70px; }
 }
 
 @media (max-width: 768px) {
@@ -231,8 +237,7 @@
     margin-bottom: 5px;
   }
   .centerIcon {
-    margin-top: -60px;
-    margin-bottom: -20px;
+    margin: 0;
   }
   .backgroundImageSection {
     .introOverlay {
@@ -260,8 +265,8 @@
   .decorTopLeft { top: -25px; }
   .decorTopRight { top: -25px; }
   .decorBottomLeft { bottom: -50px; }
+  .decorBottomCenter { bottom: -50px; }
   .decorBottomRight { bottom: -50px; }
-  .decorBottomCenter { bottom: -60px; }
 }
 
 @media (max-width: 600px) {
@@ -282,8 +287,8 @@
   .decorTopLeft { top: -20px; }
   .decorTopRight { top: -20px; }
   .decorBottomLeft { bottom: -40px; }
+  .decorBottomCenter { bottom: -40px; }
   .decorBottomRight { bottom: -40px; }
-  .decorBottomCenter { bottom: -50px; }
 
   .mainTitle {
     font-size: 24px;
@@ -291,8 +296,7 @@
     margin-bottom: 0px;
   }
   .centerIcon {
-    margin-top: -45px;
-    margin-bottom: -15px;
+    margin: 0;
   }
   .backgroundImageSection {
     min-height: 220px;
@@ -360,16 +364,16 @@
   .decorTopLeft { top: -15px; }
   .decorTopRight { top: -15px; }
   .decorBottomLeft { bottom: -30px; }
+  .decorBottomCenter { bottom: -30px; }
   .decorBottomRight { bottom: -30px; }
-  .decorBottomCenter { bottom: -40px; }
 }
 
 /* Center icon container */
 .centerIcon {
   position: absolute;
-  top: -60px;
+  top: 0;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   z-index: 10;
 }
 
@@ -378,10 +382,21 @@
 }
 
 
-
 .cityCardContainer {
   width: 100%;
   display: flex;
   justify-content: center;
   margin-bottom: 20px; /* Add some space between cards */
+}
+
+/* Larger screens (≥1281px): lower the banner block by additional 20px */
+@media (min-width: 1281px) {
+  .fullWidthSection {
+    margin: 110px auto 80px auto;
+  }
+
+  .decorBottomLeft,
+  .decorBottomRight {
+    bottom: -130px; // was -130px, moved 40px lower to avoid overlapping text
+  }
 }

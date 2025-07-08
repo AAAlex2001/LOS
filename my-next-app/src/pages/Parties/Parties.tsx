@@ -21,14 +21,19 @@ import PartyCardGal from './PartyCardGal';
 const Parties: React.FC = () => {
   // Scroll to city function
   const scrollToCity = (cityId: string) => {
-    const element = document.getElementById(cityId);
-    if (element) {
-      element.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start',
-        inline: 'nearest'
-      });
-    }
+    const container = document.getElementById(cityId);
+    if (!container) return;
+
+    // Prefer the city heading inside the card (h2) to align view to text, not image
+    const titleElement = container.querySelector('h2');
+    const target = (titleElement as HTMLElement) || container;
+
+    // Offset to account for fixed header height so title is not hidden
+    const headerOffset = 80; // adjust if header height changes
+    const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
+    const offsetPosition = elementPosition - headerOffset;
+
+    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
   };
 
   return (
