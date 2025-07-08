@@ -9,12 +9,11 @@
   max-width: 1920px;
   width: 100%;
   margin: 0 auto;
-  padding: 120px 20px 0;
+  padding: 30px 20px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
-  margin-top: -80px;
+  gap: 20px;
 }
 
 .titleSection {
@@ -23,9 +22,9 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  height: 100px;
-  margin-top: 40px;
-  margin-bottom: 15px;
+  height: auto;
+  margin-top: 0;
+  margin-bottom: 20px;
 }
 
 .titleTextContainer {
@@ -143,16 +142,16 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .mainContent {
-    padding-top: 100px;
+    padding-top: 30px;
     padding-bottom: 0;
-    gap: 30px;
+    gap: 15px;
   }
   .titleSection {
     flex-direction: column;
     height: auto;
     gap: 20px;
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
   .mainTitle {
     font-size: 28px;
@@ -172,10 +171,11 @@
 
 @media (max-width: 480px) {
   .mainContent {
-    margin-top: -60px;
+    padding-top: 30px;
+    gap: 10px;
   }
   .titleSection {
-    margin-top: 20px;
+    margin-bottom: 10px;
   }
   .mainTitle {
     font-size: 24px;
