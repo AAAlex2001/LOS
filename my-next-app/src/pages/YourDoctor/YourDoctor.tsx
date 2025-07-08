@@ -38,7 +38,13 @@ const YourDoctor: React.FC = () => {
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
           <div className={styles.logo}>
-            {/* Placeholder for logo */}
+            <Image
+              src="/assets/YourDoctor_logo.png"
+              alt="Ваш доктор логотип"
+              width={100}
+              height={100}
+              className={styles.logoImage}
+            />
           </div>
           <div className={styles.titleTextContainer}>
             <h1 className={styles.mainTitle}>Ваш доктор</h1>
