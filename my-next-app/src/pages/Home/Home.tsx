@@ -111,12 +111,16 @@ const HomePage = () => {
             <div className={styles.heroVideo}>
                 <span>Видеоряд сменяющийся</span>
             </div>
-            <div className={styles.heroBanner}>
-                <p>
-                Пейзажи, которые захватывают дух, богатая история и&nbsp;вкусная еда, Абхазия не&nbsp;просто удивит&nbsp;— она&nbsp;покорит&nbsp;вас!
-                <br /><br />
-                Готовы к&nbsp;путешествию, которое останется в&nbsp;сердце навсегда?
-                </p>
+            <div className={styles.fullWidthSection}>
+                <div className={styles.backgroundImageSection}>
+                    <div className={styles.introOverlay}>
+                        <p className={styles.introText}>
+                            Пейзажи, которые захватывают дух, богатая история и&nbsp;вкусная еда, Абхазия не&nbsp;просто удивит&nbsp;— она&nbsp;покорит&nbsp;вас!
+                            <br /><br />
+                            Готовы к&nbsp;путешествию, которое останется в&nbsp;сердце навсегда?
+                        </p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -142,10 +146,14 @@ const HomePage = () => {
             
             <div className={styles.promoBannerWrapper}>
                 <Image src="/assets/Mand3.png" alt="Mandarin" width={326} height={326} className={styles.promoMandarin}/>
-                <div className={styles.promoBanner}>
-                    <div className={styles.promoBannerText}>
-                        <p>Вы уже вдохновились горными пейзажами, лазурным морем и гостеприимством Абхазии?</p>
-                        <p>Пора забронировать уютное жильё через <span className={styles.highlight}>«Мандарин»</span> — проверенный сервис аренды с лучшими вариантами!</p>
+                <div className={styles.fullWidthSection}>
+                    <div className={styles.backgroundImageSection}>
+                        <div className={styles.introOverlay}>
+                            <div className={styles.promoBannerText}>
+                                <p className={styles.introText}>Вы уже вдохновились горными пейзажами, лазурным морем и гостеприимством Абхазии?</p>
+                                <p className={styles.introText}>Пора забронировать уютное жильё через <span className={styles.highlight}>«Мандарин»</span> — проверенный сервис аренды с лучшими вариантами!</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -170,10 +178,14 @@ const HomePage = () => {
         <section id="activities" className={styles.activitiesSection}>
             <div className={styles.activitiesHeader}>
                 <h2 className={styles.sectionTitle}>Развлечения в Абхазии: создайте свой идеальный отдых!</h2>
-                <div className={styles.activitiesBanner}>
-                    <div className={styles.activitiesBannerText}>
-                        <p>Не просто отдых — эмоции, которые запомнятся навсегда.</p>
-                        <p>От горных троп до шумных вечеринок — каждый день будет особенным!</p>
+                <div className={styles.fullWidthSection}>
+                    <div className={styles.backgroundImageSection}>
+                        <div className={styles.introOverlay}>
+                            <div className={styles.activitiesBannerText}>
+                                <p className={styles.introText}>Не просто отдых — эмоции, которые запомнятся навсегда.</p>
+                                <p className={styles.introText}>От горных троп до шумных вечеринок — каждый день будет особенным!</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

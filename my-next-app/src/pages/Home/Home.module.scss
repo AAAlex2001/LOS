@@ -11,6 +11,50 @@ $color-text-light: rgba(0, 0, 0, 0.85);
 $color-bg-light: rgba(17, 41, 189, 0.1);
 $color-border: #d5daef;
 
+// Новые классы для блоков с фоновой картинкой (по аналогии с ImportantTaxiEtiquette)
+.fullWidthSection {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-bottom: 30px;
+}
+
+.backgroundImageSection {
+  width: 100%;
+  min-height: 305px;
+  height: auto;
+  background: url('/assets/IMG_1932.jpg') center/cover;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 30px 0;
+}
+
+.introOverlay {
+  max-width: 1812px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 30px;
+}
+
+.introText {
+  font-family: $font-family;
+  font-weight: 600;
+  font-size: 38px;
+  line-height: 50px;
+  color: $color-text-light;
+  text-align: center;
+  margin: 0;
+  max-width: 100%;
+}
+
 .pageWrapper {
   background-color: #ffffff;
 }
@@ -82,24 +126,6 @@ $color-border: #d5daef;
     color: $color-text-light;
     margin-bottom: 30px;
   }
-
-  .heroBanner {
-    height: 305px;
-    border-radius: 15px;
-    background: url('/assets/IMG_1932.jpg') no-repeat center center/cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    p {
-      font-size: 38px;
-      font-weight: 600;
-      line-height: 50px;
-      text-align: center;
-      color: $color-text-light;
-      max-width: 1812px;
-    }
-  }
 }
 
 // --- Section 2: Cities ---
@@ -165,34 +191,15 @@ $color-border: #d5daef;
   height: 326px;
 }
 
-.promoBanner {
-  background: url("/assets/IMG_1932.jpg") no-repeat center center/cover;
-  border-radius: 15px;
-  min-height: 355px;
-  padding: 40px;
-  box-sizing: border-box;
+.promoBannerText {
+  padding-top: 40px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  gap: 40px;
   
-  .promoBannerText {
-    padding-top: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    
-    p {
-      font-size: 38px;
-      font-weight: 600;
-      line-height: 50px;
-      color: $color-text-light;
-      margin: 0;
-    }
-
-    .highlight {
-      color: $color-secondary;
-      text-decoration: underline;
-    }
+  .highlight {
+    color: $color-secondary;
+    text-decoration: underline;
   }
 }
 
@@ -257,25 +264,11 @@ $color-border: #d5daef;
     .activitiesHeader {
         margin-bottom: 60px;
     }
-    .activitiesBanner {
-        background: url('/assets/IMG_1932.jpg') no-repeat center center/cover;
-        border-radius: 15px;
-        padding: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
     .activitiesBannerText {
         display: flex;
         flex-direction: column;
         gap: 40px;
-        p {
-            font-size: 38px;
-            font-weight: 600;
-            line-height: 50px;
-            color: $color-text-light;
-            margin: 0;
-        }
+        text-align: center;
     }
     .activitiesGrid {
         display: grid;
@@ -312,10 +305,6 @@ $color-border: #d5daef;
             margin: 0;
         }
     }
-}
-
-.activitiesBannerText {
-  text-align: center;
 }
 
 // --- Section 5: Actions ---
@@ -363,10 +352,20 @@ $color-border: #d5daef;
 
 @media (max-width: $break-md) {
     .sectionTitle { font-size: 32px; margin-bottom: 40px; }
+    
+    .backgroundImageSection {
+        min-height: 250px;
+        padding: 25px 0;
+    }
+    
+    .introText {
+        font-size: 28px;
+        line-height: 1.4;
+    }
+    
     .heroSection {
         .tabsContainer .tabItem { font-size: 24px; }
         .heroVideo { height: 500px; }
-        .heroBanner p, .activitiesBannerText p, .ctaSection .promoBanner .promoBannerText p { font-size: 28px; line-height: 1.4; }
     }
     .citiesSection .citiesGrid, .activitiesSection .activitiesGrid {
         grid-template-columns: 1fr;
@@ -388,7 +387,17 @@ $color-border: #d5daef;
 @media (max-width: $break-sm) {
     .mainContent { padding: 20px 15px 60px; }
     .sectionTitle { font-size: 26px; }
-     .heroSection {
+    
+    .backgroundImageSection {
+        min-height: 200px;
+        padding: 20px 0;
+    }
+    
+    .introText {
+        font-size: 22px;
+    }
+    
+    .heroSection {
         .tabsContainer {
             flex-direction: column;
             align-items: center;
@@ -405,7 +414,6 @@ $color-border: #d5daef;
             }
         }
         .heroVideo { height: 300px; }
-        .heroBanner p, .activitiesBannerText p, .ctaSection .promoBanner .promoBannerText p { font-size: 22px; }
     }
 
     .promoMandarin {
