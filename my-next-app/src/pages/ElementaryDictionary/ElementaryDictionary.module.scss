@@ -1,4 +1,5 @@
 // Переменные
+$line-thickness: 1px;
 
 .pageWrapper {
   display: flex;
@@ -11,7 +12,7 @@
   width: 100%;
   max-width: 1228px;
   margin: 0 auto;
-  padding: 120px 16px 60px;
+  padding: 30px 16px 60px;
 }
 
 .mainTitle {
@@ -51,14 +52,27 @@
 
 .dictionaryTable {
   width: 100%;
-  max-width: 604px;
+  // убираем max-width, чтобы таблицы могли сжиматься и сохранялся зазор между ними
   margin: 0 auto;
-  border: 1px solid #B9B9B9;
+  border: $line-thickness solid #B9B9B9;
   border-radius: 15px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   flex: 1; // Растягиваем таблицы на одинаковую высоту
+  position: relative; // Добавляем для позиционирования псевдоэлемента
+  
+  // Добавляем вертикальную линию через псевдоэлемент
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: $line-thickness;
+    background-color: #B9B9B9;
+    transform: translateX(-50%);
+  }
 }
 
 .row {
@@ -71,7 +85,7 @@
 
   &:not(:first-child) {
     .cell {
-      border-top: 1px solid #B9B9B9;
+      border-top: $line-thickness solid #B9B9B9;
     }
   }
 }
@@ -89,7 +103,6 @@
   padding: 15px 12px;
   font-size: 14px;
   line-height: 20px;
-  border-right: 1px solid #B9B9B9;
   display: flex;
   align-items: center; // Вертикальное выравнивание по центру
   min-height: 50px; // Минимальная высота ячейки
@@ -98,9 +111,7 @@
   overflow-wrap: break-word; // Дополнительная поддержка переноса
   hyphens: auto; // Автоматические переносы
   
-  &:last-child {
-    border-right: none;
-  }
+  // Убираем границы между ячейками, так как используем псевдоэлемент
 }
 
 .cellHeader {
@@ -139,7 +150,7 @@
 // Медиа-запрос для очень маленьких экранов
 @media (max-width: 300px) {
   .mainContent {
-    padding: 120px 8px 60px; // Уменьшаем боковые отступы
+    padding: 30px 8px 60px; // Уменьшаем боковые отступы и оставляем 30px сверху
   }
 
   .mainTitle {
@@ -200,11 +211,17 @@
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 48px;
-    align-items: flex-start;
+    align-items: stretch; // Одинаковая высота таблиц на десктопе
   }
   
   .sectionBlock {
     width: calc(50% - 24px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dictionaryTable {
+    flex: 1; // Растягиваем таблицы на одинаковую высоту
   }
 
   .row {
