@@ -1,10 +1,5 @@
-'use client';
-
-import React from 'react';
 import AdministrativeBuildingsSukhum from '@/pages/Cities/administrative buildings/Sukhum/AdministrativeBuildingsSukhum';
 
-const AdministrativeBuildingsSukhumPage: React.FC = () => {
+export default function AdministrativeBuildingsSukhumPage() {
   return <AdministrativeBuildingsSukhum />;
-};
-
-export default AdministrativeBuildingsSukhumPage; 
+} 
