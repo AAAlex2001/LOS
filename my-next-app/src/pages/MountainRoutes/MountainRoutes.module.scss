@@ -2,6 +2,8 @@ $page-max-width: 1500px;
 $primary-color: #1129BD;
 $card-bg: rgba(17, 41, 189, 0.1);
 $border-color: #D5DAEF;
+$font-family: 'Inter', sans-serif;
+$color-text: #000000;
 
 .pageWrapper {
   display: flex;
@@ -14,7 +16,7 @@ $border-color: #D5DAEF;
   width: 100%;
   max-width: $page-max-width;
   margin: 0 auto;
-  padding: 120px 16px 60px;
+  padding: 30px 16px 60px;
 }
 
 .mainTitle {
@@ -26,7 +28,16 @@ $border-color: #D5DAEF;
   margin-bottom: 40px;
 }
 
-.cardsContainer {
+.routesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+
+.row {
   display: flex;
   flex-wrap: wrap;
   gap: 32px;
@@ -43,13 +54,14 @@ $border-color: #D5DAEF;
   background: $card-bg;
   border: 1px solid $border-color;
   border-radius: 15px;
-  width: clamp(260px, 30%, 564px);
+  width: 396px;
   // height will grow with content
 }
 
 .cardImg {
   width: 100%;
-  max-height: 150px;
+  max-width: 250px;
+  max-height: 130px;
   object-fit: contain;
   border-radius: 15px;
 }
@@ -59,37 +71,7 @@ $border-color: #D5DAEF;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-}
-
-.phone {
-  font-size: 20px;
-  line-height: 24px;
-  text-align: center;
-  color: $primary-color;
-}
-
-.link {
-  font-size: 20px;
-  line-height: 24px;
-  text-align: center;
-  color: $primary-color;
-  text-decoration: underline;
-  word-break: break-all;
-}
-
-.textCard {
-  width: clamp(260px, 40%, 564px);
-  padding: 20px;
-
-  .text {
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 24px;
-    text-align: center;
-    text-transform: uppercase;
-    color: $primary-color;
-  }
+  gap: 15px;
 }
 
 .cardTitle {
@@ -99,6 +81,7 @@ $border-color: #D5DAEF;
   color: $primary-color;
   text-align: center;
   text-transform: uppercase;
+  margin: 0;
 }
 
 .cardName {
@@ -106,6 +89,7 @@ $border-color: #D5DAEF;
   line-height: 20px;
   text-align: center;
   color: $primary-color;
+  margin: 0;
 }
 
 .cardPhone {
@@ -113,29 +97,99 @@ $border-color: #D5DAEF;
   line-height: 20px;
   text-align: center;
   color: $primary-color;
+  margin: 0;
+}
+
+.phone {
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  color: $primary-color;
+  margin: 0;
+}
+
+.link {
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  color: $primary-color;
+  text-decoration: underline;
+  word-break: break-all;
+  font-weight: 400;
+}
+
+.textCard {
+  width: 396px;
+  padding: 20px;
+
+  .text {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: center;
+    text-transform: uppercase;
+    color: $primary-color;
+    margin: 0;
+  }
 }
 
 // Responsive
+@media (max-width: 850px) {
+  .row {
+    flex-direction: column;
+    align-items: center;
+  }
+  .card {
+    width: 100%;
+    max-width: 396px;
+  }
+  .textCard {
+    width: 100%;
+    max-width: 396px;
+  }
+}
+
 @media (max-width: 767px) {
+  .mainContent {
+    padding: 30px 16px 60px;
+  }
+  
   .mainTitle {
     font-size: 28px;
     line-height: 34px;
   }
+  
   .card {
     width: 100%;
   }
+  
   .textCard {
     width: 100%;
+  }
+  
+  .cardTitle {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  
+  .cardName, .cardPhone {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  
+  .phone, .link {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  
+  .text {
+    font-size: 16px;
+    line-height: 20px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1299px) {
-  .card {
-    width: calc(50% - 16px);
-  }
-  .textCard {
-    width: calc(50% - 16px);
-  }
+  /* no special rules; use default row layout */
 }
 
 @media (min-width: 1300px) {
@@ -143,7 +197,7 @@ $border-color: #D5DAEF;
 }
 
 @media (min-width: 2600px) {
-  .cardsContainer {
+  .routesContainer {
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: space-between;
@@ -153,8 +207,7 @@ $border-color: #D5DAEF;
     margin-bottom: 0;
   }
 
-  .card,
-  .textCard {
+  .card, .textCard {
     width: 564px;
   }
 } 

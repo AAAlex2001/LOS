@@ -44,46 +44,87 @@ const routes: RouteCard[] = [
   },
 ];
 
+const topRowServices = routes.slice(0, 3);
+const bottomRowServices = routes.slice(3);
+
 const MountainRoutes: React.FC = () => {
   return (
     <div className={styles.pageWrapper}>
       <Header />
       <main className={styles.mainContent}>
         <h1 className={styles.mainTitle}>Горные маршруты</h1>
-        <section className={styles.cardsContainer}>
-          {routes.map((route) => (
-            <article
-              key={route.id}
-              className={route.text ? `${styles.card} ${styles.textCard}` : styles.card}
-            >
-              {route.img && (
-                <img
-                  className={styles.cardImg}
-                  src={route.img}
-                  alt={route.site || route.title || 'mountain route'}
-                />
-              )}
-              <div className={styles.cardBody}>
-                {route.title && <h3 className={styles.cardTitle}>{route.title}</h3>}
-                {route.name && <p className={styles.cardName}>{route.name}</p>}
-                {route.phone && !route.img && (
-                  <p className={styles.cardPhone}>Тел.: {route.phone}</p>
+        
+        <section className={styles.routesContainer}>
+          <div className={styles.row}>
+            {topRowServices.map((route) => (
+              <article
+                key={route.id}
+                className={route.text ? `${styles.card} ${styles.textCard}` : styles.card}
+              >
+                {route.img && (
+                  <img
+                    className={styles.cardImg}
+                    src={route.img}
+                    alt={route.site || route.title || 'mountain route'}
+                  />
                 )}
-                {route.phone && route.img && <p className={styles.phone}>Контакты: {route.phone}</p>}
-                {route.site && (
-                  <a
-                    href={route.site.startsWith('http') ? route.site : undefined}
-                    className={styles.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {route.site}
-                  </a>
+                <div className={styles.cardBody}>
+                  {route.title && <h3 className={styles.cardTitle}>{route.title}</h3>}
+                  {route.name && <p className={styles.cardName}>{route.name}</p>}
+                  {route.phone && !route.img && (
+                    <p className={styles.cardPhone}>Тел.: {route.phone}</p>
+                  )}
+                  {route.phone && route.img && <p className={styles.phone}>Контакты: {route.phone}</p>}
+                  {route.site && (
+                    <a
+                      href={route.site.includes('http') ? route.site.replace('САЙТ: ', '') : route.site}
+                      className={styles.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {route.site}
+                    </a>
+                  )}
+                  {route.text && <p className={styles.text}>{route.text}</p>}
+                </div>
+              </article>
+            ))}
+          </div>
+          <div className={styles.row}>
+            {bottomRowServices.map((route) => (
+              <article
+                key={route.id}
+                className={route.text ? `${styles.card} ${styles.textCard}` : styles.card}
+              >
+                {route.img && (
+                  <img
+                    className={styles.cardImg}
+                    src={route.img}
+                    alt={route.site || route.title || 'mountain route'}
+                  />
                 )}
-                {route.text && <p className={styles.text}>{route.text}</p>}
-              </div>
-            </article>
-          ))}
+                <div className={styles.cardBody}>
+                  {route.title && <h3 className={styles.cardTitle}>{route.title}</h3>}
+                  {route.name && <p className={styles.cardName}>{route.name}</p>}
+                  {route.phone && !route.img && (
+                    <p className={styles.cardPhone}>Тел.: {route.phone}</p>
+                  )}
+                  {route.phone && route.img && <p className={styles.phone}>Контакты: {route.phone}</p>}
+                  {route.site && (
+                    <a
+                      href={route.site.includes('http') ? route.site.replace('САЙТ: ', '') : route.site}
+                      className={styles.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {route.site}
+                    </a>
+                  )}
+                  {route.text && <p className={styles.text}>{route.text}</p>}
+                </div>
+              </article>
+            ))}
+          </div>
         </section>
       </main>
       <Footer />
