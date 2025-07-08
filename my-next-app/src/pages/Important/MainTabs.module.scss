@@ -1,0 +1,120 @@
+/* Base styles (Mobile-first, < 600px) */
+.mainTabs {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  width: 100%;
+  max-width: 500px;
+  margin: 20px auto 0;
+  padding: 0 20px;
+}
+
+.tabItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60px;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #e0e0e0;
+  transition: color 0.3s ease;
+}
+
+.tabItem:last-child {
+  border-bottom: none;
+}
+
+.tabLabel {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.4;
+  color: #000000;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.tabItem:hover .tabLabel {
+  color: #1129bd;
+}
+
+/* Tablet (600px - 1023px) */
+@media (min-width: 600px) {
+  .mainTabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 20px;
+    max-width: 700px;
+  }
+
+  .tabItem {
+    width: 48%;
+    min-height: 90px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    transform: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tabLabel {
+    font-size: 20px;
+    span {
+      position: relative;
+      display: inline-block;
+      &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -8px;
+        width: 0;
+        height: 4px;
+        background-color: #1129bd;
+        transition: width 0.3s ease;
+        transform: translateX(-50%);
+      }
+    }
+  }
+  
+  .tabItem:hover .tabLabel span::after {
+    width: 100%;
+  }
+}
+
+/* Desktop (>= 1024px) */
+@media (min-width: 1024px) {
+  .mainTabs {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: stretch; /* for equal height */
+    gap: 20px;
+    max-width: 1500px;
+    border: none;
+    background: transparent;
+    margin-top: 15px;
+  }
+  .tabItem {
+    flex: 1 1 auto; /* Allow shrink and grow */
+    min-width: 0; /* CRITICAL for text wrapping in flex items */
+    border: none;
+    background: transparent;
+    min-height: 113px;
+  }
+  .tabItem:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  .tabLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    height: 100%;
+    overflow-wrap: break-word;
+  }
+} 
