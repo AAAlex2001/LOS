@@ -34,8 +34,8 @@ const popupData = {
     { label: 'Транспортное сообщение', href: '/transport-communications' },
     { label: 'История и культура', href: '/history-and-culture' },
     { label: 'Абхазская кухня', href: '/abkhazian-cuizine' },
-    { label: 'Абхазские обычаи', href: '#' },
-    { label: 'Элементарный словарь', href: '#' }
+    { label: 'Абхазские обычаи', href: '/abkhazian-customs' },
+    { label: 'Элементарный словарь', href: '/elementary-dictionary' }
   ],
   activities: [
     { label: 'Вечеринки и яркие впечатления', href: '#' },

@@ -19,14 +19,19 @@ const AbkhazianCustoms = () => {
       <main className={styles.mainContent}>
         <h1 className={styles.mainTitle}>Абхазские национальные обычаи</h1>
         
-        {/* Баннер с изображением и текстом */}
-        <div className={styles.texBanner}>
-          <p>
-            Откройте для себя душу Абхазии через её традиции.
-            <br />
-            <br />
-            Здесь гость — посланник небес, уважение к старшим — закон, а застолье превращается в ритуал. Узнайте, что такое Апсуара, как абхазы встречают путника и почему обычаи здесь — не просто история, а часть живой культуры.
-          </p>
+        <div className={styles.fullWidthSection}>
+          <div className={styles.backgroundImageSection}>
+            <div className={styles.introOverlay}>
+              <div className={styles.introTextContainer}>
+                <p className={styles.introText}>
+                  Откройте для себя душу Абхазии через её традиции.
+                </p>
+                <p className={styles.introText}>
+                  Здесь гость — посланник небес, уважение к старшим — закон, а застолье превращается в ритуал. Узнайте, что такое Апсуара, как абхазы встречают путника и почему обычаи здесь — не просто история, а часть живой культуры.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
         
         {/* Основное изображение */}
