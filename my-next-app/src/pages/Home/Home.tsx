@@ -38,10 +38,10 @@ const popupData = {
     { label: 'Элементарный словарь', href: '/elementary-dictionary' }
   ],
   activities: [
-    { label: 'Вечеринки и яркие впечатления', href: '#' },
-    { label: 'Горные маршруты', href: '#' },
-    { label: 'Экскурсии', href: '#' },
-    { label: 'Горячие источники', href: '#' }
+    { label: 'Вечеринки и яркие впечатления', href: '/parties' },
+    { label: 'Горные маршруты', href: '/mountain-routes' },
+    { label: 'Экскурсии', href: '/excursions' },
+    { label: 'Горячие источники', href: '/hot-springs' }
   ],
   booking: [
     { label: 'Города Абхазии', href: '#' },
