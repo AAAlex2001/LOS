@@ -58,7 +58,7 @@ const YourDoctor: React.FC = () => {
           <div
             key={tab.id}
             id={tab.id}
-            className={`${styles.tabContent} ${index === 0 ? styles.hasImageCard : ''}`}
+            className={`${styles.tabContent} ${(index === 0 || index === 1) ? styles.hasImageCard : ''}`}
           >
             {tab.id === 'hospitals' ? (
               <>
