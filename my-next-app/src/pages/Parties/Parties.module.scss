@@ -20,46 +20,63 @@
   line-height: 44px;
   color: #1129bd;
   text-align: center;
-  margin-bottom: 110px;
+  margin-bottom: 20px;
   position: relative;
   z-index: 5;
 }
 
-/* Banner Section */
-.bannerSection {
+/* Full Width Section */
+.fullWidthSection {
   position: relative;
   width: 100%;
   max-width: 1872px;
-  height: 423px;
-  border-radius: 15px;
-  overflow: visible;
+  margin: 150px auto 80px auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.bannerBackground {
-  object-fit: cover;
-  z-index: 0;
-}
-
-.bannerContent {
+.backgroundImageSection {
+  width: 100%;
+  min-height: 300px;
+  height: auto;
+  background: url('/assets/IMG_1932.jpg') center/cover;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  z-index: 1;
-  max-width: 1812px;
-  padding: 0 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  padding: 80px 0 30px 0;
+  
+  .introOverlay {
+    max-width: 1812px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 30px;
+    gap: 20px;
+    
+    .introTextContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      text-align: center;
+    }
 
-.bannerText {
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  font-size: 38px;
-  line-height: 50px;
-  color: rgba(0, 0, 0, 0.85);
-  text-align: center;
+    .introText {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 36px;
+      line-height: 46px;
+      color: rgba(0, 0, 0, 0.85);
+      text-align: center;
+      margin: 0;
+      max-width: 100%;
+    }
+  }
 }
 
 /* Decorative images */
@@ -73,34 +90,34 @@
   border-radius: 15px;
   object-fit: cover;
   z-index: 3; /* above banner and text */
-  width: 150px !important;
-  height: 150px !important;
+  width: 160px !important;
+  height: 160px !important;
 }
 
 /* Base positions for decorative images on large screens */
 .decorTopLeft {
   left: 2vw;
-  top: -70px;
+  top: -100px;
   transform: rotate(-10deg);
 }
 .decorTopRight {
   right: 2vw;
-  top: -70px;
+  top: -100px;
   transform: rotate(15deg);
 }
 .decorBottomLeft {
   left: 2vw;
-  bottom: -100px;
+  bottom: -130px;
   transform: rotate(-8deg);
 }
 .decorBottomCenter {
   left: 50%;
-  bottom: -120px;
+  bottom: -160px;
   transform: translateX(-50%) rotate(8deg);
 }
 .decorBottomRight {
   right: 2vw;
-  bottom: -100px;
+  bottom: -130px;
   transform: rotate(-8deg);
 }
 
@@ -115,9 +132,13 @@
 }
 
 @media (max-width: 1440px) {
-  .bannerText {
-    font-size: 32px;
-    line-height: 44px;
+  .backgroundImageSection {
+    .introOverlay {
+      .introText {
+        font-size: 32px;
+        line-height: 44px;
+      }
+    }
   }
 }
 
@@ -127,21 +148,28 @@
   .decorBottomCenter,
   .decorBottomRight,
   .decorTopRight {
-    width: 80px !important;
-    height: 80px !important;
+    width: 90px !important;
+    height: 90px !important;
+  }
+  .centerIconWrapper {
+    width: 90px;
+    height: 90px;
   }
   .decorTopLeft {
-    top: -40px;
+    top: -45px;
   }
   .decorTopRight {
-    top: -40px;
+    top: -45px;
   }
   .decorBottomLeft {
-    left: 5vw;
-    bottom: -60px;
+    bottom: -70px;
   }
-  .decorBottomRight { right: 5vw; bottom: -60px; }
-  .decorBottomCenter { bottom: -70px; }
+  .decorBottomRight {
+    bottom: -70px;
+  }
+  .decorBottomCenter {
+    bottom: -80px;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -151,47 +179,24 @@
   .mainTitle {
     font-size: 32px;
     line-height: 40px;
-    margin-bottom: 90px;
+    margin-bottom: 10px;
   }
   .centerIcon {
     margin-top: -70px;
     margin-bottom: -20px;
   }
-  .bannerSection {
-    height: auto;
-    padding: 40px 0;
-  }
-  .bannerText {
-    font-size: 26px;
-    line-height: 36px;
-  }
-
-  .decorTopLeft {
-    left: 10px;
-    top: 0;
-  }
-  .decorTopRight {
-    right: 10px;
-    top: 0;
-  }
-  .decorBottomLeft { left: 15px; bottom: -50px; }
-  .decorBottomRight { right: 15px; bottom: -50px; }
-  .decorBottomCenter { bottom: -50px; }
-}
-
-@media (max-width: 768px) {
-  .mainTitle {
-    font-size: 28px;
-    line-height: 36px;
-    margin-bottom: 80px;
-  }
-  .centerIcon {
-    margin-top: -60px;
-    margin-bottom: -20px;
-  }
-  .bannerText {
-    font-size: 22px;
-    line-height: 32px;
+  .backgroundImageSection {
+    min-height: 250px;
+    padding: 25px 0;
+    
+    .introOverlay {
+      padding: 15px 25px;
+      
+      .introText {
+        font-size: 26px;
+        line-height: 36px;
+      }
+    }
   }
 
   .decorTopLeft,
@@ -203,77 +208,180 @@
     height: 75px !important;
   }
 
-  .decorTopLeft { left: 5px; top: 10px; }
-  .decorTopRight { right: 5px; top: 10px; }
-  .decorBottomLeft { left: 10px; bottom: -45px; }
-  .decorBottomRight { right: 10px; bottom: -45px; }
-  .decorBottomCenter { bottom: -45px; }
+  .centerIconWrapper {
+    width: 75px;
+    height: 75px;
+  }
+
+  .decorTopLeft {
+    top: -35px;
+  }
+  .decorTopRight {
+    top: -35px;
+  }
+  .decorBottomLeft { bottom: -60px; }
+  .decorBottomRight { bottom: -60px; }
+  .decorBottomCenter { bottom: -70px; }
+}
+
+@media (max-width: 768px) {
+  .mainTitle {
+    font-size: 28px;
+    line-height: 36px;
+    margin-bottom: 5px;
+  }
+  .centerIcon {
+    margin-top: -60px;
+    margin-bottom: -20px;
+  }
+  .backgroundImageSection {
+    .introOverlay {
+      .introText {
+        font-size: 22px;
+        line-height: 32px;
+      }
+    }
+  }
+
+  .decorTopLeft,
+  .decorBottomLeft,
+  .decorBottomCenter,
+  .decorBottomRight,
+  .decorTopRight {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .centerIconWrapper {
+    width: 60px;
+    height: 60px;
+  }
+
+  .decorTopLeft { top: -25px; }
+  .decorTopRight { top: -25px; }
+  .decorBottomLeft { bottom: -50px; }
+  .decorBottomRight { bottom: -50px; }
+  .decorBottomCenter { bottom: -60px; }
 }
 
 @media (max-width: 600px) {
   .decorTopLeft,
-  .decorTopRight,
   .decorBottomLeft,
   .decorBottomCenter,
   .decorBottomRight,
-  .centerIcon {
-    display: none !important;
+  .decorTopRight {
+    width: 50px !important;
+    height: 50px !important;
   }
+
+  .centerIconWrapper {
+    width: 50px;
+    height: 50px;
+  }
+
+  .decorTopLeft { top: -20px; }
+  .decorTopRight { top: -20px; }
+  .decorBottomLeft { bottom: -40px; }
+  .decorBottomRight { bottom: -40px; }
+  .decorBottomCenter { bottom: -50px; }
+
   .mainTitle {
     font-size: 24px;
     line-height: 32px;
-    margin-bottom: 60px;
+    margin-bottom: 0px;
   }
   .centerIcon {
     margin-top: -45px;
     margin-bottom: -15px;
   }
-  .bannerSection {
-    height: auto;
+  .backgroundImageSection {
+    min-height: 220px;
     padding: 20px 0;
-  }
-  .bannerText {
-    font-size: 18px;
-    line-height: 28px;
+    
+    .introOverlay {
+      padding: 15px 20px;
+      
+      .introText {
+        font-size: 18px;
+        line-height: 28px;
+      }
+    }
   }
 }
 
+// Дополнительные media queries для блока с картинкой
+@media (max-width: 560px) {
+  .backgroundImageSection {
+    min-height: 200px;
+    padding: 15px 0;
+    
+    .introOverlay {
+      padding: 10px 15px;
+      
+      .introText {
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .backgroundImageSection {
+    min-height: 180px;
+    padding: 10px 0;
+    
+    .introOverlay {
+      padding: 5px 10px;
+      
+      .introText {
+        font-size: 14px;
+        line-height: 20px;
+      }
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .decorTopLeft,
+  .decorBottomLeft,
+  .decorBottomCenter,
+  .decorBottomRight,
+  .decorTopRight {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .centerIconWrapper {
+    width: 40px;
+    height: 40px;
+  }
+
+  .decorTopLeft { top: -15px; }
+  .decorTopRight { top: -15px; }
+  .decorBottomLeft { bottom: -30px; }
+  .decorBottomRight { bottom: -30px; }
+  .decorBottomCenter { bottom: -40px; }
+}
+
+/* Center icon container */
 .centerIcon {
-  display: flex;
-  justify-content: center;
-  margin-top: -85px;
-  margin-bottom: -25px;
-  z-index: 4;
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.centerIconWrapper {
   position: relative;
 }
 
-/* Center icon scaling */
-.centerIcon img {
-  width: clamp(100px, 10vw, 150px) !important;
-  height: auto !important;
+
+
+.cityCardContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px; /* Add some space between cards */
 }
-
-/* Hide decorative images on small screens */
-@media (max-width: 600px) {
-  .decorTopLeft,
-  .decorTopRight,
-  .decorBottomLeft,
-  .decorBottomCenter,
-  .decorBottomRight {
-    display: none !important;
-  }
-
-  .centerIcon {
-    margin-top: -20px;
-    margin-bottom: -40px;
-  }
-
-  .bannerSection {
-    height: auto;
-  }
-
-  .bannerText {
-    font-size: 18px;
-    line-height: 28px;
-  }
-} 

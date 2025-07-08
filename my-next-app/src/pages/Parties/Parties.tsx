@@ -37,37 +37,37 @@ const Parties: React.FC = () => {
       <main className={styles.mainContent}>
         <h1 className={styles.mainTitle}>Вечеринки и яркие впечатления</h1>
 
-        {/* Neon party icon */}
-        <div className={styles.centerIcon}>
-          <Image
-            src="/assets/parties1.png"
-            alt="Party icon"
-            width={150}
-            height={150}
-          />
-        </div>
-
         {/* Banner with background image */}
-        <section className={styles.bannerSection}>
-          <div className={styles.bannerContent}>
-            <p className={styles.bannerText}>
-              <strong>Абхазия зажигает огни!</strong>
-              <br />
-              От атмосферных винодельческих вечеров с дегустациями местных вин до зажигательных пляжных вечеринок под открытым небом — здесь каждый найдёт свой идеальный вечер.
-              <br />
-              <br />
-              Готовы окунуться в атмосферу беззаботного отдыха? Выбирайте событие по настроению — и вперёд за впечатлениями!
-            </p>
+        <div className={styles.fullWidthSection}>
+          <div className={styles.backgroundImageSection}>
+            {/* Neon party icon */}
+            <div className={styles.centerIcon}>
+              <div className={styles.centerIconWrapper}>
+                <Image
+                  src="/assets/parties1.png"
+                  alt="Party icon"
+                  fill
+                  style={{ objectFit: 'contain' }}
+                />
+              </div>
+            </div>
+            
+            <div className={styles.introOverlay}>
+              <div className={styles.introTextContainer}>
+                <p className={styles.introText}>
+                  <strong>Абхазия зажигает огни!</strong>
+                </p>
+                <p className={styles.introText}>
+                  От атмосферных винодельческих вечеров с дегустациями местных вин до зажигательных пляжных вечеринок под открытым небом — здесь каждый найдёт свой идеальный вечер.
+                </p>
+                <p className={styles.introText}>
+                  Готовы окунуться в атмосферу беззаботного отдыха? Выбирайте событие по настроению — и вперёд за впечатлениями!
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Decorative Images */}
-          <Image
-            src="/assets/IMG_1932.jpg"
-            alt="Banner"
-            fill
-            priority
-            className={styles.bannerBackground}
-          />
           <Image
             src="/assets/parties2.jpg"
             alt="Decor 1"
@@ -103,7 +103,7 @@ const Parties: React.FC = () => {
             height={160}
             className={styles.decorBottomRight}
           />
-        </section>
+        </div>
 
         {/* Main Tabs with Navigation */}
         <section className={tabStyles.mainTabs}>
@@ -137,39 +137,39 @@ const Parties: React.FC = () => {
         </section>
 
         {/* City Cards */}
-        <div id="suhum">
+        <div id="suhum" className={styles.cityCardContainer}>
           <PartyCardSuhum />
         </div>
         
-        <div id="gagra">
+        <div id="gagra" className={styles.cityCardContainer}>
           <PartyCardGagra />
         </div>
         
-        <div id="pitsunda">
+        <div id="pitsunda" className={styles.cityCardContainer}>
           <PartyCardPitsunda />
         </div>
         
-        <div id="gudauta">
+        <div id="gudauta" className={styles.cityCardContainer}>
           <PartyCardGudauta />
         </div>
         
-        <div id="newafon">
+        <div id="newafon" className={styles.cityCardContainer}>
           <PartyCardNewafon />
         </div>
         
-        <div id="gulripsh">
+        <div id="gulripsh" className={styles.cityCardContainer}>
           <PartyCardGulripsh />
         </div>
         
-        <div id="ochamchira">
+        <div id="ochamchira" className={styles.cityCardContainer}>
           <PartyCardOchamchira />
         </div>
         
-        <div id="tkuarchal">
+        <div id="tkuarchal" className={styles.cityCardContainer}>
           <PartyCardTkuarchal />
         </div>
         
-        <div id="gal">
+        <div id="gal" className={styles.cityCardContainer}>
           <PartyCardGal />
         </div>
       </main>
