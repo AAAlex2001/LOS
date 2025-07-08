@@ -10,6 +10,8 @@ import tabStyles from './MainTabs.module.scss';
 import YourDoctorHospitals from './YourDoctorHospitals';
 import YourDoctorPrivateClinics from './YourDoctorPrivateClinics';
 import YourDoctorDentistry from './YourDoctorDentistry';
+import YourDoctorVetClinics from './YourDoctorVetClinics';
+import YourDoctorDoctors from './YourDoctorDoctors';
 
 const YourDoctor: React.FC = () => {
   const tabs = [
@@ -21,7 +23,9 @@ const YourDoctor: React.FC = () => {
   ];
 
   const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
+    // Для больниц скроллим к блоку больниц, а не к картинке
+    const targetId = sectionId === 'hospitals' ? 'hospitals-content' : sectionId;
+    const section = document.getElementById(targetId);
     if (section) {
       section.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -59,7 +63,7 @@ const YourDoctor: React.FC = () => {
           <div
             key={tab.id}
             id={tab.id}
-            className={`${styles.tabContent} ${(index === 0 || index === 1 || index === 2) ? styles.hasImageCard : ''}`}
+            className={`${styles.tabContent} ${(index === 0 || index === 1 || index === 2 || index === 3 || index === 4) ? styles.hasImageCard : ''}`}
           >
             {tab.id === 'hospitals' ? (
               <>
@@ -73,12 +77,18 @@ const YourDoctor: React.FC = () => {
                     className={styles.cardImage}
                   />
                 </div>
-                <YourDoctorHospitals />
+                <div id="hospitals-content">
+                  <YourDoctorHospitals />
+                </div>
               </>
             ) : tab.id === 'private-clinics' ? (
               <YourDoctorPrivateClinics />
             ) : tab.id === 'dentistry' ? (
               <YourDoctorDentistry />
+            ) : tab.id === 'doctors' ? (
+              <YourDoctorDoctors />
+            ) : tab.id === 'vet-clinics' ? (
+              <YourDoctorVetClinics />
             ) : (
               <div style={{ minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <h2>Контент для раздела "{tab.name}" будет здесь.</h2>
