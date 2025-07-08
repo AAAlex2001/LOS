@@ -1,0 +1,132 @@
+// Break-points & Variables
+$break-sm : 560px;
+$break-md : 768px;
+$break-lg : 1024px;
+$font-family: 'Inter', sans-serif;
+$color-primary: #1129bd;
+$color-text: #000000;
+
+.contentSection {
+  width: 100%;
+  max-width: 1238px;
+  margin: 0 auto;
+  position: relative;
+  padding: 40px 20px;
+}
+
+.mainTitle {
+  font-family: $font-family;
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 44px;
+  text-align: center;
+  color: $color-primary;
+  margin-bottom: 60px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%;
+}
+
+.imageContainer {
+  max-width: 1000px;
+  margin: 0 auto 60px;
+  text-align: center;
+  
+  .image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+  }
+}
+
+.textSection {
+  max-width: 1238px;
+  margin: 0 auto 60px;
+
+  .sectionTitle {
+    font-family: $font-family;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 39px;
+    color: $color-primary;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  p {
+    font-family: $font-family;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+    color: $color-text;
+    margin: 0;
+    text-align: left;
+  }
+}
+
+// --- Responsive ---
+@media (max-width: $break-lg) {
+  .textSection p {
+    font-size: 22px;
+  }
+  .contentSection {
+    padding: 30px 15px;
+  }
+}
+
+@media (max-width: $break-md) {
+  .mainTitle {
+    font-size: 32px;
+    line-height: 38px;
+    margin-bottom: 40px;
+  }
+  .textSection {
+    .sectionTitle {
+      font-size: 28px;
+    }
+    p {
+      font-size: 20px;
+    }
+  }
+  .contentSection {
+    padding: 20px 15px;
+  }
+  .imageContainer {
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: $break-sm) {
+  .mainTitle {
+    font-size: 28px;
+    line-height: 34px;
+    margin-bottom: 30px;
+  }
+  .textSection {
+    margin-bottom: 40px;
+    .sectionTitle {
+      font-size: 24px;
+    }
+    p {
+      font-size: 18px;
+    }
+  }
+  .contentSection {
+    padding: 15px 10px;
+  }
+  .imageContainer {
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 320px) {
+  .mainTitle {
+    font-size: 24px;
+    line-height: 30px;
+    padding: 0 5px;
+  }
+  .contentSection {
+    padding: 10px 5px;
+  }
+} 

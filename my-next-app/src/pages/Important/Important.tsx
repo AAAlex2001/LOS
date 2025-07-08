@@ -4,6 +4,7 @@ import React from 'react';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
+import ImportantPublicBehavior from './ImportantPublicBehavior';
 import styles from './Important.module.scss';
 import tabStyles from './MainTabs.module.scss';
 
@@ -91,9 +92,7 @@ const Important: React.FC = () => {
         </div>
 
         <div id="public-behavior" className={styles.tabContent}>
-          <div style={{ minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <h2>Контент для раздела "Правила поведения в общественных местах" будет здесь.</h2>
-          </div>
+          <ImportantPublicBehavior />
         </div>
 
         <div id="taxi-etiquette" className={styles.tabContent}>
