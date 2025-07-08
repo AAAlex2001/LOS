@@ -35,6 +35,20 @@ $color-border: #d5daef;
   padding: 30px 0;
 }
 
+// Специальный класс для промо блока с мандарином
+.promoBackgroundImageSection {
+  width: 100%;
+  min-height: 355px;
+  height: auto;
+  background: url('/assets/IMG_1932.jpg') center/cover;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 40px 0;
+}
+
 .introOverlay {
   max-width: 1812px;
   width: 100%;
@@ -137,16 +151,21 @@ $color-border: #d5daef;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+    width: 100%;
   }
 
   .cityCard {
     border-radius: 15px;
     overflow: hidden;
+    box-sizing: border-box;
     border: 1px solid $color-border;
+   
     .cityImage {
       height: 300px;
+      width: 100%;
       background-size: cover;
       background-position: center;
+      object-fit: cover;
     }
     .cityInfo {
       padding: 10px;
@@ -192,7 +211,7 @@ $color-border: #d5daef;
 }
 
 .promoBannerText {
-  padding-top: 40px;
+  padding-top: 40px; // отступ для учета мандарина
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -214,6 +233,7 @@ $color-border: #d5daef;
 .bookingCard {
   width: 450px;
   max-width: 100%;
+  box-sizing: border-box;
   border: 1px solid $color-border;
   border-radius: 15px;
   background-color: #fff;
@@ -222,8 +242,10 @@ $color-border: #d5daef;
 
 .bookingCardImage {
   height: 260px;
+  width: 100%;
   background-size: cover;
   background-position: center;
+  object-fit: cover;
 }
 
 .bookingCardInfo {
@@ -276,17 +298,21 @@ $color-border: #d5daef;
         gap: 20px;
         max-width: 1428px;
         margin: 0 auto;
+        width: 100%;
     }
     .activityCard {
         border-radius: 15px;
         overflow: hidden;
+        box-sizing: border-box;
         border: 1px solid $color-border;
         background-color: #fff;
     }
     .activityImage {
         height: 300.8px;
+        width: 100%;
         background-size: cover;
         background-position: center;
+        object-fit: cover;
     }
     .activityInfo {
         padding: 20px 10px;
@@ -331,6 +357,21 @@ $color-border: #d5daef;
 }
 
 // --- Responsive ---
+@media (min-width: 1600px) {
+    // Увеличенные размеры картинок для больших экранов
+    .cityCard .cityImage {
+        height: 350px;
+    }
+    
+    .activityImage {
+        height: 350px;
+    }
+    
+    .bookingCardImage {
+        height: 300px;
+    }
+}
+
 @media (max-width: $break-xl) {
     .citiesSection .citiesGrid {
         grid-template-columns: repeat(2, 1fr);
@@ -358,6 +399,11 @@ $color-border: #d5daef;
         padding: 25px 0;
     }
     
+    .promoBackgroundImageSection {
+        min-height: 300px;
+        padding: 30px 0;
+    }
+    
     .introText {
         font-size: 28px;
         line-height: 1.4;
@@ -370,6 +416,20 @@ $color-border: #d5daef;
     .citiesSection .citiesGrid, .activitiesSection .activitiesGrid {
         grid-template-columns: 1fr;
     }
+   
+    // Адаптивные размеры картинок
+    .cityCard .cityImage {
+        height: 250px;
+    }
+    
+    .activityImage {
+        height: 250px;
+    }
+    
+    .bookingCardImage {
+        height: 220px;
+    }
+    
     .ctaSection {
         .bookingButton { width: 100%; max-width: 444px; }
         .bookingCard { width: 100%; max-width: 450px; }
@@ -382,6 +442,26 @@ $color-border: #d5daef;
     .promoBannerWrapper {
         margin-top: 100px;
     }
+    
+    .promoBannerText {
+        padding-top: 30px;
+    }
+}
+
+@media (max-width: 640px) and (min-width: 561px) {
+    .heroSection {
+        .tabsContainer {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            
+            .tabItem {
+                font-size: 20px;
+                padding: 6px 8px;
+                white-space: nowrap;
+            }
+        }
+    }
 }
 
 @media (max-width: $break-sm) {
@@ -391,6 +471,11 @@ $color-border: #d5daef;
     .backgroundImageSection {
         min-height: 200px;
         padding: 20px 0;
+    }
+    
+    .promoBackgroundImageSection {
+        min-height: 250px;
+        padding: 25px 0;
     }
     
     .introText {
@@ -416,11 +501,43 @@ $color-border: #d5daef;
         .heroVideo { height: 300px; }
     }
 
+    // Адаптивные размеры картинок для маленьких экранов
+    .cityCard .cityImage {
+        height: 200px;
+    }
+    
+    .activityImage {
+        height: 200px;
+    }
+    
+    .bookingCardImage {
+        height: 180px;
+    }
+
     .promoMandarin {
         width: 150px;
         height: 150px;
     }
     .promoBannerWrapper {
         margin-top: 75px;
+    }
+    
+    .promoBannerText {
+        padding-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    // Дополнительное уменьшение картинок для очень маленьких экранов
+    .cityCard .cityImage {
+        height: 150px;
+    }
+    
+    .activityImage {
+        height: 150px;
+    }
+    
+    .bookingCardImage {
+        height: 140px;
     }
 }

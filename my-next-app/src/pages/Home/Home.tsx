@@ -147,7 +147,7 @@ const HomePage = () => {
             <div className={styles.promoBannerWrapper}>
                 <Image src="/assets/Mand3.png" alt="Mandarin" width={326} height={326} className={styles.promoMandarin}/>
                 <div className={styles.fullWidthSection}>
-                    <div className={styles.backgroundImageSection}>
+                    <div className={styles.promoBackgroundImageSection}>
                         <div className={styles.introOverlay}>
                             <div className={styles.promoBannerText}>
                                 <p className={styles.introText}>Вы уже вдохновились горными пейзажами, лазурным морем и гостеприимством Абхазии?</p>
