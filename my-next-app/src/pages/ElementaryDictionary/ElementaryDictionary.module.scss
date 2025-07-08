@@ -32,6 +32,8 @@
 .sectionBlock {
   width: 100%;
   max-width: 604px;
+  display: flex;
+  flex-direction: column;
 }
 
 .sectionBlockFullWidth {
@@ -56,10 +58,12 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  flex: 1; // Растягиваем таблицы на одинаковую высоту
 }
 
 .row {
   display: flex;
+  min-height: 50px; // Фиксированная минимальная высота строки
 
   &:nth-child(even) {
     background: rgba(255, 255, 255, 0.002);
@@ -82,10 +86,18 @@
 
 .cell {
   flex: 1 1 50%;
-  padding: 10px 12px;
+  padding: 15px 12px;
   font-size: 14px;
-  line-height: 17px;
+  line-height: 20px;
   border-right: 1px solid #B9B9B9;
+  display: flex;
+  align-items: center; // Вертикальное выравнивание по центру
+  min-height: 50px; // Минимальная высота ячейки
+  box-sizing: border-box;
+  word-wrap: break-word; // Перенос длинных слов
+  overflow-wrap: break-word; // Дополнительная поддержка переноса
+  hyphens: auto; // Автоматические переносы
+  
   &:last-child {
     border-right: none;
   }
@@ -96,6 +108,7 @@
   background: #0A1977;
   font-weight: 800;
   color: #fff;
+  justify-content: center; // Горизонтальное выравнивание по центру для заголовков
 }
 
 @media (max-width: 768px) {
@@ -110,6 +123,64 @@
   .dictionaryTable {
     max-width: 100%;
   }
+
+  .row {
+    min-height: 60px; // Увеличиваем высоту на мобильных
+  }
+
+  .cell {
+    padding: 12px 8px;
+    font-size: 13px;
+    line-height: 18px;
+    min-height: 60px;
+  }
+}
+
+// Медиа-запрос для очень маленьких экранов
+@media (max-width: 300px) {
+  .mainContent {
+    padding: 120px 8px 60px; // Уменьшаем боковые отступы
+  }
+
+  .mainTitle {
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  .sectionTitle {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .dictionaryTable {
+    max-width: 100%;
+    border-radius: 10px; // Меньший радиус для маленьких экранов
+  }
+
+  .row {
+    min-height: 70px; // Увеличиваем высоту для лучшей читаемости
+  }
+
+  .cell {
+    padding: 10px 6px; // Меньшие отступы
+    font-size: 12px;
+    line-height: 16px;
+    min-height: 70px;
+    word-break: break-word; // Принудительный перенос слов
+  }
+
+  .cellHeader {
+    font-size: 12px;
+    font-weight: 700; // Чуть меньше жирности
+  }
+
+  .sectionsContainer {
+    gap: 40px; // Меньший зазор между секциями
+  }
+
+  .tablesRow {
+    gap: 24px; // Меньший зазор между таблицами
+  }
 }
 
 .tablesRow {
@@ -117,7 +188,7 @@
   flex-direction: column;
   gap: 32px;
   justify-content: center;
-  align-items: center;
+  align-items: stretch; // Растягиваем таблицы на одинаковую высоту
 }
 
 @media (min-width: 1300px) {
@@ -131,7 +202,19 @@
     gap: 48px;
     align-items: flex-start;
   }
+  
   .sectionBlock {
     width: calc(50% - 24px);
+  }
+
+  .row {
+    min-height: 55px; // Чуть больше высота на больших экранах
+  }
+
+  .cell {
+    padding: 16px 15px;
+    font-size: 15px;
+    line-height: 22px;
+    min-height: 55px;
   }
 } 

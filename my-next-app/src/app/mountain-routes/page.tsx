@@ -1,3 +1,5 @@
 import MountainRoutes from '@/pages/MountainRoutes/MountainRoutes';
 
-export default MountainRoutes; 
+export default function MountainRoutesPage() {
+  return <MountainRoutes />;
+} 
