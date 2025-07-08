@@ -9,6 +9,7 @@ import styles from './YourDoctor.module.scss';
 import tabStyles from './MainTabs.module.scss';
 import YourDoctorHospitals from './YourDoctorHospitals';
 import YourDoctorPrivateClinics from './YourDoctorPrivateClinics';
+import YourDoctorDentistry from './YourDoctorDentistry';
 
 const YourDoctor: React.FC = () => {
   const tabs = [
@@ -58,7 +59,7 @@ const YourDoctor: React.FC = () => {
           <div
             key={tab.id}
             id={tab.id}
-            className={`${styles.tabContent} ${(index === 0 || index === 1) ? styles.hasImageCard : ''}`}
+            className={`${styles.tabContent} ${(index === 0 || index === 1 || index === 2) ? styles.hasImageCard : ''}`}
           >
             {tab.id === 'hospitals' ? (
               <>
@@ -76,6 +77,8 @@ const YourDoctor: React.FC = () => {
               </>
             ) : tab.id === 'private-clinics' ? (
               <YourDoctorPrivateClinics />
+            ) : tab.id === 'dentistry' ? (
+              <YourDoctorDentistry />
             ) : (
               <div style={{ minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <h2>Контент для раздела "{tab.name}" будет здесь.</h2>
