@@ -4,12 +4,12 @@ import Image from 'next/image';
 import styles from './Footer.module.scss';
 
 const socialIcons = [
-  { src: '/assets/telegram.svg', alt: 'Telegram', w: 35, h: 30 },
-  { src: '/assets/instagram.svg', alt: 'Instagram', w: 32, h: 30 },
-  { src: '/assets/twitter.svg', alt: 'Twitter', w: 32, h: 32 },
-  { src: '/assets/facebook.svg', alt: 'Facebook', w: 30, h: 30 },
-  { src: '/assets/youtube.svg', alt: 'YouTube', w: 40, h: 30 },
-  { src: '/assets/rutube.svg', alt: 'Rutube', w: 44, h: 48 },
+  { src: '/assets/telegram.svg', alt: 'Telegram', w: 42, h: 42 },
+  { src: '/assets/instagram.svg', alt: 'Instagram', w: 42, h: 42 },
+  { src: '/assets/twitter.svg', alt: 'Twitter', w: 42, h: 42 },
+  { src: '/assets/facebook.svg', alt: 'Facebook', w: 42, h: 42 },
+  { src: '/assets/youtube.svg', alt: 'YouTube', w: 42, h: 42 },
+  { src: '/assets/rutube.svg', alt: 'Rutube', w: 42, h: 42 },
 ];
 
 const quickLinks = [
