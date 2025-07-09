@@ -182,9 +182,20 @@ $break-xxl: 1920px;
   text-align: center;
   text-decoration: none;
   transition: all 0.2s ease;
+  position: relative;
 
   &:hover {
     background: rgba(17, 41, 189, 0.05);
+  }
+
+  &.blueOutline {
+    border-color: #d5daef;
+  }
+
+  &.blueOutline:hover {
+    background: #1129BD;
+    color: #FFFFFF;
+    border-color: #1129BD;
   }
 }
 
@@ -200,6 +211,24 @@ $break-xxl: 1920px;
   border: 2px solid rgba(17, 41, 189, 0.1);
   border-radius: 100px;
   margin-top: 0;
+}
+
+// Global badge style
+.soonBadge {
+  position: absolute;
+  top: -8px;
+  right: -20px;
+  background: #1129BD;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 12px;
+  text-transform: uppercase;
+  font-style: italic;
+  padding: 4px 8px;
+  border-radius: 50px;
+  pointer-events: none;
 }
 
 // --- Tablet and smaller desktops ---
@@ -261,6 +290,7 @@ $break-xxl: 1920px;
   }
 
   .navButton {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -282,6 +312,27 @@ $break-xxl: 1920px;
     &:hover {
       background: rgba(17, 41, 189, 0.05);
     }
+
+    &.blueOutline:hover {
+      background: #1129BD;
+      color: #FFFFFF;
+      border-color: #1129BD;
+    }
+  }
+
+  .soonBadge {
+    position: absolute;
+    top: -8px;
+    right: -20px;
+    background: #1129BD;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 12px;
+    padding: 4px 8px;
+    border-radius: 50px;
+    pointer-events: none;
   }
 
   .orangeOutline {

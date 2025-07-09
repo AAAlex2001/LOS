@@ -20,11 +20,10 @@ const Header = () => {
       {/* Mobile menu */}
       <div className={`${styles.mobileMenu} ${menuOpen ? styles.active : ''}`}>
         <nav className={styles.mobileNavList}>
-          <Link href="#" className={styles.mobileNavButton} onClick={closeMenu}>
-            Аренда жилья
-          </Link>
-          <Link href="#" className={`${styles.mobileNavButton} ${styles.orangeOutline}`} onClick={closeMenu}>
+          {/* <Link href="#" className={styles.mobileNavButton} onClick={closeMenu}>Аренда жилья</Link> */}
+          <Link href="#" className={`${styles.mobileNavButton} ${styles.blueOutline}`} onClick={closeMenu}>
             Доска объявлений
+            <span className={styles.soonBadge}>скоро</span>
           </Link>
         </nav>
 
@@ -74,11 +73,10 @@ const Header = () => {
 
         {/* Center navigation buttons */}
         <nav className={styles.nav}>
-          <Link href="#" className={`${styles.navButton} ${styles.orangeOutline}`}>
-            Аренда жилья
-          </Link>
+          {/* <Link href="#" className={`${styles.navButton} ${styles.orangeOutline}`}>Аренда жилья</Link> */}
           <Link href="#" className={`${styles.navButton} ${styles.blueOutline}`}>
             Доска объявлений
+            <span className={styles.soonBadge}>скоро</span>
           </Link>
         </nav>
 
