@@ -18,7 +18,8 @@ const Important: React.FC = () => {
   ];
 
   const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
+    const targetId = sectionId === 'public-behavior' ? 'public-behavior-text' : sectionId;
+    const section = document.getElementById(targetId);
     if (section) {
       section.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }

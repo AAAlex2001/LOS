@@ -271,7 +271,18 @@ $color-border: #d5daef;
   font-size: 24px;
   font-weight: 500;
   cursor: pointer;
+  transition: all 0.2s ease;
+
   svg { transform: rotate(90deg); }
+  svg path { stroke: #ffffff; transition: stroke 0.2s ease; }
+
+  &:hover {
+    background-color: #ffffff;
+    color: $color-secondary;
+    border: 2px solid $color-secondary;
+
+    svg path { stroke: $color-secondary; }
+  }
 }
 
 .bookingFinePrint {
