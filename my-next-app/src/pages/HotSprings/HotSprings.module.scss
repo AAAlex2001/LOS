@@ -6,11 +6,10 @@
 
 .mainContent {
   flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 100%;
+  max-width: 1872px;
+  margin: 0 auto;
   padding: 20px 24px 60px;
-  position: relative;
 }
 
 .mainTitle {
@@ -26,58 +25,47 @@
   padding: 10px 10px 32px;
 }
 
-/* Banner Section */
-.bannerSection {
+.fullWidthSection {
+  width: 100vw;
   position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-bottom: 60px;
+}
+
+.backgroundImageSection {
   width: 100%;
-  max-width: 1872px;
-  min-height: 374px;
-  border-radius: 15px;
-  overflow: hidden;
+  min-height: 300px;
+  height: auto;
+  background: url('/assets/IMG_1932.jpg') center/cover;
+  border-radius: 0;
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-top: 0;
-}
-
-.bannerBackground {
-  object-fit: cover;
-  z-index: 0;
-}
-
-.bannerContent {
+  justify-content: center;
   position: relative;
-  z-index: 1;
+  padding: 30px 0;
+}
+
+.introOverlay {
   max-width: 1812px;
   width: 100%;
-  min-height: 200px;
-  padding: 60px 30px;
   display: flex;
+  align-items: center;
   justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
+  padding: 20px 30px;
 }
 
-.bannerTextContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 40px;
-  max-width: 1812px;
-  width: 100%;
-  flex-wrap: wrap;
-}
-
-.bannerText {
+.introText {
   font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  font-size: 38px;
-  line-height: 50px;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 46px;
   color: rgba(0, 0, 0, 0.85);
   text-align: center;
   margin: 0;
-  word-wrap: break-word;
-  hyphens: auto;
+  max-width: 100%;
 }
 
 /* Hot Springs Cards */
@@ -90,149 +78,63 @@
   padding: 0 24px;
 }
 
-/* Responsive Design - Фиксированные отступы для каждого диапазона */
-
-/* 1441px и выше - Большие экраны */
-@media (min-width: 1441px) {
-  .bannerContent {
-    padding: 75px 40px;
-  }
-  .bannerText {
-    font-size: 38px;
-    line-height: 50px;
-  }
-}
-
-/* 1062px - 1440px - Средние экраны */
-@media (max-width: 1440px) and (min-width: 1062px) {
-  .bannerSection {
-    max-width: 95vw;
-  }
-  .bannerContent {
-    padding: 68px 35px;
-  }
-  .bannerText {
-    font-size: 32px;
-    line-height: 44px;
-  }
-}
-
-/* 900px - 1061px - Средние планшеты */
-@media (max-width: 1061px) and (min-width: 900px) {
-  .mainContent {
-    padding: 50px 20px 40px;
-  }
+@media (max-width: 767px) {
   .mainTitle {
+    font-size: 28px;
+    line-height: 34px;
+  }
+
+  .backgroundImageSection {
+    min-height: 250px;
+    padding: 25px 0;
+  }
+
+  .introOverlay {
+    padding: 15px 25px;
+  }
+
+  .introText {
+    font-size: 24px;
+    line-height: 30px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1299px) {
+  .backgroundImageSection .introOverlay .introText {
     font-size: 30px;
     line-height: 38px;
-    margin-bottom: 60px;
-  }
-  .bannerSection {
-    max-width: 90vw;
-  }
-  .bannerContent {
-    padding: 75px 30px;
-  }
-  .bannerText {
-    font-size: 28px;
-    line-height: 38px;
-  }
-  .bannerTextContainer {
-    gap: 30px;
   }
 }
 
-/* 769px - 899px - Планшеты */
-@media (max-width: 899px) and (min-width: 769px) {
-  .mainContent {
-    padding: 60px 20px 40px;
+// Дополнительные media queries для блока с картинкой
+@media (max-width: 560px) {
+  .backgroundImageSection {
+    min-height: 220px;
+    padding: 20px 0;
   }
-  .mainTitle {
-    font-size: 32px;
-    line-height: 40px;
-    margin-bottom: 70px;
+
+  .introOverlay {
+    padding: 15px 20px;
   }
-  .bannerSection {
-    max-width: 90vw;
-  }
-  .bannerContent {
-    padding: 68px 25px;
-  }
-  .bannerText {
-    font-size: 26px;
-    line-height: 36px;
+
+  .introText {
+    font-size: 20px;
+    line-height: 26px;
   }
 }
 
-/* 601px - 768px - Маленькие планшеты */
-@media (max-width: 768px) and (min-width: 601px) {
-  .mainTitle {
-    font-size: 28px;
-    line-height: 36px;
-    margin-bottom: 60px;
+@media (max-width: 320px) {
+  .backgroundImageSection {
+    min-height: 180px;
+    padding: 15px 0;
   }
-  .bannerSection {
-    border-radius: 10px;
-  }
-  .bannerContent {
-    padding: 70px 20px;
-  }
-  .bannerText {
-    font-size: 22px;
-    line-height: 32px;
-  }
-}
 
-/* 481px - 600px - Большие мобильные */
-@media (max-width: 600px) and (min-width: 481px) {
-  .mainContent {
-    padding: 40px 15px 30px;
+  .introOverlay {
+    padding: 10px 10px;
   }
-  .mainTitle {
-    font-size: 24px;
-    line-height: 32px;
-    margin-bottom: 50px;
-    padding: 10px;
-  }
-  .bannerSection {
-    border-radius: 8px;
-  }
-  .bannerContent {
-    padding: 60px 15px;
-  }
-  .bannerText {
-    font-size: 18px;
-    line-height: 28px;
-  }
-  .bannerTextContainer {
-    gap: 25px;
-  }
-}
 
-/* 320px - 480px - Маленькие мобильные */
-@media (max-width: 480px) and (min-width: 320px) {
-  .bannerContent {
-    padding: 70px 12px;
-  }
-  .bannerText {
+  .introText {
     font-size: 16px;
-    line-height: 24px;
-  }
-  .bannerTextContainer {
-    gap: 20px;
-  }
-}
-
-/* Менее 320px - Очень маленькие экраны */
-@media (max-width: 319px) {
-  .bannerContent {
-    padding: 55px 10px;
-  }
-  .bannerText {
-    font-size: 14px;
     line-height: 22px;
-  }
-  .bannerTextContainer {
-    gap: 15px;
   }
 } 
