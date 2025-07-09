@@ -7,7 +7,9 @@ $break-xxl: 1920px;
 
 // --- Base Styles (Mobile First < 1024px) ---
 .header {
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   width: 100%;
   max-width: 1920px;
   height: 80px;

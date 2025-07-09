@@ -60,7 +60,7 @@ const Header = () => {
 
       <header className={styles.header}>
         {/* Left block: Logo */}
-        <div className={styles.logoSection}>
+        <Link href="/" className={styles.logoSection} onClick={closeMenu}>
           <Image
             src="/assets/IMG_1557.png"
             alt="Logo"
@@ -69,7 +69,7 @@ const Header = () => {
             className={styles.logoImage}
           />
           <h1 className={styles.logoText}>Land of Soul</h1>
-        </div>
+        </Link>
 
         {/* Center navigation buttons */}
         <nav className={styles.nav}>
