@@ -13,15 +13,15 @@ const socialIcons = [
 ];
 
 const quickLinks = [
-  'Города',
-  'Ваш доктор',
-  'Жильё',
-  'Связь',
-  'Важно знать',
-  'Развлечения',
-  'Такси',
-  'Об Абхазии',
-  'Банки',
+  { label: 'Города', href: '/cities' },
+  { label: 'Связь', href: '/mobile-communication' },
+  { label: 'Такси', href: '/taxi' },
+  { label: 'Ваш доктор', href: '/your-doctor' },
+  { label: 'Важно знать', href: '/important' },
+  { label: 'История и культура Абхазии', href: '/history-and-culture' },
+  // { label: 'Жильё', href: '/rent' },
+  { label: 'Развлечения', href: '/parties' },
+  { label: 'Банки', href: '/banks' },
 ];
 
 const Footer = () => {
@@ -50,9 +50,9 @@ const Footer = () => {
         <div className={styles.quickLinksBlock}>
           <h3 className={styles.quickLinksTitle}>Быстрые ссылки</h3>
           <nav className={styles.quickLinks}>
-            {quickLinks.map((link) => (
-              <Link href="#" key={link} className={styles.quickLinkItem}>
-                {link}
+            {quickLinks.map(({label, href}) => (
+              <Link href={href} key={label} className={styles.quickLinkItem}>
+                {label}
               </Link>
             ))}
           </nav>
