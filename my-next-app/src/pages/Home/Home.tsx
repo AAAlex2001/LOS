@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Header from '@/components/Header/Header';
+import Link from 'next/link';
 import Footer from '@/components/Footer/Footer';
 import Popup from '@/components/Popup/Popup';
 import styles from './Home.module.scss';
@@ -20,13 +21,19 @@ const cities = [
 ];
 
 const activities = [
-    { img: '/assets/activity_vecherinki.png', title: 'вечеринки' },
-    { img: '/assets/activity_gornye_marshruty.jpg', title: 'горные маршруты' },
-    { img: '/assets/activity_ekskursii.jpg', title: 'экскурсии' },
-    { img: '/assets/activity_goryachie_istochniki.png', title: 'горячие источники' },
+    { img: '/assets/activity_vecherinki.png', title: 'вечеринки', href: '/parties' },
+    { img: '/assets/activity_gornye_marshruty.jpg', title: 'горные маршруты', href: '/mountain-routes' },
+    { img: '/assets/activity_ekskursii.jpg', title: 'экскурсии', href: '/excursions' },
+    { img: '/assets/activity_goryachie_istochniki.png', title: 'горячие источники', href: '/hot-springs' },
 ];
 
-const actionButtons = ['Ваш доктор', 'Связь и интернет', 'Службы такси', 'Банки', 'Важно знать'];
+const actionButtons = [
+  { label: 'Ваш доктор', href: '/your-doctor' },
+  { label: 'Связь и интернет', href: '/mobile-communication' },
+  { label: 'Службы такси', href: '/taxi' },
+  { label: 'Банки', href: '/banks' },
+  { label: 'Важно знать', href: '/important' },
+];
 
 const popupData = {
   about: [
@@ -191,12 +198,12 @@ const HomePage = () => {
             </div>
             <div className={styles.activitiesGrid}>
                 {activities.map((activity) => (
-                    <div key={activity.title} className={styles.activityCard}>
+                    <Link key={activity.title} href={activity.href} className={styles.activityCard}>
                         <div className={styles.activityImage} style={{ backgroundImage: `url(${activity.img})` }} />
                         <div className={styles.activityInfo}>
                             <h3>{activity.title}</h3>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </section>
@@ -205,8 +212,8 @@ const HomePage = () => {
         <section id="essentials" className={styles.actionsSection}>
             <h2 className={styles.sectionTitle}>Здесь собрано всё, что избавит вас от лишних переживаний в поездке</h2>
             <div className={styles.actionsGrid}>
-                {actionButtons.map((label) => (
-                    <button key={label} className={styles.actionButton}>{label}</button>
+                {actionButtons.map(({label, href}) => (
+                    <Link key={label} href={href} className={styles.actionButton}>{label}</Link>
                 ))}
             </div>
         </section>

@@ -317,6 +317,12 @@ $color-border: #d5daef;
         box-sizing: border-box;
         border: 1px solid $color-border;
         background-color: #fff;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
     }
     .activityImage {
         height: 300.8px;
@@ -364,6 +370,16 @@ $color-border: #d5daef;
         color: $color-primary;
         font-size: 20px;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background-color: $color-secondary;
+          color: #ffffff;
+          border-color: $color-secondary;
+        }
     }
 }
 
