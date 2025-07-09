@@ -44,15 +44,15 @@ const popupData = {
     { label: 'Горячие источники', href: '/hot-springs' }
   ],
   booking: [
-    { label: 'Города Абхазии', href: '#' },
-    { label: 'Аренда жилья', href: '#' },
-    { label: 'Связь', href: '#' },
-    { label: 'Такси', href: '#' },
-    { label: 'Банки', href: '#' }
+    { label: 'Города Абхазии', href: '/cities' },
+    // { label: 'Аренда жилья', href: '#' },
+    { label: 'Связь', href: '/mobile-communication' },
+    { label: 'Такси', href: '/taxi' },
+    { label: 'Банки', href: '/banks' }
   ],
   essentials: [
-    { label: 'Ваш доктор', href: '#' },
-    { label: 'Важно знать', href: '#' }
+    { label: 'Ваш доктор', href: '/your-doctor' },
+    { label: 'Важно знать', href: '/important' }
   ],
 };
 
