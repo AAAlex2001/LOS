@@ -84,14 +84,11 @@ const Footer = () => {
       {/* Bottom line */}
       <div className={styles.bottomRow}>
         <nav className={styles.legalLinks}>
-          <Link href="#" className={styles.legalLink}>
-            Privacy Policy
+          <Link href="/accessibility-and-terms" className={styles.legalLink}>
+            Доступность и правила пользования сайтом
           </Link>
-          <Link href="#" className={styles.legalLink}>
-            Terms and Conditions
-          </Link>
-          <Link href="#" className={styles.legalLink}>
-            Accessibility
+          <Link href="/privacy-policy" className={styles.legalLink}>
+            Политика конфиденциальности сайта
           </Link>
         </nav>
         <span className={styles.rights}>© 2025 Land of soul Abkhazia. Все права защищены.</span>
