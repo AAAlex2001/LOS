@@ -131,7 +131,7 @@ $color-border: #d5daef;
   .sliderContainer {
     position: relative;
     width: 100%;
-    height: 701px;
+    height: 600px;
     border-radius: 15px;
     overflow: hidden;
     margin-bottom: 30px;
@@ -487,7 +487,7 @@ $color-border: #d5daef;
     
     .heroSection {
         .tabsContainer .tabItem { font-size: 24px; }
-        .sliderContainer { height: 500px; }
+        .sliderContainer { height: 450px; }
     }
     .citiesSection .citiesGrid, .activitiesSection .activitiesGrid {
         grid-template-columns: 1fr;
@@ -574,7 +574,7 @@ $color-border: #d5daef;
                 width: 100%;
             }
         }
-        .sliderContainer { height: 300px; }
+        .sliderContainer { height: 250px; }
     }
 
     // Адаптивные размеры картинок для маленьких экранов
