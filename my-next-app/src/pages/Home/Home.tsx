@@ -20,6 +20,21 @@ const cities = [
   { img: '/assets/city_tkuarchal.jpg', title: 'Ткуарчал', desc: 'Город шахтёров в окружении живописных горных хребтов' },
 ];
 
+const sliderItems = [
+  { type: 'video' as const, src: '/assets/Video12.mp4' },
+  { type: 'image' as const, src: '/assets/Video1.JPG' },
+  { type: 'image' as const, src: '/assets/Video2.JPG' },
+  { type: 'image' as const, src: '/assets/Video3.JPG' },
+  { type: 'image' as const, src: '/assets/Video4.JPG' },
+  { type: 'image' as const, src: '/assets/Video5.PNG' },
+  { type: 'image' as const, src: '/assets/Video6.JPG' },
+  { type: 'image' as const, src: '/assets/Video7.JPG' },
+  { type: 'image' as const, src: '/assets/Video8.JPG' },
+  { type: 'image' as const, src: '/assets/Video9.JPG' },
+  { type: 'image' as const, src: '/assets/Video10.JPG' },
+  { type: 'image' as const, src: '/assets/Video11.JPG' },
+];
+
 const activities = [
     { img: '/assets/activity_vecherinki.png', title: 'вечеринки', href: '/parties' },
     { img: '/assets/activity_gornye_marshruty.jpg', title: 'горные маршруты', href: '/mountain-routes' },
@@ -65,6 +80,16 @@ const popupData = {
 
 const HomePage = () => {
   const [activePopup, setActivePopup] = useState<string | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const nextSlide = () => {
+    setCurrentSlide(prev => (prev === sliderItems.length - 1 ? 0 : prev + 1));
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide(prev => (prev === 0 ? sliderItems.length - 1 : prev - 1));
+  };
+
 
   return (
     <div className={styles.pageWrapper}>
@@ -115,8 +140,23 @@ const HomePage = () => {
                   </div>
                 </div>
             </nav>
-            <div className={styles.heroVideo}>
-                <span>Видеоряд сменяющийся</span>
+            <div className={styles.sliderContainer}>
+              <div className={styles.sliderWrapper} style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
+                {sliderItems.map((item, index) => (
+                  <div key={index} className={styles.slide}>
+                    {item.type === 'video' ? (
+                      <video className={styles.sliderMedia} autoPlay muted loop playsInline>
+                        <source src={item.src} type="video/mp4" />
+                        К сожалению, ваш браузер не поддерживает воспроизведение видео.
+                      </video>
+                    ) : (
+                      <Image src={item.src} alt={`Slide ${index + 1}`} layout="fill" objectFit="cover" className={styles.sliderMedia} />
+                    )}
+                  </div>
+                ))}
+              </div>
+              <button onClick={prevSlide} className={`${styles.sliderButton} ${styles.prev}`}>&#10094;</button>
+              <button onClick={nextSlide} className={`${styles.sliderButton} ${styles.next}`}>&#10095;</button>
             </div>
             <div className={styles.fullWidthSection}>
                 <div className={styles.backgroundImageSection}>
