@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 import GovernmentStructureScreen from './GovernmentStructureScreen';
+import HistoryAndCultureScreen from './HistoryAndCultureScreen';
 
 const buttons = [
   { title: 'Государственное\nустройство', icon: <MaterialCommunityIcons name="flag-variant" size={40} color="#fff" /> },
@@ -15,6 +16,7 @@ const buttons = [
 
 export default function AboutAbkhaziaModal({ visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [govVisible, setGovVisible] = useState(false);
+  const [historyVisible, setHistoryVisible] = useState(false);
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
       <View style={styles.fullscreen}>
@@ -28,7 +30,11 @@ export default function AboutAbkhaziaModal({ visible, onClose }: { visible: bool
           {buttons.map((btn, idx) => (
             <TouchableOpacity
               key={idx}
-              onPress={idx === 0 ? () => setGovVisible(true) : undefined}
+              onPress={
+                idx === 0 ? () => setGovVisible(true)
+                : idx === 2 ? () => setHistoryVisible(true)
+                : undefined
+              }
               activeOpacity={0.7}
               style={styles.item}
             >
@@ -38,6 +44,7 @@ export default function AboutAbkhaziaModal({ visible, onClose }: { visible: bool
           ))}
         </View>
         <GovernmentStructureScreen visible={govVisible} onClose={() => setGovVisible(false)} />
+        <HistoryAndCultureScreen visible={historyVisible} onClose={() => setHistoryVisible(false)} />
       </View>
     </Modal>
   );
