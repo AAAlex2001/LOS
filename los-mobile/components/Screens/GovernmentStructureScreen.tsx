@@ -41,7 +41,7 @@ export default function GovernmentStructureScreen({ visible, onClose }: { visibl
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>ГОСУДАРСТВЕННОЕ УСТРОЙСТВО</Text>
-          <View style={{ width: 36 }} /> {/* Пустой view для симметрии */}
+          <View style={{ width: 36 }} />
         </View>
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {/* Карта */}
