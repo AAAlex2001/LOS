@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Image, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -76,6 +76,16 @@ export default function AbkhazianCustomsScreen({ visible, onClose }: { visible: 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {/* Основное изображение */}
           <Image source={require('../../assets/images/obuzhai.jpg')} style={styles.heroImage} resizeMode="cover" />
+          {/* Баннер-интро */}
+          <View style={styles.bannerImgWrap}>
+            <Image source={require('../../assets/images/IMG_1932.jpg')} style={styles.bannerImg} resizeMode="cover" />
+            <View style={styles.bannerOverlayAbs}>
+              <Text style={styles.bannerText}>
+                Откройте для себя душу Абхазии через её традиции.{"\n\n"}
+                Здесь гость — посланник небес, уважение к старшим — закон, а застолье превращается в ритуал. Узнайте, что такое Апсуара, как абхазы встречают путника и почему обычаи здесь — не просто история, а часть живой культуры.
+              </Text>
+            </View>
+          </View>
           {sections.map((section, idx) => (
             <View key={idx} style={styles.textBlock}>
               <Text style={styles.sectionTitle}>{section.title}</Text>
@@ -162,5 +172,83 @@ const styles = StyleSheet.create({
     color: '#000',
     lineHeight: 24,
     marginBottom: 0,
+  },
+  bannerBox: {
+    width: screenWidth - 40,
+    maxWidth: 350,
+    minHeight: 112,
+    alignSelf: 'center',
+    marginBottom: 32,
+    borderRadius: 15,
+    backgroundColor: 'rgba(255,255,255,0.85)',
+    overflow: 'hidden',
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: -8,
+    // Фоновое изображение через ImageBackground не используем, только цвет и прозрачность
+  },
+  bannerBg: {
+    width: screenWidth - 40,
+    maxWidth: 350,
+    minHeight: 112,
+    alignSelf: 'center',
+    marginBottom: 32,
+    borderRadius: 15,
+    overflow: 'hidden',
+    marginTop: -8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bannerBgImg: {
+    borderRadius: 15,
+    resizeMode: 'cover',
+  },
+  bannerOverlay: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(255,255,255,0.85)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+  },
+  bannerText: {
+    fontFamily: 'Inter',
+    fontWeight: '600',
+    fontSize: 12,
+    lineHeight: 16,
+    color: 'rgba(0,0,0,0.85)',
+    textAlign: 'center',
+  },
+  bannerImgWrap: {
+    width: screenWidth - 40,
+    height: 144,
+    alignSelf: 'center',
+    marginBottom: 32,
+    borderRadius: 15,
+    overflow: 'hidden',
+    marginTop: -8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  bannerImg: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 15,
+  },
+  bannerOverlayAbs: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 16,
   },
 }); 
