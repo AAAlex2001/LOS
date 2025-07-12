@@ -10,6 +10,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { Image } from 'expo-image';
+import { Video } from 'expo-av';
 import AboutAbkhaziaModal from '../../components/Screens/AboutAbkhaziaModal';
 import EntertainmentScreen from '../../components/Screens/EntertainmentScreen';
 import PlanTripScreen from '../../components/Screens/PlanTripScreen';
@@ -38,10 +39,18 @@ const sliderTop = 100;
 const topEllipseTop = sliderTop - topEllipseHeight + topEllipseShiftY;
 
 const sliderItems = [
-  { src: require('../../assets/images/abhazy1.jpg') },
-  { src: require('../../assets/images/abhazy2.jpg') },
-  { src: require('../../assets/images/abhazskayaKuhnya.jpg') },
-  { src: require('../../assets/images/WineriesGagra1.jpg') },
+  { type: 'video', src: require('../../assets/images/Video12.mp4') },
+  { type: 'image', src: require('../../assets/images/Main1.jpg') },
+  { type: 'image', src: require('../../assets/images/Main2.jpg') },
+  { type: 'image', src: require('../../assets/images/Main3.jpg') },
+  { type: 'image', src: require('../../assets/images/Main4.jpg') },
+  { type: 'image', src: require('../../assets/images/Main5.png') },
+  { type: 'image', src: require('../../assets/images/Main6.jpg') },
+  { type: 'image', src: require('../../assets/images/Main7.jpg') },
+  { type: 'image', src: require('../../assets/images/Main8.jpg') },
+  { type: 'image', src: require('../../assets/images/Main9.jpg') },
+  { type: 'image', src: require('../../assets/images/Main10.jpg') },
+  { type: 'image', src: require('../../assets/images/Main11.jpg') },
 ];
 
 const tabs = [
@@ -87,7 +96,18 @@ const HomePage = () => {
 
   const renderSliderItem = ({ item }: { item: any }) => (
     <View style={styles.slide}>
-      <Image source={item.src} style={styles.slideImage} contentFit="cover" />
+      {item.type === 'video' ? (
+        <Video
+          source={item.src}
+          style={styles.slideImage}
+          resizeMode="cover"
+          shouldPlay
+          isLooping
+          useNativeControls
+        />
+      ) : (
+        <Image source={item.src} style={styles.slideImage} contentFit="cover" />
+      )}
     </View>
   );
 
@@ -134,11 +154,13 @@ const HomePage = () => {
 
       {/* Dots */}
       <View style={styles.dots}>
-        <View style={[styles.dot, currentSlide % sliderItems.length === 0 ? styles.activeDot : {}]} />
-        <View style={[styles.dot, currentSlide % sliderItems.length === 1 ? styles.activeDot : {}]} />
-        <View style={[styles.dot, currentSlide % sliderItems.length === 2 ? styles.activeDot : {}]} />
-        <View style={[styles.dot, currentSlide % sliderItems.length === 3 ? styles.activeDot : {}]} />
-        </View>
+        {sliderItems.map((_, idx) => (
+          <View
+            key={idx}
+            style={[styles.dot, currentSlide % sliderItems.length === idx ? styles.activeDot : {}]}
+          />
+        ))}
+      </View>
 
       {/* Bottom Curve behind tabs */}
       <View style={styles.bottomCurve} />
@@ -186,9 +208,6 @@ const HomePage = () => {
           setSidebarVisible(false);
           // Если используешь react-navigation, раскомментируй:
           // navigation.navigate('Home');
-        }}
-        onOpenContacts={() => {
-          // Открытие контактов теперь внутри SidebarScreen
         }}
       />
 
