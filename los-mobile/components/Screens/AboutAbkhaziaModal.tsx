@@ -6,6 +6,7 @@ import GovernmentStructureScreen from './GovernmentStructureScreen';
 import HistoryAndCultureScreen from './HistoryAndCultureScreen';
 import TransportCommunicationsScreen from './TransportCommunicationsScreen';
 import AbkhazianCuizineScreen from './AbkhazianCuizineScreen';
+import AbkhazianCustomsScreen from './AbkhazianCustomsScreen';
 
 const buttons = [
   { title: 'Государственное\nустройство', icon: <MaterialCommunityIcons name="flag-variant" size={40} color="#fff" /> },
@@ -21,6 +22,7 @@ export default function AboutAbkhaziaModal({ visible, onClose }: { visible: bool
   const [historyVisible, setHistoryVisible] = useState(false);
   const [transportVisible, setTransportVisible] = useState(false);
   const [cuisineVisible, setCuisineVisible] = useState(false);
+  const [customsVisible, setCustomsVisible] = useState(false);
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
       <View style={styles.fullscreen}>
@@ -39,6 +41,7 @@ export default function AboutAbkhaziaModal({ visible, onClose }: { visible: bool
                 : idx === 1 ? () => setTransportVisible(true)
                 : idx === 2 ? () => setHistoryVisible(true)
                 : idx === 3 ? () => setCuisineVisible(true)
+                : idx === 4 ? () => setCustomsVisible(true)
                 : undefined
               }
               activeOpacity={0.7}
@@ -53,6 +56,7 @@ export default function AboutAbkhaziaModal({ visible, onClose }: { visible: bool
         <TransportCommunicationsScreen visible={transportVisible} onClose={() => setTransportVisible(false)} />
         <HistoryAndCultureScreen visible={historyVisible} onClose={() => setHistoryVisible(false)} />
         <AbkhazianCuizineScreen visible={cuisineVisible} onClose={() => setCuisineVisible(false)} />
+        <AbkhazianCustomsScreen visible={customsVisible} onClose={() => setCustomsVisible(false)} />
       </View>
     </Modal>
   );
