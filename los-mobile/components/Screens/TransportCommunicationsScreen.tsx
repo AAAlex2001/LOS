@@ -13,7 +13,9 @@ export default function TransportCommunicationsScreen({ visible, onClose }: { vi
           <TouchableOpacity onPress={onClose} style={styles.backButton}>
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>ТРАНСПОРТНОЕ СООБЩЕНИЕ</Text>
+          <View style={styles.headerTitleWrap}>
+            <Text style={styles.headerTitle}>ТРАНСПОРТНОЕ СООБЩЕНИЕ</Text>
+          </View>
           <View style={{ width: 36 }} />
         </View>
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
@@ -66,9 +68,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 30,
   },
-  headerTitle: {
+  headerTitleWrap: {
     flex: 1,
-    textAlign: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerTitle: {
     fontFamily: 'Inter',
     fontWeight: '700',
     fontSize: 18,
@@ -76,6 +81,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 0.2,
     marginTop: 30,
+    marginLeft: 0,
   },
   scrollContent: {
     paddingBottom: 40,

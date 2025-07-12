@@ -95,7 +95,9 @@ export default function HistoryAndCultureScreen({ visible, onClose }: { visible:
           <TouchableOpacity onPress={onClose} style={styles.backButton}>
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>ИСТОРИЯ И КУЛЬТУРА АБХАЗИИ</Text>
+          <View style={styles.headerTitleWrap}>
+            <Text style={styles.headerTitle}>ИСТОРИЯ И КУЛЬТУРА АБХАЗИИ</Text>
+          </View>
           <View style={{ width: 36 }} />
         </View>
         {/* Tabs */}
@@ -181,9 +183,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 30,
   },
-  headerTitle: {
+  headerTitleWrap: {
     flex: 1,
-    textAlign: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerTitle: {
     fontFamily: 'Inter',
     fontWeight: '700',
     fontSize: 18,
@@ -191,6 +196,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 0.2,
     marginTop: 30,
+    marginLeft: 0,
   },
   scrollContent: {
     paddingBottom: 40,
@@ -227,16 +233,17 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontFamily: 'Inter',
     fontWeight: '700',
-    fontSize: 18,
+    fontSize: 22,
     color: '#1129BD',
-    marginBottom: 8,
+    marginBottom: 16,
   },
   sectionText: {
     fontFamily: 'Inter',
     fontWeight: '400',
-    fontSize: 16,
+    fontSize: 18,
     color: '#000',
-    lineHeight: 22,
+    lineHeight: 24,
+    marginBottom: 0,
   },
   tabsContainer: {
     flexDirection: 'row',
