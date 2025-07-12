@@ -87,7 +87,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
             onPress={() => handleNavigation('/')}
           >
             <Image
-              source={require('../../assets/images/IMG_1557.png')}
+              source={require('../../assets/images/logoMountain2.png')}
               style={styles.logoImage}
               contentFit="contain"
             />
