@@ -19,13 +19,13 @@ const topEllipseShiftY = -10; // вертикальные сдвиги
 const bottomEllipseShiftY = 0;
 
 // Нижний полукруг
-const bottomEllipseWidth = screenWidth * 8;
+const bottomEllipseWidth = screenWidth * 8.5;
 const bottomEllipseHeight = bottomEllipseWidth / 2;
 const bottomEllipseLeft = -((bottomEllipseWidth - screenWidth) / 2) + bottomEllipseShiftX;
 const bottomEllipseTop = 654 + bottomEllipseShiftY;
 
 // Верхний полукруг
-const topEllipseWidth = screenWidth * 8;
+const topEllipseWidth = screenWidth * 8.5;
 const topEllipseHeight = topEllipseWidth / 2;
 const topEllipseLeft = -((topEllipseWidth - screenWidth) / 2) + topEllipseShiftX;
 const sliderTop = 100;
