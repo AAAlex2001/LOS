@@ -1,0 +1,171 @@
+import React, { useRef, useEffect } from 'react';
+import { Modal, View, Text, TouchableOpacity, StyleSheet, Dimensions, Animated, Pressable } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import SideBarLogo from '../../assets/images/SideBarLogo.svg';
+
+const menuItems = [
+  { label: 'Главное меню', icon: <Ionicons name="home-outline" size={24} color="#1129BD" /> },
+  { label: 'Свяжитесь с нами', icon: <Ionicons name="chatbubble-ellipses-outline" size={24} color="#1129BD" /> },
+  { label: 'Политика обработки данных', icon: <Ionicons name="document-outline" size={24} color="#1129BD" /> },
+  { label: 'Выберите язык', icon: <Ionicons name="language-outline" size={24} color="#1129BD" /> },
+];
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+
+export default function SidebarScreen({ visible, onClose, onNavigateHome }: { visible: boolean, onClose: () => void, onNavigateHome?: () => void }) {
+  const slideAnim = useRef(new Animated.Value(-screenWidth)).current;
+
+  useEffect(() => {
+    if (visible) {
+      slideAnim.setValue(-screenWidth);
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(slideAnim, {
+        toValue: -screenWidth,
+        duration: 250,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [visible]);
+
+  return (
+    <Modal visible={visible} animationType="none" transparent={true}>
+      <View style={styles.overlay}>
+        <Pressable style={styles.bgClose} onPress={onClose} />
+        <Animated.View style={[styles.sidebar, { transform: [{ translateX: slideAnim }] }]}> 
+          {/* Логотип */}
+          <SideBarLogo width={160} height={160} style={styles.logo} />
+          {/* Заголовок */}
+          <Text style={styles.title}>LAND OF SOUL ABKHAZIA</Text>
+          {/* Линия */}
+          <View style={styles.line} />
+          {/* Кнопки */}
+          <TouchableOpacity style={styles.boardBtn}>
+            <Text style={styles.boardBtnText}>Доска объявлений “LOS”</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.mandarinBtn}>
+            <Text style={styles.mandarinBtnText}>Аренда жилья “Мандарин”</Text>
+          </TouchableOpacity>
+          {/* Меню */}
+          <View style={styles.menuList}>
+            {menuItems.map((item, idx) => (
+              <TouchableOpacity
+                key={idx}
+                style={styles.menuItem}
+                onPress={idx === 0 && onNavigateHome ? onNavigateHome : undefined}
+              >
+                <View style={styles.menuIcon}>{item.icon}</View>
+                <Text style={styles.menuLabel}>{item.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </Animated.View>
+      </View>
+    </Modal>
+  );
+}
+
+const styles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: 'rgba(0,0,0,0.10)',
+  },
+  sidebar: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#fff',
+    paddingTop: 64,
+    paddingHorizontal: 28,
+    justifyContent: 'flex-start',
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    bottom: 0,
+    zIndex: 2,
+  },
+  bgClose: {
+    flex: 1,
+    zIndex: 1,
+  },
+  logo: {
+    alignSelf: 'flex-start',
+    marginBottom: 10,
+    marginTop: 24,
+  },
+  title: {
+    fontWeight: '700',
+    fontSize: 20,
+    textTransform: 'uppercase',
+    color: '#0F0F0F',
+    textAlign: 'left',
+    alignSelf: 'flex-start',
+    marginBottom: 10,
+    marginTop: 8,
+  },
+  line: {
+    height: 1,
+    backgroundColor: '#E2E4E6',
+    width: '100%',
+    marginBottom: 30,
+  },
+  boardBtn: {
+    width: 246,
+    height: 40,
+    alignSelf: 'flex-start',
+    borderRadius: 100,
+    borderWidth: 2,
+    borderColor: '#D5DAEF',
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  boardBtnText: {
+    color: '#1129BD',
+    fontWeight: '500',
+    fontSize: 16,
+  },
+  mandarinBtn: {
+    width: 246,
+    height: 40,
+    alignSelf: 'flex-start',
+    borderRadius: 100,
+    borderWidth: 2,
+    borderColor: 'rgba(255, 107, 0, 0.25)',
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  mandarinBtnText: {
+    color: '#1129BD',
+    fontWeight: '500',
+    fontSize: 16,
+  },
+  menuList: {
+    marginTop: 10,
+  },
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 56,
+    borderRadius: 12,
+    marginBottom: 8,
+    paddingLeft: 10,
+  },
+  menuIcon: {
+    width: 32,
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  menuLabel: {
+    fontSize: 16,
+    color: '#1129BD',
+    fontWeight: '500',
+  },
+}); 

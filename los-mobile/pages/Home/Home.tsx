@@ -14,6 +14,7 @@ import AboutAbkhaziaModal from '../../components/Screens/AboutAbkhaziaModal';
 import EntertainmentScreen from '../../components/Screens/EntertainmentScreen';
 import PlanTripScreen from '../../components/Screens/PlanTripScreen';
 import ImportantTripScreen from '../../components/Screens/ImportantTripScreen';
+import SidebarScreen from '../../components/Screens/SidebarScreen';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo, FontAwesome } from '@expo/vector-icons';
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -74,6 +75,7 @@ const HomePage = () => {
   const [entertainmentVisible, setEntertainmentVisible] = useState(false);
   const [planTripVisible, setPlanTripVisible] = useState(false);
   const [importantTripVisible, setImportantTripVisible] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
   const flatListRef = useRef<FlatList>(null);
 
   const onScroll = (event: any) => {
@@ -95,7 +97,7 @@ const HomePage = () => {
       <View style={styles.headerContainer}>
         <View style={styles.headerCurve} />
         
-        <TouchableOpacity style={styles.menuBar}>
+        <TouchableOpacity style={styles.menuBar} onPress={() => setSidebarVisible(true)}>
           <View style={styles.menuFrame}>
             <View style={styles.menuLine} />
             <View style={styles.menuLine} />
@@ -177,6 +179,15 @@ const HomePage = () => {
       <EntertainmentScreen visible={entertainmentVisible} onClose={() => setEntertainmentVisible(false)} />
       <PlanTripScreen visible={planTripVisible} onClose={() => setPlanTripVisible(false)} />
       <ImportantTripScreen visible={importantTripVisible} onClose={() => setImportantTripVisible(false)} />
+      <SidebarScreen
+        visible={sidebarVisible}
+        onClose={() => setSidebarVisible(false)}
+        onNavigateHome={() => {
+          setSidebarVisible(false);
+          // Если используешь react-navigation, раскомментируй:
+          // navigation.navigate('Home');
+        }}
+      />
 
       {/* Убрали Home Indicator */}
     </View>
