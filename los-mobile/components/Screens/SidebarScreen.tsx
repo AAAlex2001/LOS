@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, Dimensions, Animated, 
 import { Ionicons } from '@expo/vector-icons';
 import SideBarLogo from '../../assets/images/SideBarLogo.svg';
 import ContactsScreen from './ContactsScreen';
+import LanguageScreen from './LanguageScreen';
 
 const menuItems = [
   { label: 'Главное меню', icon: <Ionicons name="home-outline" size={24} color="#1129BD" /> },
@@ -15,6 +16,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export default function SidebarScreen({ visible, onClose, onNavigateHome }: { visible: boolean, onClose: () => void, onNavigateHome?: () => void }) {
   const [contactsVisible, setContactsVisible] = useState(false);
+  const [languageVisible, setLanguageVisible] = useState(false);
   const slideAnim = useRef(new Animated.Value(-screenWidth)).current;
 
   useEffect(() => {
@@ -63,6 +65,8 @@ export default function SidebarScreen({ visible, onClose, onNavigateHome }: { vi
                     ? onNavigateHome
                     : idx === 1
                     ? () => setContactsVisible(true)
+                    : idx === 3
+                    ? () => setLanguageVisible(true)
                     : undefined
                 }
               >
@@ -72,6 +76,7 @@ export default function SidebarScreen({ visible, onClose, onNavigateHome }: { vi
             ))}
           </View>
           <ContactsScreen visible={contactsVisible} onClose={() => setContactsVisible(false)} />
+          <LanguageScreen visible={languageVisible} onClose={() => setLanguageVisible(false)} />
         </Animated.View>
       </View>
     </Modal>
