@@ -7,10 +7,29 @@ import {
   Dimensions,
   StyleSheet,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
 import { Image } from 'expo-image';
 
 const { width: screenWidth } = Dimensions.get('window');
+// --- Универсальные смещения ---
+const topEllipseShiftX = 20; // подстройка верхнего полукруга по горизонтали
+const bottomEllipseShiftX = 0; // подстройка нижнего
+const topEllipseShiftY = -10; // вертикальные сдвиги
+const bottomEllipseShiftY = 0;
+
+// Нижний полукруг
+const bottomEllipseWidth = screenWidth * 8;
+const bottomEllipseHeight = bottomEllipseWidth / 2;
+const bottomEllipseLeft = -((bottomEllipseWidth - screenWidth) / 2) + bottomEllipseShiftX;
+const bottomEllipseTop = 654 + bottomEllipseShiftY;
+
+// Верхний полукруг
+const topEllipseWidth = screenWidth * 8;
+const topEllipseHeight = topEllipseWidth / 2;
+const topEllipseLeft = -((topEllipseWidth - screenWidth) / 2) + topEllipseShiftX;
+const sliderTop = 100;
+const topEllipseTop = sliderTop - topEllipseHeight + topEllipseShiftY;
 
 const sliderItems = [
   { src: require('../../assets/images/abhazy1.jpg') },
@@ -48,7 +67,7 @@ const HomePage = () => {
     <View style={styles.homePage}>
       {/* Menu bar + Logo + Mascot */}
       <View style={styles.headerContainer}>
-        <View style={styles.headerEllipse} />
+        <View style={styles.headerCurve} />
         
         <TouchableOpacity style={styles.menuBar}>
           <View style={styles.menuFrame}>
@@ -98,8 +117,8 @@ const HomePage = () => {
         <View style={[styles.dot, currentSlide % sliderItems.length === 3 ? styles.activeDot : {}]} />
         </View>
 
-      {/* White Ellipse behind tabs */}
-      <View style={styles.ellipse1} />
+      {/* Bottom Curve behind tabs */}
+      <View style={styles.bottomCurve} />
 
       {/* Tabs */}
       <View style={styles.tabsContainer}>
@@ -124,24 +143,22 @@ const HomePage = () => {
         </ScrollView>
           </View>
 
-      {/* Home Indicator */}
-      <View style={styles.homeIndicatorContainer}>
-        <View style={styles.homeIndicator} />
-        </View>
+      {/* Убрали Home Indicator */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  homePage: {
-    position: 'relative',
-    width: 390,
-    height: 844,
+  safeArea: {
+    flex: 1,
     backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    overflow: 'hidden',
-    alignSelf: 'center',
-    marginTop: 40,
+  },
+
+  homePage: {
+    flex: 1,
+    position: 'relative',
+    backgroundColor: '#FFFFFF',
+    overflow: 'visible',
   },
 
   // Header
@@ -149,19 +166,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 480,
     height: 91,
-    left: (390 - 480) / 2,
+    left: (screenWidth - 480) / 2,
     top: 60,
     zIndex: 10,
   },
-  headerEllipse: {
+  headerCurve: {
     position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 91 * 0.2527, // 25.27%
-    bottom: 0,
+    width: topEllipseWidth,
+    height: topEllipseHeight,
+    left: topEllipseLeft,
+    top: topEllipseTop,
     backgroundColor: '#FFFFFF',
-    borderTopLeftRadius: 480/2,
-    borderTopRightRadius: 480/2
+    borderBottomLeftRadius: topEllipseWidth / 2,
+    borderBottomRightRadius: topEllipseWidth / 2,
   },
   menuBar: {
     position: 'absolute',
@@ -209,7 +226,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 433,
     height: 539,
-    left: (390 - 433) / 2,
+    left: (screenWidth - 433) / 2,
     top: 133,
   },
   slides: {
@@ -229,7 +246,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 159,
     height: 48,
-    left: (390 - 159) / 2,
+    left: (screenWidth - 159) / 2,
     top: 581,
     justifyContent: 'center',
     alignItems: 'center',
@@ -247,9 +264,9 @@ const styles = StyleSheet.create({
   // Dots
   dots: {
     position: 'absolute',
-    width: 50, // Increased width to accommodate gaps
+    width: 50,
     height: 6,
-    left: (390 - 50) / 2,
+    left: (screenWidth - 50) / 2,
     top: 638,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -267,14 +284,15 @@ const styles = StyleSheet.create({
   },
 
   // White Ellipse
-  ellipse1: {
+  bottomCurve: {
     position: 'absolute',
-    width: 480,
-    height: 68,
-    left: (390 - 480) / 2,
-    top: 654,
+    width: bottomEllipseWidth,
+    height: bottomEllipseHeight,
+    left: bottomEllipseLeft,
+    top: bottomEllipseTop,
     backgroundColor: '#FFFFFF',
-    borderRadius: 34,
+    borderTopLeftRadius: bottomEllipseWidth / 2,
+    borderTopRightRadius: bottomEllipseWidth / 2,
   },
 
   // Tabs
@@ -325,21 +343,13 @@ const styles = StyleSheet.create({
     height: 30,
   },
 
-  // Home Indicator
-  homeIndicatorContainer: {
-    position: 'absolute',
-    width: '100%',
-    height: 34,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  homeIndicator: {
-    width: 144,
-    height: 5,
-    backgroundColor: '#000000',
-    borderRadius: 100,
-  },
+  // Убрали Home Indicator
 });
 
-export default HomePage; 
+export default function HomePageWrapper() {
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <HomePage />
+    </SafeAreaView>
+  );
+} 
