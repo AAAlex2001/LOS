@@ -12,6 +12,8 @@ import {
 import { Image } from 'expo-image';
 import AboutAbkhaziaModal from '../../components/Screens/AboutAbkhaziaModal';
 import EntertainmentScreen from '../../components/Screens/EntertainmentScreen';
+import PlanTripScreen from '../../components/Screens/PlanTripScreen';
+import ImportantTripScreen from '../../components/Screens/ImportantTripScreen';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo, FontAwesome } from '@expo/vector-icons';
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -70,6 +72,8 @@ const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [aboutVisible, setAboutVisible] = useState(false);
   const [entertainmentVisible, setEntertainmentVisible] = useState(false);
+  const [planTripVisible, setPlanTripVisible] = useState(false);
+  const [importantTripVisible, setImportantTripVisible] = useState(false);
   const flatListRef = useRef<FlatList>(null);
 
   const onScroll = (event: any) => {
@@ -151,6 +155,8 @@ const HomePage = () => {
               onPress={() => {
                 if (tab.title === 'Об Абхазии') setAboutVisible(true);
                 if (tab.title === 'Развлечения') setEntertainmentVisible(true);
+                if (tab.title === 'Запланируйте\nпоездку') setPlanTripVisible(true);
+                if (tab.title === 'Необходимо\nв поездке') setImportantTripVisible(true);
                 // Здесь можно добавить обработку других табов
               }}
             >
@@ -169,6 +175,8 @@ const HomePage = () => {
       </View>
       <AboutAbkhaziaModal visible={aboutVisible} onClose={() => setAboutVisible(false)} />
       <EntertainmentScreen visible={entertainmentVisible} onClose={() => setEntertainmentVisible(false)} />
+      <PlanTripScreen visible={planTripVisible} onClose={() => setPlanTripVisible(false)} />
+      <ImportantTripScreen visible={importantTripVisible} onClose={() => setImportantTripVisible(false)} />
 
       {/* Убрали Home Indicator */}
     </View>

@@ -1,36 +1,33 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 
 const buttons = [
-  { title: 'Государственное\nустройство', icon: <MaterialCommunityIcons name="flag-variant" size={40} color="#fff" /> },
-  { title: 'Транспортное\nсообщение', icon: <MaterialCommunityIcons name="train" size={40} color="#fff" /> },
-  { title: 'История и культура', icon: <MaterialCommunityIcons name="human-male-female" size={40} color="#fff" /> },
-  { title: 'Абхазская кухня', icon: <MaterialCommunityIcons name="silverware-fork-knife" size={40} color="#fff" /> },
-  { title: 'Абхазские обычаи', icon: <MaterialCommunityIcons name="handshake" size={40} color="#fff" /> },
-  { title: 'Элементарный\nсловарь', icon: <MaterialCommunityIcons name="book-open-variant" size={40} color="#fff" /> },
+  { title: 'Ваш доктор', icon: <FontAwesome5 name="clinic-medical" size={40} color="#fff" /> },
+  { title: 'Важно знать', icon: <MaterialCommunityIcons name="alert-circle-outline" size={40} color="#fff" /> },
 ];
 
-export default function AboutAbkhaziaModal({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function ImportantTripScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
       <View style={styles.fullscreen}>
         <View style={styles.headerBar}>
           <TouchableOpacity onPress={onClose} style={styles.backButton}>
             <Ionicons name="arrow-back" size={24} color="#000" />
-            <Text style={styles.header}>ОБ АБХАЗИИ</Text>
+            <Text style={styles.header}>НЕОБХОДИМО В ПОЕЗДКЕ</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.grid}>
-          {buttons.map((btn, idx) => (
-            <View key={idx} style={styles.item}>
-              <View style={styles.iconCircle}>
-                {btn.icon}
+          <View style={styles.row}>
+            {buttons.map((btn, idx) => (
+              <View key={idx} style={styles.item}>
+                <View style={styles.iconCircle}>
+                  {btn.icon}
+                </View>
+                <Text style={styles.label}>{btn.title}</Text>
               </View>
-              <Text style={styles.label}>{btn.title}</Text>
-            </View>
-          ))}
+            ))}
+          </View>
         </View>
       </View>
     </Modal>
@@ -62,9 +59,12 @@ const styles = StyleSheet.create({
   },
   grid: {
     marginTop: 32,
+    flexDirection: 'column',
+    paddingLeft: 20,
+  },
+  row: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+    marginBottom: 0,
   },
   item: {
     width: 110,
@@ -89,4 +89,4 @@ const styles = StyleSheet.create({
     color: '#000',
     width: 110,
   },
-});
+}); 

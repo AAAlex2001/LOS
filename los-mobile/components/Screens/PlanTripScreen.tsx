@@ -1,29 +1,28 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo, FontAwesome } from '@expo/vector-icons';
 
 const buttons = [
-  { title: 'Вечеринки и яркие впечатления', icon: <MaterialCommunityIcons name="party-popper" size={40} color="#fff" /> },
-  { title: 'Горные маршруты', icon: <MaterialCommunityIcons name="terrain" size={40} color="#fff" /> },
-  { title: 'Экскурсии', icon: <MaterialCommunityIcons name="car-outline" size={40} color="#fff" /> },
-  { title: 'Горячие источники', icon: <MaterialCommunityIcons name="hot-tub" size={40} color="#fff" /> },
-  { title: 'Спортивные залы', icon: <FontAwesome5 name="dumbbell" size={40} color="#fff" /> },
+  { title: 'Города Абхазии', icon: <MaterialCommunityIcons name="city-variant-outline" size={40} color="#fff" /> },
+  { title: 'Аренда жилья', icon: <MaterialCommunityIcons name="home-outline" size={40} color="#fff" /> },
+  { title: 'Мобильная связь\nи интернет', icon: <MaterialIcons name="wifi" size={40} color="#fff" /> },
+  { title: 'Службы такси', icon: <FontAwesome5 name="taxi" size={40} color="#fff" /> },
+  { title: 'Банки', icon: <FontAwesome5 name="piggy-bank" size={40} color="#fff" /> },
 ];
 
-export default function EntertainmentScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function PlanTripScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
       <View style={styles.fullscreen}>
         <View style={styles.headerBar}>
           <TouchableOpacity onPress={onClose} style={styles.backButton}>
             <Ionicons name="arrow-back" size={24} color="#000" />
-            <Text style={styles.header}>РАЗВЛЕЧЕНИЯ</Text>
+            <Text style={styles.header}>ЗАПЛАНИРУЙТЕ ПОЕЗДКУ</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.grid}>
           {/* Первый ряд — 3 элемента */}
-          <View style={[styles.row]}>
+          <View style={styles.row}>
             {buttons.slice(0, 3).map((btn, idx) => (
               <View key={idx} style={styles.item}>
                 <View style={styles.iconCircle}>
@@ -34,7 +33,7 @@ export default function EntertainmentScreen({ visible, onClose }: { visible: boo
             ))}
           </View>
           {/* Второй ряд — 2 элемента, прижаты к левому краю */}
-          <View style={[styles.row]}>
+          <View style={styles.row}>
             {buttons.slice(3, 5).map((btn, idx) => (
               <View key={idx} style={styles.item}>
                 <View style={styles.iconCircle}>
