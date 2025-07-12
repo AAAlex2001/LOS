@@ -10,6 +10,9 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { Image } from 'expo-image';
+import AboutAbkhaziaModal from '../../components/Screens/AboutAbkhaziaModal';
+import EntertainmentScreen from '../../components/Screens/EntertainmentScreen';
+import { Ionicons, MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo, FontAwesome } from '@expo/vector-icons';
 
 const { width: screenWidth } = Dimensions.get('window');
 // --- Универсальные смещения ---
@@ -39,15 +42,34 @@ const sliderItems = [
 ];
 
 const tabs = [
-    { title: 'Об Абхазии' },
-    { title: 'Развлечения' },
-    { title: 'Запланируйте\nпоездку', multiline: true },
-    { title: 'Необходимо\nв поездке', multiline: true },
-    { title: 'Города' },
+  {
+    title: 'Об Абхазии',
+    icon: <MaterialCommunityIcons name="party-popper" size={40} color="#fff" />,
+  },
+  {
+    title: 'Развлечения',
+    icon: <MaterialCommunityIcons name="star" size={40} color="#fff" />,
+  },
+  {
+    title: 'Запланируйте\nпоездку',
+    multiline: true,
+    icon: <MaterialIcons name="event-available" size={40} color="#fff" />,
+  },
+  {
+    title: 'Необходимо\nв поездке',
+    multiline: true,
+    icon: <Entypo name="suitcase" size={40} color="#fff" />,
+  },
+  {
+    title: 'Города',
+    icon: <FontAwesome5 name="city" size={40} color="#fff" />,
+  },
 ];
 
 const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [aboutVisible, setAboutVisible] = useState(false);
+  const [entertainmentVisible, setEntertainmentVisible] = useState(false);
   const flatListRef = useRef<FlatList>(null);
 
   const onScroll = (event: any) => {
@@ -123,9 +145,17 @@ const HomePage = () => {
           contentContainerStyle={styles.tabsContent}
         >
           {tabs.map((tab, index) => (
-            <TouchableOpacity key={index} style={styles.tabComponent}>
+            <TouchableOpacity
+              key={index}
+              style={styles.tabComponent}
+              onPress={() => {
+                if (tab.title === 'Об Абхазии') setAboutVisible(true);
+                if (tab.title === 'Развлечения') setEntertainmentVisible(true);
+                // Здесь можно добавить обработку других табов
+              }}
+            >
               <View style={styles.tabIcon}>
-                 <View style={styles.iconPlaceholder} />
+                 <View style={styles.iconCircle}>{tab.icon}</View>
               </View>
               <Text style={[
                 styles.tabText,
@@ -133,10 +163,12 @@ const HomePage = () => {
               ]}>
                 {tab.title}
               </Text>
-              </TouchableOpacity>
-            ))}
+            </TouchableOpacity>
+          ))}
         </ScrollView>
-          </View>
+      </View>
+      <AboutAbkhaziaModal visible={aboutVisible} onClose={() => setAboutVisible(false)} />
+      <EntertainmentScreen visible={entertainmentVisible} onClose={() => setEntertainmentVisible(false)} />
 
       {/* Убрали Home Indicator */}
     </View>
@@ -292,10 +324,18 @@ const styles = StyleSheet.create({
   tabIcon: {
     width: 73,
     height: 73,
-    backgroundColor: '#1129BD',
+    backgroundColor: 'transparent',
     borderRadius: 36.5,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  iconCircle: {
+    width: 73,
+    height: 73,
+    borderRadius: 100,
+    backgroundColor: '#1129BD',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   iconPlaceholder: {
     width: 48,
