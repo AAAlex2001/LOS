@@ -14,7 +14,7 @@ import { Image } from 'expo-image';
 const { width: screenWidth } = Dimensions.get('window');
 // --- Универсальные смещения ---
 const topEllipseShiftX = 20; // подстройка верхнего полукруга по горизонтали
-const bottomEllipseShiftX = 0; // подстройка нижнего
+const bottomEllipseShiftX = -20; // подстройка нижнего (влево)
 const topEllipseShiftY = -10; // вертикальные сдвиги
 const bottomEllipseShiftY = 0;
 
@@ -103,11 +103,6 @@ const HomePage = () => {
           contentContainerStyle={styles.slides}
             />
           </View>
-
-      {/* АБХАЗИЯ Title */}
-      <View style={styles.titleFrame}>
-        <Text style={styles.abkhaziaTitle}>АБХАЗИЯ</Text>
-        </View>
 
       {/* Dots */}
       <View style={styles.dots}>
@@ -239,26 +234,6 @@ const styles = StyleSheet.create({
   slideImage: {
     width: '100%',
     height: '100%',
-  },
-
-  // Title
-  titleFrame: {
-    position: 'absolute',
-    width: 159,
-    height: 48,
-    left: (screenWidth - 159) / 2,
-    top: 581,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  abkhaziaTitle: {
-    fontFamily: 'Inter',
-    fontWeight: '700',
-    fontSize: 28,
-    lineHeight: 28,
-    textAlign: 'center',
-    textTransform: 'uppercase',
-    color: '#1129BD',
   },
 
   // Dots
