@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, Dimensions, Animated, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import SideBarLogo from '../../assets/images/SideBarLogo.svg';
+import ContactsScreen from './ContactsScreen';
 
 const menuItems = [
   { label: 'Главное меню', icon: <Ionicons name="home-outline" size={24} color="#1129BD" /> },
@@ -13,6 +14,7 @@ const menuItems = [
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export default function SidebarScreen({ visible, onClose, onNavigateHome }: { visible: boolean, onClose: () => void, onNavigateHome?: () => void }) {
+  const [contactsVisible, setContactsVisible] = useState(false);
   const slideAnim = useRef(new Animated.Value(-screenWidth)).current;
 
   useEffect(() => {
@@ -56,13 +58,20 @@ export default function SidebarScreen({ visible, onClose, onNavigateHome }: { vi
               <TouchableOpacity
                 key={idx}
                 style={styles.menuItem}
-                onPress={idx === 0 && onNavigateHome ? onNavigateHome : undefined}
+                onPress={
+                  idx === 0 && onNavigateHome
+                    ? onNavigateHome
+                    : idx === 1
+                    ? () => setContactsVisible(true)
+                    : undefined
+                }
               >
                 <View style={styles.menuIcon}>{item.icon}</View>
                 <Text style={styles.menuLabel}>{item.label}</Text>
               </TouchableOpacity>
             ))}
           </View>
+          <ContactsScreen visible={contactsVisible} onClose={() => setContactsVisible(false)} />
         </Animated.View>
       </View>
     </Modal>

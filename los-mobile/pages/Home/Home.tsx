@@ -187,6 +187,9 @@ const HomePage = () => {
           // Если используешь react-navigation, раскомментируй:
           // navigation.navigate('Home');
         }}
+        onOpenContacts={() => {
+          // Открытие контактов теперь внутри SidebarScreen
+        }}
       />
 
       {/* Убрали Home Indicator */}
