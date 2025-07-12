@@ -236,6 +236,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: '#1129BD',
     marginBottom: 16,
+    textTransform: 'uppercase',
+    width: '100%',
   },
   sectionText: {
     fontFamily: 'Inter',

@@ -125,13 +125,14 @@ const styles = StyleSheet.create({
     width: screenWidth - 40,
     alignItems: 'flex-start',
     paddingTop: 24,
+    marginBottom: 40,
   },
   sectionTitle: {
     fontFamily: 'Inter',
     fontWeight: '700',
     fontSize: 22,
     color: '#1129BD',
-    marginBottom: 16,
+    marginBottom: 8,
     textTransform: 'uppercase',
   },
   sectionText: {
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000',
     lineHeight: 24,
-    marginBottom: 8,
+    marginBottom: 24,
   },
   gerbImage: {
     width: 120,

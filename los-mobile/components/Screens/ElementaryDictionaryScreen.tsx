@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingBottom: 40,
     alignItems: 'center',
-    paddingTop: 0,
+    paddingTop: 20,
   },
   sectionBlock: {
     width: screenWidth - 40,
@@ -335,7 +335,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: '#1129BD',
     marginBottom: 16,
-    textAlign: 'left',
+    textAlign: 'center',
   },
   table: {
     borderWidth: 1,

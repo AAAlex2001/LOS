@@ -6,15 +6,15 @@ const { width: screenWidth } = Dimensions.get('window');
 
 const sections = [
   {
-    title: 'Уникальность абхазских блюд',
+    title: 'УНИКАЛЬНОСТЬ АБХАЗСКИХ\nБЛЮД',
     text: 'Абхазская кухня славится блюдами, такими как абыста, акуд, ачашь и другими, которые отличаются неповторимым вкусом благодаря традиционным специям. Это не просто еда, а часть древней культуры застолья, где важны место, время и компания.',
   },
   {
-    title: 'Церемониал застолья',
+    title: 'ЦЕРЕМОНИАЛ ЗАСТОЛЬЯ',
     text: 'В Абхазии застолье — это ритуал. Очерёдность подачи блюд и тостов имеет глубокое значение. Абхазская трапеза — это история, связанная с традициями и гостеприимством, а не просто набор рецептов.',
   },
   {
-    title: 'Апацха: сердце абхазской кухи',
+    title: 'АПАЦХА: СЕРДЦЕ АБХАЗСКОЙ\nКУХНИ',
     text: 'Апацха — традиционный ресторан в виде деревянных домиков с очагом. Здесь подают мамалыгу, сыр, зелень, соленья и акуд без меню — это основа современной абхазской кухни. Блюда готовят на открытом огне, сохраняя местный колорит.',
   },
   {
@@ -141,8 +141,8 @@ const styles = StyleSheet.create({
   },
   textBlock: {
     width: screenWidth - 40,
-    maxWidth: 920,
     alignSelf: 'center',
+    alignItems: 'stretch',
     marginBottom: 40,
   },
   sectionTitle: {
@@ -151,6 +151,11 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: '#1129BD',
     marginBottom: 16,
+    textTransform: 'uppercase',
+    width: '100%',
+    alignSelf: 'stretch',
+    flexShrink: 1,
+    flexWrap: 'wrap',
   },
   sectionText: {
     fontFamily: 'Inter',
@@ -176,10 +181,14 @@ const styles = StyleSheet.create({
   sectionTitleBlue: {
     fontFamily: 'Inter',
     fontWeight: '700',
-    fontSize: 18,
+    fontSize: 22,
     color: '#1129BD',
-    marginBottom: 16,
+    marginBottom: 8,
     textTransform: 'uppercase',
+    width: '100%',
+    alignSelf: 'stretch',
+    flexShrink: 1,
+    flexWrap: 'wrap',
   },
   dishList: {
     display: 'flex',
