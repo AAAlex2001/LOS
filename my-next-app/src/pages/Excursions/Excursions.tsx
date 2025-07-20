@@ -15,31 +15,31 @@ interface ExcursionCard {
 const excursionServices: ExcursionCard[] = [
   {
     id: 1,
-    img: '/assets/excursions1.svg',
+    img: '/assets/Excursions1.svg',
     contacts: 'Контакты: +7 (940) 910-70-70',
     site: 'https://welcome-abkhazia.com/',
   },
   {
     id: 2,
-    img: '/assets/excursions2.svg',
+    img: '/assets/Excursions2.svg',
     contacts: 'Контакты: +7 (940) 771-62-84',
     site: 'https://new.sukhum-travel.ru/',
   },
   {
     id: 3,
-    img: '/assets/excursions3.svg',
+    img: '/assets/Excursions3.svg',
     contacts: 'Контакты: +7 (940) 932-51-51',
     site: 'https://apsny-travel.com/tours_catalog.php',
   },
   {
     id: 4,
-    img: '/assets/excursions4.svg',
+    img: '/assets/Excursions4.svg',
     contacts: 'Контакты: +7 (940) 770-22-20',
     site: 'https://kruizgagra.ru/ekskursii',
   },
   {
     id: 5,
-    img: '/assets/excursions5.svg',
+    img: '/assets/Excursions5.svg',
     contacts: 'Контакты: +7 (940) 996-72-76,\nWhatsapp +7 (940) 996-72-76',
     site: 'https://continent-gagra.ru/excursionsabkhazia',
   },

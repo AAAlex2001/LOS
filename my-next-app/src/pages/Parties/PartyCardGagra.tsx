@@ -18,7 +18,7 @@ const PartyCardGagra: React.FC = () => {
         {/* Events Container */}
         <div className={cardStyles.eventsContainer}>
           {/* Event 1: Караоке-бар */}
-          <div className={cardStyles.eventItem}>
+          {/* <div className={cardStyles.eventItem}>
             <div className={cardStyles.eventHeader}>
               <div className={cardStyles.eventArrow}></div>
               <h3 className={cardStyles.eventTitle}>Караоке-бар "Space"</h3>
@@ -45,9 +45,18 @@ const PartyCardGagra: React.FC = () => {
             </div>
           </div>
 
-          {/* Ad Block 1 */}
           <div className={cardStyles.adBlock}>
             <AdSlider />
+          </div> */}
+          
+          <div style={{ 
+            color: '#999', 
+            fontSize: 'clamp(24px, 6vw, 64px)', 
+            textAlign: 'center', 
+            padding: 'clamp(60px, 15vw, 200px) 20px',
+            lineHeight: '1.2'
+          }}>
+            Пока нет информации
           </div>
 
         </div>
