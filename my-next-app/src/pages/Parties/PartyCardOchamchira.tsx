@@ -1,6 +1,6 @@
 import React from 'react';
 import cardStyles from './PartyCardOchamchira.module.scss';
-import AdSlider from './AdSlider';
+import AdSlider from '@/components/AdSlider/AdSlider';
 
 const PartyCardOchamchira: React.FC = () => {
   return (

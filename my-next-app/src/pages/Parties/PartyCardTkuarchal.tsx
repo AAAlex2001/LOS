@@ -1,6 +1,6 @@
 import React from 'react';
 import cardStyles from './PartyCardTkuarchal.module.scss';
-import AdSlider from './AdSlider';
+import AdSlider from '@/components/AdSlider/AdSlider';
 
 const PartyCardTkuarchal: React.FC = () => {
   return (

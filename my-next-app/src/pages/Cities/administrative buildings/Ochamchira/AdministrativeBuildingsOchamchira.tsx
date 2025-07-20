@@ -18,6 +18,14 @@ const administrativeBuildings = [
     addressLink: 'https://yandex.com/maps/-/CDxdI8Zy',
     contacts: '+7(840) 251-00-52',
     image: '/assets/AdministrativeBuildingsOchamchira1.jpg'
+  },
+  {
+    id: 2,
+    name: 'ОВД по Очамчырскому району',
+    nameLink: null,
+    address: 'Адрес: г. Очамчыра, ул. Аиааира, д.1.',
+    addressLink: 'https://yandex.ru/maps/-/CHD25I~P',
+    image: '/assets/AdministrativeBuildingsOchamchira2.jpg'
   }
 ];
 

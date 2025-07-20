@@ -1,6 +1,6 @@
 import React from 'react';
 import cardStyles from './PartyCardGulripsh.module.scss';
-import AdSlider from './AdSlider';
+import AdSlider from '@/components/AdSlider/AdSlider';
 
 const PartyCardGulripsh: React.FC = () => {
   return (

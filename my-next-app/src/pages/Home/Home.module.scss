@@ -155,6 +155,25 @@ $color-border: #d5daef;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border: none;
+    outline: none;
+    
+    // Убираем рамки для видео
+    &::-webkit-media-controls {
+      display: none;
+    }
+    
+    &::-webkit-media-controls-panel {
+      display: none;
+    }
+    
+    &::-webkit-media-controls-play-button {
+      display: none;
+    }
+    
+    &::-webkit-media-controls-start-playback-button {
+      display: none;
+    }
   }
 
   .sliderButton {

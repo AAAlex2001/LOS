@@ -22,7 +22,7 @@ const restaurants = [
     {
         id: 2,
         name: "Кафе, ОлигарХ' – Хинкальная",
-        address: 'Гали, улица Владислава Ардзинба',
+        address: 'Гал, улица Владислава Ардзинба',
         addressLink: 'https://yandex.com/maps/-/CDxduPlV',
         phone: '+7 (940) 775-79-70\n+7 (940) 779-75-70',
         workingHours: 'с 08:00 до 21:00',

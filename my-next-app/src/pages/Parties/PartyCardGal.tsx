@@ -1,6 +1,6 @@
 import React from 'react';
 import cardStyles from './PartyCardGal.module.scss';
-import AdSlider from './AdSlider';
+import AdSlider from '@/components/AdSlider/AdSlider';
 
 const PartyCardGal: React.FC = () => {
   return (
