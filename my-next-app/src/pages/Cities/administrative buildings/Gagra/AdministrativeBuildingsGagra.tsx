@@ -35,7 +35,7 @@ const administrativeBuildings = [
     address: 'ул. Абазгаа, 67/4, Гагра',
     addressLink: 'https://yandex.ru/maps/-/CDfiuHOb',
     contacts: '+7(940) 234-39-44',
-    image: '/assets/AdministrativeBuildingsGagra3.webp'
+    image: '/assets/AdministrativeBuildingsGagra3.jpg'
   },
   {
     id: 4,

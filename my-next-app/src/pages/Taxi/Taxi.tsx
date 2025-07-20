@@ -17,7 +17,7 @@ interface TaxiCard {
 const taxiServices: TaxiCard[] = [
   {
     id: 1,
-    img: '/assets/taxi1.svg',
+    img: '/assets/Taxi1.svg',
     title: 'Фортуна Такси',
     workingHours: 'круглосуточно',
     phones: ['+79409240024 (звонки и WhatsApp)', '+79407240024'],
@@ -25,7 +25,7 @@ const taxiServices: TaxiCard[] = [
   },
   {
     id: 2,
-    img: '/assets/taxi2.svg',
+    img: '/assets/Taxi2.svg',
     title: 'GT Abkhazia',
     workingHours: 'не указано',
     phones: ['Абхазия', '+7 (840) 22-333-22', 'Трансфер из Сочи', '+7 (862) 225-74-20'],
@@ -33,7 +33,7 @@ const taxiServices: TaxiCard[] = [
   },
   {
     id: 3,
-    img: '/assets/taxi3.svg',
+    img: '/assets/Taxi3.svg',
     title: 'А-ТАКСИ',
     workingHours: 'круглосуточно',
     phones: ['+7 (940) 903-1-903', '+7(940) 703-1-703 (WhatsApp)'],
@@ -41,7 +41,7 @@ const taxiServices: TaxiCard[] = [
   },
   {
     id: 4,
-    img: '/assets/taxi4.svg',
+    img: '/assets/Taxi4.svg',
     title: 'Такси GARUDA',
     workingHours: 'круглосуточно',
     phones: ['+7 940 999 00 00 / +7 940 777 00 00', '+7 940 996 00 00 / +7 940 776 00 00'],
@@ -49,7 +49,7 @@ const taxiServices: TaxiCard[] = [
   },
   {
     id: 5,
-    img: '/assets/taxi5.svg',
+    img: '/assets/Taxi5.svg',
     title: 'RED Такси',
     workingHours: 'круглосуточно',
     phones: ['+7 (940) 700-00-00', '7000'],
