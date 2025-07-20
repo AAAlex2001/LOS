@@ -16,7 +16,7 @@ const cities = [
   { img: '/assets/city_pitsunda.jpg', title: 'Пицунда', desc: 'Царство реликтовых сосен и золотистых галечных пляжей' },
   { img: '/assets/city_ochamchira.jpg', title: 'Очамчыра', desc: 'Тихий приморский город с атмосферой старинного порта' },
   { img: '/assets/city_gal.png', title: 'Гал', desc: 'Край чайных плантаций, зелёных холмов и гостеприимных жителей' },
-  { img: '/assets/city_gulripsh.jpg', title: 'Гулрыпш', desc: 'Горное селение с водопадами и панорамными видами' },
+  { img: '/assets/city_gulripsh.jpg', title: 'Гулрыпшский район', desc: 'Район с водопадами и панорамными видами' },
   { img: '/assets/city_tkuarchal.jpg', title: 'Ткуарчал', desc: 'Город шахтёров в окружении живописных горных хребтов' },
 ];
 

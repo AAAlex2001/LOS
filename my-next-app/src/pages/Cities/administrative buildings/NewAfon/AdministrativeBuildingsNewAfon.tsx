@@ -16,7 +16,7 @@ const administrativeBuildings = [
     workingHours: 'с 09:00 до 18:00',
     address: 'Гудаутский район,г. Н.Афон ул.Ладария д.3',
     addressLink: null,
-    contacts: 'Тел. 5-80-16, 5-82-00',
+    contacts: 'Тел. +7-940-911-01-22',
     image: '/assets/city_newafon.jpg'
   }
 ];
