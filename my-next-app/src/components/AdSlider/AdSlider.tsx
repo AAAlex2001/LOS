@@ -35,10 +35,21 @@ const AdSlider: React.FC = () => {
         {sliderItems.map((item, index) => (
           <div key={index} className={styles.slide}>
             {item.type === 'video' ? (
-              <video className={styles.sliderMedia} autoPlay muted loop playsInline>
-                <source src={item.src} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              <div className={styles.videoWrapper}>
+                <video 
+                  className={styles.videoMedia} 
+                  autoPlay 
+                  muted 
+                  loop 
+                  playsInline 
+                  webkit-playsinline="true"
+                  disablePictureInPicture
+                  controlsList="nodownload nofullscreen noremoteplayback"
+                >
+                  <source src={item.src} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
             ) : (
               <Image src={item.src} alt={`Slide ${index + 1}`} layout="fill" objectFit="cover" className={styles.sliderMedia} />
             )}

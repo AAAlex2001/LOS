@@ -5,6 +5,7 @@
   height: 100%;
   overflow: hidden;
   border-radius: 15px; /* Match the ad block's border-radius */
+  background-color: white; /* Меняем на белый фон для контраста */
 }
 
 .sliderWrapper {
@@ -18,6 +19,8 @@
   width: 100%;
   height: 100%;
   position: relative;
+  border-radius: 15px;
+  overflow: hidden;
 }
 
 .sliderMedia {
@@ -25,6 +28,66 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
+  border: none;
+  outline: none;
+}
+
+// Специальная обертка для видео
+.videoWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent; /* Делаем фон прозрачным */
+  border-radius: 15px;
+  
+  /* Создаем псевдоэлемент для маскировки углов */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 15px;
+    box-shadow: 0 0 0 1000px white; /* Большая тень того же цвета, что и фон контейнера */
+    z-index: 2; /* Поверх видео */
+    pointer-events: none; /* Чтобы не мешать взаимодействию */
+  }
+}
+
+// Стили для видео
+.videoMedia {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 110%; // Увеличиваем еще больше
+  min-height: 110%; // Увеличиваем еще больше
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  border: none;
+  outline: none;
+  z-index: 1; /* Под псевдоэлементом маски */
+  
+  // Скрываем все элементы управления
+  &::-webkit-media-controls,
+  &::-webkit-media-controls-panel,
+  &::-webkit-media-controls-play-button,
+  &::-webkit-media-controls-start-playback-button,
+  &::-webkit-media-controls-timeline,
+  &::-webkit-media-controls-current-time-display,
+  &::-webkit-media-controls-time-remaining-display,
+  &::-webkit-media-controls-mute-button,
+  &::-webkit-media-controls-volume-slider,
+  &::-webkit-media-controls-fullscreen-button,
+  &::-webkit-media-controls-enclosure,
+  &::-webkit-media-controls-overlay-play-button,
+  &::-moz-media-controls,
+  &::-ms-media-controls {
+    display: none !important;
+  }
 }
 
 .sliderButton {
