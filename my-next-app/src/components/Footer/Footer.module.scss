@@ -26,7 +26,8 @@ $break-xxl: 1920px;
 // --- Column Blocks ---
 .brand,
 .quickLinksBlock,
-.appBlock {
+.appBlock,
+.contactBlock {
   width: 100%;
 }
 
@@ -158,6 +159,40 @@ $break-xxl: 1920px;
   gap: 12px;
 }
 
+// --- Contact Block ---
+.contactBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contactTitle {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.2;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.contactInfo {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contactEmail {
+  color: #fff;
+  text-decoration: underline;
+  word-break: break-all;
+  transition: color 0.2s;
+}
+.contactEmail:hover {
+  color: #ffde59;
+}
+
 // Divider
 .divider {
   width: 100%;
@@ -228,6 +263,13 @@ $break-xxl: 1920px;
   .rights {
     font-size: 16px;
   }
+
+  .contactTitle {
+    font-size: 20px;
+  }
+  .contactInfo {
+    font-size: 17px;
+  }
 }
 
 // --- Desktop and Up ---
@@ -256,6 +298,12 @@ $break-xxl: 1920px;
     padding-left: 0;
   }
 
+  .contactBlock {
+    flex: 1;
+    min-width: 220px;
+    max-width: 320px;
+  }
+
   .quickLinks {
     grid-template-columns: repeat(2, 1fr); // Keep 2 cols, looks less cramped
   }
@@ -272,6 +320,13 @@ $break-xxl: 1920px;
 
   .brandDescription,
   .quickLinkItem {
+    font-size: 18px;
+  }
+
+  .contactTitle {
+    font-size: 22px;
+  }
+  .contactInfo {
     font-size: 18px;
   }
 }
@@ -298,6 +353,10 @@ $break-xxl: 1920px;
   .brandSubtitle,
   .quickLinksTitle,
   .appBlockTitle {
+    font-size: 24px;
+  }
+
+  .contactTitle {
     font-size: 24px;
   }
 }

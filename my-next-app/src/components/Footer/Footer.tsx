@@ -58,6 +58,25 @@ const Footer = () => {
           </nav>
         </div>
 
+        {/* Contact block */}
+        <div className={styles.contactBlock}>
+          <h3 className={styles.contactTitle}>Связаться с нами</h3>
+          <div className={styles.contactInfo}>
+            <div>
+              <strong>Часы работы:</strong><br/>
+              Понедельник – суббота<br/>
+              9:00 – 18:00<br/>
+              Воскресенье – выходной
+            </div>
+            <div style={{ marginTop: 8 }}>
+              <strong>Корпоративная почта:</strong><br/>
+              <a href="mailto:landofsoulweb@yandex.com" className={styles.contactEmail}>
+                landofsoulweb@yandex.com
+              </a>
+            </div>
+          </div>
+        </div>
+
         {/* Download badges block */}
         <div className={styles.appBlock}>
           <h3 className={styles.appBlockTitle}>Скачайте мобильное приложение</h3>
