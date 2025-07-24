@@ -37,7 +37,7 @@ const Header = () => {
           />
         </div>
 
-        <div className={styles.mobileLanguageSelect} onClick={closeMenu}>
+        {/* <div className={styles.mobileLanguageSelect} onClick={closeMenu}>
           <span className={styles.languageText}>Выберите язык</span>
           <svg
             className={styles.arrowIcon}
@@ -55,7 +55,7 @@ const Header = () => {
               strokeLinejoin="round"
             />
           </svg>
-        </div>
+        </div> */}
       </div>
 
       <header className={styles.header}>
@@ -92,7 +92,7 @@ const Header = () => {
         </div>
 
         {/* Right block: language select */}
-        <div className={styles.languageSelect}>
+        {/* <div className={styles.languageSelect}>
           <span className={styles.languageText}>Выберите язык</span>
           <svg
             className={styles.arrowIcon}
@@ -110,7 +110,7 @@ const Header = () => {
               strokeLinejoin="round"
             />
           </svg>
-        </div>
+        </div> */}
 
         {/* Burger button */}
         <button className={`${styles.burgerButton} ${menuOpen ? styles.active : ''}`} onClick={toggleMenu} aria-label="Menu">
