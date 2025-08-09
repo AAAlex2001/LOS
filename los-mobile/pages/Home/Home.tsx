@@ -8,6 +8,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
 } from 'react-native';
 import { Image } from 'expo-image';
 import { Video } from 'expo-av';
@@ -38,7 +40,20 @@ const topEllipseLeft = -((topEllipseWidth - screenWidth) / 2) + topEllipseShiftX
 const sliderTop = 100;
 const topEllipseTop = sliderTop - topEllipseHeight + topEllipseShiftY;
 
-const sliderItems = [
+// Типизация для слайдера
+interface SliderItem {
+  type: 'video' | 'image';
+  src: any; // Для require() пока оставляем any, но можно создать более специфичный тип
+}
+
+// Типизация для табов
+interface TabItem {
+  title: string;
+  icon: React.ReactNode;
+  multiline?: boolean;
+}
+
+const sliderItems: SliderItem[] = [
   { type: 'video', src: require('../../assets/images/Video12.mp4') },
   { type: 'image', src: require('../../assets/images/Main1.jpg') },
   { type: 'image', src: require('../../assets/images/Main2.jpg') },
@@ -53,7 +68,7 @@ const sliderItems = [
   { type: 'image', src: require('../../assets/images/Main11.jpg') },
 ];
 
-const tabs = [
+const tabs: TabItem[] = [
   {
     title: 'Об Абхазии',
     icon: <MaterialCommunityIcons name="party-popper" size={40} color="#fff" />,
@@ -85,16 +100,16 @@ const HomePage = () => {
   const [planTripVisible, setPlanTripVisible] = useState(false);
   const [importantTripVisible, setImportantTripVisible] = useState(false);
   const [sidebarVisible, setSidebarVisible] = useState(false);
-  const flatListRef = useRef<FlatList>(null);
+  const flatListRef = useRef<FlatList<SliderItem>>(null);
 
-  const onScroll = (event: any) => {
+  const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const slideIndex = Math.round(event.nativeEvent.contentOffset.x / 433);
     if (slideIndex !== currentSlide) {
       setCurrentSlide(slideIndex);
     }
   };
 
-  const renderSliderItem = ({ item }: { item: any }) => (
+  const renderSliderItem = ({ item }: { item: SliderItem }) => (
     <View style={styles.slide}>
       {item.type === 'video' ? (
         <Video

@@ -2,6 +2,10 @@ import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
+import PartiesScreen from './PartiesScreen';
+import MountainRoutesScreen from './MountainRoutesScreen';
+import ExcursionsScreen from './ExcursionsScreen';
+import HotSpringsScreen from './HotSpringsScreen';
 
 const buttons = [
   { title: 'Вечеринки и яркие впечатления', icon: <MaterialCommunityIcons name="party-popper" size={40} color="#fff" /> },
@@ -12,6 +16,10 @@ const buttons = [
 ];
 
 export default function EntertainmentScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const [partiesVisible, setPartiesVisible] = React.useState(false);
+  const [mountainVisible, setMountainVisible] = React.useState(false);
+  const [excursionsVisible, setExcursionsVisible] = React.useState(false);
+  const [hotSpringsVisible, setHotSpringsVisible] = React.useState(false);
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
       <View style={styles.fullscreen}>
@@ -25,26 +33,55 @@ export default function EntertainmentScreen({ visible, onClose }: { visible: boo
           {/* Первый ряд — 3 элемента */}
           <View style={[styles.row]}>
             {buttons.slice(0, 3).map((btn, idx) => (
-              <View key={idx} style={styles.item}>
+              <TouchableOpacity
+                key={idx}
+                style={styles.item}
+                activeOpacity={0.8}
+                onPress={() => {
+                  if (btn.title === 'Вечеринки и яркие впечатления') {
+                    setPartiesVisible(true);
+                  } else if (btn.title === 'Горные маршруты') {
+                    setMountainVisible(true);
+                  } else if (btn.title === 'Экскурсии') {
+                    setExcursionsVisible(true);
+                  } else if (btn.title === 'Горячие источники') {
+                    setHotSpringsVisible(true);
+                  }
+                }}
+              >
                 <View style={styles.iconCircle}>
                   {btn.icon}
                 </View>
                 <Text style={styles.label}>{btn.title}</Text>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
           {/* Второй ряд — 2 элемента, прижаты к левому краю */}
           <View style={[styles.row]}>
             {buttons.slice(3, 5).map((btn, idx) => (
-              <View key={idx} style={styles.item}>
+              <TouchableOpacity
+                key={idx}
+                style={styles.item}
+                activeOpacity={0.8}
+                onPress={() => {
+                  if (btn.title === 'Горячие источники') {
+                    setHotSpringsVisible(true);
+                  }
+                  // 'Спортивные залы' — позже добавим модалку
+                }}
+              >
                 <View style={styles.iconCircle}>
                   {btn.icon}
                 </View>
                 <Text style={styles.label}>{btn.title}</Text>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         </View>
+        <PartiesScreen visible={partiesVisible} onClose={() => setPartiesVisible(false)} />
+        <MountainRoutesScreen visible={mountainVisible} onClose={() => setMountainVisible(false)} />
+        <ExcursionsScreen visible={excursionsVisible} onClose={() => setExcursionsVisible(false)} />
+        <HotSpringsScreen visible={hotSpringsVisible} onClose={() => setHotSpringsVisible(false)} />
       </View>
     </Modal>
   );
