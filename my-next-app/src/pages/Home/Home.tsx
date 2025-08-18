@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Link from 'next/link';
@@ -9,65 +9,57 @@ import Popup from '@/components/Popup/Popup';
 import AdSlider from '@/components/AdSlider/AdSlider';
 import styles from './Home.module.scss';
 
-const cities = [
-  { img: '/assets/city_gagra.jpg', title: 'Гагра', desc: 'Жемчужина Абхазии с пальмовой набережной, замками и крепостями' },
-  { img: '/assets/city_sukhum.jpg', title: 'Сухум', desc: 'Солнечная столица с Ботаническим садом и колониальными особняками' },
-  { img: '/assets/city_gudauta.jpg', title: 'Гудаута', desc: 'Уютный городок с мандариновыми садами и чистейшими пляжами' },
-  { img: '/assets/city_newafon.jpg', title: 'Новый Афон', desc: 'Духовный центр с древними пещерами и Несторовой горой' },
-  { img: '/assets/city_pitsunda.jpg', title: 'Пицунда', desc: 'Царство реликтовых сосен и золотистых галечных пляжей' },
-  { img: '/assets/city_ochamchira.jpg', title: 'Очамчыра', desc: 'Тихий приморский город с атмосферой старинного порта' },
-  { img: '/assets/city_gal.png', title: 'Гал', desc: 'Край чайных плантаций, зелёных холмов и гостеприимных жителей' },
-  { img: '/assets/city_gulripsh.jpg', title: 'Гулрыпшский район', desc: 'Район с водопадами и панорамными видами' },
-  { img: '/assets/city_tkuarchal.jpg', title: 'Ткуарчал', desc: 'Город шахтёров в окружении живописных горных хребтов' },
-];
-
-
-
-const activities = [
-    { img: '/assets/activity_vecherinki.png', title: 'вечеринки', href: '/parties' },
-    { img: '/assets/activity_gornye_marshruty.jpg', title: 'горные маршруты', href: '/mountain-routes' },
-    { img: '/assets/activity_ekskursii.jpg', title: 'экскурсии', href: '/excursions' },
-    { img: '/assets/activity_goryachie_istochniki.png', title: 'горячие источники', href: '/hot-springs' },
-];
-
-const actionButtons = [
-  { label: 'Ваш доктор', href: '/your-doctor' },
-  { label: 'Связь и интернет', href: '/mobile-communication' },
-  { label: 'Службы такси', href: '/taxi' },
-  { label: 'Банки', href: '/banks' },
-  { label: 'Важно знать', href: '/important' },
-];
-
-const popupData = {
-  about: [
-    { label: 'Государственное устройство', href: '/government-structure' },
-    { label: 'Транспортное сообщение', href: '/transport-communications' },
-    { label: 'История и культура', href: '/history-and-culture' },
-    { label: 'Абхазская кухня', href: '/abkhazian-cuizine' },
-    { label: 'Абхазские обычаи', href: '/abkhazian-customs' },
-    { label: 'Элементарный словарь', href: '/elementary-dictionary' }
-  ],
-  activities: [
-    { label: 'Вечеринки и яркие впечатления', href: '/parties' },
-    { label: 'Горные маршруты', href: '/mountain-routes' },
-    { label: 'Экскурсии', href: '/excursions' },
-    { label: 'Горячие источники', href: '/hot-springs' }
-  ],
-  booking: [
-    { label: 'Города Абхазии', href: '/cities' },
-    // { label: 'Аренда жилья', href: '#' },
-    { label: 'Связь', href: '/mobile-communication' },
-    { label: 'Такси', href: '/taxi' },
-    { label: 'Банки', href: '/banks' }
-  ],
-  essentials: [
-    { label: 'Ваш доктор', href: '/your-doctor' },
-    { label: 'Важно знать', href: '/important' }
-  ],
+type HomeData = {
+  hero_text: string;
+  slider_items: { media_type: 'video' | 'image'; url: string; alt: string; order: number }[];
+  cities: { image_url: string; title: string; description: string; order: number }[];
+  activities: { image_url: string; title: string; href: string; order: number }[];
+  action_buttons: { label: string; href: string; order: number }[];
+  popup_items: { group: 'about' | 'activities' | 'booking' | 'essentials'; label: string; href: string; order: number }[];
 };
+
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || '';
 
 const HomePage = () => {
   const [activePopup, setActivePopup] = useState<string | null>(null);
+  const [data, setData] = useState<HomeData | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/home/`);
+        if (!res.ok) throw new Error('Failed to load homepage');
+        const json = await res.json();
+        setData(json);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    load();
+  }, []);
+
+  const sliderItems = useMemo(() => (
+    data?.slider_items?.map(i => ({ type: i.media_type, src: i.url })) || undefined
+  ), [data]);
+
+  const cities = useMemo(() => (
+    data?.cities || []
+  ), [data]);
+
+  const activities = useMemo(() => (
+    data?.activities || []
+  ), [data]);
+
+  const actionButtons = useMemo(() => (
+    (data?.action_buttons || [])
+  ), [data]);
+
+  const popupData = useMemo(() => ({
+    about: (data?.popup_items || []).filter(i => i.group === 'about').map(i => ({ label: i.label, href: i.href })),
+    activities: (data?.popup_items || []).filter(i => i.group === 'activities').map(i => ({ label: i.label, href: i.href })),
+    booking: (data?.popup_items || []).filter(i => i.group === 'booking').map(i => ({ label: i.label, href: i.href })),
+    essentials: (data?.popup_items || []).filter(i => i.group === 'essentials').map(i => ({ label: i.label, href: i.href })),
+  }), [data]);
 
 
   return (
@@ -120,16 +112,12 @@ const HomePage = () => {
                 </div>
             </nav>
             <div className={styles.sliderContainer}>
-              <AdSlider />
+              <AdSlider items={sliderItems} />
             </div>
             <div className={styles.fullWidthSection}>
                 <div className={styles.backgroundImageSection}>
                     <div className={styles.introOverlay}>
-                        <p className={styles.introText}>
-                            Пейзажи, которые захватывают дух, богатая история и&nbsp;вкусная еда, Абхазия не&nbsp;просто удивит&nbsp;— она&nbsp;покорит&nbsp;вас!
-                            <br /><br />
-                            Готовы к&nbsp;путешествию, которое останется в&nbsp;сердце навсегда?
-                        </p>
+                        <p className={styles.introText} dangerouslySetInnerHTML={{ __html: data?.hero_text || `Пейзажи, которые захватывают дух, богатая история и&nbsp;вкусная еда, Абхазия не&nbsp;просто удивит&nbsp;— она&nbsp;покорит&nbsp;вас!<br /><br />Готовы к&nbsp;путешествию, которое останется в&nbsp;сердце навсегда?` }} />
                     </div>
                 </div>
             </div>
@@ -141,10 +129,10 @@ const HomePage = () => {
             <div className={styles.citiesGrid}>
                 {cities.map((city) => (
                     <div key={city.title} className={styles.cityCard}>
-                        <div className={styles.cityImage} style={{ backgroundImage: `url(${city.img})` }} />
+                        <div className={styles.cityImage} style={{ backgroundImage: `url(${city.image_url})` }} />
                         <div className={styles.cityInfo}>
                             <h3>{city.title}</h3>
-                            <p>{city.desc}</p>
+                            <p>{city.description}</p>
                         </div>
                     </div>
                 ))}
@@ -203,7 +191,7 @@ const HomePage = () => {
             <div className={styles.activitiesGrid}>
                 {activities.map((activity) => (
                     <Link key={activity.title} href={activity.href} className={styles.activityCard}>
-                        <div className={styles.activityImage} style={{ backgroundImage: `url(${activity.img})` }} />
+                        <div className={styles.activityImage} style={{ backgroundImage: `url(${activity.image_url})` }} />
                         <div className={styles.activityInfo}>
                             <h3>{activity.title}</h3>
                         </div>
