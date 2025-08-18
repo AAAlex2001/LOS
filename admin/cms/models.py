@@ -42,7 +42,34 @@ class ImageAsset(TimestampedModel):
 
 
 class HomePage(TimestampedModel):
-    hero_text = models.TextField(blank=True, help_text="Текст в геро-секции. Можно использовать HTML для переносов строк")
+    hero_text_primary = models.TextField(blank=True, default="", help_text="Геро-текст №1. Перенос строки через Enter")
+    hero_text_secondary = models.TextField(blank=True, default="", help_text="Геро-текст №2. Перенос строки через Enter")
+    hero_bg_image = models.ImageField(upload_to="homepage/bg/%Y/%m/%d", blank=True, null=True)
+
+    # Табы (подписи)
+    tab_about_label = models.CharField(max_length=100, default="Об Абхазии")
+    tab_activities_label = models.CharField(max_length=100, default="Чем заняться")
+    tab_booking_label = models.CharField(max_length=100, default="Запланируйте поездку")
+    tab_essentials_label = models.CharField(max_length=100, default="Необходимо в поездке")
+
+    # Заголовки секций
+    cities_section_title = models.CharField(max_length=255, blank=True, default="")
+    activities_section_title = models.CharField(max_length=255, blank=True, default="")
+    actions_section_title = models.CharField(max_length=255, blank=True, default="")
+
+    # CTA блок (Отдых в Абхазии — с комфортом)
+    cta_title = models.CharField(max_length=255, blank=True, default="")
+    cta_hero_text = models.TextField(blank=True, default="", help_text="Текст над карточкой. Перенос строки через Enter")
+    cta_bg_image = models.ImageField(upload_to="homepage/cta_bg/%Y/%m/%d", blank=True, null=True)
+    cta_overlay_image = models.ImageField(upload_to="homepage/cta_overlay/%Y/%m/%d", blank=True, null=True)
+    cta_card_image = models.ImageField(upload_to="homepage/cta/%Y/%m/%d", blank=True, null=True)
+    cta_card_title = models.CharField(max_length=255, blank=True, default="")
+    cta_card_description = models.CharField(max_length=255, blank=True, default="")
+    cta_button_label = models.CharField(max_length=100, blank=True, default="")
+    cta_button_href = models.CharField(max_length=255, blank=True, default="")
+
+    # Фон раздела "развлечения"
+    activities_bg_image = models.ImageField(upload_to="homepage/bg/%Y/%m/%d", blank=True, null=True)
 
     class Meta:
         verbose_name = "Главная страница (данные)"
@@ -71,6 +98,39 @@ class HomeSliderItem(TimestampedModel):
 
     def __str__(self) -> str:  # pragma: no cover - trivial
         return self.alt or f"Slide {self.id}"
+
+
+# Отдельный слайдер для рекламного блока (AdSlider)
+class AdSlider(TimestampedModel):
+    title = models.CharField(max_length=255, default="Ad Slider")
+
+    class Meta:
+        verbose_name = "Рекламный слайдер"
+        verbose_name_plural = "Рекламные слайдеры"
+
+    def __str__(self) -> str:
+        return self.title
+
+
+class AdSlide(TimestampedModel):
+    class MediaType(models.TextChoices):
+        IMAGE = "image", "Изображение"
+        VIDEO = "video", "Видео"
+
+    slider = models.ForeignKey(AdSlider, on_delete=models.CASCADE, related_name="slides")
+    media_type = models.CharField(max_length=10, choices=MediaType.choices, default=MediaType.IMAGE)
+    image = models.ImageField(upload_to="adslider/images/%Y/%m/%d", blank=True, null=True)
+    video = models.FileField(upload_to="adslider/videos/%Y/%m/%d", blank=True, null=True)
+    alt = models.CharField(max_length=255, blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "id"]
+        verbose_name = "Слайд рекламного слайдера"
+        verbose_name_plural = "Слайды рекламного слайдера"
+
+    def __str__(self) -> str:
+        return self.alt or f"AdSlide {self.id}"
 
 
 class HomeCity(TimestampedModel):

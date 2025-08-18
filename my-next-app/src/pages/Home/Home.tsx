@@ -10,7 +10,18 @@ import AdSlider from '@/components/AdSlider/AdSlider';
 import styles from './Home.module.scss';
 
 type HomeData = {
-  hero_text: string;
+  hero_text_primary: string;
+  hero_text_secondary: string;
+  tab_about_label: string;
+  tab_activities_label: string;
+  tab_booking_label: string;
+  tab_essentials_label: string;
+  cta_title: string;
+  cta_hero_text: string;
+  cta_card_title: string;
+  cta_card_description: string;
+  cta_button_label: string;
+  cta_button_href: string;
   slider_items: { media_type: 'video' | 'image'; url: string; alt: string; order: number }[];
   cities: { image_url: string; title: string; description: string; order: number }[];
   activities: { image_url: string; title: string; href: string; order: number }[];
@@ -76,7 +87,7 @@ const HomePage = () => {
                   onMouseLeave={() => setActivePopup(null)}
                 >
                   <div className={styles.tabItem}>
-                    Об Абхазии
+                    {data?.tab_about_label || 'Об Абхазии'}
                     {activePopup === 'about' && <Popup items={popupData.about} />}
                   </div>
                 </div>
@@ -86,7 +97,7 @@ const HomePage = () => {
                   onMouseLeave={() => setActivePopup(null)}
                 >
                   <div className={styles.tabItem}>
-                    Чем заняться
+                    {data?.tab_activities_label || 'Чем заняться'}
                     {activePopup === 'activities' && <Popup items={popupData.activities} />}
                   </div>
                 </div>
@@ -96,7 +107,7 @@ const HomePage = () => {
                   onMouseLeave={() => setActivePopup(null)}
                 >
                   <div className={styles.tabItem}>
-                    Запланируйте поездку
+                    {data?.tab_booking_label || 'Запланируйте поездку'}
                     {activePopup === 'booking' && <Popup items={popupData.booking} />}
                   </div>
                 </div>
@@ -106,7 +117,7 @@ const HomePage = () => {
                   onMouseLeave={() => setActivePopup(null)}
                 >
                   <div className={styles.tabItem}>
-                    Необходимо в поездке
+                    {data?.tab_essentials_label || 'Необходимо в поездке'}
                     {activePopup === 'essentials' && <Popup items={popupData.essentials} />}
                   </div>
                 </div>
@@ -115,9 +126,16 @@ const HomePage = () => {
               <AdSlider items={sliderItems} />
             </div>
             <div className={styles.fullWidthSection}>
-                <div className={styles.backgroundImageSection}>
+                <div className={styles.backgroundImageSection} style={{ backgroundImage: (data as any)?.hero_bg_image_url ? `url(${(data as any).hero_bg_image_url})` : undefined }}>
                     <div className={styles.introOverlay}>
-                        <p className={styles.introText} dangerouslySetInnerHTML={{ __html: data?.hero_text || `Пейзажи, которые захватывают дух, богатая история и&nbsp;вкусная еда, Абхазия не&nbsp;просто удивит&nbsp;— она&nbsp;покорит&nbsp;вас!<br /><br />Готовы к&nbsp;путешествию, которое останется в&nbsp;сердце навсегда?` }} />
+                        <p className={styles.introText}>
+                          {(data?.hero_text_primary || `Пейзажи, которые захватывают дух, богатая история и вкусная еда, Абхазия не просто удивит — она покорит вас!\n\nГотовы к путешествию, которое останется в сердце навсегда?`).split('\n').map((line, idx) => (
+                            <>
+                              {idx > 0 && <><br/><br/></>}
+                              {line}
+                            </>
+                          ))}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -125,7 +143,7 @@ const HomePage = () => {
 
         {/* Section 2: Cities */}
         <section id="about" className={styles.citiesSection}>
-            <h2 className={styles.sectionTitle}>Незабываемые виды Абхазии</h2>
+            <h2 className={styles.sectionTitle}>{(data as any)?.cities_section_title || 'Незабываемые виды Абхазии'}</h2>
             <div className={styles.citiesGrid}>
                 {cities.map((city) => (
                     <div key={city.title} className={styles.cityCard}>
@@ -140,17 +158,20 @@ const HomePage = () => {
         </section>
 
         {/* Section 3: CTA */}
-        {/* <section id="booking" className={styles.ctaSection}>
-            <h2 className={styles.sectionTitle}>Отдых в Абхазии — с комфортом!</h2>
-            
+        <section id="booking" className={styles.ctaSection}>
+            <h2 className={styles.sectionTitle}>{data?.cta_title || 'Отдых в Абхазии — с комфортом!'}</h2>
             <div className={styles.promoBannerWrapper}>
-                <Image src="/assets/Mand3.png" alt="Mandarin" width={326} height={326} className={styles.promoMandarin}/>
+                {(data as any)?.cta_overlay_image_url && (
+                  <Image src={(data as any).cta_overlay_image_url} alt="Overlay" width={326} height={326} className={styles.promoMandarin} unoptimized />
+                )}
                 <div className={styles.fullWidthSection}>
-                    <div className={styles.promoBackgroundImageSection}>
+                    <div className={styles.promoBackgroundImageSection} style={{ backgroundImage: (data as any)?.cta_bg_image_url ? `url(${(data as any).cta_bg_image_url})` : undefined }}>
                         <div className={styles.introOverlay}>
                             <div className={styles.promoBannerText}>
-                                <p className={styles.introText}>Вы уже вдохновились горными пейзажами, лазурным морем и гостеприимством Абхазии?</p>
-                                <p className={styles.introText}>Пора забронировать уютное жильё через <span className={styles.highlight}>«Мандарин»</span> — проверенный сервис аренды с лучшими вариантами!</p>
+                                {(data?.cta_hero_text || 'Вы уже вдохновились горными пейзажами, лазурным морем и гостеприимством Абхазии?\nПора забронировать уютное жильё через «Мандарин» — проверенный сервис аренды с лучшими вариантами!')
+                                  .split('\n').map((line, idx) => (
+                                    <p key={idx} className={styles.introText}>{line}</p>
+                                  ))}
                             </div>
                         </div>
                     </div>
@@ -159,30 +180,39 @@ const HomePage = () => {
 
             <div className={styles.bookingCardWrapper}>
                 <div className={styles.bookingCard}>
-                     <div className={styles.bookingCardImage} style={{ backgroundImage: `url(/assets/big_image.jpg)`}}/>
+                     <div className={styles.bookingCardImage} style={{ backgroundImage: `url(${(data as any)?.cta_card_image_url || ''})`}}/>
                      <div className={styles.bookingCardInfo}>
-                        <h3>Частный сектор</h3>
-                        <p>Гостевые дома в горах или аутентичные домики с национальным колоритом</p>
+                        <h3>{data?.cta_card_title || 'Частный сектор'}</h3>
+                        <p>{data?.cta_card_description || 'Гостевые дома в горах или аутентичные домики с национальным колоритом'}</p>
                      </div>
                 </div>
-                <button className={styles.bookingButton}>
+                {data?.cta_button_label ? (
+                  <Link href={data?.cta_button_href || '#'} className={styles.bookingButton}>
+                    {data?.cta_button_label}
+                    <svg width="31" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4L12 20M12 4L18 10M12 4L6 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </Link>
+                ) : (
+                  <button className={styles.bookingButton}>
                     Подобрать жильё
                     <svg width="31" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4L12 20M12 4L18 10M12 4L6 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </button>
+                  </button>
+                )}
                 <p className={styles.bookingFinePrint}>Без&nbsp;комиссий · Поддержка 24/7 · Гарантия заселения</p>
              </div>
-        </section> */}
+        </section>
 
         {/* Section 4: Activities */}
         <section id="activities" className={styles.activitiesSection}>
             <div className={styles.activitiesHeader}>
-                <h2 className={styles.sectionTitle}>Развлечения в Абхазии: создайте свой идеальный отдых!</h2>
+                <h2 className={styles.sectionTitle}>{(data as any)?.activities_section_title || 'Развлечения в Абхазии: создайте свой идеальный отдых!'}</h2>
                 <div className={styles.fullWidthSection}>
-                    <div className={styles.backgroundImageSection}>
+                    <div className={styles.backgroundImageSection} style={{ backgroundImage: (data as any)?.activities_bg_image_url ? `url(${(data as any).activities_bg_image_url})` : undefined }}>
                         <div className={styles.introOverlay}>
                             <div className={styles.activitiesBannerText}>
-                                <p className={styles.introText}>Не просто отдых — эмоции, которые запомнятся навсегда.</p>
-                                <p className={styles.introText}>От горных троп до шумных вечеринок — каждый день будет особенным!</p>
+                                {(data?.hero_text_secondary || 'Не просто отдых — эмоции, которые запомнятся навсегда.\n\nОт горных троп до шумных вечеринок — каждый день будет особенным!')
+                                  .split('\n').map((line, idx) => (
+                                    <p key={idx} className={styles.introText}>{line}</p>
+                                  ))}
                             </div>
                         </div>
                     </div>
@@ -202,7 +232,7 @@ const HomePage = () => {
 
         {/* Section 5: Action Buttons */}
         <section id="essentials" className={styles.actionsSection}>
-            <h2 className={styles.sectionTitle}>Здесь собрано всё, что избавит вас от лишних переживаний в поездке</h2>
+            <h2 className={styles.sectionTitle}>{(data as any)?.actions_section_title || 'Здесь собрано всё, что избавит вас от лишних переживаний в поездке'}</h2>
             <div className={styles.actionsGrid}>
                 {actionButtons.map(({label, href}) => (
                     <Link key={label} href={href} className={styles.actionButton}>{label}</Link>

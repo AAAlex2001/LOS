@@ -1,6 +1,15 @@
 from rest_framework import serializers
 
-from .models import Page, ImageAsset, HomePage, HomeSliderItem, HomeCity, HomeActivity, HomeActionButton, HomePopupItem
+from .models import (
+    Page,
+    ImageAsset,
+    HomePage,
+    HomeSliderItem,
+    HomeCity,
+    HomeActivity,
+    HomeActionButton,
+    HomePopupItem,
+)
 
 
 class ImageAssetSerializer(serializers.ModelSerializer):
@@ -79,16 +88,58 @@ class HomePageSerializer(serializers.ModelSerializer):
     action_buttons = HomeActionButtonSerializer(many=True, read_only=True)
     popup_items = HomePopupItemSerializer(many=True, read_only=True)
 
+    cta_card_image_url = serializers.SerializerMethodField()
+    hero_bg_image_url = serializers.SerializerMethodField()
+    cta_bg_image_url = serializers.SerializerMethodField()
+    cta_overlay_image_url = serializers.SerializerMethodField()
+    activities_bg_image_url = serializers.SerializerMethodField()
+
     class Meta:
         model = HomePage
         fields = [
             "id",
-            "hero_text",
+            "hero_text_primary",
+            "hero_text_secondary",
+            "hero_bg_image_url",
+            "tab_about_label",
+            "tab_activities_label",
+            "tab_booking_label",
+            "tab_essentials_label",
+            "cities_section_title",
+            "activities_section_title",
+            "actions_section_title",
+            "cta_title",
+            "cta_hero_text",
+            "cta_bg_image_url",
+            "cta_overlay_image_url",
+            "cta_card_title",
+            "cta_card_description",
+            "cta_button_label",
+            "cta_button_href",
+            "cta_card_image_url",
+            # collections
             "slider_items",
             "cities",
             "activities",
             "action_buttons",
             "popup_items",
+            # section bg
+            "activities_bg_image_url",
         ]
+
+    def get_cta_card_image_url(self, obj: HomePage) -> str:
+        return obj.cta_card_image.url if obj.cta_card_image else ""
+
+    def get_hero_bg_image_url(self, obj: HomePage) -> str:
+        return obj.hero_bg_image.url if getattr(obj, "hero_bg_image", None) else ""
+
+    def get_cta_bg_image_url(self, obj: HomePage) -> str:
+        return obj.cta_bg_image.url if getattr(obj, "cta_bg_image", None) else ""
+
+    def get_cta_overlay_image_url(self, obj: HomePage) -> str:
+        return obj.cta_overlay_image.url if getattr(obj, "cta_overlay_image", None) else ""
+
+    def get_activities_bg_image_url(self, obj: HomePage) -> str:
+        return obj.activities_bg_image.url if getattr(obj, "activities_bg_image", None) else ""
 
 

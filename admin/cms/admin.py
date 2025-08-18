@@ -88,6 +88,14 @@ class PopupItemInline(admin.TabularInline):
 class HomePageAdmin(admin.ModelAdmin):
     list_display = ("id", "updated_at")
     inlines = [SliderInline, CityInline, ActivityInline, ActionButtonInline, PopupItemInline]
-    fieldsets = ((None, {"fields": ("hero_text",)}),)
+    fieldsets = (
+        ("Геро-секции", {"fields": ("hero_text_primary", "hero_text_secondary", "hero_bg_image")}),
+        ("Табы", {"fields": ("tab_about_label", "tab_activities_label", "tab_booking_label", "tab_essentials_label")}),
+        ("Заголовки секций", {"fields": ("cities_section_title", "activities_section_title", "actions_section_title")}),
+        ("CTA блок", {"fields": ("cta_title", "cta_hero_text", "cta_bg_image", "cta_overlay_image", "cta_card_image", "cta_card_title", "cta_card_description", "cta_button_label", "cta_button_href")}),
+    )
+
+
+## Убран отдельный раздел рекламных слайдеров; управление слайдами в HomePage
 
 

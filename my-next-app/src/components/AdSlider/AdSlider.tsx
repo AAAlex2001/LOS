@@ -5,24 +5,9 @@ import styles from './AdSlider.module.scss';
 
 type SliderItem = { type: 'video' | 'image'; src: string };
 
-const defaultSliderItems: SliderItem[] = [
-  { type: 'video', src: '/assets/Video12.mp4' },
-  { type: 'image', src: '/assets/Video1.JPG' },
-  { type: 'image', src: '/assets/Video2.JPG' },
-  { type: 'image', src: '/assets/Video3.JPG' },
-  { type: 'image', src: '/assets/Video4.JPG' },
-  { type: 'image', src: '/assets/Video5.PNG' },
-  { type: 'image', src: '/assets/Video6.JPG' },
-  { type: 'image', src: '/assets/Video7.JPG' },
-  { type: 'image', src: '/assets/Video8.JPG' },
-  { type: 'image', src: '/assets/Video9.JPG' },
-  { type: 'image', src: '/assets/Video10.JPG' },
-  { type: 'image', src: '/assets/Video11.JPG' },
-];
-
 const AdSlider: React.FC<{ items?: SliderItem[] }> = ({ items }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const sliderItems = useMemo(() => (items && items.length ? items : defaultSliderItems), [items]);
+  const sliderItems = useMemo(() => (items && items.length ? items : []), [items]);
 
   const nextSlide = () => {
     setCurrentSlide(prev => (prev === sliderItems.length - 1 ? 0 : prev + 1));
@@ -54,7 +39,7 @@ const AdSlider: React.FC<{ items?: SliderItem[] }> = ({ items }) => {
                 </video>
               </div>
             ) : (
-              <Image src={item.src} alt={`Slide ${index + 1}`} layout="fill" objectFit="cover" className={styles.sliderMedia} />
+              <Image src={item.src} alt={`Slide ${index + 1}`} layout="fill" objectFit="cover" className={styles.sliderMedia} unoptimized />
             )}
           </div>
         ))}

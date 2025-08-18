@@ -10,7 +10,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-secret-key-change-me")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "1") == "1"
 
-ALLOWED_HOSTS = [h for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h]
+ALLOWED_HOSTS = [h for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,109.196.103.12").split(",") if h]
 
 
 INSTALLED_APPS = [
@@ -107,14 +107,14 @@ REST_FRAMEWORK = {
 # CORS / CSRF
 _cors_env = os.environ.get(
     "DJANGO_CORS_ALLOWED_ORIGINS",
-    "http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,http://127.0.0.1:5173",
+    "http://localhost,http://localhost:3000,http://127.0.0.1,http://127.0.0.1:3000,http://109.196.103.12,http://109.196.103.12:3000",
 )
 CORS_ALLOWED_ORIGINS = [o for o in _cors_env.split(",") if o]
 CORS_ALLOW_CREDENTIALS = True
 
 _csrf_env = os.environ.get(
     "DJANGO_CSRF_TRUSTED_ORIGINS",
-    "http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,http://127.0.0.1:5173",
+    "http://localhost,http://localhost:3000,http://127.0.0.1,http://127.0.0.1:3000,http://109.196.103.12,http://109.196.103.12:3000",
 )
 CSRF_TRUSTED_ORIGINS = [o for o in _csrf_env.split(",") if o]
 
