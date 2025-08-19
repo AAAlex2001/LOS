@@ -9,6 +9,7 @@ from .models import (
     HomeActivity,
     HomeActionButton,
     HomePopupItem,
+    HomeTab,
 )
 
 
@@ -87,12 +88,15 @@ class HomePageSerializer(serializers.ModelSerializer):
     activities = HomeActivitySerializer(many=True, read_only=True)
     action_buttons = HomeActionButtonSerializer(many=True, read_only=True)
     popup_items = HomePopupItemSerializer(many=True, read_only=True)
+    tabs = serializers.SerializerMethodField()
 
     cta_card_image_url = serializers.SerializerMethodField()
     hero_bg_image_url = serializers.SerializerMethodField()
     cta_bg_image_url = serializers.SerializerMethodField()
     cta_overlay_image_url = serializers.SerializerMethodField()
     activities_bg_image_url = serializers.SerializerMethodField()
+    og_image_url = serializers.SerializerMethodField()
+    twitter_image_url = serializers.SerializerMethodField()
 
     class Meta:
         model = HomePage
@@ -101,10 +105,7 @@ class HomePageSerializer(serializers.ModelSerializer):
             "hero_text_primary",
             "hero_text_secondary",
             "hero_bg_image_url",
-            "tab_about_label",
-            "tab_activities_label",
-            "tab_booking_label",
-            "tab_essentials_label",
+            # labels removed in favor of tabs list
             "cities_section_title",
             "activities_section_title",
             "actions_section_title",
@@ -123,8 +124,22 @@ class HomePageSerializer(serializers.ModelSerializer):
             "activities",
             "action_buttons",
             "popup_items",
+            "tabs",
             # section bg
             "activities_bg_image_url",
+            # SEO
+            "seo_title",
+            "seo_description",
+            "seo_keywords",
+            "canonical_url",
+            "og_title",
+            "og_description",
+            "og_image_url",
+            "twitter_title",
+            "twitter_description",
+            "twitter_image_url",
+            "robots_index",
+            "robots_follow",
         ]
 
     def get_cta_card_image_url(self, obj: HomePage) -> str:
@@ -141,5 +156,18 @@ class HomePageSerializer(serializers.ModelSerializer):
 
     def get_activities_bg_image_url(self, obj: HomePage) -> str:
         return obj.activities_bg_image.url if getattr(obj, "activities_bg_image", None) else ""
+
+    def get_og_image_url(self, obj: HomePage) -> str:
+        return obj.og_image.url if getattr(obj, "og_image", None) else ""
+
+    def get_twitter_image_url(self, obj: HomePage) -> str:
+        return obj.twitter_image.url if getattr(obj, "twitter_image", None) else ""
+
+    def get_tabs(self, obj: HomePage):
+        # Return tabs grouped by group
+        return [
+            {"group": t.group, "label": t.label, "href": t.href, "order": t.order}
+            for t in obj.tabs.all().order_by("order", "id")
+        ]
 
 

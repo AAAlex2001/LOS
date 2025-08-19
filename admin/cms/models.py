@@ -46,11 +46,7 @@ class HomePage(TimestampedModel):
     hero_text_secondary = models.TextField(blank=True, default="", help_text="Геро-текст №2. Перенос строки через Enter")
     hero_bg_image = models.ImageField(upload_to="homepage/bg/%Y/%m/%d", blank=True, null=True)
 
-    # Табы (подписи)
-    tab_about_label = models.CharField(max_length=100, default="Об Абхазии")
-    tab_activities_label = models.CharField(max_length=100, default="Чем заняться")
-    tab_booking_label = models.CharField(max_length=100, default="Запланируйте поездку")
-    tab_essentials_label = models.CharField(max_length=100, default="Необходимо в поездке")
+    # Табы теперь управляются через HomeTab
 
     # Заголовки секций
     cities_section_title = models.CharField(max_length=255, blank=True, default="")
@@ -70,6 +66,20 @@ class HomePage(TimestampedModel):
 
     # Фон раздела "развлечения"
     activities_bg_image = models.ImageField(upload_to="homepage/bg/%Y/%m/%d", blank=True, null=True)
+
+    # SEO / OpenGraph / Twitter
+    seo_title = models.CharField(max_length=255, blank=True, default="")
+    seo_description = models.TextField(blank=True, default="")
+    seo_keywords = models.CharField(max_length=255, blank=True, default="")
+    canonical_url = models.CharField(max_length=255, blank=True, default="")
+    og_title = models.CharField(max_length=255, blank=True, default="")
+    og_description = models.TextField(blank=True, default="")
+    og_image = models.ImageField(upload_to="homepage/seo/og/%Y/%m/%d", blank=True, null=True)
+    twitter_title = models.CharField(max_length=255, blank=True, default="")
+    twitter_description = models.TextField(blank=True, default="")
+    twitter_image = models.ImageField(upload_to="homepage/seo/twitter/%Y/%m/%d", blank=True, null=True)
+    robots_index = models.BooleanField(default=True)
+    robots_follow = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "Главная страница (данные)"
@@ -201,4 +211,19 @@ class HomePopupItem(TimestampedModel):
     def __str__(self) -> str:  # pragma: no cover - trivial
         return f"{self.get_group_display()}: {self.label}"
 
+
+class HomeTab(TimestampedModel):
+    homepage = models.ForeignKey(HomePage, on_delete=models.CASCADE, related_name="tabs")
+    group = models.CharField(max_length=20, choices=HomePopupItem.Group.choices)
+    label = models.CharField(max_length=100)
+    order = models.PositiveIntegerField(default=0)
+    href = models.CharField(max_length=255, blank=True, default="")
+
+    class Meta:
+        ordering = ["order", "id"]
+        verbose_name = "Таб (верхнее меню)"
+        verbose_name_plural = "Табы (верхнее меню)"
+
+    def __str__(self) -> str:  # pragma: no cover - trivial
+        return self.label
 

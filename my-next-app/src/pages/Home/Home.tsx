@@ -12,21 +12,30 @@ import styles from './Home.module.scss';
 type HomeData = {
   hero_text_primary: string;
   hero_text_secondary: string;
+  hero_bg_image_url?: string;
   tab_about_label: string;
   tab_activities_label: string;
   tab_booking_label: string;
   tab_essentials_label: string;
-  cta_title: string;
-  cta_hero_text: string;
-  cta_card_title: string;
-  cta_card_description: string;
-  cta_button_label: string;
-  cta_button_href: string;
+  cities_section_title?: string;
+  activities_section_title?: string;
+  actions_section_title?: string;
+  cta_title?: string;
+  cta_hero_text?: string;
+  cta_bg_image_url?: string;
+  cta_overlay_image_url?: string;
+  cta_card_title?: string;
+  cta_card_description?: string;
+  cta_button_label?: string;
+  cta_button_href?: string;
+  cta_card_image_url?: string;
+  activities_bg_image_url?: string;
   slider_items: { media_type: 'video' | 'image'; url: string; alt: string; order: number }[];
   cities: { image_url: string; title: string; description: string; order: number }[];
   activities: { image_url: string; title: string; href: string; order: number }[];
   action_buttons: { label: string; href: string; order: number }[];
   popup_items: { group: 'about' | 'activities' | 'booking' | 'essentials'; label: string; href: string; order: number }[];
+  tabs?: { group: 'about' | 'activities' | 'booking' | 'essentials'; label: string; href?: string; order: number }[];
 };
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE || '';
@@ -38,7 +47,7 @@ const HomePage = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/home/`);
+        const res = await fetch(`${API_BASE}/api/home/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load homepage');
         const json = await res.json();
         setData(json);
@@ -50,20 +59,22 @@ const HomePage = () => {
   }, []);
 
   const sliderItems = useMemo(() => (
-    data?.slider_items?.map(i => ({ type: i.media_type, src: i.url })) || undefined
+    data?.slider_items?.map(i => ({ type: i.media_type, src: i.url })) || []
   ), [data]);
 
-  const cities = useMemo(() => (
-    data?.cities || []
-  ), [data]);
+  const cities = useMemo(() => data?.cities || [], [data]);
+  const activities = useMemo(() => data?.activities || [], [data]);
+  const actionButtons = useMemo(() => (data?.action_buttons || []), [data]);
 
-  const activities = useMemo(() => (
-    data?.activities || []
-  ), [data]);
-
-  const actionButtons = useMemo(() => (
-    (data?.action_buttons || [])
-  ), [data]);
+  const tabsByGroup = useMemo(() => {
+    const tabs = data?.tabs || [];
+    return {
+      about: tabs.filter(t => t.group === 'about').sort((a,b)=>a.order-b.order),
+      activities: tabs.filter(t => t.group === 'activities').sort((a,b)=>a.order-b.order),
+      booking: tabs.filter(t => t.group === 'booking').sort((a,b)=>a.order-b.order),
+      essentials: tabs.filter(t => t.group === 'essentials').sort((a,b)=>a.order-b.order),
+    };
+  }, [data]);
 
   const popupData = useMemo(() => ({
     about: (data?.popup_items || []).filter(i => i.group === 'about').map(i => ({ label: i.label, href: i.href })),
@@ -72,6 +83,7 @@ const HomePage = () => {
     essentials: (data?.popup_items || []).filter(i => i.group === 'essentials').map(i => ({ label: i.label, href: i.href })),
   }), [data]);
 
+  if (!data) return null; // не рендерим до загрузки
 
   return (
     <div className={styles.pageWrapper}>
@@ -87,7 +99,9 @@ const HomePage = () => {
                   onMouseLeave={() => setActivePopup(null)}
                 >
                   <div className={styles.tabItem}>
-                    {data?.tab_about_label || 'Об Абхазии'}
+                    <Link href={tabsByGroup.about[0]?.href || '#'}>
+                      {tabsByGroup.about[0]?.label}
+                    </Link>
                     {activePopup === 'about' && <Popup items={popupData.about} />}
                   </div>
                 </div>
@@ -97,7 +111,9 @@ const HomePage = () => {
                   onMouseLeave={() => setActivePopup(null)}
                 >
                   <div className={styles.tabItem}>
-                    {data?.tab_activities_label || 'Чем заняться'}
+                    <Link href={tabsByGroup.activities[0]?.href || '#'}>
+                      {tabsByGroup.activities[0]?.label}
+                    </Link>
                     {activePopup === 'activities' && <Popup items={popupData.activities} />}
                   </div>
                 </div>
@@ -107,7 +123,9 @@ const HomePage = () => {
                   onMouseLeave={() => setActivePopup(null)}
                 >
                   <div className={styles.tabItem}>
-                    {data?.tab_booking_label || 'Запланируйте поездку'}
+                    <Link href={tabsByGroup.booking[0]?.href || '#'}>
+                      {tabsByGroup.booking[0]?.label}
+                    </Link>
                     {activePopup === 'booking' && <Popup items={popupData.booking} />}
                   </div>
                 </div>
@@ -117,19 +135,23 @@ const HomePage = () => {
                   onMouseLeave={() => setActivePopup(null)}
                 >
                   <div className={styles.tabItem}>
-                    {data?.tab_essentials_label || 'Необходимо в поездке'}
+                    <Link href={tabsByGroup.essentials[0]?.href || '#'}>
+                      {tabsByGroup.essentials[0]?.label}
+                    </Link>
                     {activePopup === 'essentials' && <Popup items={popupData.essentials} />}
                   </div>
                 </div>
             </nav>
+            {!!sliderItems.length && (
             <div className={styles.sliderContainer}>
-              <AdSlider items={sliderItems} />
+                <AdSlider items={sliderItems} />
             </div>
+            )}
             <div className={styles.fullWidthSection}>
-                <div className={styles.backgroundImageSection} style={{ backgroundImage: (data as any)?.hero_bg_image_url ? `url(${(data as any).hero_bg_image_url})` : undefined }}>
+                <div className={styles.backgroundImageSection} style={{ backgroundImage: data.hero_bg_image_url ? `url(${data.hero_bg_image_url})` : undefined }}>
                     <div className={styles.introOverlay}>
                         <p className={styles.introText}>
-                          {(data?.hero_text_primary || `Пейзажи, которые захватывают дух, богатая история и вкусная еда, Абхазия не просто удивит — она покорит вас!\n\nГотовы к путешествию, которое останется в сердце навсегда?`).split('\n').map((line, idx) => (
+                          {data.hero_text_primary.split('\n').map((line, idx) => (
                             <>
                               {idx > 0 && <><br/><br/></>}
                               {line}
@@ -143,7 +165,7 @@ const HomePage = () => {
 
         {/* Section 2: Cities */}
         <section id="about" className={styles.citiesSection}>
-            <h2 className={styles.sectionTitle}>{(data as any)?.cities_section_title || 'Незабываемые виды Абхазии'}</h2>
+            {data.cities_section_title && <h2 className={styles.sectionTitle}>{data.cities_section_title}</h2>}
             <div className={styles.citiesGrid}>
                 {cities.map((city) => (
                     <div key={city.title} className={styles.cityCard}>
@@ -159,19 +181,18 @@ const HomePage = () => {
 
         {/* Section 3: CTA */}
         <section id="booking" className={styles.ctaSection}>
-            <h2 className={styles.sectionTitle}>{data?.cta_title || 'Отдых в Абхазии — с комфортом!'}</h2>
+            {data.cta_title && <h2 className={styles.sectionTitle}>{data.cta_title}</h2>}
             <div className={styles.promoBannerWrapper}>
-                {(data as any)?.cta_overlay_image_url && (
-                  <Image src={(data as any).cta_overlay_image_url} alt="Overlay" width={326} height={326} className={styles.promoMandarin} unoptimized />
+                {data.cta_overlay_image_url && (
+                  <Image src={data.cta_overlay_image_url} alt="Overlay" width={326} height={326} className={styles.promoMandarin} unoptimized />
                 )}
                 <div className={styles.fullWidthSection}>
-                    <div className={styles.promoBackgroundImageSection} style={{ backgroundImage: (data as any)?.cta_bg_image_url ? `url(${(data as any).cta_bg_image_url})` : undefined }}>
+                    <div className={styles.promoBackgroundImageSection} style={{ backgroundImage: data.cta_bg_image_url ? `url(${data.cta_bg_image_url})` : undefined }}>
                         <div className={styles.introOverlay}>
                             <div className={styles.promoBannerText}>
-                                {(data?.cta_hero_text || 'Вы уже вдохновились горными пейзажами, лазурным морем и гостеприимством Абхазии?\nПора забронировать уютное жильё через «Мандарин» — проверенный сервис аренды с лучшими вариантами!')
-                                  .split('\n').map((line, idx) => (
-                                    <p key={idx} className={styles.introText}>{line}</p>
-                                  ))}
+                                {data.cta_hero_text?.split('\n').map((line, idx) => (
+                                  <p key={idx} className={styles.introText}>{line}</p>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -180,22 +201,17 @@ const HomePage = () => {
 
             <div className={styles.bookingCardWrapper}>
                 <div className={styles.bookingCard}>
-                     <div className={styles.bookingCardImage} style={{ backgroundImage: `url(${(data as any)?.cta_card_image_url || ''})`}}/>
+                     <div className={styles.bookingCardImage} style={{ backgroundImage: data.cta_card_image_url ? `url(${data.cta_card_image_url})` : undefined }}/>
                      <div className={styles.bookingCardInfo}>
-                        <h3>{data?.cta_card_title || 'Частный сектор'}</h3>
-                        <p>{data?.cta_card_description || 'Гостевые дома в горах или аутентичные домики с национальным колоритом'}</p>
+                        {data.cta_card_title && <h3>{data.cta_card_title}</h3>}
+                        {data.cta_card_description && <p>{data.cta_card_description}</p>}
                      </div>
                 </div>
-                {data?.cta_button_label ? (
-                  <Link href={data?.cta_button_href || '#'} className={styles.bookingButton}>
-                    {data?.cta_button_label}
+                {data.cta_button_label && (
+                  <Link href={data.cta_button_href || '#'} className={styles.bookingButton}>
+                    {data.cta_button_label}
                     <svg width="31" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4L12 20M12 4L18 10M12 4L6 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   </Link>
-                ) : (
-                  <button className={styles.bookingButton}>
-                    Подобрать жильё
-                    <svg width="31" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4L12 20M12 4L18 10M12 4L6 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </button>
                 )}
                 <p className={styles.bookingFinePrint}>Без&nbsp;комиссий · Поддержка 24/7 · Гарантия заселения</p>
              </div>
@@ -204,15 +220,14 @@ const HomePage = () => {
         {/* Section 4: Activities */}
         <section id="activities" className={styles.activitiesSection}>
             <div className={styles.activitiesHeader}>
-                <h2 className={styles.sectionTitle}>{(data as any)?.activities_section_title || 'Развлечения в Абхазии: создайте свой идеальный отдых!'}</h2>
+                {data.activities_section_title && <h2 className={styles.sectionTitle}>{data.activities_section_title}</h2>}
                 <div className={styles.fullWidthSection}>
-                    <div className={styles.backgroundImageSection} style={{ backgroundImage: (data as any)?.activities_bg_image_url ? `url(${(data as any).activities_bg_image_url})` : undefined }}>
+                    <div className={styles.backgroundImageSection} style={{ backgroundImage: data.activities_bg_image_url ? `url(${data.activities_bg_image_url})` : undefined }}>
                         <div className={styles.introOverlay}>
                             <div className={styles.activitiesBannerText}>
-                                {(data?.hero_text_secondary || 'Не просто отдых — эмоции, которые запомнятся навсегда.\n\nОт горных троп до шумных вечеринок — каждый день будет особенным!')
-                                  .split('\n').map((line, idx) => (
-                                    <p key={idx} className={styles.introText}>{line}</p>
-                                  ))}
+                                {data.hero_text_secondary.split('\n').map((line, idx) => (
+                                  <p key={idx} className={styles.introText}>{line}</p>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -232,7 +247,7 @@ const HomePage = () => {
 
         {/* Section 5: Action Buttons */}
         <section id="essentials" className={styles.actionsSection}>
-            <h2 className={styles.sectionTitle}>{(data as any)?.actions_section_title || 'Здесь собрано всё, что избавит вас от лишних переживаний в поездке'}</h2>
+            {data.actions_section_title && <h2 className={styles.sectionTitle}>{data.actions_section_title}</h2>}
             <div className={styles.actionsGrid}>
                 {actionButtons.map(({label, href}) => (
                     <Link key={label} href={href} className={styles.actionButton}>{label}</Link>
