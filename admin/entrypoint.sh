@@ -3,11 +3,21 @@ set -euo pipefail
 
 mkdir -p /app/data /app/media /app/staticfiles
 
-# Создаем миграции если нужно
-python manage.py makemigrations
+echo "🚀 Запуск Django приложения..."
 
-# Применяем миграции
-python manage.py migrate
+# Создаем миграции автоматически
+echo "📝 Создание миграций..."
+python manage.py makemigrations --noinput
+
+# Применяем все миграции
+echo "🔄 Применение миграций..."
+python manage.py migrate --noinput
+
+# Собираем статические файлы
+echo "📦 Сбор статических файлов..."
+python manage.py collectstatic --noinput
+
+echo "✅ Django готов к работе!"
 
 exec "$@"
 

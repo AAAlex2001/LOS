@@ -22,5 +22,5 @@ class ImageAssetAdmin(admin.ModelAdmin):
     
     preview.short_description = "Предпросмотр"
 
-# Импортируем админ-классы из homepage модуля
 from .homepage.admin import HomePageAdmin
+from .banks.admin import BanksPageAdmin
