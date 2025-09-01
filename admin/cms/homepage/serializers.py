@@ -1,8 +1,6 @@
 from rest_framework import serializers
 
 from .models import (
-    Page,
-    ImageAsset,
     HomePage,
     HomeSliderItem,
     HomeCity,
@@ -11,27 +9,6 @@ from .models import (
     HomePopupItem,
     HomeTab,
 )
-
-
-class ImageAssetSerializer(serializers.ModelSerializer):
-    image_url = serializers.SerializerMethodField()
-
-    class Meta:
-        model = ImageAsset
-        fields = ["id", "alt", "image_url", "order"]
-
-    def get_image_url(self, obj: ImageAsset) -> str:
-        if not obj.image:
-            return ""
-        return obj.image.url
-
-
-class PageSerializer(serializers.ModelSerializer):
-    images = ImageAssetSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Page
-        fields = ["id", "slug", "title", "subtitle", "body", "images", "updated_at"]
 
 
 class HomeSliderItemSerializer(serializers.ModelSerializer):
@@ -82,13 +59,19 @@ class HomePopupItemSerializer(serializers.ModelSerializer):
         fields = ["id", "group", "label", "href", "order"]
 
 
+class HomeTabSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HomeTab
+        fields = ["id", "group", "label", "href", "order"]
+
+
 class HomePageSerializer(serializers.ModelSerializer):
     slider_items = HomeSliderItemSerializer(many=True, read_only=True)
     cities = HomeCitySerializer(many=True, read_only=True)
     activities = HomeActivitySerializer(many=True, read_only=True)
     action_buttons = HomeActionButtonSerializer(many=True, read_only=True)
     popup_items = HomePopupItemSerializer(many=True, read_only=True)
-    tabs = serializers.SerializerMethodField()
+    tabs = HomeTabSerializer(many=True, read_only=True)
 
     cta_card_image_url = serializers.SerializerMethodField()
     hero_bg_image_url = serializers.SerializerMethodField()
@@ -105,7 +88,6 @@ class HomePageSerializer(serializers.ModelSerializer):
             "hero_text_primary",
             "hero_text_secondary",
             "hero_bg_image_url",
-            # labels removed in favor of tabs list
             "cities_section_title",
             "activities_section_title",
             "actions_section_title",
@@ -113,21 +95,12 @@ class HomePageSerializer(serializers.ModelSerializer):
             "cta_hero_text",
             "cta_bg_image_url",
             "cta_overlay_image_url",
+            "cta_card_image_url",
             "cta_card_title",
             "cta_card_description",
             "cta_button_label",
             "cta_button_href",
-            "cta_card_image_url",
-            # collections
-            "slider_items",
-            "cities",
-            "activities",
-            "action_buttons",
-            "popup_items",
-            "tabs",
-            # section bg
             "activities_bg_image_url",
-            # SEO
             "seo_title",
             "seo_description",
             "seo_keywords",
@@ -140,34 +113,32 @@ class HomePageSerializer(serializers.ModelSerializer):
             "twitter_image_url",
             "robots_index",
             "robots_follow",
+            "slider_items",
+            "cities",
+            "activities",
+            "action_buttons",
+            "popup_items",
+            "tabs",
+            "updated_at",
         ]
 
     def get_cta_card_image_url(self, obj: HomePage) -> str:
         return obj.cta_card_image.url if obj.cta_card_image else ""
 
     def get_hero_bg_image_url(self, obj: HomePage) -> str:
-        return obj.hero_bg_image.url if getattr(obj, "hero_bg_image", None) else ""
+        return obj.hero_bg_image.url if obj.hero_bg_image else ""
 
     def get_cta_bg_image_url(self, obj: HomePage) -> str:
-        return obj.cta_bg_image.url if getattr(obj, "cta_bg_image", None) else ""
+        return obj.cta_bg_image.url if obj.cta_bg_image else ""
 
     def get_cta_overlay_image_url(self, obj: HomePage) -> str:
-        return obj.cta_overlay_image.url if getattr(obj, "cta_overlay_image", None) else ""
+        return obj.cta_overlay_image.url if obj.cta_overlay_image else ""
 
     def get_activities_bg_image_url(self, obj: HomePage) -> str:
-        return obj.activities_bg_image.url if getattr(obj, "activities_bg_image", None) else ""
+        return obj.activities_bg_image.url if obj.activities_bg_image else ""
 
     def get_og_image_url(self, obj: HomePage) -> str:
-        return obj.og_image.url if getattr(obj, "og_image", None) else ""
+        return obj.og_image.url if obj.og_image else ""
 
     def get_twitter_image_url(self, obj: HomePage) -> str:
-        return obj.twitter_image.url if getattr(obj, "twitter_image", None) else ""
-
-    def get_tabs(self, obj: HomePage):
-        # Return tabs grouped by group
-        return [
-            {"group": t.group, "label": t.label, "href": t.href, "order": t.order}
-            for t in obj.tabs.all().order_by("order", "id")
-        ]
-
-
+        return obj.twitter_image.url if obj.twitter_image else ""

@@ -6,8 +6,8 @@ services:
       context: ./admin
     container_name: los-admin
     volumes:
-      - ./admin/media:/app/media
-      - admin_data:/app/data
+      - ./admin:/app  # Синхронизируем весь код admin
+      - admin_data:/app/data  # Данные БД в отдельном volume
     environment:
       - DJANGO_ALLOWED_HOSTS=*
       - DJANGO_CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000,http://109.196.103.12,http://109.196.103.12:3000
@@ -22,6 +22,7 @@ services:
     container_name: los-frontend
     environment:
       - NEXT_PUBLIC_API_BASE=/api
+      - NEXT_PUBLIC_SITE_URL=http://109.196.103.12
     expose:
       - "3000"
     depends_on:

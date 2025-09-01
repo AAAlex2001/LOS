@@ -3,8 +3,11 @@ set -euo pipefail
 
 mkdir -p /app/data /app/media /app/staticfiles
 
-# Apply committed migrations only
-python manage.py migrate --noinput
+# Создаем миграции если нужно
+python manage.py makemigrations
+
+# Применяем миграции
+python manage.py migrate
 
 exec "$@"
 
