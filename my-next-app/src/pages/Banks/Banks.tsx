@@ -16,7 +16,7 @@ type BankData = {
   address_link: string | null;
   contacts: string;
   email: string;
-  image: string;
+  image_url: string;
   order: number;
 };
 
@@ -60,7 +60,7 @@ const Banks: React.FC = () => {
               <div key={bank.id} className={styles.buildingCard}>
                 {/* Изображение (логотип банка) */}
                 <div className={styles.imageContainer}>
-                  <img src={bank.image} alt={bank.name} className={styles.buildingImage} />
+                  <img src={`${API_BASE}${bank.image_url}`} alt={bank.name} className={styles.buildingImage} />
                 </div>
 
                 {/* Информация */}

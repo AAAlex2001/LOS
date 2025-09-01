@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Link from 'next/link';
@@ -59,15 +59,12 @@ const HomePage = () => {
     load();
   }, []);
 
-  const sliderItems = useMemo(() => (
-    data?.slider_items?.map(i => ({ type: i.media_type, src: i.url })) || []
-  ), [data]);
+  const sliderItems = data?.slider_items?.map(i => ({ type: i.media_type, src: i.url })) || [];
+  const cities = data?.cities || [];
+  const activities = data?.activities || [];
+  const actionButtons = data?.action_buttons || [];
 
-  const cities = useMemo(() => data?.cities || [], [data]);
-  const activities = useMemo(() => data?.activities || [], [data]);
-  const actionButtons = useMemo(() => (data?.action_buttons || []), [data]);
-
-  const tabsByGroup = useMemo(() => {
+  const tabsByGroup = (() => {
     const tabs = data?.tabs || [];
     return {
       about: tabs.filter(t => t.group === 'about').sort((a,b)=>a.order-b.order),
@@ -75,14 +72,14 @@ const HomePage = () => {
       booking: tabs.filter(t => t.group === 'booking').sort((a,b)=>a.order-b.order),
       essentials: tabs.filter(t => t.group === 'essentials').sort((a,b)=>a.order-b.order),
     };
-  }, [data]);
+  })();
 
-  const popupData = useMemo(() => ({
+  const popupData = {
     about: (data?.popup_items || []).filter(i => i.group === 'about').map(i => ({ label: i.label, href: i.href })),
     activities: (data?.popup_items || []).filter(i => i.group === 'activities').map(i => ({ label: i.label, href: i.href })),
     booking: (data?.popup_items || []).filter(i => i.group === 'booking').map(i => ({ label: i.label, href: i.href })),
     essentials: (data?.popup_items || []).filter(i => i.group === 'essentials').map(i => ({ label: i.label, href: i.href })),
-  }), [data]);
+  };
 
   if (!data) return null; // не рендерим до загрузки
 
