@@ -138,6 +138,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  gap: 8px;
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
@@ -246,6 +247,10 @@
     font-size: 22px;
     line-height: 27px;
   }
+  
+  .infoItem {
+    gap: 6px;
+  }
 }
 
 /* Tablet (769px - 899px) */
@@ -289,6 +294,10 @@
   .infoLabel, .infoValue {
     font-size: 20px;
     line-height: 25px;
+  }
+  
+  .infoItem {
+    gap: 6px;
   }
 }
 
@@ -339,6 +348,10 @@
   .infoLabel, .infoValue {
     font-size: 18px;
     line-height: 23px;
+  }
+  
+  .infoItem {
+    gap: 5px;
   }
 }
 
@@ -394,6 +407,10 @@
   .infoBlock {
     gap: 2px;
   }
+  
+  .infoItem {
+    gap: 4px;
+  }
 }
 
 /* Mobile Small (< 320px) */
@@ -438,6 +455,10 @@
   .infoLabel, .infoValue {
     font-size: 14px;
     line-height: 18px;
+  }
+  
+  .infoItem {
+    gap: 3px;
   }
 }
 
