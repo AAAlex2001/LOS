@@ -8,6 +8,7 @@ import Footer from '@/components/Footer/Footer';
 import Popup from '@/components/Popup/Popup';
 import AdSlider from '@/components/AdSlider/AdSlider';
 import styles from './Home.module.scss';
+import config from '@/config';
 
 type HomeData = {
   hero_text_primary: string;
@@ -38,7 +39,7 @@ type HomeData = {
   tabs?: { group: 'about' | 'activities' | 'booking' | 'essentials'; label: string; href?: string; order: number }[];
 };
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || '';
+const API_BASE = config.API_BASE;
 
 const HomePage = () => {
   const [activePopup, setActivePopup] = useState<string | null>(null);

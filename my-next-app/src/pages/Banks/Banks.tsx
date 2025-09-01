@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './Banks.module.scss';
+import config from '@/config';
 
-// Типы данных
-interface Bank {
+type BankData = {
   id: number;
   name: string;
   name_link: string;
@@ -18,57 +18,28 @@ interface Bank {
   email: string;
   image: string;
   order: number;
-}
+};
+
+const API_BASE = config.API_BASE;
 
 const Banks: React.FC = () => {
-  const [banks, setBanks] = useState<Bank[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<BankData[]>([]);
 
   useEffect(() => {
-    const fetchBanks = async () => {
+    const load = async () => {
       try {
-        setLoading(true);
-        // Исправляем URL - используем /list/ для получения списка банков
-        const response = await fetch('/api/cms/banks/list/');
-        if (!response.ok) {
-          throw new Error('Ошибка загрузки данных');
-        }
-        const data = await response.json();
-        setBanks(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Произошла ошибка');
-      } finally {
-        setLoading(false);
+        const res = await fetch(`${API_BASE}/api/banks/list/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load banks');
+        const json = await res.json();
+        setData(json);
+      } catch (e) {
+        console.error(e);
       }
     };
-
-    fetchBanks();
+    load();
   }, []);
 
-  if (loading) {
-    return (
-      <div className={styles.pageWrapper}>
-        <Header />
-        <main className={styles.mainContent}>
-          <div className={styles.loading}>Загрузка...</div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className={styles.pageWrapper}>
-        <Header />
-        <main className={styles.mainContent}>
-          <div className={styles.error}>Ошибка: {error}</div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
+  if (!data) return null; // не рендерим до загрузки
 
   return (
     <div className={styles.pageWrapper}>
@@ -82,10 +53,10 @@ const Banks: React.FC = () => {
 
         {/* Карточки банков */}
         <section className={styles.cardsSection}>
-          {banks.length === 0 ? (
+          {data.length === 0 ? (
             <div className={styles.noData}>Нет данных о банках</div>
           ) : (
-            banks.map((bank) => (
+            data.map((bank) => (
               <div key={bank.id} className={styles.buildingCard}>
                 {/* Изображение (логотип банка) */}
                 <div className={styles.imageContainer}>
