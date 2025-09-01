@@ -3,7 +3,7 @@ from django.utils.html import format_html
 
 from .models import ImageAsset
 
-
+# Регистрируем базовые модели
 @admin.register(ImageAsset)
 class ImageAssetAdmin(admin.ModelAdmin):
     """
@@ -22,4 +22,5 @@ class ImageAssetAdmin(admin.ModelAdmin):
     
     preview.short_description = "Предпросмотр"
 
-
+# Импортируем админ-классы из homepage модуля
+from .homepage.admin import HomePageAdmin
