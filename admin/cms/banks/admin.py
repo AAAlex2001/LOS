@@ -51,29 +51,5 @@ class BanksPageAdmin(admin.ModelAdmin):
     seo_preview.short_description = "SEO предпросмотр"
 
 
-@admin.register(Bank)
-class BankAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "order", "updated_at")
-    list_editable = ("order",)
-    search_fields = ("name", "email", "address")
-    list_filter = ("updated_at",)
-    readonly_fields = ("preview",)
-    
-    fieldsets = (
-        ("Основная информация", {
-            "fields": ("page", "name", "name_link", "image", "order")
-        }),
-        ("Контактная информация", {
-            "fields": ("contacts", "email", "address", "address_link")
-        }),
-        ("Дополнительно", {
-            "fields": ("working_hours", "preview")
-        }),
-    )
-
-    def preview(self, obj):
-        if obj and obj.image:
-            return format_html('<img src="{}" style="height:120px;" />', obj.image.url)
-        return "—"
-    
-    preview.short_description = "Предпросмотр логотипа"
+## ВАЖНО: Не регистрируем модель `Bank` отдельно,
+## чтобы она не отображалась в главном меню админки. Управление — только через inlines.

@@ -25,3 +25,4 @@ class ImageAssetAdmin(admin.ModelAdmin):
 from .homepage.admin import HomePageAdmin
 from .banks.admin import BanksPageAdmin
 from .history_and_culture.admin import HistoryAndCulturePageAdmin
+from .abkhazian_cuisine.admin import AbkhazianCuisinePageAdmin

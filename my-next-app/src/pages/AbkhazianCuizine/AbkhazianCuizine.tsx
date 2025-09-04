@@ -1,63 +1,104 @@
-import React from 'react';
-import Image from 'next/image';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
+import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './AbkhazianCuizine.module.scss';
+import config from '@/config';
+
+type CuisineSection = {
+  id: number;
+  title: string;
+  text: string;
+  order: number;
+};
+
+type MainDish = {
+  id: number;
+  name: string;
+  description: string;
+  order: number;
+};
+
+type CuisinePageData = {
+  main_title: string;
+  hero_image_url: string;
+  sections: CuisineSection[];
+  main_dishes: MainDish[];
+};
+
+const API_BASE = config.API_BASE;
 
 const AbkhazianCuizine = () => {
-  const sections = [
-    {
-      title: 'Уникальность абхазских блюд',
-      text: 'Абхазская кухня славится блюдами, такими как абыста, акуд, ачашь и другими, которые отличаются неповторимым вкусом благодаря традиционным специям. Это не просто еда, а часть древней культуры застолья, где важны место, время и компания.',
-    },
-    {
-      title: 'Церемониал застолья',
-      text: 'В Абхазии застолье — это ритуал. Очерёдность подачи блюд и тостов имеет глубокое значение. Абхазская трапеза — это история, связанная с традициями и гостеприимством, а не просто набор рецептов.',
-    },
-    {
-      title: 'Апацха: сердце абхазской кухи',
-      text: 'Апацха — традиционный ресторан в виде деревянных домиков с очагом. Здесь подают мамалыгу, сыр, зелень, соленья и акуд без меню — это основа современной абхазской кухни. Блюда готовят на открытом огне, сохраняя местный колорит.',
-    },
-    {
-      title: 'Основные блюда: мамалыга, мясо, фасоль',
-      text: 'Мамалыга — кукурузная каша, мясо и фасоль составляют основу кухни. Зимой блюда раскрываются по‑особенному: копчёное мясо, поджаренное на огне, и мамалыга с тающим сыром создают уникальный вкус.',
-    },
-    {
-      title: 'Натуральность продуктов',
-      text: 'Абхазская кухня использует только натуральные ингредиенты. Сыр для мамалыги должен быть домашним, чтобы выделялся жир, а акуд из фасоли подаётся с аджикой. Соленья и ачашь (хачапур) с обильным сыром дополняют трапезу.',
-    },
-    {
-      title: 'Мясные традиции',
-      text: 'Копчёное или жареное мясо, особенно козлятина, и курица по‑абхазски с аджикой — неотъемлемая часть стола. Вино или чача сопровождают застолье, но в меру, сохраняя атмосферу душевности.',
-    },
-    {
-      title: 'Утро после застолья',
-      text: 'На утро после обильной трапезы спасает асыдзбал — подлива из зеленой алычи. Она восстанавливает баланс витаминов и помогает справиться с похмельем, подаваясь к любому столу.',
-    },
-    {
-      title: 'Настоящее гостеприимство',
-      text: 'Истинная абхазская кухня раскрывается в деревенских апацхах или в гостях у местных жителей, где нет коммерции. Здесь можно почувствовать подлинный вкус жизни по‑абхазски, не зависящий от денег.',
-    },
-  ];
+  const [data, setData] = useState<CuisinePageData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/abkhazian-cuisine/page/content/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load');
+        const json = await res.json();
+        setData(json);
+      } catch (e) {
+        console.error('Error loading cuisine data:', e);
+        setData(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Ошибка загрузки данных</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Источник изображения (как в HistoryAndCulture: API возвращает путь без /media/)
+  const heroImageSrc = data.hero_image_url
+    ? `${API_BASE}/media/${data.hero_image_url}`
+    : '';
 
   return (
     <div className={styles.pageWrapper}>
       <Header />
       <main className={styles.mainContent}>
-        <h1 className={styles.mainTitle}>Абхазская кухня</h1>
-        <div className={styles.heroImageContainer}>
-          <Image
-            src="/assets/abhazskayaKuhnya.jpg"
-            alt="Абхазская кухня"
-            width={680}
-            height={680}
-            className={styles.heroImage}
-          />
-        </div>
+        <h1 className={styles.mainTitle}>{data.main_title || 'Абхазская кухня'}</h1>
+        {heroImageSrc && (
+          <div className={styles.heroImageContainer}>
+            <img
+              src={heroImageSrc}
+              alt="Абхазская кухня"
+              className={styles.heroImage}
+            />
+          </div>
+        )}
 
         <article className={styles.textContent}>
-          {sections.map((section, index) => (
-            <section key={index} className={styles.textBlock}>
+          {data.sections.map((section) => (
+            <section key={section.id} className={styles.textBlock}>
               <h2 className={styles.sectionTitle}>{section.title}</h2>
               <p>{section.text}</p>
             </section>
@@ -66,24 +107,22 @@ const AbkhazianCuizine = () => {
           <section className={styles.textBlock}>
             <h2 className={styles.sectionTitle}>Основные блюда и их особенности</h2>
             <div className={styles.mainDishesList}>
-              <p><strong>Амгьал</strong> — лепешка из кукурузной муки с сыром;</p>
-              <p><strong>Ачапа</strong> — национальная абхазская закуска;</p>
-              <p><strong>Акуд</strong> — соус из фасоли с аджикой и специями;</p>
-              <p><strong>Аджика</strong> — абхазская острая приправа;</p>
-              <p>Нарезка из овощей и солений;</p>
-              <p><strong>Хачапур</strong> (нартовский; ачма) — самое известное блюдо из теста;</p>
-              <p><strong>Акуац</strong> — жаренное копченное мясо (свинина, говядина, буйволина);</p>
-              <p><strong>Аджьмажьы</strong> — козлятина (жарено-копченная; вареная);</p>
-              <p><strong>Ачырхал</strong> — блюдо, приготовляемое из листьев соленого кольраби с орехами;</p>
-              <p><strong>Ахул</strong> — специальным образом, приготовленный определенный вид капусты-кольраби;</p>
-              <p><strong>Акутыжь</strong> — вареная «Курица в аджике», которая отличается пикантной остротой, большим количеством зелени и специй;</p>
-              <p><strong>Ачьырка</strong> — квашеный топинамбур со специями;</p>
-              <p><strong>Аиладжь</strong> — традиционная абхазская каша с сыром (ашеилаца). Замешивается на основе отварной кукурузной муки мелкого помола, с кукурузной мукой и топленым сыром (ашеилаца). Блюдо принято подавать и есть горячим или теплым - так сохраняется его мягкая тягучая консистенция. Невероятно вкусно и сытно.</p>
+              {data.main_dishes && data.main_dishes.length > 0 ? (
+                data.main_dishes.map((dish, idx) => (
+                  <p key={dish.id}>
+                    <strong>{dish.name}</strong> — {dish.description}
+                    {idx < data.main_dishes.length - 1 ? ';' : '.'}
+                  </p>
+                ))
+              ) : (
+                <p>Нет данных о блюдах</p>
+              )}
             </div>
           </section>
         </article>
       </main>
       <Footer />
+      <ScrollToTop />
     </div>
   );
 };
