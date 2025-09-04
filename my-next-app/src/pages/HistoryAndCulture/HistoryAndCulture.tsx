@@ -1,9 +1,28 @@
 'use client';
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import Image from 'next/image';
 import styles from './HistoryAndCulture.module.scss';
+import config from '@/config';
+
+// Types for API data
+type HistorySection = {
+  id: number;
+  title: string;
+  content: string;
+  image_url: string;
+  order: number;
+};
+
+type CultureSection = {
+  id: number;
+  title: string;
+  content: string;
+  image_url: string;
+  order: number;
+};
+
+const API_BASE = config.API_BASE;
 
 // Reusable component for text sections to keep the code DRY
 const TextBlock = ({ title, children }: { title: string; children: React.ReactNode }) => (
@@ -14,9 +33,9 @@ const TextBlock = ({ title, children }: { title: string; children: React.ReactNo
 );
 
 // Reusable component for image sections
-const ImageBlock = ({ src, alt, width, height }: { src: string; alt: string; width: number; height: number }) => (
+const ImageBlock = ({ src, alt }: { src: string; alt: string }) => (
     <div className={styles.imageContainer}>
-        <Image src={src} alt={alt} width={width} height={height} className={styles.image} />
+        <img src={src} alt={alt} className={styles.image} />
     </div>
 );
 
@@ -24,12 +43,56 @@ const ImageBlock = ({ src, alt, width, height }: { src: string; alt: string; wid
 const HistoryAndCulture = () => {
   const historyRef = useRef<HTMLHeadingElement>(null);
   const cultureRef = useRef<HTMLHeadingElement>(null);
+  
+  const [historySections, setHistorySections] = useState<HistorySection[]>([]);
+  const [cultureSections, setCultureSections] = useState<CultureSection[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const scrollToSection = (ref: React.RefObject<HTMLElement | null>) => {
     if (ref.current) {
       ref.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        // Загружаем секции истории
+        const historyRes = await fetch(`${API_BASE}/api/history-and-culture/history-sections/`, { cache: 'no-store' });
+        if (historyRes.ok) {
+          const historyData = await historyRes.json();
+          setHistorySections(historyData);
+        }
+
+        // Загружаем секции культуры
+        const cultureRes = await fetch(`${API_BASE}/api/history-and-culture/culture-sections/`, { cache: 'no-store' });
+        if (cultureRes.ok) {
+          const cultureData = await cultureRes.json();
+          setCultureSections(cultureData);
+        }
+      } catch (error) {
+        console.error('Error loading data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <div style={{ textAlign: 'center', padding: '40px' }}>
+            Загрузка...
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.pageWrapper}>
@@ -54,107 +117,49 @@ const HistoryAndCulture = () => {
         
         <h2 id="history" ref={historyRef} className={styles.contentTitle}>История Абхазии</h2>
 
-        <ImageBlock src="/assets/abhazy1.jpg" alt="Абхазы" width={1000} height={796}/>
-        
-        <TextBlock title="Древняя Абхазия">
-            Первые поселения в Абхазии появились 35 тысяч лет назад в эпоху позднего палеолита. 
-            В мезолите (XII–VII тыс. до н.э.) люди жили в пещерах, занимались рыболовством и собирательством. 
-            В неолите (VI–IV тыс. до н.э.) началась обработка земли, приручение животных и производство глиняной посуды. 
-            В IV–III тыс. до н.э. освоили металлургию, а в III–II тыс. до н.э. возникла дольменная культура с каменными гробницами, 
-            особенно в районе села Отхара.
-        </TextBlock>
-
-        <TextBlock title="Первые города и греческая колонизация">
-            В VIII веке до н.э. греческие мореходы основали на черноморском побережье города: Диоскурию (Сухум), 
-            Питиунт (Пицунда), Гюэнос (Очамчыра). Эти города стали центрами ремёсел и торговли. Диоскуриада, 
-            называвшаяся местными Агуа, в IV–III вв. до н.э. объединила греков и местное население. 
-            В I веке н.э. римляне переименовали Диоскуриаду в Себастополис, начав римско-византийский период.
-        </TextBlock>
-
-        <TextBlock title="Раннее христианство">
-            В 55 году н.э. апостолы Симон Кананит и Андрей Первозванный принесли христианство в Абхазию. 
-            К III–IV векам в Питиунте сформировалась древнейшая христианская община Кавказа. 
-            В VI веке Абхазия вошла в состав Византийской империи, где началось развитие феодальных отношений и укрепление христианства. 
-            В VII веке построена Анакопийская крепость.
-        </TextBlock>
-
-        <ImageBlock src="/assets/abhazy2.jpg" alt="Абхазы" width={1000} height={798}/>
-        
-        <TextBlock title="Анакопийское сражение">
-            В 738 году арабы под предводительством Мервана Кру осадили Анакопию. 
-            Абхазы и картлийцы, укрывшиеся в крепости, выдержали осаду благодаря мощным укреплениям и эпидемии, поразившей арабское войско. 
-            Мерван отступил, не сумев захватить крепость.
-        </TextBlock>
-
-        <TextBlock title="Абхазское царство">
-            В конце VIII века сформировалось Абхазское царство, простиравшееся от Туапсе до Сурамского перевала. 
-            Леон II провозгласил себя царём, перенеся столицу в Кутаис. Царство процветало 200 лет, развивая экономику и культуру, 
-            но пришло в упадок после смерти Феодосия Слепого.
-        </TextBlock>
-
-        <TextBlock title="Российское покровительство">
-            В начале XIX века Абхазия вошла под покровительство России. В 1810 году князь Сефербей признал верховенство Российской империи.
-            После Кавказской войны (1864) Абхазское княжество было упразднено, а регион стал Сухумским округом.
-            В 1877–1878 годах махаджирство привело к массовому оттоку абхазов, изменив этнический состав региона.
-        </TextBlock>
-
-        <ImageBlock src="/assets/abhazy3.jpg" alt="Абхазы" width={1000} height={709}/>
-
-        <TextBlock title="Советский период">
-            В 1921 году Абхазия стала Советской Социалистической Республикой, но в 1931 году была преобразована в автономную республику в составе Грузинской ССР. 
-            В 1930-е годы началась ассимиляция и переселение грузин в Абхазию. Несмотря на репрессии, Абхазия развивалась как курортный регион. 
-            В годы Великой Отечественной войны абхазы героически сражались, 22 человека получили звание Героя Советского Союза.
-        </TextBlock>
-
-        <TextBlock title="Борьба и независимость">
-            В конце 1980-х годов Абхазия стремилась к повышению статуса. В 1992 году Грузия начала войну против Абхазии, 
-            но 30 сентября 1993 года Абхазия освободила свою территорию. В 1994 году принята Конституция, провозгласившая Абхазию суверенным государством. 
-            В 1999 году референдум подтвердил независимость.
-        </TextBlock>
-
-        <TextBlock title="Современная Абхазия">
-            В 2008 году Россия признала независимость Абхазии, за ней последовали Никарагуа, Венесуэла, Науру и Сирия. 
-            В 2014 году подписан Договор о союзничестве с Россией, укрепивший экономические и оборонные связи. 
-            Сегодня Абхазия развивается как суверенное государство, сохраняя культурное и экономическое сотрудничество с Россией.
-        </TextBlock>
+        {/* Рендерим секции истории из API */}
+        {historySections.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '40px' }}>
+            Нет данных о секциях истории
+          </div>
+        ) : (
+          historySections.map((section) => (
+            <div key={section.id}>
+              {section.image_url && (
+                <ImageBlock 
+                  src={`${API_BASE}/media/${section.image_url}`} 
+                  alt={section.title}
+                />
+              )}
+              <TextBlock title={section.title}>
+                {section.content}
+              </TextBlock>
+            </div>
+          ))
+        )}
 
         <h2 id="culture" ref={cultureRef} className={`${styles.contentTitle} ${styles.spacedTitle}`}>Культура Абхазии</h2>
 
-        <ImageBlock src="/assets/abhazy4.jpg" alt="Абхазы" width={1000} height={521}/>
-
-        <TextBlock title="Основы культуры">
-            Абхазы, коренные жители Абхазии, создали уникальную культуру, обусловленную мягким климатом и богатой природой. 
-            Основные занятия — земледелие, скотоводство, охота, рыболовство и ремесла. Военные навыки и оружейное искусство развивались для защиты от врагов. 
-            В основе абхазской идентичности лежит этический кодекс «апсуара» — свод обычаев, ценностей и национального самосознания.
-        </TextBlock>
-        
-        <TextBlock title="Язык и литература">
-            Абхазский язык, государственный в Республике Абхазия, относится к абхазо-адыгской группе. 
-            В XIX веке П.К. Услар создал грамматику и алфавит на основе русской графики. Основоположник абхазской литературы — Д.И. Гулиа, 
-            автор первой поэмы 1913 года. В советский период язык обогатился диалектами и заимствованиями, сформировав стили: деловой, научный, художественный. 
-            Устное творчество и работы писателей, таких как Самсон Чанба, Баграт Шинкуба и Алексей Гогуа, сыграли ключевую роль.
-        </TextBlock>
-
-        <TextBlock title="Фольклор и эпос">
-            Абхазский фольклор богат песнями, танцами, мифами и преданиями. Народные песни сочетают мелодию и речитатив, 
-            включая древние языческие, трудовые и магические мотивы. Характерно многоголосие, где запевале вторят низкие голоса. 
-            Женские песни ограничиваются колыбельными и причитаниями. Нартский эпос, особенно сказания о ста братьях и Сатаней-Гуаше, 
-            и мифы об Абраскиле, герое-богоборце, составляют основу эпического наследия.
-        </TextBlock>
-
-        <ImageBlock src="/assets/abhazy5.jpg" alt="Абхазы" width={1000} height={564}/>
-
-        <TextBlock title="Музыка и Танцы">
-            Музыкальные инструенты абхазов включают струнные (апхярца, аюмаа), духовые (ачарпын, абыкь) и ударные (адаул, трещотки). 
-            Народные танцы — популярный вид искусства, включающий фольклорные, обрядовые и кавказские танцы. 
-            Профессиональные ансамбли и детские студии сохраняют традиции.
-        </TextBlock>
-
-        <TextBlock title="Одежда и традиции">
-            Абхазская одежда делится на будничную, праздничную и ритуальную. Мужская черкеска с буркой, башлыком и чувяками подчёркивает статус всадника. 
-            Женская одежда включает платье, кафтанчик, пояс и шапку, часто украшенные искусной вышивкой. 
-            Посох алабашьа — символ опоры и ораторского мастерства.
-        </TextBlock>
+        {/* Рендерим секции культуры из API */}
+        {cultureSections.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '40px' }}>
+            Нет данных о секциях культуры
+          </div>
+        ) : (
+          cultureSections.map((section) => (
+            <div key={section.id}>
+              {section.image_url && (
+                <ImageBlock 
+                  src={`${API_BASE}/media/${section.image_url}`} 
+                  alt={section.title}
+                />
+              )}
+              <TextBlock title={section.title}>
+                {section.content}
+              </TextBlock>
+            </div>
+          ))
+        )}
 
       </main>
       <Footer />

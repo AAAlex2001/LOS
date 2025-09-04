@@ -7,9 +7,19 @@ class CmsConfig(AppConfig):
     verbose_name = 'CMS'
 
     def ready(self):
-        # Импортируем модели из homepage модуля
+        # Импортируем модели из модулей
         try:
             from . import homepage  # noqa
+        except ImportError:
+            pass
+        
+        try:
+            from . import banks  # noqa
+        except ImportError:
+            pass
+            
+        try:
+            from . import history_and_culture  # noqa
         except ImportError:
             pass
 
