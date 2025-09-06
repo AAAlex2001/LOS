@@ -22,5 +22,15 @@ class CmsConfig(AppConfig):
             from . import history_and_culture  # noqa
         except ImportError:
             pass
+            
+        try:
+            from . import abkhazian_cuisine  # noqa
+        except ImportError:
+            pass
+            
+        try:
+            from . import abkhazian_customs  # noqa
+        except ImportError:
+            pass
 
 
