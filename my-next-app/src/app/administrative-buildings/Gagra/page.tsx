@@ -1,4 +1,4 @@
-import AdministrativeBuildingsGagra from '@/pages/Cities/administrative buildings/Gagra/AdministrativeBuildingsGagra';
+import AdministrativeBuildingsGagra from '@/pages/Cities/administrative-buildings/Gagra/AdministrativeBuildingsGagra';
 import { FC } from 'react';
 
 const AdministrativeBuildingsGagraPage: FC = () => {

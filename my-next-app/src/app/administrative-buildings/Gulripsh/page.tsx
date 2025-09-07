@@ -1,4 +1,4 @@
-import AdministrativeBuildingsGulripsh from '@/pages/Cities/administrative buildings/Gulripsh/AdministrativeBuildingsGulripsh';
+import AdministrativeBuildingsGulripsh from '@/pages/Cities/administrative-buildings/Gulripsh/AdministrativeBuildingsGulripsh';
 import { FC } from 'react';
 
 const AdministrativeBuildingsGulripshPage: FC = () => {

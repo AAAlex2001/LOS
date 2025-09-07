@@ -1,4 +1,4 @@
-import AdministrativeBuildingsGal from '@/pages/Cities/administrative buildings/Gal/AdministrativeBuildingsGal';
+import AdministrativeBuildingsGal from '@/pages/Cities/administrative-buildings/Gal/AdministrativeBuildingsGal';
 import { FC } from 'react';
 
 const AdministrativeBuildingsGalPage: FC = () => {
