@@ -1,34 +1,26 @@
-'use client';
+"use client";
 
 import React from 'react';
-import Image from 'next/image';
 import styles from './YourDoctorVetClinics.module.scss';
+import config from '@/config';
 
-// Данные ветеринарных клиник
-const vetClinics = [
-  {
-    id: 1,
-    name: 'Ветеринарная клиника «АлаДу»',
-    nameLink: null,
-    workingHours: 'с 11:00 до 15:00',
-    address: 'г. Сухум, р-н Турбаза, ул. Джелия, 5',
-    addressLink: 'https://2gis.ru/abkhazia/geo/70030076604499430',
-    contacts: '+7 (940) 951-05-09',
-    image: '/assets/YourDoctor_Vet1.jpg'
-  },
-  {
-    id: 2,
-    name: 'Ветеринарная клиника «Солёный Пёс»',
-    nameLink: null,
-    workingHours: 'с 09:00 до 18:00',
-    address: 'г. Сухум, Имама Шамиля, 56',
-    addressLink: 'https://2gis.ru/abkhazia/geo/70030076604632646',
-    contacts: '+7 (940) 722-81-54',
-    image: '/assets/YourDoctor_Vet2.jpg'
-  },
-];
+type VetClinic = {
+  id: number;
+  name: string;
+  name_link: string;
+  working_hours: string;
+  address: string;
+  address_link: string;
+  contacts: string;
+  image_url: string;
+  order: number;
+};
 
-const YourDoctorVetClinics: React.FC = () => {
+const API_BASE = config.API_BASE;
+
+type Props = { vet_clinics: VetClinic[] };
+
+const YourDoctorVetClinics: React.FC<Props> = ({ vet_clinics }) => {
   return (
     <div className={styles.vetWrapper}>
       {/* Заголовок */}
@@ -38,23 +30,25 @@ const YourDoctorVetClinics: React.FC = () => {
 
       {/* Карточки ветеринарных клиник */}
       <section className={styles.cardsSection}>
-        {vetClinics.map((clinic) => (
+        {vet_clinics?.map((clinic: VetClinic) => (
           <div key={clinic.id} className={styles.vetCard}>
             {/* Изображение */}
             <div className={styles.imageContainer}>
-              <Image
-                src={clinic.image}
-                alt={clinic.name}
-                fill
-                className={styles.vetImage}
-              />
+              {clinic.image_url && (
+                <img
+                  src={`${API_BASE}/media/${clinic.image_url}`}
+                  alt={clinic.name}
+                  className={styles.vetImage}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              )}
             </div>
 
             {/* Информация */}
             <div className={styles.infoContainer}>
               <h2 className={styles.vetName}>
-                {clinic.nameLink ? (
-                  <a href={clinic.nameLink} target="_blank" rel="noopener noreferrer">
+                {clinic.name_link ? (
+                  <a href={clinic.name_link} target="_blank" rel="noopener noreferrer">
                     {clinic.name}
                   </a>
                 ) : (
@@ -63,18 +57,18 @@ const YourDoctorVetClinics: React.FC = () => {
               </h2>
               
               <div className={styles.infoBlock}>
-                {clinic.workingHours && (
+                {clinic.working_hours && (
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Режим работы:</span>
-                    <span className={styles.infoValue}>{clinic.workingHours}</span>
+                    <span className={styles.infoValue}>{clinic.working_hours}</span>
                   </div>
                 )}
                 
                 <div className={styles.infoItem}>
                   <span className={styles.infoLabel}>Адрес:</span>
-                  <span className={`${styles.infoValue} ${clinic.addressLink ? styles.addressLink : ''}`}>
-                    {clinic.addressLink ? (
-                      <a href={clinic.addressLink} target="_blank" rel="noopener noreferrer">{clinic.address}</a>
+                  <span className={`${styles.infoValue} ${clinic.address_link ? styles.addressLink : ''}`}>
+                    {clinic.address_link ? (
+                      <a href={clinic.address_link} target="_blank" rel="noopener noreferrer">{clinic.address}</a>
                     ) : (
                       clinic.address
                     )}

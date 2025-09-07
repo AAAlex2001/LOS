@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
@@ -12,6 +11,42 @@ import YourDoctorPrivateClinics from './YourDoctorPrivateClinics';
 import YourDoctorDentistry from './YourDoctorDentistry';
 import YourDoctorVetClinics from './YourDoctorVetClinics';
 import YourDoctorDoctors from './YourDoctorDoctors';
+import config from '@/config';
+
+type Hospital = {
+  id: number;
+  name: string;
+  name_link: string;
+  working_hours: string;
+  address: string;
+  address_link: string;
+  contacts: string;
+  image_url: string;
+  order: number;
+};
+
+type PrivateClinic = Hospital;
+type Dentistry = Hospital;
+type VetClinic = Hospital;
+
+type DoctorsGroup = {
+  id: number;
+  hospital_name: string;
+  doctors: string[];
+  order: number;
+};
+
+type YourDoctorPageData = {
+  hospitals: Hospital[];
+  private_clinics: PrivateClinic[];
+  dentistries: Dentistry[];
+  vet_clinics: VetClinic[];
+  doctors_groups: DoctorsGroup[];
+  logo_image_url: string;
+  hospitals_hero_image_url: string;
+};
+
+const API_BASE = config.API_BASE;
 
 const YourDoctor: React.FC = () => {
   const tabs = [
@@ -31,21 +66,67 @@ const YourDoctor: React.FC = () => {
     }
   };
 
+  const [pageData, setPageData] = useState<YourDoctorPageData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/your-doctor/page/content/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load YourDoctor');
+        const json = (await res.json()) as YourDoctorPageData;
+        setPageData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !pageData) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <div className={styles.logo}>
-            <Image
-              src="/assets/YourDoctor_logo.png"
-              alt="Ваш доктор логотип"
-              width={100}
-              height={100}
-              className={styles.logoImage}
-            />
-          </div>
+          {pageData.logo_image_url && (
+            <div className={styles.logo}>
+              <img
+                src={`${API_BASE}/media/${pageData.logo_image_url}`}
+                alt="Ваш доктор логотип"
+                className={styles.logoImage}
+                style={{ width: 100, height: 100 }}
+              />
+            </div>
+          )}
           <div className={styles.titleTextContainer}>
             <h1 className={styles.mainTitle}>Ваш доктор</h1>
           </div>
@@ -73,28 +154,28 @@ const YourDoctor: React.FC = () => {
           >
             {tab.id === 'hospitals' ? (
               <>
-                <div className={styles.imageCard}>
-                  <Image
-                    src="/assets/city_sukhum.jpg"
-                    alt="Сухум"
-                    layout="responsive"
-                    width={1872}
-                    height={1248}
-                    className={styles.cardImage}
-                  />
-                </div>
+                {pageData.hospitals_hero_image_url && (
+                  <div className={styles.imageCard}>
+                    <img
+                      src={`${API_BASE}/media/${pageData.hospitals_hero_image_url}`}
+                      alt="Больницы"
+                      className={styles.cardImage}
+                      style={{ background: 'transparent', width: '100%', height: 'auto' }}
+                    />
+                  </div>
+                )}
                 <div id="hospitals-content">
-                  <YourDoctorHospitals />
+                  <YourDoctorHospitals hospitals={pageData.hospitals} />
                 </div>
               </>
             ) : tab.id === 'private-clinics' ? (
-              <YourDoctorPrivateClinics />
+              <YourDoctorPrivateClinics private_clinics={pageData.private_clinics} />
             ) : tab.id === 'dentistry' ? (
-              <YourDoctorDentistry />
+              <YourDoctorDentistry dentistries={pageData.dentistries} />
             ) : tab.id === 'doctors' ? (
-              <YourDoctorDoctors />
+              <YourDoctorDoctors doctors_groups={pageData.doctors_groups} />
             ) : tab.id === 'vet-clinics' ? (
-              <YourDoctorVetClinics />
+              <YourDoctorVetClinics vet_clinics={pageData.vet_clinics} />
             ) : (
               <div style={{ minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <h2>Контент для раздела "{tab.name}" будет здесь.</h2>

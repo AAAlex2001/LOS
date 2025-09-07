@@ -16,7 +16,8 @@ class BankSerializer(serializers.ModelSerializer):
     def get_image_url(self, obj: Bank) -> str:
         if not obj.image:
             return ""
-        return obj.image.url
+        # Возвращаем относительный путь, без /media/, для унификации с другими модулями
+        return obj.image.url.replace('/media/', '')
 
 
 class BanksPageSerializer(serializers.ModelSerializer):

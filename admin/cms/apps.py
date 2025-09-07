@@ -33,4 +33,13 @@ class CmsConfig(AppConfig):
         except ImportError:
             pass
 
+        try:
+            from . import taxi  # noqa
+        except ImportError:
+            pass
+
+        try:
+            from . import your_doctor  # noqa
+        except ImportError:
+            pass
 

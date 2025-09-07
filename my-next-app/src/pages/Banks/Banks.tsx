@@ -13,33 +13,64 @@ type BankData = {
   name_link: string;
   working_hours: string;
   address: string;
-  address_link: string | null;
+  address_link: string;
   contacts: string;
   email: string;
   image_url: string;
   order: number;
 };
 
+type BanksPageData = {
+  banks: BankData[];
+};
+
 const API_BASE = config.API_BASE;
 
 const Banks: React.FC = () => {
-  const [data, setData] = useState<BankData[]>([]);
+  const [pageData, setPageData] = useState<BanksPageData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/banks/list/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/banks/page/content/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load banks');
-        const json = await res.json();
-        setData(json);
+        const json = (await res.json()) as BanksPageData;
+        setPageData(json);
       } catch (e) {
         console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
       }
     };
     load();
   }, []);
 
-  if (!data) return null; // не рендерим до загрузки
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !pageData) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.pageWrapper}>
@@ -53,14 +84,14 @@ const Banks: React.FC = () => {
 
         {/* Карточки банков */}
         <section className={styles.cardsSection}>
-          {data.length === 0 ? (
+          {(!pageData.banks || pageData.banks.length === 0) ? (
             <div className={styles.noData}>Нет данных о банках</div>
           ) : (
-            data.map((bank) => (
+            pageData.banks.map((bank) => (
               <div key={bank.id} className={styles.buildingCard}>
                 {/* Изображение (логотип банка) */}
                 <div className={styles.imageContainer}>
-                  <img src={`${API_BASE}${bank.image_url}`} alt={bank.name} className={styles.buildingImage} />
+                  <img src={`${API_BASE}/media/${bank.image_url}`} alt={bank.name} className={styles.buildingImage} />
                 </div>
 
                 {/* Информация */}

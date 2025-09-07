@@ -1,66 +1,84 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './Taxi.module.scss';
+import config from '@/config';
 
-interface TaxiCard {
+// Types that reflect CMS API
+type TaxiService = {
   id: number;
-  img?: string;
-  title: string;
-  workingHours: string;
+  name: string;
+  working_hours: string;
   phones: string[];
   site: string;
-}
+  image_url: string;
+  order: number;
+};
 
-const taxiServices: TaxiCard[] = [
-  {
-    id: 1,
-    img: '/assets/Taxi1.svg',
-    title: 'Фортуна Такси',
-    workingHours: 'круглосуточно',
-    phones: ['+79409240024 (звонки и WhatsApp)', '+79407240024'],
-    site: 'https://fortuna.abkhazia.su/',
-  },
-  {
-    id: 2,
-    img: '/assets/Taxi2.svg',
-    title: 'GT Abkhazia',
-    workingHours: 'не указано',
-    phones: ['Абхазия', '+7 (840) 22-333-22', 'Трансфер из Сочи', '+7 (862) 225-74-20'],
-    site: 'https://abhtaxi.ru/contacts/',
-  },
-  {
-    id: 3,
-    img: '/assets/Taxi3.svg',
-    title: 'А-ТАКСИ',
-    workingHours: 'круглосуточно',
-    phones: ['+7 (940) 903-1-903', '+7(940) 703-1-703 (WhatsApp)'],
-    site: 'https://abhtaxi.ru/contacts/',
-  },
-  {
-    id: 4,
-    img: '/assets/Taxi4.svg',
-    title: 'Такси GARUDA',
-    workingHours: 'круглосуточно',
-    phones: ['+7 940 999 00 00 / +7 940 777 00 00', '+7 940 996 00 00 / +7 940 776 00 00'],
-    site: 'https://abhtaxi.ru/contacts/',
-  },
-  {
-    id: 5,
-    img: '/assets/Taxi5.svg',
-    title: 'RED Такси',
-    workingHours: 'круглосуточно',
-    phones: ['+7 (940) 700-00-00', '7000'],
-    site: 'https://www.redtaxi.biz/',
-  },
-];
+type TaxiPageData = {
+  services: TaxiService[];
+  intro_text: string;
+  hero_image_url: string;
+};
 
-const topRowServices = taxiServices.slice(0, 3);
-const bottomRowServices = taxiServices.slice(3);
+const API_BASE = config.API_BASE;
 
 const Taxi: React.FC = () => {
+  const [pageData, setPageData] = useState<TaxiPageData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/taxi/page/content/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load taxi');
+        const json = (await res.json()) as TaxiPageData;
+        setPageData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  const { topRowServices, bottomRowServices } = useMemo(() => {
+    const list = pageData?.services ?? [];
+    return {
+      topRowServices: list.slice(0, 3),
+      bottomRowServices: list.slice(3),
+    };
+  }, [pageData]);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !pageData) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
@@ -68,11 +86,18 @@ const Taxi: React.FC = () => {
         <h1 className={styles.mainTitle}>Такси</h1>
         
         <div className={styles.fullWidthSection}>
-          <div className={styles.backgroundImageSection}>
+          <div
+            className={styles.backgroundImageSection}
+            style={pageData.hero_image_url ? {
+              backgroundImage: `url(${API_BASE}/media/${pageData.hero_image_url})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            } : undefined}
+          >
             <div className={styles.introOverlay}>
-              <p className={styles.introText}>
-                Мы собрали для вас лучшие такси — просто выберите!
-                Круглосуточно во всех городах Абхазии.
+              <p className={styles.introText} style={{ whiteSpace: 'pre-line' }}>
+                {pageData.intro_text || 'Вводный текст не настроен'}
               </p>
             </div>
           </div>
@@ -82,18 +107,19 @@ const Taxi: React.FC = () => {
           <div className={styles.row}>
             {topRowServices.map((taxi) => (
               <article key={taxi.id} className={styles.card}>
-                {taxi.img && (
+                {taxi.image_url && (
                   <img
                     className={styles.cardImg}
-                    src={taxi.img}
+                    src={`${API_BASE}/media/${taxi.image_url}`}
                     alt="taxi service logo"
+                    style={{ background: 'transparent' }}
                   />
                 )}
                 <div className={styles.cardBody}>
                   <a href={taxi.site} className={styles.cardTitle} target="_blank" rel="noopener noreferrer">
-                    {taxi.title}
+                    {taxi.name}
                   </a>
-                  <p className={styles.workingHours}>Время работы: {taxi.workingHours}</p>
+                  <p className={styles.workingHours}>Время работы: {taxi.working_hours}</p>
                   <div className={styles.phoneSection}>
                     <p className={styles.orderLabel}>Заказать такси:</p>
                     <div className={styles.phoneList}>
@@ -109,18 +135,19 @@ const Taxi: React.FC = () => {
           <div className={styles.row}>
             {bottomRowServices.map((taxi) => (
               <article key={taxi.id} className={styles.card}>
-                {taxi.img && (
+                {taxi.image_url && (
                   <img
                     className={styles.cardImg}
-                    src={taxi.img}
+                    src={`${API_BASE}/media/${taxi.image_url}`}
                     alt="taxi service logo"
+                    style={{ background: 'transparent' }}
                   />
                 )}
                 <div className={styles.cardBody}>
                   <a href={taxi.site} className={styles.cardTitle} target="_blank" rel="noopener noreferrer">
-                    {taxi.title}
+                    {taxi.name}
                   </a>
-                  <p className={styles.workingHours}>Время работы: {taxi.workingHours}</p>
+                  <p className={styles.workingHours}>Время работы: {taxi.working_hours}</p>
                   <div className={styles.phoneSection}>
                     <p className={styles.orderLabel}>Заказать такси:</p>
                     <div className={styles.phoneList}>
