@@ -21,24 +21,25 @@ type Building = {
   order: number;
 };
 
-type PageData = {
-  cities: City[];
+type CityPageData = {
+  title: string;
+  city?: City;
   buildings: Building[];
 };
 
 const API_BASE = config.API_BASE;
 
 const AdministrativeBuildingsGagra: React.FC = () => {
-  const [data, setData] = React.useState<PageData | null>(null);
+  const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/administrative-buildings/page/content/`, { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to load administrative buildings');
-        const json = (await res.json()) as PageData;
+        const res = await fetch(`${API_BASE}/api/administrative-buildings/page/city/${encodeURIComponent('Гагра')}/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load administrative buildings city');
+        const json = (await res.json()) as CityPageData;
         setData(json);
       } catch (e) {
         console.error(e);
@@ -49,9 +50,8 @@ const AdministrativeBuildingsGagra: React.FC = () => {
     };
     load();
   }, []);
-
-  const gagra = data?.cities.find(c => c.name.toLowerCase().includes('гагр'));
-  const buildings = (data?.buildings || []).filter(b => b.city === (gagra?.id || -1));
+  
+  const buildings = data?.buildings || [];
 
   if (loading) {
     return (
@@ -83,7 +83,7 @@ const AdministrativeBuildingsGagra: React.FC = () => {
       <main className={styles.mainContent}>
         {/* Заголовок */}
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{gagra?.title || 'Гагра: административные здания, правоохранительный блок'}</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Гагра: административные здания, правоохранительный блок'}</h1>
         </section>
 
         {/* Карточки зданий */}
