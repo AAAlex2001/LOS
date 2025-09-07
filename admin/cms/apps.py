@@ -43,3 +43,8 @@ class CmsConfig(AppConfig):
         except ImportError:
             pass
 
+        try:
+            from . import administrative_buildings  # noqa
+        except ImportError:
+            pass
+

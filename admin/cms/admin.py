@@ -29,3 +29,4 @@ from .abkhazian_cuisine.admin import AbkhazianCuisinePageAdmin
 from .abkhazian_customs.admin import AbkhazianCustomsPageAdmin
 from .taxi.admin import TaxiPageAdmin
 from .your_doctor.admin import YourDoctorPageAdmin
+from .administrative_buildings.admin import AdministrativeBuildingsPageAdmin

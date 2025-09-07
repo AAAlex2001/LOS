@@ -8,6 +8,7 @@ urlpatterns = [
     path("abkhazian-customs/", include("cms.abkhazian_customs.urls")),
     path("taxi/", include("cms.taxi.urls")),
     path("your-doctor/", include("cms.your_doctor.urls")),
+    path("administrative-buildings/", include("cms.administrative_buildings.urls")),
 ]
 
 
