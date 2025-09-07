@@ -48,3 +48,8 @@ class CmsConfig(AppConfig):
         except ImportError:
             pass
 
+        try:
+            from . import beaches  # noqa
+        except ImportError:
+            pass
+

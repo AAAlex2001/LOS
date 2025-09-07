@@ -9,6 +9,7 @@ urlpatterns = [
     path("taxi/", include("cms.taxi.urls")),
     path("your-doctor/", include("cms.your_doctor.urls")),
     path("administrative-buildings/", include("cms.administrative_buildings.urls")),
+    path("beaches/", include("cms.beaches.urls")),
 ]
 
 

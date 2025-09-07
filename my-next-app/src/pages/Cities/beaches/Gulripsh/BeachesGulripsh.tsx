@@ -1,49 +1,107 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './BeachesGulripsh.module.scss';
+import config from '@/config';
 
-// Данные пляжей
-const beaches = [
-  {
-    id: 1,
-    name: 'Агудзерский пляж',
-    address: 'Гулрыпшский район',
-    addressLink: 'https://yandex.com/maps/-/CDxHqRKi',
-    image: '/assets/BeachesGulripsh1.png',
-  },
-];
+type City = { id: number; name: string; title?: string; order: number };
+type Beach = {
+  id: number;
+  city: number;
+  name: string;
+  name_link?: string;
+  address: string;
+  address_link?: string;
+  description?: string;
+  phone?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  beaches: Beach[];
+};
+
+const API_BASE = config.API_BASE;
 
 const BeachesGulripsh: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/beaches/page/city/${encodeURIComponent('Гулрыпш')}/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load beaches');
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Гулрыпш: пляжи</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Гулрыпш: пляжи'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
-          {beaches.map((beach: any) => (
+          {data.beaches.map((beach) => (
             <div key={beach.id} className={styles.beachCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={beach.image}
-                  alt={beach.name}
-                  fill
-                  className={styles.beachImage}
-                />
+                {beach.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${beach.image_url}`}
+                    alt={beach.name}
+                    className={styles.beachImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
               <div className={styles.infoContainer}>
-                <h2 className={`${styles.beachName} ${beach.nameLink ? styles.clickable : ''}`}>
-                  {beach.nameLink ? (
-                    <a href={beach.nameLink} target="_blank" rel="noopener noreferrer">{beach.name}</a>
+                <h2 className={`${styles.beachName} ${beach.name_link ? styles.clickable : ''}`}>
+                  {beach.name_link ? (
+                    <a href={beach.name_link} target="_blank" rel="noopener noreferrer">{beach.name}</a>
                   ) : (
                     beach.name
                   )}
@@ -52,9 +110,9 @@ const BeachesGulripsh: React.FC = () => {
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Адрес:</span>
-                    <span className={`${styles.infoValue} ${beach.addressLink ? styles.addressLink : ''}`}>
-                      {beach.addressLink ? (
-                        <a href={beach.addressLink} target="_blank" rel="noopener noreferrer">{beach.address}</a>
+                    <span className={`${styles.infoValue} ${beach.address_link ? styles.addressLink : ''}`}>
+                      {beach.address_link ? (
+                        <a href={beach.address_link} target="_blank" rel="noopener noreferrer">{beach.address}</a>
                       ) : (
                         beach.address
                       )}

@@ -1,0 +1,3 @@
+# Beaches CMS module
+
+
