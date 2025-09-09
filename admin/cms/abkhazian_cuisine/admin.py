@@ -21,6 +21,11 @@ class AbkhazianCuisinePageAdmin(admin.ModelAdmin):
     list_display = ("id", "updated_at")
     inlines = [CuisineSectionInline, MainDishInline]
     readonly_fields = ("seo_preview", "hero_image_preview")
+
+    def has_add_permission(self, request):
+        if AbkhazianCuisinePage.objects.exists():
+            return False
+        return super().has_add_permission(request)
     
     fieldsets = (
         ("Основное содержимое", {

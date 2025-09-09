@@ -32,7 +32,7 @@ class YourDoctorPage(TimestampedModel):
 
     class Meta:
         verbose_name = "Страница 'Ваш доктор'"
-        verbose_name_plural = "Страницы 'Ваш доктор'"
+        verbose_name_plural = "Страница 'Ваш доктор'"
 
     def __str__(self) -> str:
         return "Страница 'Ваш доктор'"
@@ -52,7 +52,7 @@ class Hospital(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Больница"
-        verbose_name_plural = "Больницы"
+        verbose_name_plural = "Больница"
 
     def __str__(self) -> str:
         return self.name
@@ -72,7 +72,7 @@ class PrivateClinic(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Частная клиника"
-        verbose_name_plural = "Частные клиники"
+        verbose_name_plural = "Частная клиника"
 
     def __str__(self) -> str:
         return self.name
@@ -92,7 +92,7 @@ class Dentistry(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Стоматологическая клиника"
-        verbose_name_plural = "Стоматологические клиники"
+        verbose_name_plural = "Стоматологическая клиника"
 
     def __str__(self) -> str:
         return self.name
@@ -112,7 +112,7 @@ class VetClinic(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Ветеринарная клиника"
-        verbose_name_plural = "Ветеринарные клиники"
+        verbose_name_plural = "Ветеринарная клиника"
 
     def __str__(self) -> str:
         return self.name
@@ -127,7 +127,7 @@ class DoctorsGroup(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Группа врачей"
-        verbose_name_plural = "Группы врачей"
+        verbose_name_plural = "Группа врачей"
 
     def __str__(self) -> str:
         return self.hospital_name

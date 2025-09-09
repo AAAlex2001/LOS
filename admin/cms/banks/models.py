@@ -27,7 +27,7 @@ class BanksPage(TimestampedModel):
 
     class Meta:
         verbose_name = "Страница банков"
-        verbose_name_plural = "Страницы банков"
+        verbose_name_plural = "Страница банков"
 
     def __str__(self) -> str:
         return "Страница банков"
@@ -51,7 +51,7 @@ class Bank(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Банк"
-        verbose_name_plural = "Банки"
+        verbose_name_plural = "Банк"
 
     def __str__(self) -> str:
         return self.name

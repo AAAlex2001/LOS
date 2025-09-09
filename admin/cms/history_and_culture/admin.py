@@ -21,6 +21,11 @@ class HistoryAndCulturePageAdmin(admin.ModelAdmin):
     list_display = ['__str__', 'seo_title', 'created_at', 'updated_at']
     readonly_fields = ['created_at', 'updated_at']
     inlines = [HistorySectionInline, CultureSectionInline]
+
+    def has_add_permission(self, request):
+        if HistoryAndCulturePage.objects.exists():
+            return False
+        return super().has_add_permission(request)
     
     fieldsets = (
         ('SEO настройки', {

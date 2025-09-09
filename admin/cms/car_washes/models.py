@@ -25,7 +25,7 @@ class CarWashesPage(TimestampedModel):
 
     class Meta:
         verbose_name = "Страница моек машин"
-        verbose_name_plural = "Страницы моек машин"
+        verbose_name_plural = "Страница моек машин"
 
     def __str__(self) -> str:
         return "Страница моек машин"
@@ -40,7 +40,7 @@ class CarWashCity(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Город (мойки машин)"
-        verbose_name_plural = "Города (мойки машин)"
+        verbose_name_plural = "Город (мойки машин)"
 
     def __str__(self) -> str:
         return self.name
@@ -62,7 +62,7 @@ class CarWash(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Мойка машин"
-        verbose_name_plural = "Мойки машин"
+        verbose_name_plural = "Мойка машин"
 
     def __str__(self) -> str:
         return self.name

@@ -33,7 +33,7 @@ class AbkhazianCuisinePage(TimestampedModel):
 
     class Meta:
         verbose_name = "Страница абхазской кухни"
-        verbose_name_plural = "Страницы абхазской кухни"
+        verbose_name_plural = "Страница абхазской кухни"
 
     def __str__(self) -> str:
         return "Страница абхазской кухни"
@@ -51,7 +51,7 @@ class CuisineSection(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Секция кухни"
-        verbose_name_plural = "Секции кухни"
+        verbose_name_plural = "Секция кухни"
 
     def __str__(self) -> str:
         return self.title
@@ -69,7 +69,7 @@ class MainDish(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Основное блюдо"
-        verbose_name_plural = "Основные блюда"
+        verbose_name_plural = "Основное блюдо"
 
     def __str__(self) -> str:
         return self.name

@@ -23,6 +23,11 @@ class BanksPageAdmin(admin.ModelAdmin):
     list_display = ("id", "updated_at")
     inlines = [BankInline]
     readonly_fields = ("seo_preview",)
+
+    def has_add_permission(self, request):
+        if BanksPage.objects.exists():
+            return False
+        return super().has_add_permission(request)
     
     fieldsets = (
         ("SEO", {

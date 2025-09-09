@@ -25,7 +25,7 @@ class BeachesPage(TimestampedModel):
 
     class Meta:
         verbose_name = "Страница пляжей"
-        verbose_name_plural = "Страницы пляжей"
+        verbose_name_plural = "Страница пляжей"
 
     def __str__(self) -> str:
         return "Страница пляжей"
@@ -40,7 +40,7 @@ class BeachCity(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Город (пляжи)"
-        verbose_name_plural = "Города (пляжи)"
+        verbose_name_plural = "Город (пляжи)"
 
     def __str__(self) -> str:
         return self.name
@@ -61,7 +61,7 @@ class Beach(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Пляж"
-        verbose_name_plural = "Пляжи"
+        verbose_name_plural = "Пляж"
 
     def __str__(self) -> str:
         return self.name

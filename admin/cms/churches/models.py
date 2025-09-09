@@ -25,7 +25,7 @@ class ChurchesPage(TimestampedModel):
 
     class Meta:
         verbose_name = "Страница церквей"
-        verbose_name_plural = "Страницы церквей"
+        verbose_name_plural = "Страница церквей"
 
     def __str__(self) -> str:
         return "Страница церквей"
@@ -40,7 +40,7 @@ class ChurchCity(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Город (церкви)"
-        verbose_name_plural = "Города (церкви)"
+        verbose_name_plural = "Город (церкви)"
 
     def __str__(self) -> str:
         return self.name
@@ -62,7 +62,7 @@ class Church(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Церковь"
-        verbose_name_plural = "Церкви"
+        verbose_name_plural = "Церковь"
 
     def __str__(self) -> str:
         return self.name

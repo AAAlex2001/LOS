@@ -72,6 +72,11 @@ class HomePageAdmin(admin.ModelAdmin):
     inlines = [TabInline, SliderInline, CityInline, ActivityInline, ActionButtonInline, PopupItemInline]
     readonly_fields = ("seo_preview",)
 
+    def has_add_permission(self, request):
+        if HomePage.objects.exists():
+            return False
+        return super().has_add_permission(request)
+
     fieldsets = (
         ("Герой-секция", {
             "fields": (

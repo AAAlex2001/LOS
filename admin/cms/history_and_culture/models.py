@@ -27,7 +27,7 @@ class HistoryAndCulturePage(TimestampedModel):
 
     class Meta:
         verbose_name = "Страница истории и культуры"
-        verbose_name_plural = "Страницы истории и культуры"
+        verbose_name_plural = "Страница истории и культуры"
 
     def __str__(self) -> str:
         return "Страница истории и культуры"
@@ -46,7 +46,7 @@ class HistorySection(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Секция истории"
-        verbose_name_plural = "Секции истории"
+        verbose_name_plural = "Секция истории"
 
     def __str__(self) -> str:
         return self.title
@@ -65,7 +65,7 @@ class CultureSection(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Секция культуры"
-        verbose_name_plural = "Секции культуры"
+        verbose_name_plural = "Секция культуры"
 
     def __str__(self) -> str:
         return self.title

@@ -35,7 +35,7 @@ class TaxiPage(TimestampedModel):
 
     class Meta:
         verbose_name = "Страница такси"
-        verbose_name_plural = "Страницы такси"
+        verbose_name_plural = "Страница такси"
 
     def __str__(self) -> str:
         return "Страница такси"
@@ -56,7 +56,7 @@ class TaxiService(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Служба такси"
-        verbose_name_plural = "Службы такси"
+        verbose_name_plural = "Служба такси"
 
     def __str__(self) -> str:
         return self.name

@@ -25,7 +25,7 @@ class AdministrativeBuildingsPage(TimestampedModel):
 
     class Meta:
         verbose_name = "Страница административных зданий"
-        verbose_name_plural = "Страницы административных зданий"
+        verbose_name_plural = "Страница административных зданий"
 
     def __str__(self) -> str:
         return "Страница административных зданий"
@@ -39,8 +39,8 @@ class City(TimestampedModel):
 
     class Meta:
         ordering = ["order", "id"]
-        verbose_name = "Город"
-        verbose_name_plural = "Города"
+        verbose_name = "Город (административные здания)"
+        verbose_name_plural = "Город (административные здания)"
 
     def __str__(self) -> str:
         return self.name
@@ -61,7 +61,7 @@ class AdministrativeBuilding(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Административное здание"
-        verbose_name_plural = "Административные здания"
+        verbose_name_plural = "Административное здание"
 
     def __str__(self) -> str:
         return self.name

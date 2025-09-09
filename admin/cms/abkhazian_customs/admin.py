@@ -15,6 +15,11 @@ class AbkhazianCustomsPageAdmin(admin.ModelAdmin):
     list_display = ("id", "updated_at")
     inlines = [CustomSectionInline]
     readonly_fields = ("seo_preview", "hero_image_preview")
+
+    def has_add_permission(self, request):
+        if AbkhazianCustomsPage.objects.exists():
+            return False
+        return super().has_add_permission(request)
     
     fieldsets = (
         ("Основное содержимое", {
