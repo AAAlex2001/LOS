@@ -1,104 +1,145 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './CarWashesPitsunda.module.scss';
+import config from '@/config';
 
-const carWashes: {
+type City = { id: number; name: string; title?: string; order: number };
+type CarWash = {
   id: number;
+  city: number;
   name: string;
   name_link?: string;
-  workingHours?: string;
   address: string;
-  addressLink?: string;
+  address_link?: string;
   contacts?: string;
-  image: string;
-}[] = [
-  {
-    id: 1,
-    name: 'Мойка самообслуживания',
-    workingHours: 'круглосуточно',
-    address: 'Пицундское шоссе',
-    addressLink: 'https://yandex.com/maps/-/CDHteS9I',
-    image: '/assets/CarWashesPitsunda1.jpg'
-  },
-  {
-    id: 2,
-    name: 'Автомойка',
-    workingHours: 'с 10:00 до 21:00',
-    address: 'Гагрский район, Пицунда, Тополёвая улица',
-    addressLink: 'https://yandex.com/maps/-/CDHti-5z',
-    image: '/assets/CarWashesPitsunda2.jpg'
-  },
-  {
-    id: 3,
-    name: 'Мойка самообслуживания Car Wash',
-    workingHours: 'круглосуточно',
-    address: 'село Лдзаа, ул. Адамия, 27',
-    addressLink: 'https://yandex.com/maps/-/CDHtm4p6',
-    image: '/assets/CarWashesPitsunda3.jpg'
-  }
-];
+  working_hours?: string;
+  services?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  car_washes: CarWash[];
+};
+
+const API_BASE = config.API_BASE;
 
 const CarWashesPitsunda: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/car-washes/page/city/${encodeURIComponent('Пицунда')}/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load car washes');
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Пицунда: автомойки</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Пицунда: мойки машин'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
-          {carWashes.map((wash) => (
-            <div key={wash.id} className={styles.carWashCard}>
+          {data.car_washes.map((carWash) => (
+            <div key={carWash.id} className={styles.carWashCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={wash.image}
-                  alt={wash.name}
-                  fill
-                  className={styles.carWashImage}
-                />
+                {carWash.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${carWash.image_url}`}
+                    alt={carWash.name}
+                    className={styles.carWashImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.carWashName}>
-                  {wash.name_link ? (
-                    <a href={wash.name_link} target="_blank" rel="noopener noreferrer">
-                      {wash.name}
+                  {carWash.name_link ? (
+                    <a href={carWash.name_link} target="_blank" rel="noopener noreferrer">
+                      {carWash.name}
                     </a>
                   ) : (
-                    wash.name
+                    carWash.name
                   )}
                 </h2>
                 
                 <div className={styles.infoBlock}>
-                  {wash.workingHours && (
-                    <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
-                      <span className={styles.infoValue}>{wash.workingHours}</span>
-                    </div>
-                  )}
-                  
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Адрес:</span>
-                    <span className={`${styles.infoValue} ${wash.addressLink ? styles.addressLink : ''}`}>
-                      {wash.addressLink ? (
-                        <a href={wash.addressLink} target="_blank" rel="noopener noreferrer">{wash.address}</a>
+                    <span className={`${styles.infoValue} ${carWash.address_link ? styles.addressLink : ''}`}>
+                      {carWash.address_link ? (
+                        <a href={carWash.address_link} target="_blank" rel="noopener noreferrer">{carWash.address}</a>
                       ) : (
-                        wash.address
+                        carWash.address
                       )}
                     </span>
                   </div>
                   
-                  {wash.contacts && (
+                  {carWash.contacts && (
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>Контакты:</span>
-                      <span className={styles.infoValue}>{wash.contacts}</span>
+                      <span className={styles.infoValue}>{carWash.contacts}</span>
+                    </div>
+                  )}
+                  
+                  {carWash.working_hours && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{carWash.working_hours}</span>
+                    </div>
+                  )}
+                  
+                  {carWash.services && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Услуги:</span>
+                      <span className={styles.infoValue}>{carWash.services}</span>
                     </div>
                   )}
                 </div>
@@ -114,4 +155,4 @@ const CarWashesPitsunda: React.FC = () => {
   );
 };
 
-export default CarWashesPitsunda; 
+export default CarWashesPitsunda;

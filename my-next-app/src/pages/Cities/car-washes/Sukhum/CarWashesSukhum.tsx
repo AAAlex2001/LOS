@@ -1,108 +1,145 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './CarWashesSukhum.module.scss';
+import config from '@/config';
 
-// Данные автомоек
-const carWashes = [
-  {
-    id: 1,
-    name: 'М-1',
-    name_link: 'https://instagram.com/mo1ka_m1?igshid=MWZjMTM2ODFkZg==',
-    workingHours: 'круглосуточно',
-    address: 'Сухум, ул. Аидгылара, 2',
-    addressLink: 'https://yandex.com/maps/-/CDhUn-~H',
-    contacts: '+7 (940) 945-01-01',
-    image: '/assets/CarWashesSukhum1.png'
-  },
-  {
-    id: 2,
-    name: 'Автомойка АЗИД',
-    workingHours: 'с 09:00 до 21:00',
-    address: 'Сухум, Маяцкий район',
-    addressLink: 'https://yandex.com/maps/-/CDhUvY4z',
-    contacts: '+7 (940) 226-34-04',
-    image: '/assets/CarWashesSukhum2.png'
-  },
-  {
-    id: 3,
-    name: 'Мойка AquaRalli',
-    workingHours: 'круглосуточно',
-    address: 'Сухум, ул. Эшба, 147',
-    addressLink: 'https://yandex.com/maps/-/CDhUvL0U',
-    contacts: '+7 (940) 772-39-33',
-    image: '/assets/CarWashesSukhum3.png'
-  },
-  {
-    id: 4,
-    name: 'Автомойка Сухум',
-    workingHours: '09:00 до 21:00',
-    address: 'улица Бейгуа',
-    addressLink: 'https://yandex.com/maps/-/CDhUzUIi',
-    image: '/assets/CarWashesSukhum4.png'
-  }
-];
+type City = { id: number; name: string; title?: string; order: number };
+type CarWash = {
+  id: number;
+  city: number;
+  name: string;
+  name_link?: string;
+  address: string;
+  address_link?: string;
+  contacts?: string;
+  working_hours?: string;
+  services?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  car_washes: CarWash[];
+};
+
+const API_BASE = config.API_BASE;
 
 const CarWashesSukhum: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/car-washes/page/city/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load car washes');
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Сухум: автомойки</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Сухум: мойки машин'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
-          {carWashes.map((wash) => (
-            <div key={wash.id} className={styles.carWashCard}>
+          {data.car_washes.map((carWash) => (
+            <div key={carWash.id} className={styles.carWashCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={wash.image}
-                  alt={wash.name}
-                  fill
-                  className={styles.carWashImage}
-                />
+                {carWash.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${carWash.image_url}`}
+                    alt={carWash.name}
+                    className={styles.carWashImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.carWashName}>
-                  {wash.name_link ? (
-                    <a href={wash.name_link} target="_blank" rel="noopener noreferrer">
-                      {wash.name}
+                  {carWash.name_link ? (
+                    <a href={carWash.name_link} target="_blank" rel="noopener noreferrer">
+                      {carWash.name}
                     </a>
                   ) : (
-                    wash.name
+                    carWash.name
                   )}
                 </h2>
                 
                 <div className={styles.infoBlock}>
-                  {wash.workingHours && (
-                    <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
-                      <span className={styles.infoValue}>{wash.workingHours}</span>
-                    </div>
-                  )}
-                  
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Адрес:</span>
-                    <span className={`${styles.infoValue} ${wash.addressLink ? styles.addressLink : ''}`}>
-                      {wash.addressLink ? (
-                        <a href={wash.addressLink} target="_blank" rel="noopener noreferrer">{wash.address}</a>
+                    <span className={`${styles.infoValue} ${carWash.address_link ? styles.addressLink : ''}`}>
+                      {carWash.address_link ? (
+                        <a href={carWash.address_link} target="_blank" rel="noopener noreferrer">{carWash.address}</a>
                       ) : (
-                        wash.address
+                        carWash.address
                       )}
                     </span>
                   </div>
                   
-                  {wash.contacts && (
+                  {carWash.contacts && (
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>Контакты:</span>
-                      <span className={styles.infoValue}>{wash.contacts}</span>
+                      <span className={styles.infoValue}>{carWash.contacts}</span>
+                    </div>
+                  )}
+                  
+                  {carWash.working_hours && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{carWash.working_hours}</span>
+                    </div>
+                  )}
+                  
+                  {carWash.services && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Услуги:</span>
+                      <span className={styles.infoValue}>{carWash.services}</span>
                     </div>
                   )}
                 </div>
@@ -118,4 +155,4 @@ const CarWashesSukhum: React.FC = () => {
   );
 };
 
-export default CarWashesSukhum; 
+export default CarWashesSukhum;

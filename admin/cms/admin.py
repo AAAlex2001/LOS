@@ -32,3 +32,4 @@ from .your_doctor.admin import YourDoctorPageAdmin
 from .administrative_buildings.admin import AdministrativeBuildingsPageAdmin
 from .beaches.admin import BeachesPageAdmin
 from .beauty_salons.admin import BeautySalonsPageAdmin
+from .car_washes.admin import CarWashesPageAdmin
