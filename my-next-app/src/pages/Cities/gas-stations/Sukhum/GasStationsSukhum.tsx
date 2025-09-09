@@ -6,72 +6,91 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './GasStationsSukhum.module.scss';
+import config from '@/config';
 
-// Данные АЗС
-const gasStations = [
-  {
-    id: 1,
-    name: 'Азид',
-    name_link: 'https://azid.org/index.php/nash-azs',
-    address: 'Сухум, Привокзальный район',
-    addressLink: 'https://yandex.com/maps/-/CDX85F9j',
-    contacts: '+7 (840) 226-34-04',
-    image: '/assets/GasStationsSukhum1.png'
-  },
-  {
-    id: 2,
-    name: 'Азид',
-    name_link: 'https://azid.org/index.php/nash-azs',
-    address: 'Сухум, ул. Дзидзария, 58А',
-    addressLink: 'https://yandex.com/maps/-/CDX85VZy',
-    contacts: '+7 (840) 226-34-04',
-    image: '/assets/GasStationsSukhum2.png'
-  },
-  {
-    id: 3,
-    name: 'Азид',
-    name_link: 'https://azid.org/index.php/nash-azs',
-    address: 'Сухум, ул. Б. Адлейба, 34',
-    addressLink: 'https://yandex.com/maps/-/CDX85S6I',
-    contacts: '+7 (840) 226-34-04',
-    image: '/assets/GasStationsSukhum3.png'
-  },
-  {
-    id: 4,
-    name: 'АЗС Роснефть',
-    name_link: 'https://allrus.business/go/57466501088/',
-    address: 'Сухум',
-    addressLink: 'https://yandex.com/maps/-/CDX85Xi6',
-    contacts: '+7 (940) 700-05-55',
-    image: '/assets/GasStationsSukhum4.png'
-  },
-  {
-    id: 5,
-    name: 'Подорожник',
-    name_link: 'https://apsny-oil.info/',
-    address: 'Гулрыпшский район, село Мачара',
-    addressLink: 'https://yandex.com/maps/-/CDXcYVZa',
-    contacts: '+7 (940) 762-00-00',
-    image: '/assets/GasStationsSukhum5.png'
-  }
-];
+type GasStation = {
+  id: number;
+  name: string;
+  name_link?: string;
+  address: string;
+  address_link?: string;
+  contacts?: string;
+  image_url?: string;
+  order: number;
+};
+
+type CityPayload = {
+  title: string;
+  gas_stations: GasStation[];
+};
+
+const API_BASE = config.API_BASE;
 
 const GasStationsSukhum: React.FC = () => {
+  const [data, setData] = React.useState<CityPayload | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/gas-stations/page/city/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load');
+        const json = (await res.json()) as CityPayload;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>Загрузка...</h1>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Сухум: автозаправочные станции</h1>
+          <h1 className={styles.mainTitle}>{data.title || 'Сухум: автозаправочные станции'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
-          {gasStations.map((station) => (
+          {data.gas_stations.map((station) => (
             <div key={station.id} className={styles.gasStationCard}>
               <div className={styles.imageContainer}>
                 <Image
-                  src={station.image}
+                  src={station.image_url ? `${API_BASE}/media/${station.image_url}` : '/assets/placeholder.png'}
                   alt={station.name}
                   fill
                   className={styles.gasStationImage}
@@ -92,9 +111,9 @@ const GasStationsSukhum: React.FC = () => {
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Адрес:</span>
-                    <span className={`${styles.infoValue} ${station.addressLink ? styles.addressLink : ''}`}>
-                      {station.addressLink ? (
-                        <a href={station.addressLink} target="_blank" rel="noopener noreferrer">{station.address}</a>
+                    <span className={`${styles.infoValue} ${station.address_link ? styles.addressLink : ''}`}>
+                      {station.address_link ? (
+                        <a href={station.address_link} target="_blank" rel="noopener noreferrer">{station.address}</a>
                       ) : (
                         station.address
                       )}
@@ -103,7 +122,7 @@ const GasStationsSukhum: React.FC = () => {
                   
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Контакты:</span>
-                    <span className={styles.infoValue}>{station.contacts}</span>
+                    <span className={styles.infoValue}>{station.contacts || ''}</span>
                   </div>
                 </div>
               </div>
