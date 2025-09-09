@@ -1,10 +1,11 @@
 // Конфигурация API
+const apiBaseRaw = process.env.NEXT_PUBLIC_API_BASE || '';
 const config = {
-  // API Base URL для продакшена
-  API_BASE: 'http://109.196.103.12',
-  
+  // Базовый URL API (берём из ENV, без завершающих слешей)
+  API_BASE: apiBaseRaw.replace(/\/+$/, ''),
+
   // Другие настройки
-  NODE_ENV: 'production'
+  NODE_ENV: process.env.NODE_ENV || 'development',
 };
 
 export default config;
