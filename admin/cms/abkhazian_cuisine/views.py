@@ -18,24 +18,15 @@ class AbkhazianCuisinePageViewSet(viewsets.ReadOnlyModelViewSet):
         """
         Получить полное содержимое страницы абхазской кухни
         """
-        try:
-            page = AbkhazianCuisinePage.objects.first()
-            if not page:
-                return Response({
-                    "sections": [],
-                    "main_dishes": [],
-                    "hero_image_url": ""
-                })
-            
-            serializer = AbkhazianCuisinePageSerializer(page)
-            return Response(serializer.data)
-        except Exception as e:
+        page = AbkhazianCuisinePage.objects.first()
+        if not page:
             return Response({
-                "error": str(e),
                 "sections": [],
                 "main_dishes": [],
                 "hero_image_url": ""
             })
+        serializer = AbkhazianCuisinePageSerializer(page)
+        return Response(serializer.data)
 
     @action(detail=False, methods=['get'])
     def sections(self, request):

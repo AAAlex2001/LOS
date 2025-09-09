@@ -1,61 +1,96 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
+// next/image убираем; используем <img> как в банках
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './GasStationsGagra.module.scss';
+import config from '@/config';
 
-// Данные АЗС
-const gasStations = [
-  {
-    id: 1,
-    name: 'Азид',
-    name_link: null,
-    address: 'Сухумское ш., 20',
-    addressLink: 'https://yandex.ru/maps/-/CDSLyY0T',
-    contacts: '+7 (840) 226-34-04',
-    image: '/assets/GasStationsGagra1.jpg'
-  },
-  {
-    id: 2,
-    name: 'АЗК № 2 Роснефть',
-    name_link: null,
-    address: 'Гагрский район, посёлок Бзыпта, Сухумское шоссе',
-    addressLink: 'https://yandex.ru/maps/-/CDSLyBMM',
-    contacts: '+7 (940) 777-67-51',
-    image: '/assets/GasStationsGagra2.jpg'
-  },
-  {
-    id: 3,
-    name: 'Подорожник',
-    name_link: null,
-    address: 'Гагрский район, посёлок городского типа Бзыпта',
-    addressLink: 'https://yandex.ru/maps/-/CDSLy60q',
-    contacts: '+7 (940) 762-00-00',
-    image: '/assets/GasStationsGagra3.jpg'
-  }
-];
+type GasStation = {
+  id: number;
+  name: string;
+  name_link?: string;
+  address: string;
+  address_link?: string;
+  contacts?: string;
+  image_url?: string;
+  order: number;
+};
+
+type CityPayload = {
+  title: string;
+  gas_stations: GasStation[];
+};
+
+const API_BASE = config.API_BASE;
 
 const GasStationsGagra: React.FC = () => {
+  const [data, setData] = React.useState<CityPayload | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/gas-stations/page/city/${encodeURIComponent('Гагра')}/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load');
+        const json = (await res.json()) as CityPayload;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>Загрузка...</h1>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Гагра: автозаправочные станции</h1>
+          <h1 className={styles.mainTitle}>{data.title || 'Гагра: автозаправочные станции'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
-          {gasStations.map((station) => (
+          {data.gas_stations.map((station) => (
             <div key={station.id} className={styles.gasStationCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={station.image}
+                <img
+                  src={station.image_url ? `${API_BASE}/media/${station.image_url}` : '/assets/placeholder.png'}
                   alt={station.name}
-                  fill
                   className={styles.gasStationImage}
                 />
               </div>
@@ -74,9 +109,9 @@ const GasStationsGagra: React.FC = () => {
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Адрес:</span>
-                    <span className={`${styles.infoValue} ${station.addressLink ? styles.addressLink : ''}`}>
-                      {station.addressLink ? (
-                        <a href={station.addressLink} target="_blank" rel="noopener noreferrer">{station.address}</a>
+                    <span className={`${styles.infoValue} ${station.address_link ? styles.addressLink : ''}`}>
+                      {station.address_link ? (
+                        <a href={station.address_link} target="_blank" rel="noopener noreferrer">{station.address}</a>
                       ) : (
                         station.address
                       )}
@@ -85,7 +120,7 @@ const GasStationsGagra: React.FC = () => {
                   
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Контакты:</span>
-                    <span className={styles.infoValue}>{station.contacts}</span>
+                    <span className={styles.infoValue}>{station.contacts || ''}</span>
                   </div>
                 </div>
               </div>

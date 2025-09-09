@@ -36,3 +36,10 @@ from .car_washes.admin import CarWashesPageAdmin
 from .churches.admin import ChurchesPageAdmin
 from .clothing_repair.admin import ClothingRepairPageAdmin
 from .cultural_attractions.admin import CulturalAttractionsPageAdmin
+from .gas_stations.admin import GasStationsPageAdmin
+from .hotels.admin import HotelsPageAdmin
+from .parking_lots.admin import ParkingLotsPageAdmin
+from .pharmacy.admin import PharmacyPageAdmin
+from .restaurants.admin import RestaurantsPageAdmin
+from .shops_and_markets.admin import ShopsAndMarketsPageAdmin
+from .wineries.admin import WineriesPageAdmin

@@ -14,19 +14,21 @@ class HistoryAndCulturePageViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = HistoryAndCulturePageSerializer
 
     @action(detail=False, methods=['get'])
+    def content(self, request):
+        page = HistoryAndCulturePage.objects.first()
+        if not page:
+            return Response({"history_sections": [], "culture_sections": []})
+        serializer = HistoryAndCulturePageSerializer(page)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'])
     def history_sections(self, request):
-        """
-        Получить список всех секций истории
-        """
         sections = HistorySection.objects.all().order_by('order', 'id')
         serializer = HistorySectionSerializer(sections, many=True)
         return Response(serializer.data)
 
     @action(detail=False, methods=['get'])
     def culture_sections(self, request):
-        """
-        Получить список всех секций культуры
-        """
         sections = CultureSection.objects.all().order_by('order', 'id')
         serializer = CultureSectionSerializer(sections, many=True)
         return Response(serializer.data)

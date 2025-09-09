@@ -22,7 +22,7 @@ class HomeSliderItemSerializer(serializers.ModelSerializer):
         file_field = obj.image if obj.media_type == HomeSliderItem.MediaType.IMAGE else obj.video
         if not file_field:
             return ""
-        return file_field.url
+        return file_field.url.replace('/media/', '')
 
 
 class HomeCitySerializer(serializers.ModelSerializer):
@@ -33,7 +33,7 @@ class HomeCitySerializer(serializers.ModelSerializer):
         fields = ["id", "title", "description", "image_url", "order"]
 
     def get_image_url(self, obj: HomeCity) -> str:
-        return obj.image.url if obj.image else ""
+        return obj.image.url.replace('/media/', '') if obj.image else ""
 
 
 class HomeActivitySerializer(serializers.ModelSerializer):
@@ -44,7 +44,7 @@ class HomeActivitySerializer(serializers.ModelSerializer):
         fields = ["id", "title", "href", "image_url", "order"]
 
     def get_image_url(self, obj: HomeActivity) -> str:
-        return obj.image.url if obj.image else ""
+        return obj.image.url.replace('/media/', '') if obj.image else ""
 
 
 class HomeActionButtonSerializer(serializers.ModelSerializer):
@@ -123,23 +123,23 @@ class HomePageSerializer(serializers.ModelSerializer):
         ]
 
     def get_cta_card_image_url(self, obj: HomePage) -> str:
-        return obj.cta_card_image.url if obj.cta_card_image else ""
+        return obj.cta_card_image.url.replace('/media/', '') if obj.cta_card_image else ""
 
     def get_hero_bg_image_url(self, obj: HomePage) -> str:
-        return obj.hero_bg_image.url if obj.hero_bg_image else ""
+        return obj.hero_bg_image.url.replace('/media/', '') if obj.hero_bg_image else ""
 
     def get_cta_bg_image_url(self, obj: HomePage) -> str:
-        return obj.cta_bg_image.url if obj.cta_bg_image else ""
+        return obj.cta_bg_image.url.replace('/media/', '') if obj.cta_bg_image else ""
 
     def get_cta_overlay_image_url(self, obj: HomePage) -> str:
-        return obj.cta_overlay_image.url if obj.cta_overlay_image else ""
+        return obj.cta_overlay_image.url.replace('/media/', '') if obj.cta_overlay_image else ""
 
     def get_activities_bg_image_url(self, obj: HomePage) -> str:
-        return obj.activities_bg_image.url if obj.activities_bg_image else ""
+        return obj.activities_bg_image.url.replace('/media/', '') if obj.activities_bg_image else ""
 
     def get_og_image_url(self, obj: HomePage) -> str:
-        return obj.og_image.url if obj.og_image else ""
+        return obj.og_image.url.replace('/media/', '') if obj.og_image else ""
 
     def get_twitter_image_url(self, obj: HomePage) -> str:
-        return obj.twitter_image.url if obj.twitter_image else ""
+        return obj.twitter_image.url.replace('/media/', '') if obj.twitter_image else ""
 
