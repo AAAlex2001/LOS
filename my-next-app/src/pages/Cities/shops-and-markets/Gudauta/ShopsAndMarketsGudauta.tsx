@@ -1,105 +1,109 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './ShopsAndMarketsGudauta.module.scss';
+import config from '@/config';
 
-const shopsAndMarkets = [
-  {
-    id: 1,
-    name: 'Premium market',
-    workingHours: 'с 09:00 до 22:30',
-    address: 'Гудаута, ул. Дзидзария, 34',
-    addressLink: 'https://yandex.com/maps/-/CDxGvRLE',
-    contacts: '+7 (940) 910-39-59',
-    image: '/assets/ShopAndMarketsGudauta1.jpg',
-    name_link: 'http://instagram.com/premium_abkhazia',
-  },
-  {
-    id: 2,
-    name: 'Городской рынок',
-    workingHours: 'с 08: 00 до 17:00',
-    address: 'Гудаута, ул. 23 Июля 25',
-    addressLink: 'https://yandex.com/maps/-/CDxGv0ph',
-    contacts: null,
-    image: '/assets/ShopAndMarketsGudauta2.jpg',
-    name_link: null,
-  },
-  {
-    id: 3,
-    name: 'Premium market',
-    workingHours: 'с 09:00 до 22:30',
-    address: 'Гудаута, ул. Чанба 6',
-    addressLink: 'https://yandex.com/maps/-/CDxKIWiT',
-    contacts: null,
-    image: '/assets/ShopAndMarketsGudauta3.jpg',
-    name_link: null,
-  },
-  {
-    id: 4,
-    name: 'Foodmarket',
-    workingHours: 'с 09:00 до 22:00',
-    address: 'Гудаута, ул. 4 Марта, 8',
-    addressLink: 'https://yandex.com/maps/-/CDxKI-7J',
-    contacts: null,
-    image: '/assets/ShopAndMarketsGudauta4.jpg',
-    name_link: null,
-  },
-  {
-    id: 5,
-    name: 'Вавилон',
-    workingHours: 'с 09:00 до 19:00',
-    address: 'Гудаута, ул. Тарнава, 16',
-    addressLink: 'https://yandex.com/maps/-/CDxKQE0D',
-    contacts: '+7 (940) 920-62-00',
-    image: '/assets/ShopAndMarketsGudauta5.jpg',
-    name_link: 'https://vavilongu.ru/',
-  },
-  {
-    id: 6,
-    name: 'Нарт',
-    workingHours: 'с 08:00 до 22:00',
-    address: 'Гудаута, ул. Трапш, 20',
-    addressLink: 'https://yandex.com/maps/-/CDxKQJp1',
-    contacts: null,
-    image: '/assets/ShopAndMarketsGudauta6.jpg',
-    name_link: null,
-  },
-  {
-    id: 7,
-    name: 'Пятерочка',
-    workingHours: 'с 09:00 до 22:00',
-    address: 'Гудаутский район',
-    addressLink: 'https://yandex.com/maps/-/CDxKQW~v',
-    contacts: null,
-    image: '/assets/ShopAndMarketsGudauta7.jpg',
-    name_link: null,
-  },
-];
+type City = { id: number; name: string; title?: string; order: number };
+type Shop = {
+  id: number;
+  city: number;
+  name: string;
+  name_link?: string;
+  address: string;
+  address_link?: string;
+  phone?: string;
+  working_hours?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  shops: Shop[];
+};
+
+const API_BASE = config.API_BASE;
 
 const ShopsAndMarketsGudauta: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/shops-and-markets/page/city_page/${encodeURIComponent('Гудаута')}/`, { cache: 'no-store' });
+        
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Гудаута: Магазины, рынки</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Гудаута: магазины и рынки'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
-          {shopsAndMarkets.map((shop) => (
+          {data.shops.map((shop) => (
             <div key={shop.id} className={styles.shopCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={shop.image}
-                  alt={shop.name}
-                  fill
-                  className={styles.shopImage}
-                />
+                {shop.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${shop.image_url}`}
+                    alt={shop.name}
+                    className={styles.shopImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
               <div className={styles.infoContainer}>
@@ -114,30 +118,28 @@ const ShopsAndMarketsGudauta: React.FC = () => {
                 </h2>
                 
                 <div className={styles.infoBlock}>
-                  {shop.workingHours && (
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={`${styles.infoValue} ${shop.address_link ? styles.addressLink : ''}`}>
+                      {shop.address_link ? (
+                        <a href={shop.address_link} target="_blank" rel="noopener noreferrer">{shop.address}</a>
+                      ) : (
+                        shop.address
+                      )}
+                    </span>
+                  </div>
+                  
+                  {shop.working_hours && (
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>Режим работы:</span>
-                      <span className={styles.infoValue}>{shop.workingHours}</span>
+                      <span className={styles.infoValue}>{shop.working_hours}</span>
                     </div>
                   )}
                   
-                  {shop.address && (
+                  {shop.phone && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Адрес:</span>
-                      <span className={`${styles.infoValue} ${shop.addressLink ? styles.addressLink : ''}`}>
-                        {shop.addressLink ? (
-                          <a href={shop.addressLink} target="_blank" rel="noopener noreferrer">{shop.address}</a>
-                        ) : (
-                          shop.address
-                        )}
-                      </span>
-                    </div>
-                  )}
-                  
-                  {shop.contacts && (
-                    <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
-                      <span className={styles.infoValue}>{shop.contacts}</span>
+                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoValue}>{shop.phone}</span>
                     </div>
                   )}
                 </div>

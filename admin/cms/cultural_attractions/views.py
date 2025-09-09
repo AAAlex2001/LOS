@@ -53,3 +53,4 @@ class CulturalAttractionsPageViewSet(viewsets.ReadOnlyModelViewSet):
             
         except Exception as e:
             return Response({"error": str(e)}, status=500)
+

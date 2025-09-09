@@ -1,54 +1,108 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './GasStationsGudauta.module.scss';
+import config from '@/config';
 
-// Данные АЗС
-const gasStations = [
-  {
-    id: 1,
-    name: 'АЗИД',
-    name_link: 'https://azid.org/index.php/nash-azs',
-    address: 'Гудаута, пос. Бамбора ,Гагрское шоссе',
-    addressLink: 'https://yandex.com/maps/-/CDxryKMK',
-    contacts: '+7 (840) 226-34-04',
-    image: '/assets/GasStationsGudauta1.jpg'
-  },
-  {
-    id: 2,
-    name: 'Подорожник',
-    name_link: 'https://apsny-oil.info/',
-    address: 'Гудаутский район, село Хыпста, поселок Бамбора',
-    addressLink: 'https://yandex.com/maps/-/CDxry8l7',
-    contacts: '+7 (940) 762-00-00',
-    image: '/assets/GasStationsGudauta2.jpg'
-  }
-];
+type City = { id: number; name: string; title?: string; order: number };
+type GasStation = {
+  id: number;
+  city: number;
+  name: string;
+  name_link?: string;
+  address: string;
+  address_link?: string;
+  contacts?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  gas_stations: GasStation[];
+};
+
+const API_BASE = config.API_BASE;
 
 const GasStationsGudauta: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/gas-stations/page/city_page/${encodeURIComponent('Гудаута')}/`, { cache: 'no-store' });
+        
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Гудаута: автозаправочные станции</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Гудаута: автозаправочные станции'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
-          {gasStations.map((station) => (
+          {data.gas_stations.map((station) => (
             <div key={station.id} className={styles.gasStationCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={station.image}
-                  alt={station.name}
-                  fill
-                  className={styles.gasStationImage}
-                />
+                {station.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${station.image_url}`}
+                    alt={station.name}
+                    className={styles.gasStationImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
               <div className={styles.infoContainer}>
@@ -65,19 +119,21 @@ const GasStationsGudauta: React.FC = () => {
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Адрес:</span>
-                    <span className={`${styles.infoValue} ${station.addressLink ? styles.addressLink : ''}`}>
-                      {station.addressLink ? (
-                        <a href={station.addressLink} target="_blank" rel="noopener noreferrer">{station.address}</a>
+                    <span className={`${styles.infoValue} ${station.address_link ? styles.addressLink : ''}`}>
+                      {station.address_link ? (
+                        <a href={station.address_link} target="_blank" rel="noopener noreferrer">{station.address}</a>
                       ) : (
                         station.address
                       )}
                     </span>
                   </div>
                   
-                  <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Контакты:</span>
-                    <span className={styles.infoValue}>{station.contacts}</span>
-                  </div>
+                  {station.contacts && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoValue}>{station.contacts}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -91,4 +147,4 @@ const GasStationsGudauta: React.FC = () => {
   );
 };
 
-export default GasStationsGudauta; 
+export default GasStationsGudauta;

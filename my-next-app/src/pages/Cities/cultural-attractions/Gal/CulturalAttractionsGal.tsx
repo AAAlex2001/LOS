@@ -38,13 +38,21 @@ const CulturalAttractionsGal: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/cultural-attractions/page/city/${encodeURIComponent('Гал')}/`, { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to load cultural attractions');
+        const res = await fetch(`${API_BASE}/api/cultural-attractions/page/city_page/${encodeURIComponent('Гал')}/`, { cache: 'no-store' });
+        
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
         const json = (await res.json()) as CityPageData;
         setData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
       } finally {
         setLoading(false);
       }

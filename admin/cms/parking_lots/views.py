@@ -12,24 +12,51 @@ class ParkingLotsPageViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=['get'])
     def content(self, request):
-        page = ParkingLotsPage.objects.first()
-        if not page:
-            return Response({"cities": [], "parking_lots": []})
-        serializer = ParkingLotsPageSerializer(page)
-        return Response(serializer.data)
+        """Получить все данные страницы парковок"""
+        try:
+            page = self.get_queryset().first()
+            if not page:
+                return Response({"error": "Страница парковок не найдена"}, status=404)
+            
+            serializer = self.get_serializer(page)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
-    @action(detail=False, methods=['get'], url_path='city/(?P<name>[^/]+)')
-    def city(self, request, name=None):
-        page = ParkingLotsPage.objects.first()
-        city = ParkingLotCity.objects.filter(name__iexact=name).first()
-        if not page or not city:
-            return Response({"title": "", "parking_lots": []})
-        items = ParkingLot.objects.filter(city=city).order_by('order', 'id')
-        return Response({
-            "title": city.title or city.name,
-            "city": {"id": city.id, "name": city.name, "title": city.title, "order": city.order},
-            "parking_lots": ParkingLotSerializer(items, many=True).data,
-        })
+    @action(detail=False, methods=['get'], url_path='city/(?P<city_name>[^/]+)')
+    def city_page(self, request, city_name=None):
+        """Получить данные страницы парковок для конкретного города"""
+        try:
+            page = self.get_queryset().first()
+            if not page:
+                return Response({"error": "Страница парковок не найдена"}, status=404)
+            
+            # Найти город по имени
+            city = ParkingLotCity.objects.filter(
+                page=page,
+                name__icontains=city_name
+            ).first()
+            
+            if not city:
+                return Response({"error": f"Город '{city_name}' не найден"}, status=404)
+            
+            # Получить парковки для этого города
+            parking_lots = ParkingLot.objects.filter(city=city).order_by('order', 'id')
+            
+            # Формируем заголовок
+            title = city.title or f"{city.name}: парковки"
+            
+            data = {
+                "title": title,
+                "city": CitySerializer(city).data,
+                "parking_lots": ParkingLotSerializer(parking_lots, many=True).data
+            }
+            
+            return Response(data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
 
 class CityViewSet(viewsets.ReadOnlyModelViewSet):

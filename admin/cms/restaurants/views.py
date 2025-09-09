@@ -12,24 +12,51 @@ class RestaurantsPageViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=['get'])
     def content(self, request):
-        page = RestaurantsPage.objects.first()
-        if not page:
-            return Response({"cities": [], "restaurants": []})
-        serializer = RestaurantsPageSerializer(page)
-        return Response(serializer.data)
+        """Получить все данные страницы ресторанов"""
+        try:
+            page = self.get_queryset().first()
+            if not page:
+                return Response({"error": "Страница ресторанов не найдена"}, status=404)
+            
+            serializer = self.get_serializer(page)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
-    @action(detail=False, methods=['get'], url_path='city/(?P<name>[^/]+)')
-    def city(self, request, name=None):
-        page = RestaurantsPage.objects.first()
-        city = RestaurantCity.objects.filter(name__iexact=name).first()
-        if not page or not city:
-            return Response({"title": "", "restaurants": []})
-        items = Restaurant.objects.filter(city=city).order_by('order', 'id')
-        return Response({
-            "title": city.title or city.name,
-            "city": {"id": city.id, "name": city.name, "title": city.title, "order": city.order},
-            "restaurants": RestaurantSerializer(items, many=True).data,
-        })
+    @action(detail=False, methods=['get'], url_path='city/(?P<city_name>[^/]+)')
+    def city_page(self, request, city_name=None):
+        """Получить данные страницы ресторанов для конкретного города"""
+        try:
+            page = self.get_queryset().first()
+            if not page:
+                return Response({"error": "Страница ресторанов не найдена"}, status=404)
+            
+            # Найти город по имени
+            city = RestaurantCity.objects.filter(
+                page=page,
+                name__icontains=city_name
+            ).first()
+            
+            if not city:
+                return Response({"error": f"Город '{city_name}' не найден"}, status=404)
+            
+            # Получить рестораны для этого города
+            restaurants = Restaurant.objects.filter(city=city).order_by('order', 'id')
+            
+            # Формируем заголовок
+            title = city.title or f"{city.name}: рестораны"
+            
+            data = {
+                "title": title,
+                "city": CitySerializer(city).data,
+                "restaurants": RestaurantSerializer(restaurants, many=True).data
+            }
+            
+            return Response(data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
 
 class CityViewSet(viewsets.ReadOnlyModelViewSet):

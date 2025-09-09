@@ -37,3 +37,4 @@ class BeautySalonsPageSerializer(serializers.ModelSerializer):
             "twitter_description", "twitter_image", "robots_index", "robots_follow",
             "cities", "beauty_salons"
         ]
+

@@ -1,44 +1,57 @@
 'use client';
 
 import React from 'react';
-// next/image убираем; используем <img> как в банках
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './ParkingLotsSukhum.module.scss';
 import config from '@/config';
 
+type City = { id: number; name: string; title?: string; order: number };
 type ParkingLot = {
   id: number;
+  city: number;
   name: string;
+  name_link?: string;
   address: string;
   address_link?: string;
-  image_url?: string;
+  phone?: string;
+  working_hours?: string;
+  image_url: string;
   order: number;
 };
 
-type CityPayload = {
+type CityPageData = {
   title: string;
+  city?: City;
   parking_lots: ParkingLot[];
 };
 
 const API_BASE = config.API_BASE;
 
 const ParkingLotsSukhum: React.FC = () => {
-  const [data, setData] = React.useState<CityPayload | null>(null);
+  const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/parking-lots/page/city/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to load');
-        const json = (await res.json()) as CityPayload;
+        const res = await fetch(`${API_BASE}/api/parking-lots/page/city_page/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
+        
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
+        const json = (await res.json()) as CityPageData;
         setData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
       } finally {
         setLoading(false);
       }
@@ -51,9 +64,7 @@ const ParkingLotsSukhum: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>Загрузка...</h1>
-          </section>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
         </main>
         <Footer />
       </div>
@@ -65,36 +76,46 @@ const ParkingLotsSukhum: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
-          </section>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
         </main>
         <Footer />
       </div>
     );
   }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data.title || 'Сухум: парковки для автомобилей'}</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Сухум: парковки для автомобилей'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
           {data.parking_lots.map((lot) => (
             <div key={lot.id} className={styles.parkingLotCard}>
               <div className={styles.imageContainer}>
-                <img
-                  src={lot.image_url ? `${API_BASE}/media/${lot.image_url}` : '/assets/placeholder.png'}
-                  alt={lot.name}
-                  className={styles.parkingLotImage}
-                />
+                {lot.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${lot.image_url}`}
+                    alt={lot.name}
+                    className={styles.parkingLotImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
               <div className={styles.infoContainer}>
-                <h2 className={styles.parkingLotName}>{lot.name}</h2>
+                <h2 className={styles.parkingLotName}>
+                  {lot.name_link ? (
+                    <a href={lot.name_link} target="_blank" rel="noopener noreferrer">
+                      {lot.name}
+                    </a>
+                  ) : (
+                    lot.name
+                  )}
+                </h2>
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
@@ -107,6 +128,20 @@ const ParkingLotsSukhum: React.FC = () => {
                       )}
                     </span>
                   </div>
+                  
+                  {lot.working_hours && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{lot.working_hours}</span>
+                    </div>
+                  )}
+                  
+                  {lot.phone && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoValue}>{lot.phone}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -120,4 +155,4 @@ const ParkingLotsSukhum: React.FC = () => {
   );
 };
 
-export default ParkingLotsSukhum; 
+export default ParkingLotsSukhum;

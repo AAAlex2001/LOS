@@ -1,75 +1,145 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './PharmacyGulripsh.module.scss';
+import config from '@/config';
 
-// Данные аптек
-const pharmacies = [
-  {
-    id: 1,
-    name: 'Аптека 36.6',
-    workingHours: 'с 08:00 до 21:00',
-    address: 'Гулрыпшский район, п.г.т. Агудзера ул. Курчатова 30',
-    addressLink: 'https://yandex.ru/maps/105962/gulripsh-district/house/YEgYdwdkSEUCQFpofXVycH1kZg==/',
-    contacts: null,
-    image: '/assets/PharmacyGulripsh1.jpg'
-  },
-];
+type City = { id: number; name: string; title?: string; order: number };
+type Pharmacy = {
+  id: number;
+  city: number;
+  name: string;
+  name_link?: string;
+  address: string;
+  address_link?: string;
+  phone?: string;
+  working_hours?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  pharmacies: Pharmacy[];
+};
+
+const API_BASE = config.API_BASE;
 
 const PharmacyGulripsh: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/pharmacy/page/city_page/${encodeURIComponent('Гулрыпш')}/`, { cache: 'no-store' });
+        
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Гулрыпш: аптеки</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Гулрыпш: аптеки'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
-          {pharmacies.map((pharmacy) => (
+          {data.pharmacies.map((pharmacy) => (
             <div key={pharmacy.id} className={styles.pharmacyCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={pharmacy.image}
-                  alt={pharmacy.name}
-                  fill
-                  className={styles.pharmacyImage}
-                />
+                {pharmacy.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${pharmacy.image_url}`}
+                    alt={pharmacy.name}
+                    className={styles.pharmacyImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.pharmacyName}>
-                  {pharmacy.name}
+                  {pharmacy.name_link ? (
+                    <a href={pharmacy.name_link} target="_blank" rel="noopener noreferrer">
+                      {pharmacy.name}
+                    </a>
+                  ) : (
+                    pharmacy.name
+                  )}
                 </h2>
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Адрес:</span>
-                    <span className={`${styles.infoValue} ${pharmacy.addressLink ? styles.addressLink : ''}`}>
-                      {pharmacy.addressLink ? (
-                        <a href={pharmacy.addressLink} target="_blank" rel="noopener noreferrer">{pharmacy.address}</a>
+                    <span className={`${styles.infoValue} ${pharmacy.address_link ? styles.addressLink : ''}`}>
+                      {pharmacy.address_link ? (
+                        <a href={pharmacy.address_link} target="_blank" rel="noopener noreferrer">{pharmacy.address}</a>
                       ) : (
                         pharmacy.address
                       )}
                     </span>
                   </div>
                   
-                  {pharmacy.contacts && (
+                  {pharmacy.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
-                      <span className={styles.infoValue}>{pharmacy.contacts}</span>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{pharmacy.working_hours}</span>
                     </div>
                   )}
                   
-                  {pharmacy.workingHours && (
+                  {pharmacy.phone && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Часы работы:</span>
-                      <span className={styles.infoValue}>{pharmacy.workingHours}</span>
+                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoValue}>{pharmacy.phone}</span>
                     </div>
                   )}
                 </div>
@@ -85,4 +155,4 @@ const PharmacyGulripsh: React.FC = () => {
   );
 };
 
-export default PharmacyGulripsh; 
+export default PharmacyGulripsh;

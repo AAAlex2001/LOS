@@ -37,7 +37,7 @@ const AdministrativeBuildingsOchamchira: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/administrative-buildings/page/city/${encodeURIComponent('Очамчыра')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/administrative-buildings/page/city_page/${encodeURIComponent('Очамчыра')}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load administrative buildings city');
         const json = (await res.json()) as CityPageData;
         setData(json);

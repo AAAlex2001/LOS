@@ -1,47 +1,57 @@
 'use client';
 
 import React from 'react';
-// next/image удаляем; используем <img> как в банках
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './PharmacySukhum.module.scss';
 import config from '@/config';
 
+type City = { id: number; name: string; title?: string; order: number };
 type Pharmacy = {
   id: number;
+  city: number;
   name: string;
   name_link?: string;
-  working_hours?: string;
   address: string;
   address_link?: string;
-  contacts?: string;
-  image_url?: string;
+  phone?: string;
+  working_hours?: string;
+  image_url: string;
   order: number;
 };
 
-type CityPayload = {
+type CityPageData = {
   title: string;
+  city?: City;
   pharmacies: Pharmacy[];
 };
 
 const API_BASE = config.API_BASE;
 
 const PharmacySukhum: React.FC = () => {
-  const [data, setData] = React.useState<CityPayload | null>(null);
+  const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/pharmacy/page/city/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to load');
-        const json = (await res.json()) as CityPayload;
+        const res = await fetch(`${API_BASE}/api/pharmacy/page/city_page/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
+        
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
+        const json = (await res.json()) as CityPageData;
         setData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
       } finally {
         setLoading(false);
       }
@@ -54,9 +64,7 @@ const PharmacySukhum: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>Загрузка...</h1>
-          </section>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
         </main>
         <Footer />
       </div>
@@ -68,38 +76,36 @@ const PharmacySukhum: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
-          </section>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
         </main>
         <Footer />
       </div>
     );
   }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
-        {/* Заголовок */}
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data.title || 'Сухум: аптеки'}</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Сухум: аптеки'}</h1>
         </section>
 
-        {/* Карточки аптек */}
         <section className={styles.cardsSection}>
           {data.pharmacies.map((pharmacy) => (
             <div key={pharmacy.id} className={styles.pharmacyCard}>
-              {/* Изображение */}
               <div className={styles.imageContainer}>
-                <img
-                  src={pharmacy.image_url ? `${API_BASE}/media/${pharmacy.image_url}` : '/assets/placeholder.png'}
-                  alt={pharmacy.name}
-                  className={styles.pharmacyImage}
-                />
+                {pharmacy.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${pharmacy.image_url}`}
+                    alt={pharmacy.name}
+                    className={styles.pharmacyImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
-              {/* Информация */}
               <div className={styles.infoContainer}>
                 <h2 className={styles.pharmacyName}>
                   {pharmacy.name_link ? (
@@ -123,17 +129,19 @@ const PharmacySukhum: React.FC = () => {
                     </span>
                   </div>
                   
-                  {pharmacy.contacts && (
+                  {pharmacy.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
-                      <span className={styles.infoValue}>{pharmacy.contacts}</span>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{pharmacy.working_hours}</span>
                     </div>
                   )}
                   
-                  <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Часы работы:</span>
-                    <span className={styles.infoValue}>{pharmacy.working_hours || ''}</span>
-                  </div>
+                  {pharmacy.phone && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoValue}>{pharmacy.phone}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -147,4 +155,4 @@ const PharmacySukhum: React.FC = () => {
   );
 };
 
-export default PharmacySukhum; 
+export default PharmacySukhum;

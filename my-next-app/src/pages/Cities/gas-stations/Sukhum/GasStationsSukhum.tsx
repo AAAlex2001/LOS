@@ -34,7 +34,7 @@ const GasStationsSukhum: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/gas-stations/page/city/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/gas-stations/page/city_page/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load');
         const json = (await res.json()) as CityPayload;
         setData(json);

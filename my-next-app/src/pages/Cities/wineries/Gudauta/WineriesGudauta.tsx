@@ -1,56 +1,109 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './WineriesGudauta.module.scss';
+import config from '@/config';
 
-// Данные виноделен
-const wineries = [
-  {
-    id: 1,
-    name: 'Домашнее вино',
-    workingHours: 'с 10:00 до 19:00',
-    address: 'Гудаута, ул. Дзидзария, 30',
-    addressLink: null,
-    contacts: '+7 (940) 926-26-30',
-    image: '/assets/WineriesGudauta1.jpg',
-    name_link: null,
-  },
-  {
-    id: 2,
-    name: 'Дегустационный зал Гудаутского винзавода',
-    workingHours: 'с 10:00 до 20:00',
-    address: 'Гудаута, Гагрское шоссе',
-    addressLink: 'https://yandex.com/maps/-/CDxryYKT',
-    contacts: '+7 (940) 936-07-73',
-    image: '/assets/WineriesGudauta2.jpg',
-    name_link: null,
-  }
-];
+type City = { id: number; name: string; title?: string; order: number };
+type Winery = {
+  id: number;
+  city: number;
+  name: string;
+  name_link?: string;
+  address: string;
+  address_link?: string;
+  phone?: string;
+  working_hours?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  wineries: Winery[];
+};
+
+const API_BASE = config.API_BASE;
 
 const WineriesGudauta: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/wineries/page/city_page/${encodeURIComponent('Гудаута')}/`, { cache: 'no-store' });
+        
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Гудаута: винодельни</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Гудаута: винодельни'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
-          {wineries.map((winery) => (
+          {data.wineries.map((winery) => (
             <div key={winery.id} className={styles.wineryCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={winery.image}
-                  alt={winery.name}
-                  fill
-                  className={styles.wineryImage}
-                />
+                {winery.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${winery.image_url}`}
+                    alt={winery.name}
+                    className={styles.wineryImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
               <div className={styles.infoContainer}>
@@ -65,30 +118,28 @@ const WineriesGudauta: React.FC = () => {
                 </h2>
                 
                 <div className={styles.infoBlock}>
-                  {winery.workingHours && (
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={`${styles.infoValue} ${winery.address_link ? styles.addressLink : ''}`}>
+                      {winery.address_link ? (
+                        <a href={winery.address_link} target="_blank" rel="noopener noreferrer">{winery.address}</a>
+                      ) : (
+                        winery.address
+                      )}
+                    </span>
+                  </div>
+                  
+                  {winery.working_hours && (
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>Режим работы:</span>
-                      <span className={styles.infoValue}>{winery.workingHours}</span>
+                      <span className={styles.infoValue}>{winery.working_hours}</span>
                     </div>
                   )}
                   
-                  {winery.address && (
+                  {winery.phone && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Адрес:</span>
-                      <span className={`${styles.infoValue} ${winery.addressLink ? styles.addressLink : ''}`}>
-                        {winery.addressLink ? (
-                          <a href={winery.addressLink} target="_blank" rel="noopener noreferrer">{winery.address}</a>
-                        ) : (
-                          winery.address
-                        )}
-                      </span>
-                    </div>
-                  )}
-                  
-                  {winery.contacts && (
-                    <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
-                      <span className={styles.infoValue}>{winery.contacts}</span>
+                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoValue}>{winery.phone}</span>
                     </div>
                   )}
                 </div>

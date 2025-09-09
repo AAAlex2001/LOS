@@ -38,7 +38,7 @@ const BeautySalonsOchamchira: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/beauty-salons/page/city/${encodeURIComponent('Очамчыра')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/beauty-salons/page/city_page/${encodeURIComponent('Очамчыра')}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load beauty salons');
         const json = (await res.json()) as CityPageData;
         setData(json);

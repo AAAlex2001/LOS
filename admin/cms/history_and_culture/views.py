@@ -15,23 +15,39 @@ class HistoryAndCulturePageViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=['get'])
     def content(self, request):
-        page = HistoryAndCulturePage.objects.first()
-        if not page:
-            return Response({"history_sections": [], "culture_sections": []})
-        serializer = HistoryAndCulturePageSerializer(page)
-        return Response(serializer.data)
+        """Получить все данные страницы истории и культуры"""
+        try:
+            page = self.get_queryset().first()
+            if not page:
+                return Response({"error": "Страница истории и культуры не найдена"}, status=404)
+            
+            serializer = self.get_serializer(page)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
     @action(detail=False, methods=['get'])
     def history_sections(self, request):
-        sections = HistorySection.objects.all().order_by('order', 'id')
-        serializer = HistorySectionSerializer(sections, many=True)
-        return Response(serializer.data)
+        """Получить секции истории"""
+        try:
+            sections = HistorySection.objects.all().order_by('order', 'id')
+            serializer = HistorySectionSerializer(sections, many=True)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
     @action(detail=False, methods=['get'])
     def culture_sections(self, request):
-        sections = CultureSection.objects.all().order_by('order', 'id')
-        serializer = CultureSectionSerializer(sections, many=True)
-        return Response(serializer.data)
+        """Получить секции культуры"""
+        try:
+            sections = CultureSection.objects.all().order_by('order', 'id')
+            serializer = CultureSectionSerializer(sections, many=True)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
 
 class HistorySectionViewSet(viewsets.ReadOnlyModelViewSet):

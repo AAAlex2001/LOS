@@ -12,9 +12,16 @@ class HomePageViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=['get'])
     def content(self, request):
-        homepage = HomePage.objects.first()
-        if not homepage:
-            homepage = HomePage.objects.create(id=1)
-        serializer = HomePageSerializer(homepage)
-        return Response(serializer.data)
+        """Получить все данные главной страницы"""
+        try:
+            homepage = self.get_queryset().first()
+            if not homepage:
+                homepage = HomePage.objects.create(id=1)
+            
+            serializer = self.get_serializer(homepage)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
+
 

@@ -28,3 +28,4 @@ class AbkhazianCustomsPageSerializer(serializers.ModelSerializer):
         # Возвращаем относительный путь, без /media/, как в других модулях
         return obj.hero_image.url.replace('/media/', '')
 
+

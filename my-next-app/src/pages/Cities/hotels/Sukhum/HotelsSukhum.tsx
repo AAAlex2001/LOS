@@ -1,46 +1,56 @@
 'use client';
 
 import React from 'react';
-// next/image удалён; используем обычные <img> как в банках
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './HotelsSukhum.module.scss';
 import config from '@/config';
 
+type City = { id: number; name: string; title?: string; order: number };
 type Hotel = {
   id: number;
+  city: number;
   name: string;
   address: string;
   address_link?: string;
   contacts?: string;
   price?: string;
-  image_url?: string;
+  image_url: string;
   order: number;
 };
 
-type CityPayload = {
+type CityPageData = {
   title: string;
+  city?: City;
   hotels: Hotel[];
 };
 
 const API_BASE = config.API_BASE;
 
 const HotelsSukhum: React.FC = () => {
-  const [data, setData] = React.useState<CityPayload | null>(null);
+  const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/hotels/page/city/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to load');
-        const json = (await res.json()) as CityPayload;
+        const res = await fetch(`${API_BASE}/api/hotels/page/city_page/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
+        
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
+        const json = (await res.json()) as CityPageData;
         setData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
       } finally {
         setLoading(false);
       }
@@ -53,9 +63,7 @@ const HotelsSukhum: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>Загрузка...</h1>
-          </section>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
         </main>
         <Footer />
       </div>
@@ -67,32 +75,34 @@ const HotelsSukhum: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
-          </section>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
         </main>
         <Footer />
       </div>
     );
   }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data.title || 'Сухум: отели'}</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Сухум: отели'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
           {data.hotels.map((hotel) => (
             <div key={hotel.id} className={styles.hotelCard}>
               <div className={styles.imageContainer}>
-                <img
-                  src={hotel.image_url ? `${API_BASE}/media/${hotel.image_url}` : '/assets/placeholder.png'}
-                  alt={hotel.name}
-                  className={styles.hotelImage}
-                />
+                {hotel.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${hotel.image_url}`}
+                    alt={hotel.name}
+                    className={styles.hotelImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
               <div className={styles.infoContainer}>
@@ -116,7 +126,7 @@ const HotelsSukhum: React.FC = () => {
                       <span className={styles.infoValue}>{hotel.contacts}</span>
                     </div>
                   )}
-
+                  
                   {hotel.price && (
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>Цена:</span>
@@ -136,4 +146,4 @@ const HotelsSukhum: React.FC = () => {
   );
 };
 
-export default HotelsSukhum; 
+export default HotelsSukhum;

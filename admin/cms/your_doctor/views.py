@@ -26,17 +26,17 @@ class YourDoctorPageViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=['get'])
     def content(self, request):
-        page = YourDoctorPage.objects.first()
-        if not page:
-            return Response({
-                "hospitals": [],
-                "private_clinics": [],
-                "dentistries": [],
-                "vet_clinics": [],
-                "doctors_groups": [],
-            })
-        serializer = YourDoctorPageSerializer(page)
-        return Response(serializer.data)
+        """Получить все данные страницы врачей"""
+        try:
+            page = self.get_queryset().first()
+            if not page:
+                return Response({"error": "Страница врачей не найдена"}, status=404)
+            
+            serializer = self.get_serializer(page)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
 
 class HospitalViewSet(viewsets.ReadOnlyModelViewSet):
@@ -62,6 +62,7 @@ class VetClinicViewSet(viewsets.ReadOnlyModelViewSet):
 class DoctorsGroupViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = DoctorsGroup.objects.all().order_by('order', 'id')
     serializer_class = DoctorsGroupSerializer
+
 
 
 

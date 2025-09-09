@@ -1,85 +1,109 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './ShopsAndMarketsNewAfon.module.scss';
+import config from '@/config';
 
-const shopsAndMarkets = [
-  {
-    id: 1,
-    name: 'Магазин Продукты',
-    workingHours: 'с 09:00 до 23:00',
-    address: 'Новый Афон, ул. Харазия, 2',
-    addressLink: 'https://yandex.com/maps/-/CDxcyPyL',
-    contacts: null,
-    image: '/assets/ShopAndMarketsNewAfon1.jpg',
-    name_link: null,
-  },
-  {
-    id: 2,
-    name: 'Продуктовый рынок',
-    workingHours: 'с 08:00 до 18:00',
-    address: 'Гудаутский район, Новый Афон, улица Харазия',
-    addressLink: 'https://yandex.com/maps/-/CDxc5A3B',
-    contacts: null,
-    image: '/assets/ShopAndMarketsNewAfon2.jpg',
-    name_link: null,
-  },
-  {
-    id: 3,
-    name: 'Продукты',
-    workingHours: 'с 09:00 до 22:00',
-    address: 'Гудаутский район, Новый Афон, улица Эшба',
-    addressLink: 'https://yandex.com/maps/-/CDxc5Qou',
-    contacts: null,
-    image: '/assets/ShopAndMarketsNewAfon3.jpg',
-    name_link: null,
-  },
-  {
-    id: 4,
-    name: 'Магазин Светлана',
-    workingHours: null,
-    address: 'Гудаутский район, Новый Афон, улица Ладария',
-    addressLink: 'https://yandex.com/maps/-/CDxc5NmM',
-    contacts: null,
-    image: '/assets/ShopAndMarketsNewAfon4.jpg',
-    name_link: null,
-  },
-  {
-    id: 5,
-    name: 'Мясная лавка',
-    workingHours: 'с 09:00 16:00',
-    address: 'Гудаутский район, Новый Афон, улица Кяхба',
-    addressLink: 'https://yandex.com/maps/-/CDxc5K4w',
-    contacts: '+7 (940) 711-29-38',
-    image: '/assets/ShopAndMarketsNewAfon5.jpg',
-    name_link: null,
-  },
-];
+type City = { id: number; name: string; title?: string; order: number };
+type Shop = {
+  id: number;
+  city: number;
+  name: string;
+  name_link?: string;
+  address: string;
+  address_link?: string;
+  phone?: string;
+  working_hours?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  shops: Shop[];
+};
+
+const API_BASE = config.API_BASE;
 
 const ShopsAndMarketsNewAfon: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/shops-and-markets/page/city_page/${encodeURIComponent('Новый Афон')}/`, { cache: 'no-store' });
+        
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Новый Афон: Магазины, рынки</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Новый Афон: магазины и рынки'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
-          {shopsAndMarkets.map((shop) => (
+          {data.shops.map((shop) => (
             <div key={shop.id} className={styles.shopCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={shop.image}
-                  alt={shop.name}
-                  fill
-                  className={styles.shopImage}
-                />
+                {shop.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${shop.image_url}`}
+                    alt={shop.name}
+                    className={styles.shopImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
               <div className={styles.infoContainer}>
@@ -94,30 +118,28 @@ const ShopsAndMarketsNewAfon: React.FC = () => {
                 </h2>
                 
                 <div className={styles.infoBlock}>
-                  {shop.workingHours && (
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={`${styles.infoValue} ${shop.address_link ? styles.addressLink : ''}`}>
+                      {shop.address_link ? (
+                        <a href={shop.address_link} target="_blank" rel="noopener noreferrer">{shop.address}</a>
+                      ) : (
+                        shop.address
+                      )}
+                    </span>
+                  </div>
+                  
+                  {shop.working_hours && (
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>Режим работы:</span>
-                      <span className={styles.infoValue}>{shop.workingHours}</span>
+                      <span className={styles.infoValue}>{shop.working_hours}</span>
                     </div>
                   )}
                   
-                  {shop.address && (
+                  {shop.phone && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Адрес:</span>
-                      <span className={`${styles.infoValue} ${shop.addressLink ? styles.addressLink : ''}`}>
-                        {shop.addressLink ? (
-                          <a href={shop.addressLink} target="_blank" rel="noopener noreferrer">{shop.address}</a>
-                        ) : (
-                          shop.address
-                        )}
-                      </span>
-                    </div>
-                  )}
-                  
-                  {shop.contacts && (
-                    <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
-                      <span className={styles.infoValue}>{shop.contacts}</span>
+                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoValue}>{shop.phone}</span>
                     </div>
                   )}
                 </div>

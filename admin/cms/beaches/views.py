@@ -12,24 +12,51 @@ class BeachesPageViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=['get'])
     def content(self, request):
-        page = BeachesPage.objects.first()
-        if not page:
-            return Response({"cities": [], "beaches": []})
-        serializer = BeachesPageSerializer(page)
-        return Response(serializer.data)
+        """Получить все данные страницы пляжей"""
+        try:
+            page = self.get_queryset().first()
+            if not page:
+                return Response({"error": "Страница пляжей не найдена"}, status=404)
+            
+            serializer = self.get_serializer(page)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
-    @action(detail=False, methods=['get'], url_path='city/(?P<name>[^/]+)')
-    def city(self, request, name=None):
-        page = BeachesPage.objects.first()
-        city = BeachCity.objects.filter(name__iexact=name).first()
-        if not page or not city:
-            return Response({"title": "", "beaches": []})
-        beaches = Beach.objects.filter(city=city).order_by('order', 'id')
-        return Response({
-            "title": city.title or city.name,
-            "city": {"id": city.id, "name": city.name, "title": city.title, "order": city.order},
-            "beaches": BeachSerializer(beaches, many=True).data,
-        })
+    @action(detail=False, methods=['get'], url_path='city/(?P<city_name>[^/]+)')
+    def city_page(self, request, city_name=None):
+        """Получить данные страницы пляжей для конкретного города"""
+        try:
+            page = self.get_queryset().first()
+            if not page:
+                return Response({"error": "Страница пляжей не найдена"}, status=404)
+            
+            # Найти город по имени
+            city = BeachCity.objects.filter(
+                page=page,
+                name__icontains=city_name
+            ).first()
+            
+            if not city:
+                return Response({"error": f"Город '{city_name}' не найден"}, status=404)
+            
+            # Получить пляжи для этого города
+            beaches = Beach.objects.filter(city=city).order_by('order', 'id')
+            
+            # Формируем заголовок
+            title = city.title or f"{city.name}: пляжи"
+            
+            data = {
+                "title": title,
+                "city": CitySerializer(city).data,
+                "beaches": BeachSerializer(beaches, many=True).data
+            }
+            
+            return Response(data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
 
 class CityViewSet(viewsets.ReadOnlyModelViewSet):

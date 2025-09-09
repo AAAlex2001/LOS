@@ -8,3 +8,4 @@ router.register(r'page', CarWashesPageViewSet)
 urlpatterns = [
     path('', include(router.urls)),
 ]
+

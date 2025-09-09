@@ -12,16 +12,23 @@ class TaxiPageViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=['get'])
     def content(self, request):
-        page = TaxiPage.objects.first()
-        if not page:
-            return Response({"services": []})
-        serializer = TaxiPageSerializer(page)
-        return Response(serializer.data)
+        """Получить все данные страницы такси"""
+        try:
+            page = self.get_queryset().first()
+            if not page:
+                return Response({"error": "Страница такси не найдена"}, status=404)
+            
+            serializer = self.get_serializer(page)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
 
 class TaxiServiceViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = TaxiService.objects.all().order_by('order', 'id')
     serializer_class = TaxiServiceSerializer
+
 
 
 

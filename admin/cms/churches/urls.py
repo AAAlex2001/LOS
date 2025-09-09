@@ -8,3 +8,4 @@ router.register(r'page', ChurchesPageViewSet)
 urlpatterns = [
     path('', include(router.urls)),
 ]
+

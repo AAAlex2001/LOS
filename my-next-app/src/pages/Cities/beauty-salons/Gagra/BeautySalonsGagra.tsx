@@ -38,13 +38,21 @@ const BeautySalonsGagra: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/beauty-salons/page/city/${encodeURIComponent('Гагра')}/`, { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to load beauty salons');
+        const res = await fetch(`${API_BASE}/api/beauty-salons/page/city_page/${encodeURIComponent('Гагра')}/`, { cache: 'no-store' });
+        
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
         const json = (await res.json()) as CityPageData;
         setData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
       } finally {
         setLoading(false);
       }

@@ -8,3 +8,4 @@ router.register(r'page', ClothingRepairPageViewSet)
 urlpatterns = [
     path('', include(router.urls)),
 ]
+

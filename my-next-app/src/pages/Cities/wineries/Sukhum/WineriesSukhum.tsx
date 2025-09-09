@@ -1,46 +1,57 @@
 'use client';
 
 import React from 'react';
-// next/image убираем; используем <img> как в банках
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './WineriesSukhum.module.scss';
 import config from '@/config';
 
+type City = { id: number; name: string; title?: string; order: number };
 type Winery = {
   id: number;
+  city: number;
   name: string;
-  working_hours?: string;
+  name_link?: string;
   address: string;
   address_link?: string;
-  contacts?: string;
-  image_url?: string;
+  phone?: string;
+  working_hours?: string;
+  image_url: string;
   order: number;
 };
 
-type CityPayload = {
+type CityPageData = {
   title: string;
+  city?: City;
   wineries: Winery[];
 };
 
 const API_BASE = config.API_BASE;
 
 const WineriesSukhum: React.FC = () => {
-  const [data, setData] = React.useState<CityPayload | null>(null);
+  const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/wineries/page/city/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to load');
-        const json = (await res.json()) as CityPayload;
+        const res = await fetch(`${API_BASE}/api/wineries/page/city_page/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
+        
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
+        const json = (await res.json()) as CityPageData;
         setData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
       } finally {
         setLoading(false);
       }
@@ -53,9 +64,7 @@ const WineriesSukhum: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>Загрузка...</h1>
-          </section>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
         </main>
         <Footer />
       </div>
@@ -67,9 +76,7 @@ const WineriesSukhum: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
-          </section>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
         </main>
         <Footer />
       </div>
@@ -81,36 +88,36 @@ const WineriesSukhum: React.FC = () => {
       <Header />
       
       <main className={styles.mainContent}>
-        {/* Заголовок */}
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data.title || 'Сухум: винодельни'}</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Сухум: винодельни'}</h1>
         </section>
 
-        {/* Карточки виноделен */}
         <section className={styles.cardsSection}>
           {data.wineries.map((winery) => (
             <div key={winery.id} className={styles.wineryCard}>
-              {/* Изображение */}
               <div className={styles.imageContainer}>
-                <img
-                  src={winery.image_url ? `${API_BASE}/media/${winery.image_url}` : '/assets/placeholder.png'}
-                  alt={winery.name}
-                  className={styles.wineryImage}
-                />
+                {winery.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${winery.image_url}`}
+                    alt={winery.name}
+                    className={styles.wineryImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
-              {/* Информация */}
               <div className={styles.infoContainer}>
-                <h2 className={styles.wineryName}>{winery.name}</h2>
+                <h2 className={styles.wineryName}>
+                  {winery.name_link ? (
+                    <a href={winery.name_link} target="_blank" rel="noopener noreferrer">
+                      {winery.name}
+                    </a>
+                  ) : (
+                    winery.name
+                  )}
+                </h2>
                 
                 <div className={styles.infoBlock}>
-                  {winery.working_hours && (
-                    <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
-                      <span className={styles.infoValue}>{winery.working_hours}</span>
-                    </div>
-                  )}
-                  
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Адрес:</span>
                     <span className={`${styles.infoValue} ${winery.address_link ? styles.addressLink : ''}`}>
@@ -121,11 +128,18 @@ const WineriesSukhum: React.FC = () => {
                       )}
                     </span>
                   </div>
-
-                  {winery.contacts && (
+                  
+                  {winery.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
-                      <span className={styles.infoValue}>{winery.contacts}</span>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{winery.working_hours}</span>
+                    </div>
+                  )}
+                  
+                  {winery.phone && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoValue}>{winery.phone}</span>
                     </div>
                   )}
                 </div>
@@ -141,4 +155,4 @@ const WineriesSukhum: React.FC = () => {
   );
 };
 
-export default WineriesSukhum; 
+export default WineriesSukhum;

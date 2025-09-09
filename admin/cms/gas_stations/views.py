@@ -12,24 +12,51 @@ class GasStationsPageViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=['get'])
     def content(self, request):
-        page = GasStationsPage.objects.first()
-        if not page:
-            return Response({"cities": [], "gas_stations": []})
-        serializer = GasStationsPageSerializer(page)
-        return Response(serializer.data)
+        """Получить все данные страницы заправок"""
+        try:
+            page = self.get_queryset().first()
+            if not page:
+                return Response({"error": "Страница заправок не найдена"}, status=404)
+            
+            serializer = self.get_serializer(page)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
-    @action(detail=False, methods=['get'], url_path='city/(?P<name>[^/]+)')
-    def city(self, request, name=None):
-        page = GasStationsPage.objects.first()
-        city = GasStationCity.objects.filter(name__iexact=name).first()
-        if not page or not city:
-            return Response({"title": "", "gas_stations": []})
-        items = GasStation.objects.filter(city=city).order_by('order', 'id')
-        return Response({
-            "title": city.title or city.name,
-            "city": {"id": city.id, "name": city.name, "title": city.title, "order": city.order},
-            "gas_stations": GasStationSerializer(items, many=True).data,
-        })
+    @action(detail=False, methods=['get'], url_path='city/(?P<city_name>[^/]+)')
+    def city_page(self, request, city_name=None):
+        """Получить данные страницы заправок для конкретного города"""
+        try:
+            page = self.get_queryset().first()
+            if not page:
+                return Response({"error": "Страница заправок не найдена"}, status=404)
+            
+            # Найти город по имени
+            city = GasStationCity.objects.filter(
+                page=page,
+                name__icontains=city_name
+            ).first()
+            
+            if not city:
+                return Response({"error": f"Город '{city_name}' не найден"}, status=404)
+            
+            # Получить заправки для этого города
+            gas_stations = GasStation.objects.filter(city=city).order_by('order', 'id')
+            
+            # Формируем заголовок
+            title = city.title or f"{city.name}: заправки"
+            
+            data = {
+                "title": title,
+                "city": CitySerializer(city).data,
+                "gas_stations": GasStationSerializer(gas_stations, many=True).data
+            }
+            
+            return Response(data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
 
 class CityViewSet(viewsets.ReadOnlyModelViewSet):

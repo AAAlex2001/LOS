@@ -15,11 +15,17 @@ class BanksPageViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=['get'])
     def content(self, request):
-        page = BanksPage.objects.first()
-        if not page:
-            return Response({"banks": []})
-        serializer = BanksPageSerializer(page)
-        return Response(serializer.data)
+        """Получить все данные страницы банков"""
+        try:
+            page = self.get_queryset().first()
+            if not page:
+                return Response({"error": "Страница банков не найдена"}, status=404)
+            
+            serializer = self.get_serializer(page)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
 
 class BankViewSet(viewsets.ReadOnlyModelViewSet):

@@ -18,33 +18,42 @@ class AbkhazianCuisinePageViewSet(viewsets.ReadOnlyModelViewSet):
         """
         Получить полное содержимое страницы абхазской кухни
         """
-        page = AbkhazianCuisinePage.objects.first()
-        if not page:
-            return Response({
-                "sections": [],
-                "main_dishes": [],
-                "hero_image_url": ""
-            })
-        serializer = AbkhazianCuisinePageSerializer(page)
-        return Response(serializer.data)
+        try:
+            page = self.get_queryset().first()
+            if not page:
+                return Response({"error": "Страница абхазской кухни не найдена"}, status=404)
+            
+            serializer = self.get_serializer(page)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
     @action(detail=False, methods=['get'])
     def sections(self, request):
         """
         Получить только секции контента
         """
-        sections = CuisineSection.objects.all().order_by('order', 'id')
-        serializer = CuisineSectionSerializer(sections, many=True)
-        return Response(serializer.data)
+        try:
+            sections = CuisineSection.objects.all().order_by('order', 'id')
+            serializer = CuisineSectionSerializer(sections, many=True)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
     @action(detail=False, methods=['get'])
     def main_dishes(self, request):
         """
         Получить только основные блюда
         """
-        dishes = MainDish.objects.all().order_by('order', 'id')
-        serializer = MainDishSerializer(dishes, many=True)
-        return Response(serializer.data)
+        try:
+            dishes = MainDish.objects.all().order_by('order', 'id')
+            serializer = MainDishSerializer(dishes, many=True)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
 
 class CuisineSectionViewSet(viewsets.ReadOnlyModelViewSet):

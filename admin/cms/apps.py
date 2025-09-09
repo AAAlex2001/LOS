@@ -33,58 +33,30 @@ class CmsConfig(AppConfig):
         except ImportError:
             pass
 
-        try:
-            from . import taxi  # noqa
-        except ImportError:
-            pass
+        # Остальные подмодули приложения CMS
+        for module_name in (
+            # Страницы и сущности по категориям
+            'administrative_buildings',
+            'beaches',
+            'beauty_salons',
+            'car_washes',
+            'churches',
+            'clothing_repair',
+            'cultural_attractions',
+            'gas_stations',
+            'hotels',
+            'parking_lots',
+            'pharmacy',
+            'restaurants',
+            'shops_and_markets',
+            'taxi',
+            'wineries',
+            'your_doctor',
+        ):
+            try:
+                __import__(f"{self.name}.{module_name}.models")  # noqa: F401
+            except Exception:
+                # Модуль может отсутствовать или быть не инициализирован — не падаем
+                pass
 
-        try:
-            from . import your_doctor  # noqa
-        except ImportError:
-            pass
-
-        try:
-            from . import administrative_buildings  # noqa
-        except ImportError:
-            pass
-
-        try:
-            from . import beaches  # noqa
-        except ImportError:
-            pass
-
-        try:
-            from . import gas_stations  # noqa
-        except ImportError:
-            pass
-
-        try:
-            from . import hotels  # noqa
-        except ImportError:
-            pass
-
-        try:
-            from . import parking_lots  # noqa
-        except ImportError:
-            pass
-
-        try:
-            from . import pharmacy  # noqa
-        except ImportError:
-            pass
-
-        try:
-            from . import restaurants  # noqa
-        except ImportError:
-            pass
-
-        try:
-            from . import shops_and_markets  # noqa
-        except ImportError:
-            pass
-
-        try:
-            from . import wineries  # noqa
-        except ImportError:
-            pass
 

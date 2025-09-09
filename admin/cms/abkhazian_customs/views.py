@@ -18,23 +18,29 @@ class AbkhazianCustomsPageViewSet(viewsets.ReadOnlyModelViewSet):
         """
         Получить полное содержимое страницы абхазских обычаев
         """
-        page = AbkhazianCustomsPage.objects.first()
-        if not page:
-            return Response({
-                "sections": [],
-                "hero_image_url": ""
-            })
-        serializer = AbkhazianCustomsPageSerializer(page)
-        return Response(serializer.data)
+        try:
+            page = self.get_queryset().first()
+            if not page:
+                return Response({"error": "Страница абхазских обычаев не найдена"}, status=404)
+            
+            serializer = self.get_serializer(page)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
     @action(detail=False, methods=['get'])
     def sections(self, request):
         """
         Получить только секции контента
         """
-        sections = CustomSection.objects.all().order_by('order', 'id')
-        serializer = CustomSectionSerializer(sections, many=True)
-        return Response(serializer.data)
+        try:
+            sections = CustomSection.objects.all().order_by('order', 'id')
+            serializer = CustomSectionSerializer(sections, many=True)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
 
 class CustomSectionViewSet(viewsets.ReadOnlyModelViewSet):
@@ -43,4 +49,5 @@ class CustomSectionViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = CustomSection.objects.all().order_by('order', 'id')
     serializer_class = CustomSectionSerializer
+
 

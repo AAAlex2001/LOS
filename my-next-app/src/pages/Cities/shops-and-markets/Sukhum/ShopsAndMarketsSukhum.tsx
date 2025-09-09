@@ -1,46 +1,57 @@
 'use client';
 
 import React from 'react';
-// next/image убираем; используем <img> как в банках
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './ShopsAndMarketsSukhum.module.scss';
 import config from '@/config';
 
+type City = { id: number; name: string; title?: string; order: number };
 type Shop = {
   id: number;
+  city: number;
   name: string;
-  working_hours?: string;
+  name_link?: string;
   address: string;
   address_link?: string;
-  contacts?: string;
-  image_url?: string;
+  phone?: string;
+  working_hours?: string;
+  image_url: string;
   order: number;
 };
 
-type CityPayload = {
+type CityPageData = {
   title: string;
+  city?: City;
   shops: Shop[];
 };
 
 const API_BASE = config.API_BASE;
 
 const ShopsAndMarketsSukhum: React.FC = () => {
-  const [data, setData] = React.useState<CityPayload | null>(null);
+  const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/shops-and-markets/page/city/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to load');
-        const json = (await res.json()) as CityPayload;
+        const res = await fetch(`${API_BASE}/api/shops-and-markets/page/city_page/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
+        
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
+        const json = (await res.json()) as CityPageData;
         setData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
       } finally {
         setLoading(false);
       }
@@ -53,9 +64,7 @@ const ShopsAndMarketsSukhum: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>Загрузка...</h1>
-          </section>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
         </main>
         <Footer />
       </div>
@@ -67,45 +76,48 @@ const ShopsAndMarketsSukhum: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
-          </section>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
         </main>
         <Footer />
       </div>
     );
   }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data.title || 'Сухум: Магазины, рынки'}</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Сухум: магазины и рынки'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
           {data.shops.map((shop) => (
             <div key={shop.id} className={styles.shopCard}>
               <div className={styles.imageContainer}>
-                <img
-                  src={shop.image_url ? `${API_BASE}/media/${shop.image_url}` : '/assets/placeholder.png'}
-                  alt={shop.name}
-                  className={styles.shopImage}
-                />
+                {shop.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${shop.image_url}`}
+                    alt={shop.name}
+                    className={styles.shopImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
               <div className={styles.infoContainer}>
-                <h2 className={styles.shopName}>{shop.name}</h2>
+                <h2 className={styles.shopName}>
+                  {shop.name_link ? (
+                    <a href={shop.name_link} target="_blank" rel="noopener noreferrer">
+                      {shop.name}
+                    </a>
+                  ) : (
+                    shop.name
+                  )}
+                </h2>
                 
                 <div className={styles.infoBlock}>
-                  {shop.working_hours && (
-                    <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
-                      <span className={styles.infoValue}>{shop.working_hours}</span>
-                    </div>
-                  )}
-                  
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Адрес:</span>
                     <span className={`${styles.infoValue} ${shop.address_link ? styles.addressLink : ''}`}>
@@ -117,10 +129,17 @@ const ShopsAndMarketsSukhum: React.FC = () => {
                     </span>
                   </div>
                   
-                  {shop.contacts && (
+                  {shop.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
-                      <span className={styles.infoValue}>{shop.contacts}</span>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{shop.working_hours}</span>
+                    </div>
+                  )}
+                  
+                  {shop.phone && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoValue}>{shop.phone}</span>
                     </div>
                   )}
                 </div>
@@ -136,4 +155,4 @@ const ShopsAndMarketsSukhum: React.FC = () => {
   );
 };
 
-export default ShopsAndMarketsSukhum; 
+export default ShopsAndMarketsSukhum;

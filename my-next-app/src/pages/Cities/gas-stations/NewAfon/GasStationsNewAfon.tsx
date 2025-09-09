@@ -4,19 +4,18 @@ import React from 'react';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
-import styles from './PharmacyNewAfon.module.scss';
+import styles from './GasStationsNewAfon.module.scss';
 import config from '@/config';
 
 type City = { id: number; name: string; title?: string; order: number };
-type Pharmacy = {
+type GasStation = {
   id: number;
   city: number;
   name: string;
   name_link?: string;
   address: string;
   address_link?: string;
-  phone?: string;
-  working_hours?: string;
+  contacts?: string;
   image_url: string;
   order: number;
 };
@@ -24,12 +23,12 @@ type Pharmacy = {
 type CityPageData = {
   title: string;
   city?: City;
-  pharmacies: Pharmacy[];
+  gas_stations: GasStation[];
 };
 
 const API_BASE = config.API_BASE;
 
-const PharmacyNewAfon: React.FC = () => {
+const GasStationsNewAfon: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
@@ -37,7 +36,7 @@ const PharmacyNewAfon: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/pharmacy/page/city_page/${encodeURIComponent('Новый Афон')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/gas-stations/page/city_page/${encodeURIComponent('Новый Афон')}/`, { cache: 'no-store' });
         
         if (!res.ok) {
           if (res.status === 404) {
@@ -89,57 +88,50 @@ const PharmacyNewAfon: React.FC = () => {
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data?.title || 'Новый Афон: аптеки'}</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Новый Афон: автозаправочные станции'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
-          {data.pharmacies.map((pharmacy) => (
-            <div key={pharmacy.id} className={styles.pharmacyCard}>
+          {data.gas_stations.map((station) => (
+            <div key={station.id} className={styles.gasStationCard}>
               <div className={styles.imageContainer}>
-                {pharmacy.image_url && (
+                {station.image_url && (
                   <img
-                    src={`${API_BASE}/media/${pharmacy.image_url}`}
-                    alt={pharmacy.name}
-                    className={styles.pharmacyImage}
+                    src={`${API_BASE}/media/${station.image_url}`}
+                    alt={station.name}
+                    className={styles.gasStationImage}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 )}
               </div>
 
               <div className={styles.infoContainer}>
-                <h2 className={styles.pharmacyName}>
-                  {pharmacy.name_link ? (
-                    <a href={pharmacy.name_link} target="_blank" rel="noopener noreferrer">
-                      {pharmacy.name}
+                <h2 className={styles.gasStationName}>
+                  {station.name_link ? (
+                    <a href={station.name_link} target="_blank" rel="noopener noreferrer">
+                      {station.name}
                     </a>
                   ) : (
-                    pharmacy.name
+                    station.name
                   )}
                 </h2>
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Адрес:</span>
-                    <span className={`${styles.infoValue} ${pharmacy.address_link ? styles.addressLink : ''}`}>
-                      {pharmacy.address_link ? (
-                        <a href={pharmacy.address_link} target="_blank" rel="noopener noreferrer">{pharmacy.address}</a>
+                    <span className={`${styles.infoValue} ${station.address_link ? styles.addressLink : ''}`}>
+                      {station.address_link ? (
+                        <a href={station.address_link} target="_blank" rel="noopener noreferrer">{station.address}</a>
                       ) : (
-                        pharmacy.address
+                        station.address
                       )}
                     </span>
                   </div>
                   
-                  {pharmacy.working_hours && (
+                  {station.contacts && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
-                      <span className={styles.infoValue}>{pharmacy.working_hours}</span>
-                    </div>
-                  )}
-                  
-                  {pharmacy.phone && (
-                    <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Телефон:</span>
-                      <span className={styles.infoValue}>{pharmacy.phone}</span>
+                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoValue}>{station.contacts}</span>
                     </div>
                   )}
                 </div>
@@ -155,4 +147,4 @@ const PharmacyNewAfon: React.FC = () => {
   );
 };
 
-export default PharmacyNewAfon;
+export default GasStationsNewAfon;

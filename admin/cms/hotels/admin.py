@@ -1,27 +1,67 @@
 from django.contrib import admin
+from django.utils.html import format_html
 
 from .models import HotelsPage, HotelCity, Hotel
 
 
+class HotelInline(admin.TabularInline):
+    model = Hotel
+    extra = 1
+    fields = ("name", "name_link", "working_hours", "address", "address_link", "contacts", "image", "order", "preview")
+    readonly_fields = ("preview",)
+
+    def preview(self, obj):
+        if obj and obj.image:
+            return format_html('<img src="{}" style="height:60px;" />', obj.image.url)
+        return "—"
+    
+    preview.short_description = "Предпросмотр"
+
+
+class HotelCityInline(admin.TabularInline):
+    model = HotelCity
+    extra = 1
+    fields = ("name", "title", "order")
+    inlines = [HotelInline]
+
+
 @admin.register(HotelsPage)
 class HotelsPageAdmin(admin.ModelAdmin):
-    list_display = ("id", "seo_title", "updated_at")
-    search_fields = ("seo_title",)
-    list_filter = ("updated_at",)
+    list_display = ("id", "updated_at")
+    inlines = [HotelCityInline]
+    readonly_fields = ("seo_preview",)
+
+    def has_add_permission(self, request):
+        if HotelsPage.objects.exists():
+            return False
+        return super().has_add_permission(request)
+    
+    fieldsets = (
+        ("SEO", {
+            "fields": (
+                "seo_title", "seo_description", "seo_keywords", "canonical_url",
+                "robots_index", "robots_follow", "seo_preview"
+            )
+        }),
+        ("Open Graph", {
+            "fields": ("og_title", "og_description", "og_image")
+        }),
+        ("Twitter Cards", {
+            "fields": ("twitter_title", "twitter_description", "twitter_image")
+        }),
+    )
+
+    def seo_preview(self, obj):
+        if not obj.seo_title and not obj.seo_description:
+            return "SEO не настроено"
+        
+        preview = f"<strong>{obj.seo_title or 'Без заголовка'}</strong><br>"
+        preview += f"{obj.seo_description or 'Без описания'}"
+        
+        return format_html(preview)
+    
+    seo_preview.short_description = "SEO предпросмотр"
 
 
-@admin.register(HotelCity)
-class HotelCityAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "title", "order", "updated_at")
-    list_editable = ("order",)
-    search_fields = ("name", "title")
-    list_filter = ("updated_at",)
-
-
-@admin.register(Hotel)
-class HotelAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "city", "order", "updated_at")
-    list_editable = ("order",)
-    search_fields = ("name", "address", "contacts")
-    list_filter = ("city", "updated_at")
-
+## ВАЖНО: Не регистрируем модели `HotelCity` и `Hotel` отдельно,
+## чтобы они не отображались в главном меню админки. Управление — только через inlines.

@@ -1,82 +1,145 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './ParkingLotsGagra.module.scss';
+import config from '@/config';
 
-// Данные парковок
-const parkingLots = [
-  {
-    id: 1,
-    name: 'Автостоянка Гагра 1',
-    address: 'ул.Рашида Гечба 40',
-    addressLink: null,
-    contacts: '+79409932322',
-    workingHours: 'круглосуточно',
-    image: '/assets/city_gagra.jpg',
-  },
-  {
-    id: 2,
-    name: 'Автостоянка Гагра 2',
-    address: 'ул.Рашида Гечба 40',
-    addressLink: null,
-    contacts: '+79409932322',
-    workingHours: 'круглосуточно',
-    image: '/assets/city_gagra.jpg',
-  },
-];
+type City = { id: number; name: string; title?: string; order: number };
+type ParkingLot = {
+  id: number;
+  city: number;
+  name: string;
+  name_link?: string;
+  address: string;
+  address_link?: string;
+  phone?: string;
+  working_hours?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  parking_lots: ParkingLot[];
+};
+
+const API_BASE = config.API_BASE;
 
 const ParkingLotsGagra: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/parking-lots/page/city_page/${encodeURIComponent('Гагра')}/`, { cache: 'no-store' });
+        
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Гагра: парковки для автомобилей</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Гагра: парковки для автомобилей'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
-          {parkingLots.map((lot) => (
+          {data.parking_lots.map((lot) => (
             <div key={lot.id} className={styles.parkingLotCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={lot.image}
-                  alt={lot.name}
-                  fill
-                  className={styles.parkingLotImage}
-                />
+                {lot.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${lot.image_url}`}
+                    alt={lot.name}
+                    className={styles.parkingLotImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
               <div className={styles.infoContainer}>
-                <h2 className={styles.parkingLotName}>{lot.name}</h2>
+                <h2 className={styles.parkingLotName}>
+                  {lot.name_link ? (
+                    <a href={lot.name_link} target="_blank" rel="noopener noreferrer">
+                      {lot.name}
+                    </a>
+                  ) : (
+                    lot.name
+                  )}
+                </h2>
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Адрес:</span>
-                    <span className={`${styles.infoValue} ${lot.addressLink ? styles.addressLink : ''}`}>
-                      {lot.addressLink ? (
-                        <a href={lot.addressLink} target="_blank" rel="noopener noreferrer">{lot.address}</a>
+                    <span className={`${styles.infoValue} ${lot.address_link ? styles.addressLink : ''}`}>
+                      {lot.address_link ? (
+                        <a href={lot.address_link} target="_blank" rel="noopener noreferrer">{lot.address}</a>
                       ) : (
                         lot.address
                       )}
                     </span>
                   </div>
-
-                  {lot.contacts && (
+                  
+                  {lot.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
-                      <span className={styles.infoValue}>{lot.contacts}</span>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{lot.working_hours}</span>
                     </div>
                   )}
-
-                  {lot.workingHours && (
+                  
+                  {lot.phone && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Часы работы:</span>
-                      <span className={styles.infoValue}>{lot.workingHours}</span>
+                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoValue}>{lot.phone}</span>
                     </div>
                   )}
                 </div>
@@ -92,4 +155,4 @@ const ParkingLotsGagra: React.FC = () => {
   );
 };
 
-export default ParkingLotsGagra; 
+export default ParkingLotsGagra;

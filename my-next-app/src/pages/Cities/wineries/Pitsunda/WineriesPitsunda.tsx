@@ -1,86 +1,109 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './WineriesPitsunda.module.scss';
+import config from '@/config';
 
-// Данные виноделен
-const wineries = [
-  {
-    id: 1,
-    name: 'Дегустационный зал Леон',
-    workingHours: 'с 09:00 до 22:00',
-    address: 'Гагрский район, Пицунда, Кипарисовая аллея',
-    addressLink: 'https://yandex.com/maps/-/CDHbRZiP',
-    contacts: '+7 (940) 991-27-97',
-    image: '/assets/WineriesPitsunda1.jpg',
-    name_link: null,
-  },
-  {
-    id: 2,
-    name: 'У моря',
-    workingHours: 'с 09:00 до 22:00',
-    address: 'Пицунда, Кипарисовая аллея, 47',
-    addressLink: 'https://yandex.com/maps/-/CDHbV4Jf',
-    contacts: '+7 (940) 910-23-01',
-    image: '/assets/WineriesPitsunda2.jpg',
-    name_link: null,
-  },
-  {
-    id: 3,
-    name: 'Вина и воды Абхазии',
-    workingHours: null,
-    address: 'Гагрский район, Пицунда',
-    addressLink: 'https://yandex.com/maps/-/CDHbV20j',
-    contacts: null,
-    image: '/assets/WineriesPitsunda3.jpg',
-    name_link: null,
-  },
-  {
-    id: 4,
-    name: 'Вино',
-    workingHours: 'с 09:00 до 21:00',
-    address: 'Гагрский район, село Лдзаа, Рыбзаводская улица',
-    addressLink: 'https://yandex.com/maps/-/CDHbZE5O',
-    contacts: null,
-    image: '/assets/WineriesPitsunda4.jpg',
-    name_link: null,
-  },
-  {
-    id: 5,
-    name: 'Фирменный магазин Шато Абхаз',
-    workingHours: 'с 09:00 до 17:00',
-    address: 'Гагрский район, село Алахадзы',
-    addressLink: 'https://yandex.com/maps/-/CDHbZI23',
-    contacts: null,
-    image: '/assets/WineriesPitsunda5.jpg',
-    name_link: null,
-  }
-];
+type City = { id: number; name: string; title?: string; order: number };
+type Winery = {
+  id: number;
+  city: number;
+  name: string;
+  name_link?: string;
+  address: string;
+  address_link?: string;
+  phone?: string;
+  working_hours?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  wineries: Winery[];
+};
+
+const API_BASE = config.API_BASE;
 
 const WineriesPitsunda: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/wineries/page/city_page/${encodeURIComponent('Пицунда')}/`, { cache: 'no-store' });
+        
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Пицунда: винодельни</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Пицунда: винодельни'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
-          {wineries.map((winery) => (
+          {data.wineries.map((winery) => (
             <div key={winery.id} className={styles.wineryCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={winery.image}
-                  alt={winery.name}
-                  fill
-                  className={styles.wineryImage}
-                />
+                {winery.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${winery.image_url}`}
+                    alt={winery.name}
+                    className={styles.wineryImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
               <div className={styles.infoContainer}>
@@ -95,30 +118,28 @@ const WineriesPitsunda: React.FC = () => {
                 </h2>
                 
                 <div className={styles.infoBlock}>
-                  {winery.workingHours && (
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={`${styles.infoValue} ${winery.address_link ? styles.addressLink : ''}`}>
+                      {winery.address_link ? (
+                        <a href={winery.address_link} target="_blank" rel="noopener noreferrer">{winery.address}</a>
+                      ) : (
+                        winery.address
+                      )}
+                    </span>
+                  </div>
+                  
+                  {winery.working_hours && (
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>Режим работы:</span>
-                      <span className={styles.infoValue}>{winery.workingHours}</span>
+                      <span className={styles.infoValue}>{winery.working_hours}</span>
                     </div>
                   )}
                   
-                  {winery.address && (
+                  {winery.phone && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Адрес:</span>
-                      <span className={`${styles.infoValue} ${winery.addressLink ? styles.addressLink : ''}`}>
-                        {winery.addressLink ? (
-                          <a href={winery.addressLink} target="_blank" rel="noopener noreferrer">{winery.address}</a>
-                        ) : (
-                          winery.address
-                        )}
-                      </span>
-                    </div>
-                  )}
-                  
-                  {winery.contacts && (
-                    <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
-                      <span className={styles.infoValue}>{winery.contacts}</span>
+                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoValue}>{winery.phone}</span>
                     </div>
                   )}
                 </div>

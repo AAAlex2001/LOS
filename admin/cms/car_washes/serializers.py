@@ -37,3 +37,4 @@ class CarWashesPageSerializer(serializers.ModelSerializer):
             "twitter_description", "twitter_image", "robots_index", "robots_follow",
             "cities", "car_washes"
         ]
+

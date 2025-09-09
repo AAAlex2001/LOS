@@ -38,7 +38,7 @@ const ChurchesOchamchira: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/churches/page/city/${encodeURIComponent('Очамчыра')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/churches/page/city_page/${encodeURIComponent('Очамчыра')}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load churches');
         const json = (await res.json()) as CityPageData;
         setData(json);

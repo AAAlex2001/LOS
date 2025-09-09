@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from .models import AdministrativeBuildingsPage, City, AdministrativeBuilding
+from .models import AdministrativeBuildingsPage, AdministrativeBuildingCity, AdministrativeBuilding
 
 
 class CitySerializer(serializers.ModelSerializer):
     class Meta:
-        model = City
+        model = AdministrativeBuildingCity
         fields = ["id", "name", "title", "order"]
 
 

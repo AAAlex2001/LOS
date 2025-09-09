@@ -8,3 +8,4 @@ router.register(r'page', CulturalAttractionsPageViewSet)
 urlpatterns = [
     path('', include(router.urls)),
 ]
+

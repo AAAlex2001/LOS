@@ -1,96 +1,109 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './WineriesGagra.module.scss';
+import config from '@/config';
 
-// Данные виноделен
-const wineries = [
-  {
-    id: 1,
-    name: 'Домашняя винодельня',
-    workingHours: 'круглосуточно',
-    address: 'Кольцевая ул., 10, корп. 1, Гагра',
-    addressLink: 'https://yandex.ru/maps/-/CDSLuMp1',
-    contacts: '+7 (940) 717-01-54',
-    image: '/assets/WineriesGagra1.jpg',
-    name_link: null,
-  },
-  {
-    id: 2,
-    name: 'Винный погребок Бахус',
-    workingHours: null,
-    address: 'просп. Ардзинба, 88',
-    addressLink: 'https://yandex.ru/maps/-/CDSLuBom',
-    contacts: '+7940 9652626; +79407652626',
-    image: '/assets/WineriesGagra2.jpg',
-    name_link: null,
-  },
-  {
-    id: 3,
-    name: 'Винный погреб',
-    workingHours: '09:00-22:00',
-    address: 'Гагра, Шапсугская улица',
-    addressLink: 'https://yandex.ru/maps/-/CDSLuHKR',
-    contacts: '+7 (940) 964-30-39\n+7 (940) 921-61-58',
-    image: '/assets/WineriesGagra3.jpg',
-    name_link: null,
-  },
-  {
-    id: 4,
-    name: 'Винный двор',
-    workingHours: 'круглосуточно',
-    address: 'Гагрский район, посёлок городского типа Бзыпта, село Арасадзых',
-    addressLink: 'https://yandex.ru/maps/-/CDSLyE06',
-    contacts: null,
-    image: '/assets/WineriesGagra4.jpg',
-    name_link: null,
-  },
-  {
-    id: 5,
-    name: 'Ярмарка Абхазских вин',
-    workingHours: '07:00- 22:00',
-    address: 'п.г.т. Бзыпта, Гагрский район, Абхазия',
-    addressLink: 'https://go.2gis.com/1jqhd',
-    contacts: '+7 940‒712‒65‒01',
-    image: '/assets/WineriesGagra5.jpg',
-    name_link: null,
-  },
-  {
-    id: 6,
-    name: 'Винный двор у Ромы',
-    workingHours: null,
-    address: 'п.г.т. Бзыпта, Гагрский район, Абхазия',
-    addressLink: 'https://yandex.com/maps/-/CDHbRPZb',
-    contacts: '+7 (940) 993-25-32',
-    image: '/assets/WineriesGagra6.jpg',
-    name_link: null,
-  }
-];
+type City = { id: number; name: string; title?: string; order: number };
+type Winery = {
+  id: number;
+  city: number;
+  name: string;
+  name_link?: string;
+  address: string;
+  address_link?: string;
+  phone?: string;
+  working_hours?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  wineries: Winery[];
+};
+
+const API_BASE = config.API_BASE;
 
 const WineriesGagra: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/wineries/page/city_page/${encodeURIComponent('Гагра')}/`, { cache: 'no-store' });
+        
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Гагра: винодельни</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Гагра: винодельни'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
-          {wineries.map((winery) => (
+          {data.wineries.map((winery) => (
             <div key={winery.id} className={styles.wineryCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={winery.image}
-                  alt={winery.name}
-                  fill
-                  className={styles.wineryImage}
-                />
+                {winery.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${winery.image_url}`}
+                    alt={winery.name}
+                    className={styles.wineryImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
               <div className={styles.infoContainer}>
@@ -105,30 +118,28 @@ const WineriesGagra: React.FC = () => {
                 </h2>
                 
                 <div className={styles.infoBlock}>
-                  {winery.workingHours && (
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={`${styles.infoValue} ${winery.address_link ? styles.addressLink : ''}`}>
+                      {winery.address_link ? (
+                        <a href={winery.address_link} target="_blank" rel="noopener noreferrer">{winery.address}</a>
+                      ) : (
+                        winery.address
+                      )}
+                    </span>
+                  </div>
+                  
+                  {winery.working_hours && (
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>Режим работы:</span>
-                      <span className={styles.infoValue}>{winery.workingHours}</span>
+                      <span className={styles.infoValue}>{winery.working_hours}</span>
                     </div>
                   )}
                   
-                  {winery.address && (
+                  {winery.phone && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Адрес:</span>
-                      <span className={`${styles.infoValue} ${winery.addressLink ? styles.addressLink : ''}`}>
-                        {winery.addressLink ? (
-                          <a href={winery.addressLink} target="_blank" rel="noopener noreferrer">{winery.address}</a>
-                        ) : (
-                          winery.address
-                        )}
-                      </span>
-                    </div>
-                  )}
-                  
-                  {winery.contacts && (
-                    <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
-                      <span className={styles.infoValue}>{winery.contacts}</span>
+                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoValue}>{winery.phone}</span>
                     </div>
                   )}
                 </div>
