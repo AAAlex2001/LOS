@@ -35,3 +35,4 @@ from .beauty_salons.admin import BeautySalonsPageAdmin
 from .car_washes.admin import CarWashesPageAdmin
 from .churches.admin import ChurchesPageAdmin
 from .clothing_repair.admin import ClothingRepairPageAdmin
+from .cultural_attractions.admin import CulturalAttractionsPageAdmin

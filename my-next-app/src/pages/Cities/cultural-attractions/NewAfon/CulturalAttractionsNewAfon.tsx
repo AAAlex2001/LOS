@@ -1,170 +1,154 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './CulturalAttractionsNewAfon.module.scss';
+import config from '@/config';
 
-const attractions: any[] = [
-  {
-    id: 1,
-    name: 'Иверская гора',
-    description: 'Иверская гора, хорошо заметная из любого района города, возвышается на 344 метра. Здесь находится несколько достопримечательностей курорта, в том числе древняя Анакопийская крепость, заложенная в V веке, и глубокая Новоафонская пещера.\n\nИверскую гору посещают не только для того, чтобы осмотреть природные и исторические достопримечательности, но и ради прекрасных видов. С вершины просматривается большой участок побережья Черного моря – от мыса Пицунда на западе до Сухума на востоке.\n\nНа вершину можно подняться по дороге, которая серпантином проходит по склонам. Пешком путь займет около часа, также можно заказать конную прогулку.',
-    address: 'Иверская гора, Новый Афон, Абхазия.',
-    addressLink: 'https://yandex.com/maps/-/CDxKNKMQ',
-    image: '/assets/CulturalAttractionsNewAfon1.jpg',
-  },
-  {
-    id: 2,
-    name: 'Новоафонская пещера',
-    description: 'Под Иверской горой находится Новоафонская пещера – одна из самых больших карстовых полостей в Абхазии. Общий объем залов пещеры, открытой местным жителем в 1960-х годах, составляет около миллиона кубометров.\n\nПещера оборудована для туристов. Для посетителей даже была построена небольшая железнодорожная ветка: она проходит через тоннель в скале, добраться до входа в пещеру на электропоезде можно всего за несколько минут.\n\nПо подземным залам проводятся организованные экскурсии, во время которых можно увидеть несколько озер, живописные гирлянды сталактитов и причудливые каменные нагромождения. Стандартная экскурсия занимает около полутора часов, для посещения рекомендуется взять с собой теплую одежду (даже в разгар лета в пещере не больше +14 градусов).',
-    address: 'Новоафонская Пещера, улица Чанба, Новый Афон, Абхазия.',
-    addressLink: 'https://yandex.com/maps/-/CDxKN0pS',
-    image: '/assets/CulturalAttractionsNewAfon2.jpg',
-  },
-  {
-    id: 3,
-    name: 'Новоафонский мужской монастырь',
-    description: 'В 1875 году большая территория рядом с Новым Афоном была передана православным монахам, которые основали здесь обитель. Строительство комплекса продолжалось несколько лет, и к началу XX века он стал крупным христианским центром. Однако уже в 1924 году монастырь был закрыт советскими властями. В 1994-м началось возрождение обители.\n\nНовоафонский монастырь является действующим, однако он открыт для посещения. Обитель находится в живописном месте – на возвышенности рядом с побережьем, ее окружают леса и рощи. Однако главные достопримечательности комплекса – архитектурные и религиозные.\n\nЖемчужина комплекса – Пантелеймоновский собор постройки конца XIX века. Это величественное здание в нововизантийском стиле, увенчанное 5 золочеными куполами. Внутри стены собора расписаны фресками. Во время экскурсии по обители также можно осмотреть жилые и хозяйственные корпуса, которые окружают главный храм.',
-    address: 'Новоафонский монастырь, Новый Афон, Абхазия.',
-    addressLink: 'https://yandex.com/maps/-/CDxKNLlu',
-    image: '/assets/CulturalAttractionsNewAfon3.jpg',
-  },
-  {
-    id: 4,
-    name: 'Новоафонский водопад',
-    description: 'В 1882 для нужд строящегося Новоафонского монастыря на реке Псырцха была возведена гидроэлектростанция с плотиной. В результате здесь появился рукотворный водопад, который использовался для полива и других хозяйственных нужд. После закрытия обители в 1920-х годах ГЭС перестала работать, но в 2012-м вновь была запущена.\n\nВысота водопада – более 8 метров, длина – около 20 метров. Его можно осмотреть во время экскурсии в Новоафонский монастырь или включить в прогулку по окрестностям. Рядом находится живописная железнодорожная станция Псырцха, храм Симона Кананита, есть сувенирные магазины и кафе.',
-    address: 'Новоафонский водопад, Новый Афон, Абхазия.',
-    addressLink: 'https://yandex.com/maps/-/CDxKN-PC',
-    image: '/assets/CulturalAttractionsNewAfon4.jpg',
-  },
-  {
-    id: 5,
-    name: 'Храм и грот Симона Кананита',
-    description: 'В Новом Афоне находится место, в котором в I веке н.э. был убит христианский апостол Симон Кананит. Этот святой был одним из первых проповедников христианства в Абхазии, поэтому он издавна почитается местными жителями. В IX-X веках на месте гибели апостола был построен храм. Рядом с ним также находится келья, в которой, по преданию, жил святой.\n\nХрам Симона Кананита – это небольшое здание в лаконичном византийском стиле, характерном для старинных абхазских церквей. Его стены построены из белого известняка, над входом сохранились древние надписи на греческом языке, которые датируются ранним Средневековьем.\n\nПещерная келья апостола находится в ущелье на территории Псырцхинского заповедника. К ней можно подняться по тропе, которая начинается рядом с храмом и ведет вверх по склону. По пути встретится источник и множество удобных смотровых площадок.',
-    address: 'Храм Симона Кананита, Новый Афон, Абхазия.',
-    addressLink: 'https://yandex.com/maps/-/CDxKRQ8O',
-    image: '/assets/CulturalAttractionsNewAfon5.jpg',
-  },
-  {
-    id: 6,
-    name: 'Приморский парк',
-    description: 'В конце XIX века, во время строительства Новоафонского монастыря рядом с ним был разбит большой парк. На территории появились искусственные пруды, в которых разводилась рыба, были высажены плодовые деревья и кустарники. В советское время парк не забросили – здесь установили новые скульптуры, а по зеленым аллеям продолжили гулять местные жители и туристы.Приморский парк и сегодня остается популярным местом для спокойного отдыха. Здесь много красивых тенистых аллей, есть пешеходные дорожки, клумбы и лавочки. Также можно прогуляться вокруг искусственных прудов, на которые часто прилетают лебеди.',
-    address: 'Приморский Парк, Новый Афон, Абхазия.',
-    addressLink: 'https://yandex.com/maps/-/CDxKR4-R',
-    image: '/assets/CulturalAttractionsNewAfon6.jpg',
-  },
-  {
-    id: 7,
-    name: 'Музей боевой славы',
-    description: 'На площади Героев в Новом Афоне находится мемориал, посвященный Отечественной войне народа Абхазии 1992-1993 годов. Комплекс представляет собой белоснежное сооружение со звонницей, в котором работает музей.\n\nВ Музее боевой славы размещена небольшая постоянная экспозиция, осмотреть которую можно бесплатно. Коллекция музея включает фотографии и документы, здесь также можно узнать о местных жителях, погибших во время войны. 30 сентября, в день окончания войны, рядом с мемориалом проводятся памятные мероприятия.',
-    address: 'Гудаутский район, Новый Афон',
-    addressLink: 'https://yandex.com/maps/-/CDxKRR1s',
-    image: '/assets/CulturalAttractionsNewAfon7.jpg',
-  },
-  {
-    id: 8,
-    name: 'Дача Сталина',
-    sections: [
-      {
-        text: 'Дача Сталина в Новом Афоне когда-то была резиденцией вождя, где он не только отдыхал, но и работал, проводил встречи и переговоры. Сейчас бывшая госдача доступна для туристов. Здесь можно увидеть хорошо сохранившиеся интерьеры того времени, подлинную мебель и даже посуду, из которой пил Иосиф Виссарионович.\n\nИстория строительства дачи\n\nВскоре после установления Советской власти в Абхазии на землях, принадлежавших Новоафонскому монастырю, начали строительство санатория для первых лиц Советского союза.\n\nСталин впервые оказался в санатории в 1946 году, когда кремлевские врачи порекомендовали ему Абхазию как идеальное место для восстановления сил и поправки здоровья. Сталину очень понравилось это место, и он распорядился начать здесь строительство правительственной дачи.',
-        image: '/assets/CulturalAttractionsNewAfon8.jpg',
-      },
-      {
-        text: 'В этом месте морской воздух соприкасается с горным, создавая особый оздоровительный микроклимат. Здесь всегда на 3 градуса прохладнее, чем у моря.\n\nДачный комплекс построили всего за год. В 1947 году строительство было завершено. На стройке работали военнопленные немцы и советские метростроевцы.',
-        image: '/assets/CulturalAttractionsNewAfon9.jpg',
-      },
-      {
-        text: 'Автор проекта дачи - личный архитектор Сталина Мирон Мержанов. В обустройстве он использовал натуральные породы дерева, а вместо стекол — горный хрусталь. На даче Сталина в Новом Афоне вся внутренняя облицовка выполнена из абхазской древесины. Исключение составляют лишь колонны из палисандра со вставками из карельской березы и панели из красного дерева. Никакого пластика, краски или обоев при обустройстве не использовалось.',
-        image: '/assets/CulturalAttractionsNewAfon10.jpg',
-      },
-      {
-        text: 'Официально дачу в Новом Афоне Сталин посещал 5 раз. Приезжал он, как правило, в сентябре-октябре и проводил здесь по несколько месяцев.\n\nС территории дачи видны монастырские купола, а вот дачу разглядеть со стороны города или моря сложновато. Это было одним из требований при постройке, чтобы скрыть от лишних взоров местонахождения членов партийной верхушки.',
-        image: '/assets/CulturalAttractionsNewAfon11.jpg',
-      },
-      {
-        text: 'Устройство дачи Сталина*bold*\n\nГлавный дом*bold*\n\nГлавное здание — двухэтажный дом с балконном-террасой, с которого открывается вид на море. Все основные комнаты располагались на втором этаже, а первый занимала бильярдная и несколько служебных помещений. К сожалению, первый этаж сейчас пребывает в полной разрухе, на бильярдном столе - куски отпавшей штукатурки. Туристов туда не водят, но можно заглянуть в окна. Главный вход в дачу с улицы сделан сразу на второй этаж. Из вестибюля попадаешь в просторную приемную, которая одновременно являлась и столовой, и переговорной. Дальше: рабочий кабинет, комната отдыха, спальни, ванные комнаты. Высота потолков во всех помещениях — 5,4 метра.\n\nДача в Новом Афоне — единственная из дач Сталина в Абхазии, где имелся рабочий кабинет и прямая связь с Кремлем. К слову, эта связь продолжала работать на даче до 1993 года. Спален тут три. Сталин мог выбрать любую из них и менять спальню каждую ночь из соображений безопасности. Свободные кровати с целью той же конспирации могли занять манекены.\n\nЦена билетов*bold*\n\nВходной билет на Дачу Сталина стоит 200 рублей. Если набирается группа, то сотрудник музея проведет небольшую бесплатную экскурсию: расскажет об истории дачи и ответит на вопросы. Индивидуальных экскурсий, как правило, не проводится.\n\nНа территории дачи и в помещениях разрешается фотографировать.\n\nГрафик работы*bold*\n\nПосещение дачи возможно ежедневно с 10:00 до 18:00.',
-        image: null,
-      }
-    ],
-    address: 'Дача Сталина, Новый Афон',
-  }
-];
+type City = { id: number; name: string; title?: string; order: number };
+type CulturalAttraction = {
+  id: number;
+  city: number;
+  name: string;
+  name_link?: string;
+  description: string;
+  address: string;
+  address_link?: string;
+  working_hours?: string;
+  contacts?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  attractions: CulturalAttraction[];
+};
+
+const API_BASE = config.API_BASE;
 
 const CulturalAttractionsNewAfon: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/cultural-attractions/page/city/${encodeURIComponent('Новый Афон')}/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load cultural attractions');
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
+      
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Новый Афон: культурные достопримечательности</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Новый Афон: культурные достопримечательности'}</h1>
         </section>
 
-        <section className={styles.attractionsSection}>
-          {attractions.map((attraction) => (
-            <article key={attraction.id} className={styles.attractionCard}>
-              <h2 className={styles.attractionName}>{attraction.name}</h2>
-              
-              {attraction.description ? (
-                <>
-                  <div className={styles.imageContainer}>
-                    <Image
-                      src={attraction.image as string}
-                      alt={attraction.name}
-                      fill
-                      className={styles.attractionImage}
-                    />
-                  </div>
-                  <div className={styles.attractionDescription}>
-                    {attraction.description.split('\n\n').map((paragraph: string, index: number) => {
-                       const isBold = paragraph.endsWith('*bold*');
-                       const text = isBold ? paragraph.slice(0, -6) : paragraph;
-                       return <p key={index} style={{ fontWeight: isBold ? 'bold' : 'normal' }}>{text}</p>;
-                    })}
-                  </div>
-                </>
-              ) : (
-                attraction.sections?.map((section: { image: string | null; text: string; }, sectionIndex: React.Key | null | undefined) => (
-                  <React.Fragment key={sectionIndex}>
-                    {section.image && (
-                      <div className={styles.imageContainer}>
-                        <Image
-                          src={section.image}
-                          alt={attraction.name}
-                          fill
-                          className={styles.attractionImage}
-                        />
-                      </div>
-                    )}
-                    {section.text && (
-                      <div className={styles.attractionDescription}>
-                        {section.text.split('\n\n').map((paragraph: string, pIndex: number) => {
-                          const isBold = paragraph.endsWith('*bold*');
-                          const text = isBold ? paragraph.slice(0, -6) : paragraph;
-                          return <p key={pIndex} style={{ fontWeight: isBold ? 'bold' : 'normal' }}>{text}</p>;
-                        })}
-                      </div>
-                    )}
-                  </React.Fragment>
-                ))
-              )}
-
-              <p className={styles.attractionAddress}>
-                <strong>Адрес: </strong>
-                {attraction.addressLink ? (
-                  <a href={attraction.addressLink} target="_blank" rel="noopener noreferrer">
-                    {attraction.address}
-                  </a>
-                ) : (
-                  attraction.address
+        <section className={styles.cardsSection}>
+          {data.attractions.map((attraction) => (
+            <div key={attraction.id} className={styles.attractionCard}>
+              <div className={styles.imageContainer}>
+                {attraction.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${attraction.image_url}`}
+                    alt={attraction.name}
+                    className={styles.attractionImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
                 )}
-              </p>
-            </article>
+              </div>
+
+              <div className={styles.infoContainer}>
+                <h2 className={styles.attractionName}>
+                  {attraction.name_link ? (
+                    <a href={attraction.name_link} target="_blank" rel="noopener noreferrer">
+                      {attraction.name}
+                    </a>
+                  ) : (
+                    attraction.name
+                  )}
+                </h2>
+                
+                <div className={styles.infoBlock}>
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={`${styles.infoValue} ${attraction.address_link ? styles.addressLink : ''}`}>
+                      {attraction.address_link ? (
+                        <a href={attraction.address_link} target="_blank" rel="noopener noreferrer">{attraction.address}</a>
+                      ) : (
+                        attraction.address
+                      )}
+                    </span>
+                  </div>
+                  
+                  {attraction.working_hours && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{attraction.working_hours}</span>
+                    </div>
+                  )}
+                  
+                  {attraction.description && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Описание:</span>
+                      <span className={styles.infoValue}>{attraction.description}</span>
+                    </div>
+                  )}
+                  
+                  {attraction.contacts && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoValue}>{attraction.contacts}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           ))}
         </section>
       </main>
+
       <Footer />
       <ScrollToTop />
     </div>

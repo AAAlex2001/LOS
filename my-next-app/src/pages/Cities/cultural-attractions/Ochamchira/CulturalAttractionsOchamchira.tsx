@@ -1,96 +1,154 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './CulturalAttractionsOchamchira.module.scss';
+import config from '@/config';
 
-const attractions = [
-  {
-    id: 1,
-    name: 'Великая абхазская стена',
-    description: '<p>На окраине с. Уатап Очамчырского района вы можете увидеть башни и стены Великой абхазской стены (ее еще называют Келасурской). Это одно из самых загадочных сооружений всего Кавказа. Удивительно, что при такой большой протяженности (около 80 км!) не осталось точных сведений…</p>',
-    address: '',
-    addressLink: undefined,
-    image: '/assets/CulturalAttractionsOchamchira1.jpg',
-  },
-  {
-    id: 2,
-    name: 'Термальный источник с.Кындыг',
-    description: '<p>Под открытым небом и расположен самый знаменитый в Абхазии оздоровительный комплекс термальных источников Кындыг, состоящий из бассейнов с разной температурой воды, горячих душей и грязевых ванн. Вода перетекает поочередно из одной емкости в другую, при этом остывая. Самые популярные места – это души с деревянными кушетками под ними, где можно полежать под сильным напором, осуществляя таким немудренным способом самостоятельный гидромассаж.</p><p>С собой возьмите:<br/>Купальник (лучше открытый, если будете использовать грязи) / плавательные трусы. Грязь мелкой дисперсии, поэтому вымывается из одежды достаточно тяжело. Если имеется выбор – купальную одежду берите похуже.<br/>Резиновые тапочки.<br/>Сменное белье.<br/>Питьевую воду можно взять с собой или купить на территории.<br/>Сумку/пакет, чтобы повесить принесенное на крючок.</p><p>Правила поведения гласят, что приносить и распивать алкогольные напитки на территории комплекса Кындыг запрещено.</p><p>Лечение на термальных источниках Кындыг показано при следующих болезнях и недугах<br/>заболевания опорно-двигательного аппарата;<br/>заболевания сердечно-сосудистой системы;<br/>заболевания мочеполовой системы у мужчин и женщин;<br/>заболевания органов пищеварения;<br/>заболевания нервной системы;<br/>кожные болезни;<br/>последствия облучения.</p><p>Курс приема термально-грязевых процедур для оздоровления составляет 10 сеансов. Для этого, скорее всего, придется остановиться на отдых в селе Кындыг (по ссылке описание курорта и вариантов жилья). Максимальный эффект достигается через несколько недель после окончания лечения.</p><p>Противопоказания при посещении горячих источников Кындыг:<br/>онкологические заболевания;<br/>пороки сердца;<br/>туберкулез;<br/>заболевания крови.</p><p>Процедуры следует выполнять не более 20-30 минут за сеанс или 3 подхода по 15 минут с перерывом в 10-15 минут.</p>',
-    address: '',
-    addressLink: undefined,
-    image: '/assets/CulturalAttractionsOchamchira2.jpg',
-  },
-  {
-    id: 3,
-    name: 'Илыр | Илорский Храм Святого Георгия',
-    description: '',
-    address: '',
-    addressLink: undefined,
-    image: '/assets/CulturalAttractionsOchamchira3.jpg',
-  },
-  {
-    id: 4,
-    name: 'Село Мыку - Моквский собор X в. и поляна Мыкуашта',
-    description: '<p>В селении Мыку Очамчырского района расположены две знаменитые достопримечательности: Моквский храм X в. и поляна Мыкуашта.</p><p><strong>Мыкуашта</strong></p><p>Поляна Мыкуашта расположена у слияния двух рек – Моквы и Дваба. С давних времен она, как и поляна Лыхнашта в западной Абхазии, являлась местом всенародных сходов, где решались важнейшие вопросы. В народе поляну Мыкуашта называют «Абжьыуаа рейзарта», т.е. место схода всех абжуйцев - жителей современного Очамчырского района. Здесь же, после завершения официальной части схода, проходили ежегодные осенние праздники, конноспортивные состязания.<br/>И в наше время каждый год на поляне Мыкуашта в конце сентября проходит празднование в честь Дня победы абхазского народа в войне 1992-1993 годов. Собираются жители со всех окрестных сел и города Очамчыра. Кроме концертного выступления с национальными песнями, танцами, игрой на народных инструментах, зрители наблюдают за конными скачками. В последнее время возрождаются  национальные игры.Есть такая конная игра у абхазов, называется «ампыл асра». В игре участвуют две команды по шесть всадников, в руках у каждого - своеобразные ракетки («ачуган»). Кожаный мяч размером в два кулака раньше набивали мхом, а теперь используют резиновый мяч. Игровая площадка ограничивается двумя боковыми и двумя лицевыми линиями. Судья бросает мяч на поле игрокам. Участники игры стараются поймать мяч ачуганом и ускакать с ним за лицевую линию к воротам, а соперники пытаются догнать того, кто с мячом и выбить мяч из ачугана. Во время игры не обходится и без травм, что делает ее и опасной, и интересной. Победителем становится команда, забившая большее количество мячей</p><p><strong>Моквский храм X в.</strong></p><p>Моквский  собор является одним из выдающихся памятников архитектуры всего Кавказа. Это единственный крестово-купольный пятинефный храм Абхазии. (Неф – вытянутое помещение, которое ограничено с одной или обеих продольных сторон рядом колонн или столбов.) Построенный в 60-х годах Х века, Моквский храм стал последним примером раннесредневекового зодчества в Абхазии.<br/>В это время Абхазское царство процветало. «Христолюбивая страна» – так называли эту землю иностранные летописцы. Собор посвятили Успению Божьей матери и основали при нем монастырь, в котором размещалась кафедра моквских епископов. Угодья этих епископов включали в себя обширные земли - от реки Кодор до реки Галидзга. Храм служил также местом погребения архиепископов.<br/>В X веке одним из самых влиятельных государств была Византийская империя, именно при византийском императоре Юстиниане Великом в VI веке предки нынешних абхазов приняли христианство. Влияние Византии на другие страны, в том числе на Абхазское царство, касалось не только политики, религии, но и культуры, искусства, в особенности - архитектуры и живописи (фресковой, мозаичной и миниатюрной).<br/>Итак, Моквский храм был построен в византийском стиле X века. Если раньше храмы были базиликального типа (прямоугольные в плане), то теперь появляются крестово-купольные храмы, которые имеют в планировке форму креста, в центре которого располагается купол. В это время храмы становятся меньше в длину, но зато как можно больше устремляются ввысь.<br/>В наше время Моквский храм является действующим, но службы здесь проходят в основном праздникам.</p>',
-    address: '',
-    addressLink: undefined,
-    image: '/assets/CulturalAttractionsOchamchira4.jpg',
-  },
-  {
-    id: 5,
-    name: 'Пещера Абраскила',
-    description: '<p>У подножия Кодорского (Панавского) хребта расположена знаменитая пещера Абрскила. Известна она своей красотой и легендой о бесстрашном герое Абрскиле…</p><p>В стародавние времена от непорочной девы был рожден невиданной силы богатырь. Он, как и древнегреческий Прометей, добывший для людей огонь, помогал своему народу. Абрскил научил земледельцев бороться с сорняками, своими могучими руками он вырубил дикую виноградную лозу, уничтожил папоротники, мешавшие обработке почвы, сражался с докучавшими людям великанами. Абрскил защищал свою страну от иноземных врагов.</p><p>Герой был так силен и горд, что боги разгневались и решили погубить его. Вступив в поединок с Анцва (главным из абхазских богов), Абрскил на своем верном коне араше взлетел к самому небу. В больших кожаных мешках, прикрепленных к седлу, были спрятаны огромные камни. Эти-то камни герой стал бросать сверху на землю, издавая страшный шум, подобный грому.</p><p>А знаменитая сабля Абрскила, рассекая тучи, высекла настоящую молнию. Этого уж Анцва не смог утерпеть и решено было навечно заточить возгордившегося богатыря в пещеру, где жили злые духи.Не раз Абрскил пытался освободиться – вот уже почти вырван расшатанный столб, но откуда-то прилетала маленькая птичка, садилась на столб, и тот снова врастал накрепко в землю. </p><p>Так длилось многие-многие века… Верный конь араш всегда был рядом с хозяином. Река, которая протекает по дну пещеры, названа в народе Ачкы Тызго (буквально - «выносящая конский навоз»).</p><p>В 18 в. местный князь со своими помощниками пытался дойти до конца пещеры, но даже через 7-8 часов они так и не достигли ее предела. А бесстрашная путешественница итальянка Карла Селена в 1881 г. с проводниками совершила 4-часовое путешествие вглубь пещеры; они достигли того места, где пещера разделялась на две галереи - из одной вытекала ледяная река, а из другой – горячий источник.</p>',
-    address: '',
-    addressLink: undefined,
-    image: '/assets/CulturalAttractionsOchamchira5.jpg',
-  },
-];
+type City = { id: number; name: string; title?: string; order: number };
+type CulturalAttraction = {
+  id: number;
+  city: number;
+  name: string;
+  name_link?: string;
+  description: string;
+  address: string;
+  address_link?: string;
+  working_hours?: string;
+  contacts?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  attractions: CulturalAttraction[];
+};
+
+const API_BASE = config.API_BASE;
 
 const CulturalAttractionsOchamchira: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/cultural-attractions/page/city/${encodeURIComponent('Очамчыра')}/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load cultural attractions');
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
+      
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Очамчыра: культурные достопримечательности</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Очамчыра: культурные достопримечательности'}</h1>
         </section>
 
-        <section className={styles.attractionsSection}>
-          {attractions.map((attraction) => (
-            <article key={attraction.id} className={styles.attractionCard}>
-              <h2 className={styles.attractionName}>{attraction.name}</h2>
+        <section className={styles.cardsSection}>
+          {data.attractions.map((attraction) => (
+            <div key={attraction.id} className={styles.attractionCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={attraction.image}
-                  alt={attraction.name}
-                  fill
-                  className={styles.attractionImage}
-                />
+                {attraction.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${attraction.image_url}`}
+                    alt={attraction.name}
+                    className={styles.attractionImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
-              <div 
-                className={styles.attractionDescription}
-                dangerouslySetInnerHTML={{ __html: attraction.description }}
-              />
-              {attraction.address && (
-              <p className={styles.attractionAddress}>
-                <strong>Адрес: </strong>
-                  {attraction.addressLink ? (
-                <a href={attraction.addressLink} target="_blank" rel="noopener noreferrer">
-                  {attraction.address}
-                </a>
+
+              <div className={styles.infoContainer}>
+                <h2 className={styles.attractionName}>
+                  {attraction.name_link ? (
+                    <a href={attraction.name_link} target="_blank" rel="noopener noreferrer">
+                      {attraction.name}
+                    </a>
                   ) : (
-                    attraction.address
+                    attraction.name
                   )}
-              </p>
-              )}
-            </article>
+                </h2>
+                
+                <div className={styles.infoBlock}>
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={`${styles.infoValue} ${attraction.address_link ? styles.addressLink : ''}`}>
+                      {attraction.address_link ? (
+                        <a href={attraction.address_link} target="_blank" rel="noopener noreferrer">{attraction.address}</a>
+                      ) : (
+                        attraction.address
+                      )}
+                    </span>
+                  </div>
+                  
+                  {attraction.working_hours && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{attraction.working_hours}</span>
+                    </div>
+                  )}
+                  
+                  {attraction.description && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Описание:</span>
+                      <span className={styles.infoValue}>{attraction.description}</span>
+                    </div>
+                  )}
+                  
+                  {attraction.contacts && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoValue}>{attraction.contacts}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           ))}
         </section>
       </main>
+
       <Footer />
       <ScrollToTop />
     </div>

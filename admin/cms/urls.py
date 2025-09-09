@@ -14,6 +14,7 @@ urlpatterns = [
     path("car-washes/", include("cms.car_washes.urls")),
     path("churches/", include("cms.churches.urls")),
     path("clothing-repair/", include("cms.clothing_repair.urls")),
+    path("cultural-attractions/", include("cms.cultural_attractions.urls")),
 ]
 
 

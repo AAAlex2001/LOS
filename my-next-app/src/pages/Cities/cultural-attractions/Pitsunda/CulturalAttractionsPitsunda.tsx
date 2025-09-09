@@ -1,119 +1,154 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './CulturalAttractionsPitsunda.module.scss';
+import config from '@/config';
 
-const attractions = [
-  {
-    id: 1,
-    name: 'Историко-архитектурный заповедник Великий Питиунт',
-    description: 'Главная достопримечательность находится практически в центре города. Заповедник занимает большую территорию, главным объектом являются развалины древнеримской крепости, возведенной, по данным ученых, в период со II по VI века нашей эры. Стена, окружающая Великий Питиунт, построена приблизительно в Х веке.\n\nВниманию туристов предлагается неплохо сохранившийся дворец командующего легионом, казармы, бани, винные погреба, колодец. На территории также расположен старинный храмовый комплекс. Осмотреть сооружения можно самостоятельно или в составе экскурсии. В осмотр входит посещение Пицундского собора и музея истории.',
-    address: 'Абаата, Пицунда, Абхазия.',
-    image: '/assets/CulturalAttractionsPitsunda1.jpg',
-  },
-  {
-    id: 2,
-    name: 'Набережная Пицунды – место, куда хочется возвращаться снова и снова',
-    description: 'Набережная Пицунды красива, ухожена и благоустроена. Отсюда открываются прекрасные пейзажи. Протяженность набережной – почти 5 километров. Вымощенная плиткой широкая дорожка идеально подходит для пеших прогулок. Повсюду высажены красивые клумбы, со стороны города растут олеандры, пальмы и другие экзотические деревья.\n\nДля детей и взрослых предусмотрено множество развлечений: аттракционы, прокат велосипедов и гироскутеров, кафе и рестораны. Параллельно набережной протянулся пляж, поэтому при желании всегда можно сойти с дорожки и искупаться или позагорать на берегу. В темное время суток на набережной включается эффектная подсветка. Часто сюда приходят музыканты, чтобы порадовать отдыхающих талантливой игрой на разных инструментах.',
-    address: 'Наб. курорта, Пицунда, Абхазия',
-    image: '/assets/CulturalAttractionsPitsunda2.jpg',
-  },
-  {
-    id: 3,
-    name: 'Патриарший собор в Пицунде – самый древний храм города',
-    description: 'Собор построен в IV веке до н.э. За всю свою историю сооружение многократно реставрировалось и перестраивалось, но это не умаляет его ценности. Основная архитектурная особенность – необычная кладка: кирпичные ряды чередуются с каменными, причем толщина каждой полосы разная. Свет проникает внутрь через узкие окна; между многими из них сохранились старинные кресты из камня. Туристы могут осмотреть сооружение не только снаружи, но и войти внутрь. С 1975 года в стенах храма функционирует концертный зал, где часто проводятся концерты органной музыки.',
-    address: 'Патриарший собор в Пицунде, Пицунда, Абхазия.',
-    image: '/assets/CulturalAttractionsPitsunda3.jpg',
-  },
-  {
-    id: 4,
-    name: 'Роща пицундской сосны – уникальный природный памятник',
-    description: 'Из-за огромного количества хвойных деревьев воздух Пицунды очень благоприятно сказывается на самочувствии. Нередко отдых в этих краях сравнивают с полноценным лечением. Реликтовая пицундская роща протянулась вдоль побережья на 7,5 км, общая площадь заповедника составляет почти 200 га.\n\nПицундская сосна уникальна по своей природе: благодаря длинным иголкам (до 18 см), дерево выделяет в 6 раз больше фитонцидов, по сравнению с обычными хвойными растениями. Чтобы попасть в рощу, не нужно заказывать экскурсию: прогуляться здесь может каждый желающий.\n\nГлавное, не оставлять после себя мусора и не жечь костры: любое вмешательство со стороны человека крайне негативно сказывается на состоянии заповедника.',
-    address: 'Пицундская сосновая роща, Пицунда, Абхазия',
-    image: '/assets/CulturalAttractionsPitsunda4.jpg',
-  },
-  {
-    id: 5,
-    name: 'Пицундо-Мюссерский Заповедник (Мюссера)',
-    description: 'Пицундо-Мюссерский заповедник находится в прибрежной зоне. На его территории растет более 800 видов деревьев, кустарников, цветов. Многие из растений занесены в Красную книгу, в том числе и знаменитая пицундская сосна, обладающая удивительными целебными свойствами. Кроме густых лесных массивов, в заповедник входят глубокие ущелья, живописные поляны, песчаные пляжи и каменные россыпи. Здесь же находится древняя самшитовая роща, восхитительной красоты озеро и бурные горные реки.\n\nЗаповедник известен не только природными, но и археологическими достопримечательностями. Останки древних поселений и античного храма датируются I-IV веками нашей эры. Находясь на территории заповедника, нельзя ломать ветки, разжигать огонь, срывать цветы – человек уже успел нанести огромный ущерб местной природе, и власти сейчас пытаются сохранить уникальную флору и фауну для следующих поколений.',
-    address: 'Пицундо-Мюссерский Заповедник (Мюссера), Miusera Road.',
-    image: '/assets/CulturalAttractionsPitsunda5.jpg',
-  },
-  {
-    id: 6,
-    name: 'Дом-музей Хецуриани – необычное с порога',
-    description: 'На окраине Пицунды расположен уникальный дом: руками его хозяина долгое время собиралась коллекция оригинальных экспонатов на тему жизни и быта абхазцев. Местные жители называют музей живым памятником культуры кавказского народа. Экспозиция насчитывает более двух тысяч предметов: монет, инструментов, ремесленных изделий, разнообразного оружия.\n\nОтдельное место занимает старинный фаэтон марки «Мерседес», который когда-то принадлежал принцу Ольденбургскому, основателю города Гагры. Мерседес был куплен владельцем музея за огромную сумму, равную цене годового урожая кукурузы.\n\nСвою коллекцию Гергий Хецуриани собирал на протяжении всей жизни. Сегодня за музеем следит его невестка. Потомки надеются, что каждое последующее поколение сможет сохранить уникальное наследие, оставленное основателем музея.',
-    address: 'Лидзава, Абхазия.',
-    image: '/assets/CulturalAttractionsPitsunda6.jpg',
-  },
-  {
-    id: 7,
-    name: 'Пицундская Медея – скульптура с трагичной историей',
-    description: 'Один из главных памятников Пицунды расположен на южном краю мыса. Изваяние изображает прекрасную Медею, героиню древнегреческого эпоса, которая уже занесла над двумя своими детьми руку с кинжалом, чтобы через секунду убить их. Так она отомстила возлюбленному, бросившему ее с младенцами на руках.\n\nЗловещая история, черная бронза, внушительные размеры – кому-то скульптура кажется чересчур мрачной, но каждый гость города считает своим долгом сделать фото на фоне знаменитого изваяния.',
-    address: 'Медея, Пицунда.',
-    image: '/assets/CulturalAttractionsPitsunda7.jpg',
-  },
-  {
-    id: 8,
-    name: 'Бамбуковая роща – природный памятник, требующий бережного отношения',
-    description: 'Бамбуковая роща в Пицунде является единственной в своем роде, больше на территории Абхазии подобных насаждений нет, бамбук попросту нигде не приживается. Власти стараются защитить растения, но туристы, желающие сделать красивые кадры, часто ломают побеги и наносят серьезный ущерб памятнику природы. Роща встречается по пути на центральный пляж, поэтому пройти мимо этой достопримечательности невозможно.',
-    address: 'GPS координаты: 43°09\'22.2"N 40°19\'59.9"E.',
-    image: '/assets/CulturalAttractionsPitsunda8.jpg',
-  },
-  {
-    id: 9,
-    name: 'Микрорайон Рыбзавод – чистый воздух и пляжи',
-    description: 'Многие туристы стараются снять жилье на время отдыха именно здесь, в микрорайоне «Рыбзавод». Над самой полосой пляжа будто нависают скалы, заросшие густыми лесами. Морской воздух смешивается с запахом хвои, получается по-настоящему волшебная смесь – здесь часто отдыхают люди, желающие укрепить иммунитет. Пляжи чистые, немноголюдные, преимущественно, песчаные. Микрорайон «Рыбзавод» идеально подойдет любителям спокойного отдыха, желающим скрыться от городской суеты.',
-    address: 'Речная 11а Пицунда, Lidzava.',
-    image: '/assets/CulturalAttractionsPitsunda9.jpg',
-  },
-  {
-    id: 10,
-    name: 'Старый маяк – свидетель истории',
-    description: 'Маяк установлен в Пицунде в самом начале 20 века. На протяжении нескольких десятилетий он исправно нес службу и подавал сигналы судам в море. После того, как на одном из современных зданий была смонтирована сигнальная башня, маяк перестал использоваться по назначению.\n\nСегодня сооружение заброшено, но туристы продолжают приходить сюда, чтобы посмотреть на старинную конструкцию. Маяк является одним из символов города; его часто изображают на открытках и брошюрах.',
-    address: 'Мыс Пицунда, Пицунда.',
-    image: '/assets/CulturalAttractionsPitsunda10.jpg',
-  },
-];
+type City = { id: number; name: string; title?: string; order: number };
+type CulturalAttraction = {
+  id: number;
+  city: number;
+  name: string;
+  name_link?: string;
+  description: string;
+  address: string;
+  address_link?: string;
+  working_hours?: string;
+  contacts?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  attractions: CulturalAttraction[];
+};
+
+const API_BASE = config.API_BASE;
 
 const CulturalAttractionsPitsunda: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/cultural-attractions/page/city/${encodeURIComponent('Пицунда')}/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load cultural attractions');
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
+      
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Пицунда: культурные достопримечательности</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Пицунда: культурные достопримечательности'}</h1>
         </section>
 
-        <section className={styles.attractionsSection}>
-          {attractions.map((attraction) => (
-            <article key={attraction.id} className={styles.attractionCard}>
-              <h2 className={styles.attractionName}>{attraction.name}</h2>
+        <section className={styles.cardsSection}>
+          {data.attractions.map((attraction) => (
+            <div key={attraction.id} className={styles.attractionCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={attraction.image}
-                  alt={attraction.name}
-                  fill
-                  className={styles.attractionImage}
-                />
+                {attraction.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${attraction.image_url}`}
+                    alt={attraction.name}
+                    className={styles.attractionImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
-              <div className={styles.attractionDescription}>
-                {attraction.description.split('\n\n').map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
+
+              <div className={styles.infoContainer}>
+                <h2 className={styles.attractionName}>
+                  {attraction.name_link ? (
+                    <a href={attraction.name_link} target="_blank" rel="noopener noreferrer">
+                      {attraction.name}
+                    </a>
+                  ) : (
+                    attraction.name
+                  )}
+                </h2>
+                
+                <div className={styles.infoBlock}>
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={`${styles.infoValue} ${attraction.address_link ? styles.addressLink : ''}`}>
+                      {attraction.address_link ? (
+                        <a href={attraction.address_link} target="_blank" rel="noopener noreferrer">{attraction.address}</a>
+                      ) : (
+                        attraction.address
+                      )}
+                    </span>
+                  </div>
+                  
+                  {attraction.working_hours && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{attraction.working_hours}</span>
+                    </div>
+                  )}
+                  
+                  {attraction.description && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Описание:</span>
+                      <span className={styles.infoValue}>{attraction.description}</span>
+                    </div>
+                  )}
+                  
+                  {attraction.contacts && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoValue}>{attraction.contacts}</span>
+                    </div>
+                  )}
+                </div>
               </div>
-              <p className={styles.attractionAddress}>
-                <strong>Адрес: </strong>
-                  {attraction.address}
-              </p>
-            </article>
+            </div>
           ))}
         </section>
       </main>
+
       <Footer />
       <ScrollToTop />
     </div>

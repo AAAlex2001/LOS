@@ -1,78 +1,154 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './CulturalAttractionsGal.module.scss';
+import config from '@/config';
 
-const attractions = [
-  {
-    id: 1,
-    name: 'Гальское водохранилище',
-    description: 'Гальское водохранилище — поистине недооцененное туристами место. Локация не так популярна, как например озеро Рица, поэтому там можно созерцать природу без существенного вмешательства человечества и при этом относительно вдали от цивилизации. Лазурного цвета вода, вокруг лес и чайные плантации.\n\nВодохранилище настолько большое, что иногда его называют Гальским «морем». Водоем имеет историческую ценность, его начали строить ещё в 1961 году. Пока эту уникальную прелесть не популяризировали, там можно посидеть с близкими на пикнике в уединении с природой, наслаждаясь свежим воздухом.',
-    address: 'Гальское водохранилище',
-    addressLink: 'https://yandex.com/maps/-/CDxdm-3A',
-    image: '/assets/CulturalAttractionsGal1.jpg',
-  },
-  {
-    id: 2,
-    name: 'Городской Дом Культуры',
-    description: 'Дом культуры — это двухэтажное серое здание, расположенное у парка Векуи. Он действующий, концерты в нем до сих пор проходят весьма регулярно.\n\nНа праздниках выступают как местные исполнители, так и выпускники художественных и музыкальных школ Сухума и Гудауты. Горожане, посещающие мероприятия, отзываются о них как о максимально экспрессивных и приятных зрелищах.\n\nМожет быть, некоторым отпускникам повезёт побывать в Гале во время работы Дома Культуры, и они застанут на сцене артистов из Сухума, а может и из РФ.',
-    address: 'ул. Леона, 1',
-    addressLink: 'https://yandex.com/maps/-/CDxdqJZm',
-    image: '/assets/CulturalAttractionsGal2.jpg',
-  },
-  {
-    id: 3,
-    name: 'Ингурская ГЭС',
-    description: 'Недалеко от города Джвари, на границе Абхазии и Грузии расположено одно из самых красивых водохранилищ в мире. Ингурская ГЭС – крупнейшая на Кавказе гидроэлектростанция на реке Ингури. Строительные работы здесь начались в 1961 году и завершились в 1977. Основу строительства Ингури ГЭС заложил общественный деятель Грузии Нико Николадзе. Одной из составляющих частей гидроэлектростанции является плотина, общая высота которой составляет 271,5 метра, а длина 728 метров. Протяжённость водохранилище достигает 27 км, а вода здесь бирюзовая.  Строительство плотины началось в мирные времена. А вот после грузино-абхазского конфликта оказалось, что часть сооружений находятся на грузинской территории, а часть – на абхазской. Если очень условно, энергия начинает вырабатываться на дамбе в Сванетии, а заканчивает на электростанции уже в Абхазии. В связи с этим ГЭС принято считать общей. Выработка электроэнергии здесь делится в пропорции 60 на 40 в пользу Грузии.',
-    address: 'Ингурская ГЭС',
-    image: '/assets/CulturalAttractionsGal3.jpg',
-  },
-];
+type City = { id: number; name: string; title?: string; order: number };
+type CulturalAttraction = {
+  id: number;
+  city: number;
+  name: string;
+  name_link?: string;
+  description: string;
+  address: string;
+  address_link?: string;
+  working_hours?: string;
+  contacts?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  attractions: CulturalAttraction[];
+};
+
+const API_BASE = config.API_BASE;
 
 const CulturalAttractionsGal: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/cultural-attractions/page/city/${encodeURIComponent('Гал')}/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load cultural attractions');
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
+      
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Гал: культурные достопримечательности</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Гал: культурные достопримечательности'}</h1>
         </section>
 
-        <section className={styles.attractionsSection}>
-          {attractions.map((attraction) => (
-            <article key={attraction.id} className={styles.attractionCard}>
-              <h2 className={styles.attractionName}>{attraction.name}</h2>
+        <section className={styles.cardsSection}>
+          {data.attractions.map((attraction) => (
+            <div key={attraction.id} className={styles.attractionCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={attraction.image}
-                  alt={attraction.name}
-                  fill
-                  className={styles.attractionImage}
-                />
-              </div>
-              <div className={styles.attractionDescription}>
-                {attraction.description.split('\n\n').map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
-              </div>
-              <p className={styles.attractionAddress}>
-                <strong>Адрес: </strong>
-                 {attraction.addressLink ? (
-                  <a href={attraction.addressLink} target="_blank" rel="noopener noreferrer">
-                    {attraction.address}
-                  </a>
-                ) : (
-                  attraction.address
+                {attraction.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${attraction.image_url}`}
+                    alt={attraction.name}
+                    className={styles.attractionImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
                 )}
-              </p>
-            </article>
+              </div>
+
+              <div className={styles.infoContainer}>
+                <h2 className={styles.attractionName}>
+                  {attraction.name_link ? (
+                    <a href={attraction.name_link} target="_blank" rel="noopener noreferrer">
+                      {attraction.name}
+                    </a>
+                  ) : (
+                    attraction.name
+                  )}
+                </h2>
+                
+                <div className={styles.infoBlock}>
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={`${styles.infoValue} ${attraction.address_link ? styles.addressLink : ''}`}>
+                      {attraction.address_link ? (
+                        <a href={attraction.address_link} target="_blank" rel="noopener noreferrer">{attraction.address}</a>
+                      ) : (
+                        attraction.address
+                      )}
+                    </span>
+                  </div>
+                  
+                  {attraction.working_hours && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{attraction.working_hours}</span>
+                    </div>
+                  )}
+                  
+                  {attraction.description && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Описание:</span>
+                      <span className={styles.infoValue}>{attraction.description}</span>
+                    </div>
+                  )}
+                  
+                  {attraction.contacts && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoValue}>{attraction.contacts}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           ))}
         </section>
       </main>
+
       <Footer />
       <ScrollToTop />
     </div>

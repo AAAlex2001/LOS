@@ -1,89 +1,154 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './CulturalAttractionsGulripsh.module.scss';
+import config from '@/config';
 
-const attractions = [
-  {
-    id: 1,
-    name: 'Великая абхазская стена',
-    description: 'На левом берегу реки Келасур, у места ее впадения в море можно увидеть обвитые плющом стены огромной башни, от которой отходит стена, перерезанная железной и шоссейной дорогами. Здесь начинается крупнейшее оборонительное сооружение – Великая абхазская стена. Длина ее линии обороны составляет около ста километров и прослеживается вплоть до границы Абхазии с Грузией по реке Ингур. На всех высотах возвышаются остатки укреплений. Великая абхазская стена прерывается в тех местах, где возникают естественные преграды на ее пути: обрывы, теснины, труднопроходимые участки леса.\n\nСтроение и история\n\nПо данным известного абхазского историка и археолога Юрия Воронова, который исследовал этот объект в 1966-1971 гг., на всем протяжении стены было обнаружено 279 башен, около 100 из них неплохо сохранились, остальные почти полностью разрушены. Расстояние между башнями колеблется от 40 до 120 метров.\n\nРазные авторы приводят разные даты возведения укрепления: одни относят ее к IV веку, другие – к XVI веку, третьи предполагают, что стена строилась в разные периоды истории и не является единым оборонительным сооружением, а представляет собой разновременной комплекс стен, башен и крепостей. Руины Великой абхазской стены, остатки башен и укрепительных сооружений обнаруживаются во многих местах Абхазии.',
-    address: 'Гулрыпшский район, посёлок Тхубын',
-    addressLink: 'https://yandex.com/maps/-/CDxHmMli',
-    image: '/assets/CulturalAttractionsGulripsh1.jpg',
-  },
-  {
-    id: 2,
-    name: 'Драндский собор',
-    description: 'Один из первых храмов Колхиды*bold*\n\nВ 30 минутах езды от Сухума, между реками Малый Кодор и Адзапш на обширном Драндском плато расположено село Дранда. Здесь, на возвышенности, окруженный кипарисами, стоит массивный Драндский собор. Он был построен в VI-VII вв. и стал одним из первых христианских храмов Колхиды. Храм относится к крестово-купольным четырехстолпным храмам, распространенным на всей территории Византии в этот период времени. Его восточный фасад оформлен тремя пятигранными выступающими апсидами. Внутри храма в них расположен алтарь, через боковые проходы он соединяется с жертвенником и диаконником. Храм увенчан куполом, лежащим на низком шестнадцатигранном барабане. Стены, свод и купол храма сложены из кирпича, внутреннее пространство собора было покрыто штукатуркой и росписями.\n\nВ средние века Дранда была резиденцией епископа, его церковная власть распространялась от Кодора до Анакопии. Собору принадлежали крупные земельные владения, он вел оживленную торговлю лесом и скотом. Во время турецкого владычества храм был разрушен, и позже неоднократно реставрировался в разные годы XIX и XX веков. В результате всех реставраций и перестроек первоначальный облик древнего храма сильно изменился, а от росписей не осталось следа.\n\nИзвестный в Российской империи мужской монастырь*bold*\n\nВ 1883 году прибывшие из Нового Афона монахи основали при храме мужской монастырь. В начале XX века Драндский мужской монастырь был широко известен в Российской империи, число насельников достигало 300 человек. Монастырь имел два скита в окрестностях Дранды и подворья в Сухуме, Екатеринодаре, Новороссийске и Ейске. При монастыре была основана церковно-приходская школа для детей.\n\nВ 1917 году на территории монастыря располагались собор Успения Божией Матери, книжная лавка, усыпальница, скит великомученика Пантелеимона и Феодора Стратилата, церковь Святого Феодосия Черниговского, монашеские корпуса, больница и гостиницы. Монастырь окружали фруктовые сады и обширные виноградники, а в холме под собором раскинулся настоящий подземный городок с галереями, пещерами и тайниками.\n\nК 1924 году большинство монастырей и приходов Сухумской епархии были закрыты и разграблены. Земли Драндского собора были переданы колхозу, жилые помещения использовались как административные учреждения.\n\nВ настоящее время Драндский храм является действующим храмом Сухумо-Абхазской епархии.\n\nПо материалам Сухумо-Абхазской епархии',
-    address: 'Гулрыпшский район, посёлок Дранда',
-    addressLink: 'https://yandex.com/maps/-/CDxHmYNv',
-    image: '/assets/CulturalAttractionsGulripsh2.jpg',
-  },
-  {
-    id: 3,
-    name: 'Озеро Амткел',
-    description: 'Озеро Амткел расположено на высоте 512 метров над уровнем моря. После Рицы второе озеро по величине Абхазии. Озеро Амткел также является самым молодым озером Абхазии, образовалось в результате горного обвала во время сильного землетрясения в 1891 году.\n\nПутешествие к озеру Амткел начинается в Цебельдинской долине. В десятке километров от села Цебельда находится селение Амткел, которое расположено на берегу реки Джампал. Через бурный поток, в начале XX века был построен мост, получивший название Красный, из-за цвета перил. Отсюда начинается прогулка ко второму по величине озеру Абхазии Амткел.\n\nНачало пути можно преодолеть на автомобиле. Для этого нужно съехать перед мостом налево и проехать к ущелью Холодной речки. Дальше дорога идет по ущелью, заросшему самшитовым лесом. Оно заканчивается тропой, уходящей вверх на высоту 200 метров. На этой высоте тропа идет по бывшей лесовозной дороге и спускается к озеру со стороны селения Азанта.\n\nОзеро Амткел образовалось в результате горного обвала во время сильного землетрясения в конце XIX века после природного катаклизма в результате обвала горных пород, перегородивших реку Амткел. Длина озера составляет 2400 м, глубина около 80 м. Площадь озера 0,60 кв. км. Поскольку озеро питается водами реки и окружено горами, уровень воды в нем непостоянен.Поступление воды зависит от интенсивности таянияснегов в горах. Часть воды уходит через завалы и образует Холодную речку, а часть проникает вглубь земли через карстовые воронки. Годовая разница уровня воды в озере – 40 м. Минимум приходиться на февраль. Максимально высоко вода поднимается в начале лета (тогда длина озера увеличивается на 4 км) и тогда Амткел особенно живописен.Летом вода в озере достаточно теплая для купания. В озере водятся форель, усач, голавль и др. У села Амткел расположены остатки русской крепости первой половины XIX века времен Кавказской войны. В данной крепости служил сосланный в Абхазию известный декабрист А.А. Бестужев – Марлинский.На Амткеле в 20-е годы побывал писатель Константин Паустовский. Свой поход с местными проводниками на озеро описал в рассказе “Бросок на юг".\n\nШакуранские водопады*bold*\n\nВернувшись в село Амткел, можно увидеть Шакуранские водопады – еще одно кавказское чудо природы. Для этого нужно углубиться по тропе в Шакуранское ущелье, по дну которого течет светлый поток. Он образует ванны и колодцы с чистой холодной водой. Пройдя через самое узкое место ущелья, можно подойти к обрыву к Джампалу и увидеть Шакуранские водопады сверху.\n\nВодопады спрятаны в горных нишах. Верхний каскад достигает 30 м в высоту. Поток воды срывается с обрыва и падает в центр каменного амфитеатра на каменное образование, похожее на сталагмит. Высота камня 10-15 м, с каждым годом он растет.\n\nДругие два каскада находятся левее за обрывом скал. Срываясь с обрыва, вода скрывает гроты в скалах. Снизу водопад особенно красив.\n\nАзантский дольмен*bold*\n\nАзантский дольмен находится недалеко от озера Амткел в зарослях кустарников. Это самый большой и высокий дольменна Кавказе (3,4 м). Рядом же находятся еще несколько дольменов. Азантский дольмен дошел до наших дней в хорошем состоянии.',
-    address: 'Озеро Амткел',
-    addressLink: 'https://yandex.com/maps/-/CDxHmNI9',
-    image: '/assets/CulturalAttractionsGulripsh3.jpg',
-  },
-  {
-    id: 4,
-    name: 'Река Кодор',
-    description: 'Кодор — река в Абхазии, впадающая в 20 километрах к юго-востоку от Сухума в Чёрное море. Кодор берет начало с южных склонов Главного Кавказского хребта, в окрестностях Нахарского перевала, на границе Цебельды и Карачая, составляется из трех горных речек, из коих самая значительная и восточная Сакен – должна быть признана главным истоком Кодора.\n\nПриняв справа реку Клыч, протекающую по узкому и живописному ущелью, Кодор направляется на запад с легким уклоном на юг, принимает справа значительный приток Адзгара, образующую одну из наиболее замечательных продольных долин у южного склона главного Кавказского хребта; на широте Сухума Кодор круто поворачивает на юго-запад и, выйдя из гор, течёт по лесистой равнине к Чёрному морю, куда и впадает тремя рукавами.\n\nКодор представляет быструю горную реку, длиной до 170 километров; верхняя часть его долины, стесненная горами (на севере южные отроги главного Кавказского хребта, на юге передовой, почти параллельный ему хребет Джедисвик), представляет чрезвычайно живописную, покрытую роскошными лесами и пастбищами, но весьма малонаселенную местность. По ущелью Кодор проведен каменный путь через Клухорский перевал в главном Кавказском хребте, для сообщения Сухума с Черкесском.',
-    address: 'Река Кодор',
-    addressLink: 'https://yandex.com/maps/-/CDxHmSnw',
-    image: '/assets/CulturalAttractionsGulripsh4.jpg',
-  },
-];
+type City = { id: number; name: string; title?: string; order: number };
+type CulturalAttraction = {
+  id: number;
+  city: number;
+  name: string;
+  name_link?: string;
+  description: string;
+  address: string;
+  address_link?: string;
+  working_hours?: string;
+  contacts?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  attractions: CulturalAttraction[];
+};
+
+const API_BASE = config.API_BASE;
 
 const CulturalAttractionsGulripsh: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/cultural-attractions/page/city/${encodeURIComponent('Гулрыпш')}/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load cultural attractions');
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
+      
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Гулрыпш: культурные достопримечательности</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Гулрыпш: культурные достопримечательности'}</h1>
         </section>
 
-        <section className={styles.attractionsSection}>
-          {attractions.map((attraction) => (
-            <article key={attraction.id} className={styles.attractionCard}>
-              <h2 className={styles.attractionName}>{attraction.name}</h2>
+        <section className={styles.cardsSection}>
+          {data.attractions.map((attraction) => (
+            <div key={attraction.id} className={styles.attractionCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={attraction.image}
-                  alt={attraction.name}
-                  fill
-                  className={styles.attractionImage}
-                />
-              </div>
-              <div className={styles.attractionDescription}>
-                {attraction.description.split('\n\n').map((paragraph, index) => {
-                  const isBold = paragraph.endsWith('*bold*');
-                  const text = isBold ? paragraph.slice(0, -6) : paragraph;
-                  return <p key={index} style={{ fontWeight: isBold ? 'bold' : 'normal' }}>{text}</p>;
-                })}
-              </div>
-              <p className={styles.attractionAddress}>
-                <strong>Адрес: </strong>
-                {attraction.addressLink ? (
-                  <a href={attraction.addressLink} target="_blank" rel="noopener noreferrer">
-                    {attraction.address}
-                  </a>
-                ) : (
-                  attraction.address
+                {attraction.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${attraction.image_url}`}
+                    alt={attraction.name}
+                    className={styles.attractionImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
                 )}
-              </p>
-            </article>
+              </div>
+
+              <div className={styles.infoContainer}>
+                <h2 className={styles.attractionName}>
+                  {attraction.name_link ? (
+                    <a href={attraction.name_link} target="_blank" rel="noopener noreferrer">
+                      {attraction.name}
+                    </a>
+                  ) : (
+                    attraction.name
+                  )}
+                </h2>
+                
+                <div className={styles.infoBlock}>
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={`${styles.infoValue} ${attraction.address_link ? styles.addressLink : ''}`}>
+                      {attraction.address_link ? (
+                        <a href={attraction.address_link} target="_blank" rel="noopener noreferrer">{attraction.address}</a>
+                      ) : (
+                        attraction.address
+                      )}
+                    </span>
+                  </div>
+                  
+                  {attraction.working_hours && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{attraction.working_hours}</span>
+                    </div>
+                  )}
+                  
+                  {attraction.description && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Описание:</span>
+                      <span className={styles.infoValue}>{attraction.description}</span>
+                    </div>
+                  )}
+                  
+                  {attraction.contacts && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoValue}>{attraction.contacts}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           ))}
         </section>
       </main>
+
       <Footer />
       <ScrollToTop />
     </div>

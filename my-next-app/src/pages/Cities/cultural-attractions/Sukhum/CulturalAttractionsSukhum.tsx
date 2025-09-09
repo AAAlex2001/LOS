@@ -1,147 +1,154 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './CulturalAttractionsSukhum.module.scss';
+import config from '@/config';
 
-const attractions = [
-  {
-    id: 1,
-    name: 'Набережная Диоскуров',
-    description: 'Диоскуриадой называлась старейшая древнегреческая колония, располагавшаяся в центре нынешнего Сухума. Сейчас руины некогда процветавшего города покоятся на дне Сухумской бухты. Однако в честь колонии был назван один из городских объектов – набережная Диоскуров (от греч. «Зевса дети»). Длина составляет 1 км, вдоль нее проходит галечный пляж.\n\nВ летний сезон на нем не переводятся отдыхающие. Помимо купания в море и приема солнечных ванн развлечься посетители могут катанием на катамаранах и «бананах». С другой стороны от набережной – парк с произрастающими в нем хвойными и пальмовыми породами. В густой зелени прячутся старинные особняки и современные здания.',
-    address: 'Набережная Диоскуров, Сухум.',
-    addressLink: 'https://yandex.com/maps/-/CDUgUMIq',
-    image: '/assets/CulturalAttractionsSukhum1.jpg',
-  },
-  {
-    id: 2,
-    name: 'Набережная Махаджиров',
-    description: 'Набережная Диоскуров переходит в набережную Махаджиров. Махаджирами называли мусульман, принудительно переселенных из немусульманских в мусульманские страны. Конкретно в случае с Абхазией речь идет о переселении мусульман в Османскую империю по завершении Кавказской войны в XIX в.\n\nЗастраивать набережную начали с XX в., постепенно превратив в одно из самых живописных мест города. Особенно примечательны особняки: дом братьев Ксандопуло, дом купца Вольфензона, отель и ресторан «Белый парус». Архитектурные памятники, пышная южная растительность, кафе и рестораны с местной и европейской кухней делают набережную Махаджиров одной из самых популярных прогулочных зон Сухума.',
-    address: 'Набережная Махаджиров, Сухум.',
-    addressLink: 'https://yandex.com/maps/-/CCUVfXSNKD',
-    image: '/assets/CulturalAttractionsSukhum2.jpg',
-  },
-  {
-    id: 3,
-    name: 'Сухумский ботанический сад',
-    description: 'Гордость Сухума – самый старый ботанический сад Кавказского региона. История его довольно драматичная и началась в 1838-м с приезда в Сухум доктора Багриновского. Он заметил, что местный климат прекрасно подходит для выращивания целебных растений. Тогда он и разбил рядом с домом сад. Выращиваемые там экземпляры он использовал в своей врачебной практике.\n\nВнес вклад в развитие ботанического сада генерал Раевский, обогативший коллекцию несколькими ценными видами. В годы русско-турецкой войны (1877-1878 гг.) сад оказался практически полностью уничтоженным. К счастью, в 1890-х на его месте была основана сельскохозяйственная станция, позволившая постепенно возродить сад.\n\nВ последующие годы военные конфликты еще не раз наносили ему увечья, но он выстоял, превратившись в одну из лучших достопримечательностей. Здесь произрастает около 5 тыс. видов растений – цветов, кустарников, деревьев. Представлена, помимо местной, флора разных уголков мира.\n\nМожно встретить множество цитрусовых, лотос, хлопок, бамбук, эвкалипт, лавровые деревья. Растут секвойи, чайные кусты, лилии и магнолии. Здесь же обитает самая старая липа Сухума: ей уже 300 лет.',
-    address: 'Сухумский ботанический сад, улица Гулиа, Сухум.',
-    addressLink: 'https://yandex.com/maps/-/CDXce2NX',
-    image: '/assets/CulturalAttractionsSukhum3.jpg',
-  },
-  {
-    id: 4,
-    name: 'Абхазский государственный музей',
-    description: 'Самый большой музей Абхазии гордится впечатляющей коллекцией, знакомящей с историей страны. Основан он в 1917-м и расположен в элегантном трехэтажном здании на проспекте Леона. Музей окружен сквером, посетить который можно бесплатно. На территории есть ряд интересных объектов: могила художника Шервашидзе, Эшерский дольмен, каменные скульптуры.\n\nЭкспозиция музея насчитывает более 100 тыс. артефактов разных исторических эпох, включая бронзовый и каменный век и античность. В частности, можно полюбоваться античной стеной, ассирийскими и греческими щитами, гарпунами времен мезолита и традиционными кавказскими жилищами. Кроме того, представлена коллекция абхазских полезных ископаемых.',
-    address: 'Сухум, просп. Леона, 22',
-    addressLink: 'https://yandex.com/maps/-/CDXciUNg',
-    image: '/assets/CulturalAttractionsSukhum4.jpg',
-  },
-  {
-    id: 5,
-    name: 'Сухумский обезьяний питомник',
-    description: 'Если ищете, что посмотреть в Сухуме, не пропустите обезьяний питомник. Создан он был в 1927-м. В первые годы существования питомника многие приматы погибли из-за неподходящих природных условий и инфекций. С 1958-го начал работу центр приматологии, сосредоточившийся на исследовании онкологических заболеваний. Число особей составляло тогда около тысячи. Часть обезьян готовили к полету в космос, на других испытывали вакцины от серьезных заболеваний. Сильно пострадал питомник во время войны между Грузией и Абхазией.\n\nСейчас он практически восстановлен, по-прежнему участвует в исследованиях. Всего здесь проживает около 300 особей, в основном вида макака-резус. На территории – памятник обезьянам и скульптура академика Павлова. Находится питомник в красивой местности, животных разрешено кормить и наблюдать за их поведением. Важно помнить про меры предосторожности и следить за мелкими вещами, чтобы обезьяны их не утащили.',
-    address: 'Питомник обезьян, Убыхская улица, Сухум.',
-    addressLink: 'https://yandex.com/maps/-/CDXciG~V',
-    image: '/assets/CulturalAttractionsSukhum5.jpg',
-  },
-  {
-    id: 6,
-    name: 'Смотровая площадка на Сухумской горе',
-    description: 'На северо-востоке столицы находится природный памятник – Сухумская гора (старое название – Чернявская). Она возвышается на 201 м над уровнем моря. В середине прошлого столетия на горе был обустроен парк, а территория облагорожена. Тогда здесь появились лестницы, колоннада, фонтаны и фонари. Из располагавшегося на территории ресторана «Амзу» можно было полюбоваться панорамой города.\n\nСейчас на горном склоне пантеон, где захоронены видные горожане; есть смотровая площадка с видом на Сухум и Черное море. На северном склоне множество разрушенных и заброшенных зданий – следов грузино-абхазской войны. Флора парка Сухумской горы представлена гималайскими кедрами, мимозой, туей, кустами роз – все растения были высажены горожанами.',
-    address: 'Сухум, улица Папаскир',
-    addressLink: 'https://yandex.com/maps/-/CDXciXJL',
-    image: '/assets/CulturalAttractionsSukhum6.jpg',
-  },
-  {
-    id: 7,
-    name: 'Проспект Леона',
-    description: 'Название одной из главных городских улиц было дано в честь царя Абхазии Леона II (VIII-IX вв. н. э.). Другое название проспекта – Царский. Основана улица была более двух столетий назад. В XXI в. она прошла масштабную реставрацию: были снесены старые здания, построены новые.\n\nСейчас она превратилась в настоящий туристический променад, поскольку проходит в окрестностях ключевых городских достопримечательностей, включая Ботанический сад и Обезьяний питомник. Здесь сохранилось множество архитектурных памятников XX в. На всем протяжении проспект засажен пальмами и кустарниками, что придает ему цветущий и ухоженный вид.',
-    address: 'Проспект Леона',
-    addressLink: 'https://yandex.com/maps/-/CDXcmDMn',
-    image: '/assets/CulturalAttractionsSukhum7.jpg',
-  },
-  {
-    id: 8,
-    name: 'Драматический театр имени С. Чанба',
-    description: 'Главный театр Абхазии получил имя в честь писателя и общественного деятеля Самсона Чанбы. Началась его история в 1920-х, когда в новой гостинице был основан небольшой театр. Созданный в 1931-м драматический театр был разрушен в годы Великой отечественной войны.\n\nВ 1950-х гг. его восстановили, объединив в одном комплексе театр, кинотеатр и гостиницу. Белоснежное здание комплекса впечатляет элегантной отделкой и расположенным перед ним фонтаном в виде грифонов. Сейчас театральная ложа предоставляет места 700 зрителям. Все представления сопровождаются синхронным переводом, транслируемым по радиосвязи.',
-    address: 'Сухум, ул. Пушкина, 1',
-    addressLink: 'https://yandex.com/maps/-/CDXcqIoz',
-    image: '/assets/CulturalAttractionsSukhum8.jpg',
-  },
-  {
-    id: 9,
-    name: 'Площадь Свободы',
-    description: 'Площадь Свободы в Сухуме – объект, хранящий следы войны с Грузией. Основана она была в 1920-х гг. и тогда же получила название, хотя позже временно была переименована в площадь Ленина. В 1950-х был обустроен сквер, появились аллеи с японскими кленами. Часть деревьев была высажена политиками разных стран в ходе дружественных визитов в Абхазию.\n\nВо время грузино-абхазской войны площадь пострадала, было сожжено здание Совета министров, а памятник Ленину расстрелян. Здание Совета по-прежнему стоит на площади, как и пустой постамент памятника – два символа войны и ушедшей эпохи.',
-    address: 'Сухум, ул. Гулиа, 34',
-    addressLink: 'https://yandex.com/maps/-/CDXcqNJX',
-    image: '/assets/CulturalAttractionsSukhum9.png',
-  },
-  {
-    id: 10,
-    name: 'Парк Славы',
-    description: 'Еще один городской объект, связанный с событиями грузино-абхазской войны, – парк Славы в центре столицы. Он служит предметом гордости для жителей республики, одновременно напоминая о трагическом прошлом. На территории парка захоронены герои, павшие во время войны с Грузией.\n\nВ парке также установлен памятник, внешне стилизованный под меч, вонзенный в землю – это символ окончания войны. Парк Славы – популярное место для митингов и других массовых событий. Приходят сюда и чтобы возложить цветы к могилам погибших.',
-    address: 'Сухум, парк Славы',
-    addressLink: 'https://yandex.com/maps/-/CDXcq0Nb',
-    image: '/assets/CulturalAttractionsSukhum10.jpg',
-  },
-  {
-    id: 11,
-    name: 'Беслетский мост',
-    description: 'Беслетский мост был построен примерно в X-XII вв., во времена расцвета Грузинского царства. Название переправе дано по реке Беслетка, над которой она проложена, но иногда ее называют также Мостом царицы Тамары. Интересно, что он до сих пор функционирует. Проложен мост был в целях сохранения торгового пути в периоды разлива речки. Рядом сохранились не менее живописные руины старинных печей для обжига кирпича, внешне напоминающие сторожевые башни.\n\nПолукруглое сооружение выполнено в соответствии с особыми технологиями: при усилении давления каменные глыбы еще прочнее соединялись между собой. Даже сейчас уникальная достопримечательность выдерживает массу в 8 т. В длину переправа 35 м, ширина – 5 м.\n\nОсобое очарование мосту придает его окружение: горы и холмы, пышная растительность, небольшая чистая речка внизу. Конструкция покрыта мягким мхом и оплетена лианами, и этот синтез природы и архитектурной мысли производит впечатление сказочности и нереальности места.',
-    address: 'Сухум, улица Чанба',
-    addressLink: 'https://yandex.com/maps/-/CDXcq-5i',
-    image: '/assets/CulturalAttractionsSukhum11.jpg',
-  },
-  {
-    id: 12,
-    name: 'Замок Баграта',
-    description: 'Живописная достопримечательность расположена на холме у реки Беслетки. Она представляет собой руины крепости Баграта III– царя Абхазов и Картвелов, правившего тысячелетие назад. Построена она была, чтобы отражать нападения сельджуков.\n\nКогда ее военное значение отпало, крепость была заброшена и постепенно разрушилась. Однако ее останки, дышащие историей и величием прошлого, неизменно притягивают туристов. Можно разглядеть стену, башни и каменные ворота – все поросло мхами и вьющимися растениями.\n\nНа территории проходили археологические исследования: в частности, были обнаружены глиняные винные кувшины. Замок Баграта – идеальное место, чтобы не только прикоснуться к истории Абхазии, но и полюбоваться с высоты на прекрасный город и бухту.',
-    address: 'Сухум, Тхубунский район',
-    addressLink: 'https://yandex.com/maps/-/CDXcuB1j',
-    image: '/assets/CulturalAttractionsSukhum12.jpg',
-  },
-];
+type City = { id: number; name: string; title?: string; order: number };
+type CulturalAttraction = {
+  id: number;
+  city: number;
+  name: string;
+  name_link?: string;
+  description: string;
+  address: string;
+  address_link?: string;
+  working_hours?: string;
+  contacts?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  attractions: CulturalAttraction[];
+};
+
+const API_BASE = config.API_BASE;
 
 const CulturalAttractionsSukhum: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/cultural-attractions/page/city/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load cultural attractions');
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
+      
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Сухум: культурные достопримечательности</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Сухум: культурные достопримечательности'}</h1>
         </section>
 
-        <section className={styles.attractionsSection}>
-          {attractions.map((attraction) => (
-            <article key={attraction.id} className={styles.attractionCard}>
+        <section className={styles.cardsSection}>
+          {data.attractions.map((attraction) => (
+            <div key={attraction.id} className={styles.attractionCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={attraction.image}
-                  alt={attraction.name}
-                  fill
-                  className={styles.attractionImage}
-                />
+                {attraction.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${attraction.image_url}`}
+                    alt={attraction.name}
+                    className={styles.attractionImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
-              <h2 className={styles.attractionName}>{attraction.name}</h2>
-              <div className={styles.attractionDescription}>
-                {attraction.description.split('\n\n').map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
+
+              <div className={styles.infoContainer}>
+                <h2 className={styles.attractionName}>
+                  {attraction.name_link ? (
+                    <a href={attraction.name_link} target="_blank" rel="noopener noreferrer">
+                      {attraction.name}
+                    </a>
+                  ) : (
+                    attraction.name
+                  )}
+                </h2>
+                
+                <div className={styles.infoBlock}>
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={`${styles.infoValue} ${attraction.address_link ? styles.addressLink : ''}`}>
+                      {attraction.address_link ? (
+                        <a href={attraction.address_link} target="_blank" rel="noopener noreferrer">{attraction.address}</a>
+                      ) : (
+                        attraction.address
+                      )}
+                    </span>
+                  </div>
+                  
+                  {attraction.working_hours && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{attraction.working_hours}</span>
+                    </div>
+                  )}
+                  
+                  {attraction.description && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Описание:</span>
+                      <span className={styles.infoValue}>{attraction.description}</span>
+                    </div>
+                  )}
+                  
+                  {attraction.contacts && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoValue}>{attraction.contacts}</span>
+                    </div>
+                  )}
+                </div>
               </div>
-              <p className={styles.attractionAddress}>
-                <strong>Адрес: </strong>
-                <a href={attraction.addressLink} target="_blank" rel="noopener noreferrer">
-                  {attraction.address}
-                </a>
-              </p>
-            </article>
+            </div>
           ))}
         </section>
       </main>
+
       <Footer />
       <ScrollToTop />
     </div>

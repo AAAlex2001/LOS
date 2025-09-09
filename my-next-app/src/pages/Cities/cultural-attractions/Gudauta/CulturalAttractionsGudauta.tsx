@@ -1,162 +1,154 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './CulturalAttractionsGudauta.module.scss';
+import config from '@/config';
 
-type DescriptionPart = {
-  text: string;
-  bold?: boolean;
-};
-
-type Attraction = {
+type City = { id: number; name: string; title?: string; order: number };
+type CulturalAttraction = {
   id: number;
+  city: number;
   name: string;
-  description: string | DescriptionPart[];
+  name_link?: string;
+  description: string;
   address: string;
-  addressLink?: string;
-  image: string;
+  address_link?: string;
+  working_hours?: string;
+  contacts?: string;
+  image_url: string;
+  order: number;
 };
 
-const attractions: Attraction[] = [
-  {
-    id: 1,
-    name: 'Здание универмага «Гунда»',
-    description: 'Одно из самых красивых зданий Гудауты было построено в 1909 году. Оно представляет собой двухэтажное сооружение с трапециевидным основанием. Фасады украшены узорчатыми пилястрами, белокаменными наличниками, филёнками и резным фризом.\\n\\nПарадное крыльцо оформлено белоснежными колоннами и архивольтом, прямо над ним расположена оконная ниша с арочной рамкой и лепным горельефом. Здание покрашено в броский ягодный цвет, а элементы декора покрыты штукатуркой, что делает их ещё ярче и заметнее. Помпезную композицию завершает сквозная звонница, внутри которой установлен массивный колокол. Звонница увенчана шатром с башенным шпилем и украшена большими круглыми часами.\\n\\nИзначально в здании располагалась элитная гостиница «Империал». В 1990-х злоумышленники устроили в одном из помещений пожар, в результате которого постройка потерпела серьёзные разрушения, а прилегающие к ней флигели сгорели дотла.\\n\\nСегодня здание отреставрировано и размещает в себе главный универмаг города, названный женским именем Гунда. Реставрация не повредила историческому облику здания, сохранив малейшие элементы декора и настенные росписи столетней давности. В настоящее время «Гунда» является символом Гудауты и её самой узнаваемой достопримечательностью.',
-    address: 'Гудаута, просп. Героев, 3',
-    addressLink: 'https://yandex.com/maps/-/CDxr5-9K',
-    image: '/assets/CulturalAttractionsGuduata1.jpg',
-  },
-  {
-    id: 2,
-    name: 'Гудаутский винный завод',
-    description: 'Завод был основан в 1953 году как частная винодельня. Всего через несколько лет после открытия предприятия производимая продукция получила известность и бешеную популярность.\\n\\nМастера-виноделы, работающие на заводе, создают напитки по национальным абхазским рецептам. Туристов, посетивших винодельню, ждёт экскурсия по производственным цехам, виноградникам, а в конце гостям будет предложена дегустация легендарного абхазского вина. Здесь путешественники смогут оценить и попробовать вино всевозможных сортов (в том числе знаменитое вино «Рица»), а также водку и коньяк.\\n\\nПри заводе открыт магазин, где каждый желающий сможет приобрести бутылку понравившегося напитка.\\n\\nГудаутское вино пользуется любовью ценителей из разных уголков мира, и побывать на его исконной родине — большая честь и привилегия. Так считают гудаутцы.',
-    address: 'Гудаута, Гагрское шоссе',
-    addressLink: 'https://yandex.com/maps/-/CDxrBS16',
-    image: '/assets/CulturalAttractionsGuduata2.jpg',
-  },
-  {
-    id: 3,
-    name: 'Церковь Успения Пресвятой Богородицы',
-    description: 'В нескольких километрах от города, в древнем селе Лыхны расположен крестово-купольный храм, построенный на рубеже X и XI веков. Здание выполнено из ровных рядов тщательно отшлифованных камней пепельно-серого цвета.\\n\\nКровли расположены на разных уровнях, в центре возвышается восьмерик с небольшим куполом. Вход в храм оформлен аркой с массивными сводами. Рядом находится трёхъярусная колокольня на кубическом основании, увенчанная крестом. Вокруг здания сохранилась часть оградной стены, сложенной из круглых камней.\\n\\nОсобой ценностью средневековой церкви являются фрески, созданные в XIV веке под влиянием византийского искусства, а также несколько настенных надписей на грузинском и греческом языках.\\n\\nНа территории церкви находится захоронение Сафар-Али-бея Чачба-Шервашидзе — абхазского князя, умершего в первой половине XIX столетия.\\n\\nЭто один из самых древних действующих храмов Абхазии.\\n\\nУникальная архитектура Гудауты\\n\\nВ плане архитектурной застройки Гудаута является поистине особенным городом. Здесь можно увидеть не только современные комплексы, но и здания XIX-XX веков, а также развалины древнейших сооружений, хозяевами которых были князья Абхазии. Немало интересных построек предстоит посетить туристам в черте города и в окрестностях.',
-    address: 'Гудаута, ул. Харазия, 26',
-    addressLink: 'https://yandex.com/maps/-/CDxrFAY-',
-    image: '/assets/CulturalAttractionsGuduata3.jpg',
-  },
-  {
-    id: 4,
-    name: 'Здание железнодорожного вокзала',
-    description: 'Железнодорожный вокзал был построен в 1944 году. Архитектурный стиль и убранства данного здания весьма необычны для постройки Советской эпохи.\\n\\nВокзал выполнен в античном стиле. Свод его крыши поддерживает ряд высоких колонн, оконные ниши украшены виноградными гроздями, выполненными из дерева. Внутренние интерьеры также восхищают. Потолок и стены обрамлены лепными узорами, на второй этаж ведёт широкая мраморная лестница, а в залах ожидания зеленеют комнатные растения и пальмы.\\n\\nВеликолепное здание понесло урон во время грузино-абхазского конфликта, и сейчас в нём ведутся реставрационные работы.',
-    address: 'Абхазская железная дорога, станция Гудаута',
-    addressLink: 'https://yandex.com/maps/-/CDxrFUZF',
-    image: '/assets/CulturalAttractionsGuduata4.jpg',
-  },
-  {
-    id: 5,
-    name: 'Музей-заповедник «Абазгия»',
-    description: 'Создание музея планировалось на 1992 год, но из-за разразившегося грузино-абхазского конфликта, проект пришлось отложить.\\n\\nМузей открыл свои двери в 1994 году. Экспозиция разместилась в здании бывшей греческой школы. Экспонаты стекались в музей со всех уголков Республики. Ценные артефакты жертвовали выставочные центры других городов, школьные музеи, а также горожане, сохранившие в личных архивах предметы старины.\\n\\nВ настоящее время экскурсия проходит по четырём выставочным залам. Первые два посвящены событиям грузино-абхазской войны и жертвам этого национального конфликта. Третий зал рассказывает о доисторической истории Абхазии, демонстрируя ископаемые останки первобытных существ.\\n\\nЧетвёртый зал посвящён этнографии Абхазии. Здесь можно увидеть образцы декоративно-прикладного искусства, женские и мужские национальные костюмы, музыкальные инструменты, изделия из дерева, глины и камня, а также прочесть литературные шедевры абхазских писателей и поэтов.\\n\\nПосещение музея-заповедника «Абазгия» — обязательный пункт обзорной экскурсии по Гудауте. Для того, чтобы обойти все залы, потребуется не более двух часов.',
-    address: 'Гудаута, улица Маргания',
-    addressLink: 'https://yandex.com/maps/-/CDxrFJlX',
-    image: '/assets/CulturalAttractionsGuduata5.jpg',
-  },
-  /*{
-    id: 6,
-    name: 'Мемориал жертвам Латской трагедии',
-    description: 'Декабрьским днём 1992 года из оккупированного города Ткварчели вылетел вертолёт Ми-8, на борту которого находились беженцы.\\n\\nВертолёт должен был приземлиться в Гудауте, но этого так и не произошло. Спустя двенадцать минут после взлёта, он был сбит боевой ракетой, выпущенной грузинскими войсками. Вертолёт потерпел крушение вблизи села Лата. Все 87 человек, включая 8 беременных женщин и 35 детей, погибли.\\n\\nОстанки погибших были захоронены в братской могиле на территории гудаутского парка имени О. Гунба. Памятник над захоронением представляет собой высокую гранитную стелу. У её подножия можно увидеть бронзовую фигуру женщины, изогнувшейся в агонии. Здесь же размещены плиты с именами и фамилиями жертв Латской трагедии.\\n\\nКаждый год, 14 декабря гудаутцы собираются в парке, чтобы почтить память невинных жертв и возложить цветы. Среди них мужчины и женщины, которые не дождались возвращения своих родных.',
-    address: 'Гудаута, парк культуры и отдыха имени Орджоникидзе',
-    addressLink: 'https://yandex.com/maps/-/CDxrFK9R',
-    image: '/assets/CulturalAttractionsGuduata6.jpg',
-  },*/
-  {
-    id: 7,
-    name: 'Скульптуры Гуды и Уты',
-    description: 'Согласно легенде, название города происходит от юношеского имени Гуда и девичьего Ута. Гуда и Ута нежно любили друг друга и мечтали пожениться, но давний раздор между семьями мешал их счастью.\\n\\nКогда родители Гуда в очередной раз запретили ему даже видеться с возлюбленной, он направился к реке и утопился. Узнав об этом, Ута в слезах бросилась к берегу. Девушка не пожелала жить на этом свете без друга своего сердца, и последовала за ним в пучину.\\n\\nКрасивая легенда, напоминающая историю Ромео и Джульетты, крепко связана с культурой Гудауты. Один из самых живописных парков курорта назван в честь влюблённых — «Гуда и Ута».\\n\\nТам, на зелёной лужайке установлены белоснежные скульптуры юноши и девушки. Это место пользуется большой популярностью у влюблённых и молодожёнов. Здесь часто назначают свидания и устраивают свадебные фотосессии.',
-    address: 'Гудаута, парк Гуда и Ута',
-    addressLink: 'https://yandex.com/maps/-/CDxrFLJq',
-    image: '/assets/CulturalAttractionsGuduata7.jpg',
-  },
-  {
-    id: 8,
-    name: 'Дача Горбачёва госдача',
-    description: [
-      { text: 'Госдача, Мюссера, Абхазия', bold: true },
-      { text: '\\n\\n' },
-      { text: 'Расположена', bold: true },
-      { text: ' госдача ' },
-      { text: 'Дача Горбачёва', bold: true },
-      { text: ' на самом берегу моря в посёлке Мюссера в 57 км от границы (р. Псоу)' },
-      { text: '\\n\\n' },
-      { text: 'Территория', bold: true },
-      { text: ' закрытая, охраняемая' },
-      { text: '\\n\\n' },
-      { text: 'Пляж', bold: true },
-      { text: ' собственный, песчано-галечный, оборудованный' },
-      { text: '\\n\\n' },
-      { text: 'Корпуса', bold: true },
-      { text: ' Главный - 2-этажный с мансардой и два 1-этажных гостевых дома (коттеджи)' },
-      { text: '\\n\\n' },
-      { text: 'GPS', bold: true },
-      { text: ' (активные): 43.151831, 40.455529' },
-    ],
-    address: '',
-    image: '/assets/CulturalAttractionsGuduata8.jpg',
-  },
-];
+type CityPageData = {
+  title: string;
+  city?: City;
+  attractions: CulturalAttraction[];
+};
+
+const API_BASE = config.API_BASE;
 
 const CulturalAttractionsGudauta: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/cultural-attractions/page/city/${encodeURIComponent('Гудаута')}/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load cultural attractions');
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
+      
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Гудаута: культурные достопримечательности</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Гудаута: культурные достопримечательности'}</h1>
         </section>
 
-        <section className={styles.attractionsSection}>
-          {attractions.map((attraction) => (
-            <article key={attraction.id} className={styles.attractionCard}>
-              <h2 className={styles.attractionName}>{attraction.name}</h2>
+        <section className={styles.cardsSection}>
+          {data.attractions.map((attraction) => (
+            <div key={attraction.id} className={styles.attractionCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={attraction.image}
-                  alt={attraction.name}
-                  fill
-                  className={styles.attractionImage}
-                />
-              </div>
-              <div className={styles.attractionDescription}>
-                {typeof attraction.description === 'string'
-                  ? attraction.description.split('\\n\\n').map((paragraph, index) => (
-                      <p key={index}>{paragraph}</p>
-                    ))
-                  : <p>{(attraction.description as DescriptionPart[]).map((part, index) =>
-                      part.text === '\\n\\n' ? <br key={index} /> : 
-                      <span key={index} style={{ fontWeight: part.bold ? 'bold' : 'normal' }}>
-                        {part.text}
-                      </span>
-                    )}</p>}
-              </div>
-              <p className={styles.attractionAddress}>
-                {attraction.address && (
-                  <>
-                <strong>Адрес: </strong>
-                    {attraction.addressLink ? (
-                <a href={attraction.addressLink} target="_blank" rel="noopener noreferrer">
-                  {attraction.address}
-                </a>
-                    ) : (
-                      attraction.address
-                    )}
-                  </>
+                {attraction.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${attraction.image_url}`}
+                    alt={attraction.name}
+                    className={styles.attractionImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
                 )}
-              </p>
-            </article>
+              </div>
+
+              <div className={styles.infoContainer}>
+                <h2 className={styles.attractionName}>
+                  {attraction.name_link ? (
+                    <a href={attraction.name_link} target="_blank" rel="noopener noreferrer">
+                      {attraction.name}
+                    </a>
+                  ) : (
+                    attraction.name
+                  )}
+                </h2>
+                
+                <div className={styles.infoBlock}>
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={`${styles.infoValue} ${attraction.address_link ? styles.addressLink : ''}`}>
+                      {attraction.address_link ? (
+                        <a href={attraction.address_link} target="_blank" rel="noopener noreferrer">{attraction.address}</a>
+                      ) : (
+                        attraction.address
+                      )}
+                    </span>
+                  </div>
+                  
+                  {attraction.working_hours && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{attraction.working_hours}</span>
+                    </div>
+                  )}
+                  
+                  {attraction.description && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Описание:</span>
+                      <span className={styles.infoValue}>{attraction.description}</span>
+                    </div>
+                  )}
+                  
+                  {attraction.contacts && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoValue}>{attraction.contacts}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           ))}
         </section>
       </main>
+
       <Footer />
       <ScrollToTop />
     </div>
