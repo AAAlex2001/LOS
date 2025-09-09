@@ -5,7 +5,7 @@ from .views import BanksPageViewSet, BankViewSet
 
 router = DefaultRouter()
 router.register(r'page', BanksPageViewSet)
-router.register(r'list', BankViewSet)  # backward compatibility for /api/banks/list/
+router.register(r'banks', BankViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
