@@ -24,7 +24,7 @@ class HotelsPageViewSet(viewsets.ReadOnlyModelViewSet):
         except Exception as e:
             return Response({"error": str(e)}, status=500)
 
-    @action(detail=False, methods=['get'], url_path='city/(?P<city_name>[^/]+)')
+    @action(detail=False, methods=['get'], url_path='city_page/(?P<city_name>[^/]+)')
     def city_page(self, request, city_name=None):
         """Получить данные страницы отелей для конкретного города"""
         try:
