@@ -53,3 +53,38 @@ class CmsConfig(AppConfig):
         except ImportError:
             pass
 
+        try:
+            from . import gas_stations  # noqa
+        except ImportError:
+            pass
+
+        try:
+            from . import hotels  # noqa
+        except ImportError:
+            pass
+
+        try:
+            from . import parking_lots  # noqa
+        except ImportError:
+            pass
+
+        try:
+            from . import pharmacy  # noqa
+        except ImportError:
+            pass
+
+        try:
+            from . import restaurants  # noqa
+        except ImportError:
+            pass
+
+        try:
+            from . import shops_and_markets  # noqa
+        except ImportError:
+            pass
+
+        try:
+            from . import wineries  # noqa
+        except ImportError:
+            pass
+

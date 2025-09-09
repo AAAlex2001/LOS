@@ -1,97 +1,96 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
+// next/image убираем; используем <img> как в банках
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './HotelsGudauta.module.scss';
+import config from '@/config';
 
-// Данные отелей
-const hotels = [
-  {
-    id: 1,
-    name: 'Отель Апсны',
-    address: 'улица Абазинская, д. 2А, Гудаута',
-    addressLink: 'https://yandex.ru/maps/-/CDBKZM4j',
-    contacts: '+79407280055',
-    price: '2600р за ночь для двух гостей',
-    image: '/assets/HotelsGudauta1.jpg',
-  },
-  {
-    id: 2,
-    name: 'Отель Келешбей',
-    address: 'улица Гумистинская, д.15, Гудаута',
-    addressLink: 'https://yandex.ru/maps/-/CDBKZY2x',
-    contacts: '+7 (940) 997-24-53',
-    price: '5500р за ночь для двух гостей',
-    image: '/assets/HotelsGudauta2.jpg',
-  },
-  {
-    id: 3,
-    name: 'База отдыха "Лыхны"',
-    address: 'Гудаутский район, село Лыхны, посёлок Бамбора',
-    addressLink: 'https://yandex.ru/maps/-/CDBKZG6j',
-    contacts: '+7 (940) 772-44-94',
-    price: '5300р за ночь для двух гостей',
-    image: '/assets/HotelsGudauta3.jpg',
-  },
-  {
-    id: 4,
-    name: 'Эко Папа',
-    address: 'ул.Абазинская, дом 30, Гудаута',
-    addressLink: 'https://yandex.ru/maps/-/CDBKZOzO',
-    contacts: '+7 (940) 730-00-04',
-    price: '8800р за ночь для двух гостей',
-    image: '/assets/HotelsGudauta4.jpg',
-  },
-  {
-    id: 5,
-    name: 'Мини-отель Bambora House',
-    address: 'Гудаутский район, посёлок Бамбора',
-    addressLink: 'https://yandex.ru/maps/-/CDBWBMz6',
-    contacts: '+7 (940) 937-07-88',
-    price: '3700 за ночь для двух гостей',
-    image: '/assets/HotelsGudauta5.jpg',
-  },
-  {
-    id: 6,
-    name: 'Золотой Якорь',
-    address: 'Ул.Трапш 2',
-    addressLink: 'https://yandex.ru/maps/-/CDBWBFnH',
-    contacts: '+7 (940) 731-48-48\n+7 (940) 710-24-44',
-    price: '4000р за ночь для двух гостей',
-    image: '/assets/HotelsGudauta6.jpg',
-  },
-  {
-    id: 7,
-    name: 'Отель Россия',
-    address: 'просп. Героев, 49',
-    addressLink: 'https://yandex.ru/maps/-/CDBWBDma',
-    contacts: '+7 (940) 723-00-55',
-    price: '3800р за ночь для двух гостей',
-    image: '/assets/HotelsGudauta7.png',
-  },
-];
+type Hotel = {
+  id: number;
+  name: string;
+  address: string;
+  address_link?: string;
+  contacts?: string;
+  price?: string;
+  image_url?: string;
+  order: number;
+};
+
+type CityPayload = {
+  title: string;
+  hotels: Hotel[];
+};
+
+const API_BASE = config.API_BASE;
 
 const HotelsGudauta: React.FC = () => {
+  const [data, setData] = React.useState<CityPayload | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/hotels/page/city/${encodeURIComponent('Гудаута')}/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load');
+        const json = (await res.json()) as CityPayload;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>Загрузка...</h1>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Гудаута: отели</h1>
+          <h1 className={styles.mainTitle}>{data.title || 'Гудаута: отели'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
-          {hotels.map((hotel) => (
+          {data.hotels.map((hotel) => (
             <div key={hotel.id} className={styles.hotelCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={hotel.image}
+                <img
+                  src={hotel.image_url ? `${API_BASE}/media/${hotel.image_url}` : '/assets/placeholder.png'}
                   alt={hotel.name}
-                  fill
                   className={styles.hotelImage}
                 />
               </div>
@@ -102,9 +101,9 @@ const HotelsGudauta: React.FC = () => {
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Адрес:</span>
-                    <span className={`${styles.infoValue} ${hotel.addressLink ? styles.addressLink : ''}`}>
-                      {hotel.addressLink ? (
-                        <a href={hotel.addressLink} target="_blank" rel="noopener noreferrer">{hotel.address}</a>
+                    <span className={`${styles.infoValue} ${hotel.address_link ? styles.addressLink : ''}`}>
+                      {hotel.address_link ? (
+                        <a href={hotel.address_link} target="_blank" rel="noopener noreferrer">{hotel.address}</a>
                       ) : (
                         hotel.address
                       )}

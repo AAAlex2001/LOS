@@ -40,6 +40,7 @@ type HomeData = {
 };
 
 const API_BASE = (config.API_BASE || '').replace(/\/+$/, '');
+const toMedia = (p?: string) => (p ? `${API_BASE}/media/${p}` : '');
 
 const HomePage = () => {
   const [activePopup, setActivePopup] = useState<string | null>(null);
@@ -49,7 +50,7 @@ const HomePage = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const url = `${API_BASE}/api/home/`;
+        const url = `${API_BASE}/api/home/page/content/`;
         const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load homepage');
         const json = await res.json();
@@ -62,7 +63,7 @@ const HomePage = () => {
     load();
   }, []);
 
-  const sliderItems = data?.slider_items?.map(i => ({ type: i.media_type, src: i.url })) || [];
+  const sliderItems = data?.slider_items?.map(i => ({ type: i.media_type, src: toMedia(i.url) })) || [];
   const cities = data?.cities || [];
   const activities = data?.activities || [];
   const actionButtons = data?.action_buttons || [];
@@ -161,7 +162,7 @@ const HomePage = () => {
             </div>
             )}
             <div className={styles.fullWidthSection}>
-                <div className={styles.backgroundImageSection} style={{ backgroundImage: data.hero_bg_image_url ? `url(${data.hero_bg_image_url})` : undefined }}>
+                <div className={styles.backgroundImageSection} style={{ backgroundImage: data.hero_bg_image_url ? `url(${toMedia(data.hero_bg_image_url)})` : undefined }}>
                     <div className={styles.introOverlay}>
                         <p className={styles.introText}>
                           {data.hero_text_primary.split('\n').map((line, idx) => (
@@ -182,7 +183,7 @@ const HomePage = () => {
             <div className={styles.citiesGrid}>
                 {cities.map((city) => (
                     <div key={city.title} className={styles.cityCard}>
-                        <div className={styles.cityImage} style={{ backgroundImage: `url(${city.image_url})` }} />
+                        <div className={styles.cityImage} style={{ backgroundImage: `url(${toMedia(city.image_url)})` }} />
                         <div className={styles.cityInfo}>
                             <h3>{city.title}</h3>
                             <p>{city.description}</p>
@@ -197,10 +198,10 @@ const HomePage = () => {
             {data.cta_title && <h2 className={styles.sectionTitle}>{data.cta_title}</h2>}
             <div className={styles.promoBannerWrapper}>
                 {data.cta_overlay_image_url && (
-                  <Image src={data.cta_overlay_image_url} alt="Overlay" width={326} height={326} className={styles.promoMandarin} unoptimized />
+                  <Image src={toMedia(data.cta_overlay_image_url)} alt="Overlay" width={326} height={326} className={styles.promoMandarin} unoptimized />
                 )}
                 <div className={styles.fullWidthSection}>
-                    <div className={styles.promoBackgroundImageSection} style={{ backgroundImage: data.cta_bg_image_url ? `url(${data.cta_bg_image_url})` : undefined }}>
+                    <div className={styles.promoBackgroundImageSection} style={{ backgroundImage: data.cta_bg_image_url ? `url(${toMedia(data.cta_bg_image_url)})` : undefined }}>
                         <div className={styles.introOverlay}>
                             <div className={styles.promoBannerText}>
                                 {data.cta_hero_text?.split('\n').map((line, idx) => (
@@ -214,7 +215,7 @@ const HomePage = () => {
 
             <div className={styles.bookingCardWrapper}>
                 <div className={styles.bookingCard}>
-                     <div className={styles.bookingCardImage} style={{ backgroundImage: data.cta_card_image_url ? `url(${data.cta_card_image_url})` : undefined }}/>
+                     <div className={styles.bookingCardImage} style={{ backgroundImage: data.cta_card_image_url ? `url(${toMedia(data.cta_card_image_url)})` : undefined }}/>
                      <div className={styles.bookingCardInfo}>
                         {data.cta_card_title && <h3>{data.cta_card_title}</h3>}
                         {data.cta_card_description && <p>{data.cta_card_description}</p>}
@@ -235,7 +236,7 @@ const HomePage = () => {
             <div className={styles.activitiesHeader}>
                 {data.activities_section_title && <h2 className={styles.sectionTitle}>{data.activities_section_title}</h2>}
                 <div className={styles.fullWidthSection}>
-                    <div className={styles.backgroundImageSection} style={{ backgroundImage: data.activities_bg_image_url ? `url(${data.activities_bg_image_url})` : undefined }}>
+                    <div className={styles.backgroundImageSection} style={{ backgroundImage: data.activities_bg_image_url ? `url(${toMedia(data.activities_bg_image_url)})` : undefined }}>
                         <div className={styles.introOverlay}>
                             <div className={styles.activitiesBannerText}>
                                 {data.hero_text_secondary.split('\n').map((line, idx) => (
@@ -249,7 +250,7 @@ const HomePage = () => {
             <div className={styles.activitiesGrid}>
                 {activities.map((activity) => (
                     <Link key={activity.title} href={activity.href} className={styles.activityCard}>
-                        <div className={styles.activityImage} style={{ backgroundImage: `url(${activity.image_url})` }} />
+                        <div className={styles.activityImage} style={{ backgroundImage: `url(${toMedia(activity.image_url)})` }} />
                         <div className={styles.activityInfo}>
                             <h3>{activity.title}</h3>
                         </div>

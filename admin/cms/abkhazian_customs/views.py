@@ -18,22 +18,14 @@ class AbkhazianCustomsPageViewSet(viewsets.ReadOnlyModelViewSet):
         """
         Получить полное содержимое страницы абхазских обычаев
         """
-        try:
-            page = AbkhazianCustomsPage.objects.first()
-            if not page:
-                return Response({
-                    "sections": [],
-                    "hero_image_url": ""
-                })
-            
-            serializer = AbkhazianCustomsPageSerializer(page)
-            return Response(serializer.data)
-        except Exception as e:
+        page = AbkhazianCustomsPage.objects.first()
+        if not page:
             return Response({
-                "error": str(e),
                 "sections": [],
                 "hero_image_url": ""
             })
+        serializer = AbkhazianCustomsPageSerializer(page)
+        return Response(serializer.data)
 
     @action(detail=False, methods=['get'])
     def sections(self, request):

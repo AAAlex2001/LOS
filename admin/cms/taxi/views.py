@@ -12,20 +12,11 @@ class TaxiPageViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=['get'])
     def content(self, request):
-        try:
-            page = TaxiPage.objects.first()
-            if not page:
-                return Response({
-                    "services": []
-                })
-
-            serializer = TaxiPageSerializer(page)
-            return Response(serializer.data)
-        except Exception as e:
-            return Response({
-                "error": str(e),
-                "services": []
-            })
+        page = TaxiPage.objects.first()
+        if not page:
+            return Response({"services": []})
+        serializer = TaxiPageSerializer(page)
+        return Response(serializer.data)
 
 
 class TaxiServiceViewSet(viewsets.ReadOnlyModelViewSet):

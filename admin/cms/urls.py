@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 urlpatterns = [
-    path("", include("cms.homepage.urls")),
+    path("home/", include("cms.homepage.urls")),
     path("banks/", include("cms.banks.urls")),
     path("history-and-culture/", include("cms.history_and_culture.urls")),
     path("abkhazian-cuisine/", include("cms.abkhazian_cuisine.urls")),
@@ -15,6 +15,13 @@ urlpatterns = [
     path("churches/", include("cms.churches.urls")),
     path("clothing-repair/", include("cms.clothing_repair.urls")),
     path("cultural-attractions/", include("cms.cultural_attractions.urls")),
+    path("gas-stations/", include("cms.gas_stations.urls")),
+    path("hotels/", include("cms.hotels.urls")),
+    path("parking-lots/", include("cms.parking_lots.urls")),
+    path("pharmacy/", include("cms.pharmacy.urls")),
+    path("restaurants/", include("cms.restaurants.urls")),
+    path("shops-and-markets/", include("cms.shops_and_markets.urls")),
+    path("wineries/", include("cms.wineries.urls")),
 ]
 
 
