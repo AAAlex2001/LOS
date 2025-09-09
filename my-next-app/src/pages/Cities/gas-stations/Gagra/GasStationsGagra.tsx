@@ -12,7 +12,7 @@ const gasStations = [
   {
     id: 1,
     name: 'Азид',
-    nameLink: null,
+    name_link: null,
     address: 'Сухумское ш., 20',
     addressLink: 'https://yandex.ru/maps/-/CDSLyY0T',
     contacts: '+7 (840) 226-34-04',
@@ -21,7 +21,7 @@ const gasStations = [
   {
     id: 2,
     name: 'АЗК № 2 Роснефть',
-    nameLink: null,
+    name_link: null,
     address: 'Гагрский район, посёлок Бзыпта, Сухумское шоссе',
     addressLink: 'https://yandex.ru/maps/-/CDSLyBMM',
     contacts: '+7 (940) 777-67-51',
@@ -30,7 +30,7 @@ const gasStations = [
   {
     id: 3,
     name: 'Подорожник',
-    nameLink: null,
+    name_link: null,
     address: 'Гагрский район, посёлок городского типа Бзыпта',
     addressLink: 'https://yandex.ru/maps/-/CDSLy60q',
     contacts: '+7 (940) 762-00-00',
@@ -62,8 +62,8 @@ const GasStationsGagra: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.gasStationName}>
-                  {station.nameLink ? (
-                    <a href={station.nameLink} target="_blank" rel="noopener noreferrer">
+                  {station.name_link ? (
+                    <a href={station.name_link} target="_blank" rel="noopener noreferrer">
                       {station.name}
                     </a>
                   ) : (

@@ -16,7 +16,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.ru/maps/-/CDS-4PJL',
     contacts: null,
     image: '/assets/ShopAndMarketsGagra1.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.ru/maps/-/CDS-4T6G',
     contacts: null,
     image: '/assets/ShopAndMarketsGagra2.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 3,
@@ -36,7 +36,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.ru/maps/-/CDS-42j~',
     contacts: '+7 (940) 712-80-84',
     image: '/assets/ShopAndMarketsGagra3.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 4,
@@ -46,7 +46,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.ru/maps/-/CDS-aA6a',
     contacts: null,
     image: '/assets/ShopAndMarketsGagra4.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 5,
@@ -56,7 +56,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.ru/maps/-/CDS-aEIW',
     contacts: '+79409953925',
     image: '/assets/ShopAndMarketsGagra5.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 6,
@@ -66,7 +66,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.ru/maps/-/CDS-aIyc',
     contacts: '+7 (940) 962-74-02',
     image: '/assets/ShopAndMarketsGagra6.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 7,
@@ -76,7 +76,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.ru/maps/-/CDS-aIol',
     contacts: '+7 (940) 994-66-10',
     image: '/assets/ShopAndMarketsGagra7.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 8,
@@ -86,7 +86,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.ru/maps/-/CDS-aU2j',
     contacts: null,
     image: '/assets/ShopAndMarketsGagra8.jpg',
-    nameLink: null,
+    name_link: null,
   },
 ];
 
@@ -114,8 +114,8 @@ const ShopsAndMarketsGagra: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.shopName}>
-                  {shop.nameLink ? (
-                    <a href={shop.nameLink} target="_blank" rel="noopener noreferrer">
+                  {shop.name_link ? (
+                    <a href={shop.name_link} target="_blank" rel="noopener noreferrer">
                       {shop.name}
                     </a>
                   ) : (

@@ -16,7 +16,7 @@ const restaurants = [
         phone: '+7 (940) 753-53-53',
         workingHours: 'с 09:00 до 01:30',
         image: '/assets/RestaurantsNewAfon1.jpg',
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
@@ -27,13 +27,13 @@ const restaurants = [
         phone: '+7 (940) 704-77-77',
         workingHours: 'с 11:00 до 23:00',
         image: '/assets/RestaurantsNewAfon2.jpg',
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
         id: 3,
         name: 'Limar',
-        nameLink: 'https://www.instagram.com/limar_cafe/',
+        name_link: 'https://www.instagram.com/limar_cafe/',
         address: 'Новый Афон, ул. Эшба, 1/1',
         addressLink: 'https://yandex.com/maps/-/CDxHARkJ',
         phone: '+7 (940) 774-22-44\n+7 (940) 700-47-68\n+7 (940) 776-01-41',
@@ -49,13 +49,13 @@ const restaurants = [
         phone: '+7 (940) 921-00-55',
         workingHours: 'с 08:00 до 22:00',
         image: '/assets/RestaurantsNewAfon4.jpg',
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
         id: 5,
         name: 'Мармиро',
-        nameLink: 'https://www.instagram.com/marmiro.afon?igsh=MTd1MTFmYXhmZTIyaQ==',
+        name_link: 'https://www.instagram.com/marmiro.afon?igsh=MTd1MTFmYXhmZTIyaQ==',
         address: 'Новый Афон, Курортная ул., 1',
         addressLink: 'https://yandex.com/maps/-/CDxHIV~f',
         phone: '+7 (940) 967-65-45',
@@ -71,7 +71,7 @@ const restaurants = [
         workingHours: 'с 10:00 до 23:00',
         image: '/assets/RestaurantsNewAfon6.jpg',
         phone: null,
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
@@ -82,13 +82,13 @@ const restaurants = [
         workingHours: 'с 12:00 до 23:00',
         image: '/assets/RestaurantsNewAfon7.jpg',
         phone: null,
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
         id: 8,
         name: 'СанРайс',
-        nameLink: 'https://instagram.com/sunrise_coffee_afon?igshid=MzRlODBiNWFlZA==',
+        name_link: 'https://instagram.com/sunrise_coffee_afon?igshid=MzRlODBiNWFlZA==',
         website: 'https://sunrise-afon.tilda.ws/',
         address: 'Новый Афон, ул. Ладария, 3',
         addressLink: 'https://yandex.com/maps/-/CDxHMGMC',
@@ -104,7 +104,7 @@ const restaurants = [
         image: '/assets/RestaurantsNewAfon9.jpg',
         addressLink: null,
         phone: null,
-        nameLink: null,
+        name_link: null,
         website: null,
     },
 ];
@@ -129,9 +129,9 @@ const RestaurantsNewAfon: React.FC = () => {
                                 />
                             </div>
                             <div className={styles.infoContainer}>
-                                <h2 className={`${styles.restaurantName} ${restaurant.nameLink ? styles.clickable : ''}`}>
-                                    {restaurant.nameLink ? (
-                                        <a href={restaurant.nameLink} target="_blank" rel="noopener noreferrer">{restaurant.name}</a>
+                                <h2 className={`${styles.restaurantName} ${restaurant.name_link ? styles.clickable : ''}`}>
+                                    {restaurant.name_link ? (
+                                        <a href={restaurant.name_link} target="_blank" rel="noopener noreferrer">{restaurant.name}</a>
                                     ) : (
                                         restaurant.name
                                     )}

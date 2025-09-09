@@ -16,7 +16,7 @@ const restaurants = [
         workingHours: 'с 10:00 до 00:00',
         image: '/assets/RestaurantsPitsunda1.jpg',
         phone: null,
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
@@ -28,12 +28,12 @@ const restaurants = [
         phone: '+7 (940) 711-27-77',
         workingHours: 'с 10:00 до 00:00',
         image: '/assets/RestaurantsPitsunda2.jpg',
-        nameLink: null,
+        name_link: null,
     },
     {
         id: 3,
         name: 'XL',
-        nameLink: 'https://www.instagram.com/cafe__xl__pitsunda/',
+        name_link: 'https://www.instagram.com/cafe__xl__pitsunda/',
         address: 'Пицунда, ул. Гочуа, 54',
         addressLink: 'https://yandex.com/maps/-/CDxtrKpN',
         phone: '+7 (940) 961-67-00',
@@ -49,7 +49,7 @@ const restaurants = [
         phone: '+7 (940) 710-42-22',
         workingHours: 'с 09:00 до 23:00',
         image: '/assets/RestaurantsPitsunda4.jpg',
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
@@ -60,13 +60,13 @@ const restaurants = [
         workingHours: 'с 08:00 до 22:00',
         image: '/assets/RestaurantsPitsunda5.jpg',
         phone: null,
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
         id: 6,
         name: 'Арго',
-        nameLink: 'https://instagram.com/_kafe_argo?r=nametag',
+        name_link: 'https://instagram.com/_kafe_argo?r=nametag',
         address: 'Пицунда, ул. Гочуа, 51',
         addressLink: 'https://yandex.com/maps/-/CDxtvNov',
         phone: '+7 (940) 728-88-77',
@@ -96,9 +96,9 @@ const RestaurantsPitsunda: React.FC = () => {
                                 />
                             </div>
                             <div className={styles.infoContainer}>
-                                <h2 className={`${styles.restaurantName} ${restaurant.nameLink ? styles.clickable : ''}`}>
-                                    {restaurant.nameLink ? (
-                                        <a href={restaurant.nameLink} target="_blank" rel="noopener noreferrer">{restaurant.name}</a>
+                                <h2 className={`${styles.restaurantName} ${restaurant.name_link ? styles.clickable : ''}`}>
+                                    {restaurant.name_link ? (
+                                        <a href={restaurant.name_link} target="_blank" rel="noopener noreferrer">{restaurant.name}</a>
                                     ) : (
                                         restaurant.name
                                     )}

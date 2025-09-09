@@ -11,7 +11,7 @@ const restaurants = [
     {
         id: 1,
         name: 'Абаата',
-        nameLink: 'https://www.instagram.com/abaata_rest?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
+        name_link: 'https://www.instagram.com/abaata_rest?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
         address: 'Проспект Владислава Ардзинба дом 115, Gagra',
         addressLink: 'https://yandex.ru/maps/-/CDW7IW8~',
         phone: '+7 (940) 737-79-79',
@@ -21,7 +21,7 @@ const restaurants = [
     {
         id: 2,
         name: 'Веранда',
-        nameLink: 'https://www.instagram.com/verandapark_gagra?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
+        name_link: 'https://www.instagram.com/verandapark_gagra?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
         address: 'Гагра, микрорайон Старая Гагра',
         addressLink: 'https://yandex.ru/maps/-/CDWKA-Oi',
         phone: '+7 (940) 991-39-99',
@@ -31,7 +31,7 @@ const restaurants = [
     {
         id: 3,
         name: 'Гагрипш',
-        nameLink: 'https://www.instagram.com/restoran_gagripsh?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
+        name_link: 'https://www.instagram.com/restoran_gagripsh?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
         address: 'Гагра, микрорайон Старая Гагра',
         addressLink: 'https://yandex.ru/maps/-/CDWKERN0',
         phone: '+7 (940) 720-00-01',
@@ -58,7 +58,7 @@ const restaurants = [
     {
         id: 6,
         name: 'Ресторан Амза',
-        nameLink: 'https://www.instagram.com/_restaurant_by_amza_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
+        name_link: 'https://www.instagram.com/_restaurant_by_amza_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
         address: 'ул. Абазгаа, 50',
         addressLink: 'https://yandex.ru/maps/-/CDcIeCK5',
         phone: '+7(940) 917-77-21',
@@ -68,7 +68,7 @@ const restaurants = [
     {
         id: 7,
         name: 'Амра Ресторан',
-        nameLink: 'https://www.instagram.com/amraparkh?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
+        name_link: 'https://www.instagram.com/amraparkh?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
         website: 'https://amrapark-hotel-spa.ru/restaurants/',
         address: 'просп. Ардзинба, 34, Гагра',
         addressLink: 'https://yandex.ru/maps/-/CDcImDOR',
@@ -88,7 +88,7 @@ const restaurants = [
     {
         id: 9,
         name: 'Мокко',
-        nameLink: 'https://www.instagram.com/mokko099?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
+        name_link: 'https://www.instagram.com/mokko099?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
         address: 'ул. Демерджипа, 35, Гагра',
         addressLink: 'https://yandex.ru/maps/-/CDcIRWMU',
         phone: '+7 (940) 990-25-00\n+7 (940) 735-97-97',
@@ -126,9 +126,9 @@ const RestaurantsGagra: React.FC = () => {
                                 />
                             </div>
                             <div className={styles.infoContainer}>
-                                <h2 className={`${styles.restaurantName} ${restaurant.nameLink ? styles.clickable : ''}`}>
-                                    {restaurant.nameLink ? (
-                                        <a href={restaurant.nameLink} target="_blank" rel="noopener noreferrer">{restaurant.name}</a>
+                                <h2 className={`${styles.restaurantName} ${restaurant.name_link ? styles.clickable : ''}`}>
+                                    {restaurant.name_link ? (
+                                        <a href={restaurant.name_link} target="_blank" rel="noopener noreferrer">{restaurant.name}</a>
                                     ) : (
                                         restaurant.name
                                     )}

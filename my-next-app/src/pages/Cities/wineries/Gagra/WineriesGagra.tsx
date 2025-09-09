@@ -17,7 +17,7 @@ const wineries = [
     addressLink: 'https://yandex.ru/maps/-/CDSLuMp1',
     contacts: '+7 (940) 717-01-54',
     image: '/assets/WineriesGagra1.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ const wineries = [
     addressLink: 'https://yandex.ru/maps/-/CDSLuBom',
     contacts: '+7940 9652626; +79407652626',
     image: '/assets/WineriesGagra2.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 3,
@@ -37,7 +37,7 @@ const wineries = [
     addressLink: 'https://yandex.ru/maps/-/CDSLuHKR',
     contacts: '+7 (940) 964-30-39\n+7 (940) 921-61-58',
     image: '/assets/WineriesGagra3.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 4,
@@ -47,7 +47,7 @@ const wineries = [
     addressLink: 'https://yandex.ru/maps/-/CDSLyE06',
     contacts: null,
     image: '/assets/WineriesGagra4.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 5,
@@ -57,7 +57,7 @@ const wineries = [
     addressLink: 'https://go.2gis.com/1jqhd',
     contacts: '+7 940‒712‒65‒01',
     image: '/assets/WineriesGagra5.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 6,
@@ -67,7 +67,7 @@ const wineries = [
     addressLink: 'https://yandex.com/maps/-/CDHbRPZb',
     contacts: '+7 (940) 993-25-32',
     image: '/assets/WineriesGagra6.jpg',
-    nameLink: null,
+    name_link: null,
   }
 ];
 
@@ -95,8 +95,8 @@ const WineriesGagra: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.wineryName}>
-                  {winery.nameLink ? (
-                    <a href={winery.nameLink} target="_blank" rel="noopener noreferrer">
+                  {winery.name_link ? (
+                    <a href={winery.name_link} target="_blank" rel="noopener noreferrer">
                       {winery.name}
                     </a>
                   ) : (

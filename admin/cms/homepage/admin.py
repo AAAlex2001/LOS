@@ -145,3 +145,4 @@ class HomePageAdmin(admin.ModelAdmin):
         return format_html(preview)
     
     seo_preview.short_description = "SEO предпросмотр"
+

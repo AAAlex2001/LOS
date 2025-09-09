@@ -12,7 +12,7 @@ const gasStations = [
   {
     id: 1,
     name: 'АЗС',
-    nameLink: null,
+    name_link: null,
     address: 'Очамчыра, ул. Баграта Шинкуба, 114',
     addressLink: 'https://yandex.com/maps/-/CDxdQOyF',
     contacts: null,
@@ -21,7 +21,7 @@ const gasStations = [
   {
     id: 2,
     name: 'Подорожник',
-    nameLink: 'https://apsny-oil.info/',
+    name_link: 'https://apsny-oil.info/',
     address: 'Очамчырский район',
     addressLink: 'https://yandex.com/maps/-/CDxdQWoV',
     contacts: '+7 (940) 762-00-00',
@@ -53,8 +53,8 @@ const GasStationsOchamchira: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.gasStationName}>
-                  {station.nameLink ? (
-                    <a href={station.nameLink} target="_blank" rel="noopener noreferrer">
+                  {station.name_link ? (
+                    <a href={station.name_link} target="_blank" rel="noopener noreferrer">
                       {station.name}
                     </a>
                   ) : (

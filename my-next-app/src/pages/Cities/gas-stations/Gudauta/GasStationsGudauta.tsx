@@ -12,7 +12,7 @@ const gasStations = [
   {
     id: 1,
     name: 'АЗИД',
-    nameLink: 'https://azid.org/index.php/nash-azs',
+    name_link: 'https://azid.org/index.php/nash-azs',
     address: 'Гудаута, пос. Бамбора ,Гагрское шоссе',
     addressLink: 'https://yandex.com/maps/-/CDxryKMK',
     contacts: '+7 (840) 226-34-04',
@@ -21,7 +21,7 @@ const gasStations = [
   {
     id: 2,
     name: 'Подорожник',
-    nameLink: 'https://apsny-oil.info/',
+    name_link: 'https://apsny-oil.info/',
     address: 'Гудаутский район, село Хыпста, поселок Бамбора',
     addressLink: 'https://yandex.com/maps/-/CDxry8l7',
     contacts: '+7 (940) 762-00-00',
@@ -53,8 +53,8 @@ const GasStationsGudauta: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.gasStationName}>
-                  {station.nameLink ? (
-                    <a href={station.nameLink} target="_blank" rel="noopener noreferrer">
+                  {station.name_link ? (
+                    <a href={station.name_link} target="_blank" rel="noopener noreferrer">
                       {station.name}
                     </a>
                   ) : (

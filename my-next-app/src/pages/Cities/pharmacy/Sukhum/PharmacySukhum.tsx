@@ -20,7 +20,7 @@ const pharmacies = [
   {
     id: 2,
     name: 'Ракета Маркет',
-    nameLink: 'https://www.instagram.com/raketa_market_/',
+    name_link: 'https://www.instagram.com/raketa_market_/',
     workingHours: 'с 09:00 до 22:00',
     address: 'просп. Аиааира, 48',
     addressLink: 'https://yandex.com/maps/-/CDXqm-5r',
@@ -30,7 +30,7 @@ const pharmacies = [
   {
     id: 3,
     name: 'Республиканская аптека',
-    nameLink: 'https://yandex.com/maps/-/CDXqqRnF',
+    name_link: 'https://yandex.com/maps/-/CDXqqRnF',
     workingHours: '08:30 до 23:00',
     address: 'просп. Леона, 12',
     image: '/assets/PharmacySukhum3.png'
@@ -94,7 +94,7 @@ const pharmacies = [
   {
     id: 11,
     name: 'Аптека АЛОЭ',
-    nameLink: 'https://www.instagram.com/apteka__aloe?igsh=ZmExcXE4NG9lM21v',
+    name_link: 'https://www.instagram.com/apteka__aloe?igsh=ZmExcXE4NG9lM21v',
     workingHours: 'с 09:00 до 23:00',
     address: 'улица Акиртава, 20',
     addressLink: 'https://yandex.com/maps/-/CDXJb8OE',
@@ -131,8 +131,8 @@ const PharmacySukhum: React.FC = () => {
               {/* Информация */}
               <div className={styles.infoContainer}>
                 <h2 className={styles.pharmacyName}>
-                  {pharmacy.nameLink ? (
-                    <a href={pharmacy.nameLink} target="_blank" rel="noopener noreferrer">
+                  {pharmacy.name_link ? (
+                    <a href={pharmacy.name_link} target="_blank" rel="noopener noreferrer">
                       {pharmacy.name}
                     </a>
                   ) : (

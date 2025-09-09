@@ -11,7 +11,7 @@ const beautySalons = [
   {
     id: 1,
     name: 'Brow & beauty Bar',
-    nameLink: 'http://instagram.com/sukhumbeauty',
+    name_link: 'http://instagram.com/sukhumbeauty',
     address: 'ул. Аидгылара, 4',
     addressLink: 'https://yandex.com/maps/-/CDxnrK35',
     phone: '+7 (940) 737-08-88',
@@ -21,7 +21,7 @@ const beautySalons = [
   {
     id: 2,
     name: 'New Fantasy',
-    nameLink: 'https://www.instagram.com/newfantasy_sukhum/',
+    name_link: 'https://www.instagram.com/newfantasy_sukhum/',
     address: 'Сухум, ул. Воронова, 39',
     addressLink: 'https://yandex.com/maps/-/CDxnrC9Q',
     phone: '+7 (940) 999-92-90, +7 (940) 777-72-90',
@@ -32,7 +32,7 @@ const beautySalons = [
   {
     id: 3,
     name: 'La La Land',
-    nameLink: 'https://instagram.com/lalaland.beauty.sukhum?igshid=ZjE2NGZiNDQ=',
+    name_link: 'https://instagram.com/lalaland.beauty.sukhum?igshid=ZjE2NGZiNDQ=',
     address: 'Сухум, ул. Конфедератов, 41',
     addressLink: 'https://yandex.com/maps/-/CDxn7C4Z',
     phone: '+7 (940) 909-77-77',
@@ -42,7 +42,7 @@ const beautySalons = [
   {
     id: 4,
     name: 'Skil Studio',
-    nameLink: 'https://instagram.com/studioskil?igshid=MzRlODBiNWFlZA==',
+    name_link: 'https://instagram.com/studioskil?igshid=MzRlODBiNWFlZA==',
     address: 'Сухум, ул. Конфедератов, 22',
     addressLink: 'https://yandex.com/maps/-/CDxn7HPv',
     phone: '+7 (940) 998-88-90',
@@ -52,7 +52,7 @@ const beautySalons = [
   {
     id: 5,
     name: 'Верона',
-    nameLink: 'http://instagram.com/verona_masterskaya_krasoty',
+    name_link: 'http://instagram.com/verona_masterskaya_krasoty',
     address: 'Сухум, ул. Конфедератов, 26',
     addressLink: 'https://yandex.com/maps/-/CDxrAEPB',
     phone: '+7 (940) 728-66-44',
@@ -71,7 +71,7 @@ const beautySalons = [
   {
     id: 7,
     name: 'Belle Cosmetic',
-    nameLink: 'https://www.instagram.com/belle___cosmetic?igsh=MzRlODBiNWFlZA==',
+    name_link: 'https://www.instagram.com/belle___cosmetic?igsh=MzRlODBiNWFlZA==',
     address: 'Сухум, ул. Званба, 20',
     phone: '+7 (940) 708-88-00',
     workingHours: 'с 10:00 до 19:00',
@@ -80,7 +80,7 @@ const beautySalons = [
   {
     id: 8,
     name: 'la belle',
-    nameLink: 'https://www.instagram.com/la_belle.salon_krasoty',
+    name_link: 'https://www.instagram.com/la_belle.salon_krasoty',
     address: 'Сухум, ул. В.Г. Ардзинба, 65',
     addressLink: 'https://yandex.com/maps/-/CDxrQ0om',
     phone: '+7 (940) 958-76-77',
@@ -90,7 +90,7 @@ const beautySalons = [
   {
     id: 9,
     name: 'Verona',
-    nameLink: 'https://www.instagram.com/studia_verona_rayon?igsh=MW8zMXRyZHBhYW5iYQ==',
+    name_link: 'https://www.instagram.com/studia_verona_rayon?igsh=MW8zMXRyZHBhYW5iYQ==',
     address: 'Сухум, ул. Аргун, 10',
     addressLink: 'https://yandex.com/maps/-/CDxrURNX',
     phone: '+7 (940) 762-10-10',
@@ -131,9 +131,9 @@ const BeautySalonsSukhum: React.FC = () => {
               </div>
 
               <div className={styles.infoContainer}>
-                <h2 className={`${styles.beautySalonName} ${salon.nameLink ? styles.clickable : ''}`}>
-                  {salon.nameLink ? (
-                    <a href={salon.nameLink} target="_blank" rel="noopener noreferrer">{salon.name}</a>
+                <h2 className={`${styles.beautySalonName} ${salon.name_link ? styles.clickable : ''}`}>
+                  {salon.name_link ? (
+                    <a href={salon.name_link} target="_blank" rel="noopener noreferrer">{salon.name}</a>
                   ) : (
                     salon.name
                   )}

@@ -11,7 +11,7 @@ const restaurants = [
     {
         id: 1,
         name: 'Веранда',
-        nameLink: 'https://www.instagram.com/cafe_veranda_gudauta',
+        name_link: 'https://www.instagram.com/cafe_veranda_gudauta',
         address: 'Гудаута, ул. Лакербай, 9А',
         addressLink: 'https://yandex.com/maps/-/CDxKYR4F',
         phone: '+7 (940) 722-00-25',
@@ -27,7 +27,7 @@ const restaurants = [
         phone: '+7 (940) 936-00-00',
         workingHours: 'с 09:00 до 23:00',
         image: '/assets/RestaurantsGudauta2.jpg',
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
@@ -38,7 +38,7 @@ const restaurants = [
         workingHours: 'с 10:00 до 22:00',
         image: '/assets/RestaurantsGudauta3.jpg',
         phone: null,
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
@@ -50,7 +50,7 @@ const restaurants = [
         phone: '+7 (940) 995-74-95',
         workingHours: 'с 10:00 до 22:00',
         image: '/assets/RestaurantsGudauta4.jpg',
-        nameLink: null,
+        name_link: null,
     },
     {
         id: 5,
@@ -60,7 +60,7 @@ const restaurants = [
         phone: '+7 (940) 992-00-00',
         workingHours: 'с 10:00 до 22:00',
         image: '/assets/RestaurantsGudauta5.jpg',
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
@@ -71,7 +71,7 @@ const restaurants = [
         phone: '+7 (940) 775-82-75\n+7 (940) 951-07-70',
         workingHours: 'с 10:00 до 21:00',
         image: '/assets/RestaurantsGudauta6.jpg',
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
@@ -82,7 +82,7 @@ const restaurants = [
         phone: '+7 (940) 919-44-44',
         workingHours: 'с 11:00 до 23:00',
         image: '/assets/RestaurantsGudauta7.jpg',
-        nameLink: null,
+        name_link: null,
         website: null,
     },
 ];
@@ -107,9 +107,9 @@ const RestaurantsGudauta: React.FC = () => {
                                 />
                             </div>
                             <div className={styles.infoContainer}>
-                                <h2 className={`${styles.restaurantName} ${restaurant.nameLink ? styles.clickable : ''}`}>
-                                    {restaurant.nameLink ? (
-                                        <a href={restaurant.nameLink} target="_blank" rel="noopener noreferrer">{restaurant.name}</a>
+                                <h2 className={`${styles.restaurantName} ${restaurant.name_link ? styles.clickable : ''}`}>
+                                    {restaurant.name_link ? (
+                                        <a href={restaurant.name_link} target="_blank" rel="noopener noreferrer">{restaurant.name}</a>
                                     ) : (
                                         restaurant.name
                                     )}

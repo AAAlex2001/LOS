@@ -12,3 +12,4 @@ class HomePageViewSet(viewsets.ViewSet):
         homepage, _ = HomePage.objects.get_or_create(id=1)
         data = HomePageSerializer(homepage, context={"request": request}).data
         return Response(data)
+

@@ -16,7 +16,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.ru/maps/105965/ochamchira/house/YEgYcgBiSUACQFpofXtxeHVmZQ==/',
     contacts: null,
     image: '/assets/ShopAndMarketsOchamchira1.jpg',
-    nameLink: null,
+    name_link: null,
   },
 ];
 
@@ -44,8 +44,8 @@ const ShopsAndMarketsOchamchira: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.shopName}>
-                  {shop.nameLink ? (
-                    <a href={shop.nameLink} target="_blank" rel="noopener noreferrer">
+                  {shop.name_link ? (
+                    <a href={shop.name_link} target="_blank" rel="noopener noreferrer">
                       {shop.name}
                     </a>
                   ) : (

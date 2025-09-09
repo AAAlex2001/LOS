@@ -33,3 +33,4 @@ class TaxiServiceViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = TaxiServiceSerializer
 
 
+

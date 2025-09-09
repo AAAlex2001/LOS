@@ -16,7 +16,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDHSJLoT',
     contacts: null,
     image: '/assets/ShopAndMarketsPitsunda1.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDHpj2Kv',
     contacts: null,
     image: '/assets/ShopAndMarketsPitsunda2.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 3,
@@ -36,7 +36,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDHprYNY',
     contacts: null,
     image: '/assets/ShopAndMarketsPitsunda3.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 4,
@@ -46,7 +46,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDHpr0Pl',
     contacts: '+7 (940) 925-35-00',
     image: '/assets/ShopAndMarketsPitsunda4.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 5,
@@ -56,7 +56,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDHpvRkA',
     contacts: null,
     image: '/assets/ShopAndMarketsPitsunda5.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 6,
@@ -66,7 +66,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDHpvZk8',
     contacts: null,
     image: '/assets/ShopAndMarketsPitsunda6.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 7,
@@ -76,7 +76,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDHpzRIc',
     contacts: null,
     image: '/assets/ShopAndMarketsPitsunda7.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 8,
@@ -86,7 +86,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDHp7U2P',
     contacts: null,
     image: '/assets/ShopAndMarketsPitsunda8.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 9,
@@ -96,7 +96,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDHp7O7a',
     contacts: null,
     image: '/assets/ShopAndMarketsPitsunda9.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 10,
@@ -106,7 +106,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDHp7-LW',
     contacts: null,
     image: '/assets/ShopAndMarketsPitsunda10.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 11,
@@ -116,7 +116,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDHtEDMQ',
     contacts: null,
     image: '/assets/ShopAndMarketsPitsunda11.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 12,
@@ -126,7 +126,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDHtYWyr',
     contacts: null,
     image: '/assets/ShopAndMarketsPitsunda12.jpg',
-    nameLink: null,
+    name_link: null,
   },
 ];
 
@@ -154,8 +154,8 @@ const ShopsAndMarketsPitsunda: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.shopName}>
-                  {shop.nameLink ? (
-                    <a href={shop.nameLink} target="_blank" rel="noopener noreferrer">
+                  {shop.name_link ? (
+                    <a href={shop.name_link} target="_blank" rel="noopener noreferrer">
                       {shop.name}
                     </a>
                   ) : (

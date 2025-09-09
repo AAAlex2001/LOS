@@ -17,7 +17,7 @@ const wineries = [
     addressLink: 'https://yandex.com/maps/-/CDxHiIP9',
     contacts: '+7(940)733-13-57\n+7 (940) 777-17-31',
     image: '/assets/WineriesGulripsh.jpg',
-    nameLink: 'https://www.instagram.com/craft_product_abkhazia',
+    name_link: 'https://www.instagram.com/craft_product_abkhazia',
   }
 ];
 
@@ -45,8 +45,8 @@ const WineriesGulripsh: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.wineryName}>
-                  {winery.nameLink ? (
-                    <a href={winery.nameLink} target="_blank" rel="noopener noreferrer">
+                  {winery.name_link ? (
+                    <a href={winery.name_link} target="_blank" rel="noopener noreferrer">
                       {winery.name}
                     </a>
                   ) : (

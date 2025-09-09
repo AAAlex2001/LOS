@@ -1,4 +1,4 @@
-import AdministrativeBuildingsPitsunda from '@/pages/Cities/administrative buildings/Pitsunda/AdministrativeBuildingsPitsunda';
+import AdministrativeBuildingsPitsunda from '@/pages/Cities/administrative-buildings/Pitsunda/AdministrativeBuildingsPitsunda';
 import { FC } from 'react';
 
 const AdministrativeBuildingsPitsundaPage: FC = () => {

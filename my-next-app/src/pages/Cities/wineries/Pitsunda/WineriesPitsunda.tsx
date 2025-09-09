@@ -17,7 +17,7 @@ const wineries = [
     addressLink: 'https://yandex.com/maps/-/CDHbRZiP',
     contacts: '+7 (940) 991-27-97',
     image: '/assets/WineriesPitsunda1.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ const wineries = [
     addressLink: 'https://yandex.com/maps/-/CDHbV4Jf',
     contacts: '+7 (940) 910-23-01',
     image: '/assets/WineriesPitsunda2.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 3,
@@ -37,7 +37,7 @@ const wineries = [
     addressLink: 'https://yandex.com/maps/-/CDHbV20j',
     contacts: null,
     image: '/assets/WineriesPitsunda3.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 4,
@@ -47,7 +47,7 @@ const wineries = [
     addressLink: 'https://yandex.com/maps/-/CDHbZE5O',
     contacts: null,
     image: '/assets/WineriesPitsunda4.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 5,
@@ -57,7 +57,7 @@ const wineries = [
     addressLink: 'https://yandex.com/maps/-/CDHbZI23',
     contacts: null,
     image: '/assets/WineriesPitsunda5.jpg',
-    nameLink: null,
+    name_link: null,
   }
 ];
 
@@ -85,8 +85,8 @@ const WineriesPitsunda: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.wineryName}>
-                  {winery.nameLink ? (
-                    <a href={winery.nameLink} target="_blank" rel="noopener noreferrer">
+                  {winery.name_link ? (
+                    <a href={winery.name_link} target="_blank" rel="noopener noreferrer">
                       {winery.name}
                     </a>
                   ) : (

@@ -55,3 +55,4 @@ class AbkhazianCustomsPageAdmin(admin.ModelAdmin):
 
 ## ВАЖНО: Не регистрируем модель `CustomSection` отдельно,
 ## чтобы она не отображалась в главном меню админки. Управление — только через inlines.
+

@@ -3,8 +3,6 @@ from cms.models import TimestampedModel
 
 
 class AdministrativeBuildingsPage(TimestampedModel):
-    main_title = models.CharField("Основной заголовок", max_length=255, default="Административные здания")
-
     # SEO
     seo_title = models.CharField(max_length=60, blank=True)
     seo_description = models.CharField(max_length=160, blank=True)

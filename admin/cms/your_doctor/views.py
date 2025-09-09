@@ -75,3 +75,4 @@ class DoctorsGroupViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = DoctorsGroupSerializer
 
 
+

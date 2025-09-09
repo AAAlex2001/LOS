@@ -9,3 +9,4 @@ router.register(r"home", HomePageViewSet, basename="home")
 urlpatterns = [
     path("", include(router.urls)),
 ]
+

@@ -16,7 +16,7 @@ const restaurants = [
         workingHours: 'с 09:00 до 21:00',
         image: '/assets/RestaurantsGal1.jpg',
         phone: null,
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
@@ -27,7 +27,7 @@ const restaurants = [
         phone: '+7 (940) 775-79-70\n+7 (940) 779-75-70',
         workingHours: 'с 08:00 до 21:00',
         image: '/assets/RestaurantsGal2.jpg',
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
@@ -38,7 +38,7 @@ const restaurants = [
         workingHours: 'с 09:00 до 22:00',
         image: '/assets/RestaurantsGal3.jpg',
         phone: null,
-        nameLink: null,
+        name_link: null,
         website: null,
     },
 ];
@@ -63,9 +63,9 @@ const RestaurantsGal: React.FC = () => {
                                 />
                             </div>
                             <div className={styles.infoContainer}>
-                                <h2 className={`${styles.restaurantName} ${restaurant.nameLink ? styles.clickable : ''}`}>
-                                    {restaurant.nameLink ? (
-                                        <a href={restaurant.nameLink} target="_blank" rel="noopener noreferrer">{restaurant.name}</a>
+                                <h2 className={`${styles.restaurantName} ${restaurant.name_link ? styles.clickable : ''}`}>
+                                    {restaurant.name_link ? (
+                                        <a href={restaurant.name_link} target="_blank" rel="noopener noreferrer">{restaurant.name}</a>
                                     ) : (
                                         restaurant.name
                                     )}

@@ -12,7 +12,7 @@ const carWashes = [
   {
     id: 1,
     name: 'М-1',
-    nameLink: 'https://instagram.com/mo1ka_m1?igshid=MWZjMTM2ODFkZg==',
+    name_link: 'https://instagram.com/mo1ka_m1?igshid=MWZjMTM2ODFkZg==',
     workingHours: 'круглосуточно',
     address: 'Сухум, ул. Аидгылара, 2',
     addressLink: 'https://yandex.com/maps/-/CDhUn-~H',
@@ -71,8 +71,8 @@ const CarWashesSukhum: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.carWashName}>
-                  {wash.nameLink ? (
-                    <a href={wash.nameLink} target="_blank" rel="noopener noreferrer">
+                  {wash.name_link ? (
+                    <a href={wash.name_link} target="_blank" rel="noopener noreferrer">
                       {wash.name}
                     </a>
                   ) : (

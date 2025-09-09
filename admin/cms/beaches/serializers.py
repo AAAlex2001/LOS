@@ -32,7 +32,7 @@ class BeachesPageSerializer(serializers.ModelSerializer):
     class Meta:
         model = BeachesPage
         fields = [
-            "id", "main_title", "seo_title", "seo_description", "seo_keywords", "canonical_url",
+            "id", "seo_title", "seo_description", "seo_keywords", "canonical_url",
             "og_title", "og_description", "og_image", "twitter_title",
             "twitter_description", "twitter_image", "robots_index", "robots_follow",
             "cities", "beaches"

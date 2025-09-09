@@ -19,7 +19,7 @@ class AdministrativeBuildingInline(admin.TabularInline):
 
 @admin.register(AdministrativeBuildingsPage)
 class AdministrativeBuildingsPageAdmin(admin.ModelAdmin):
-    list_display = ("id", "main_title", "created_at", "updated_at")
+    list_display = ("id", "created_at", "updated_at")
     inlines = [CityInline, AdministrativeBuildingInline]
 
     def has_add_permission(self, request):

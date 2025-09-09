@@ -12,7 +12,7 @@ const gasStations = [
   {
     id: 1,
     name: 'Азид',
-    nameLink: 'https://azid.org/index.php/nash-azs',
+    name_link: 'https://azid.org/index.php/nash-azs',
     address: 'Сухум, Привокзальный район',
     addressLink: 'https://yandex.com/maps/-/CDX85F9j',
     contacts: '+7 (840) 226-34-04',
@@ -21,7 +21,7 @@ const gasStations = [
   {
     id: 2,
     name: 'Азид',
-    nameLink: 'https://azid.org/index.php/nash-azs',
+    name_link: 'https://azid.org/index.php/nash-azs',
     address: 'Сухум, ул. Дзидзария, 58А',
     addressLink: 'https://yandex.com/maps/-/CDX85VZy',
     contacts: '+7 (840) 226-34-04',
@@ -30,7 +30,7 @@ const gasStations = [
   {
     id: 3,
     name: 'Азид',
-    nameLink: 'https://azid.org/index.php/nash-azs',
+    name_link: 'https://azid.org/index.php/nash-azs',
     address: 'Сухум, ул. Б. Адлейба, 34',
     addressLink: 'https://yandex.com/maps/-/CDX85S6I',
     contacts: '+7 (840) 226-34-04',
@@ -39,7 +39,7 @@ const gasStations = [
   {
     id: 4,
     name: 'АЗС Роснефть',
-    nameLink: 'https://allrus.business/go/57466501088/',
+    name_link: 'https://allrus.business/go/57466501088/',
     address: 'Сухум',
     addressLink: 'https://yandex.com/maps/-/CDX85Xi6',
     contacts: '+7 (940) 700-05-55',
@@ -48,7 +48,7 @@ const gasStations = [
   {
     id: 5,
     name: 'Подорожник',
-    nameLink: 'https://apsny-oil.info/',
+    name_link: 'https://apsny-oil.info/',
     address: 'Гулрыпшский район, село Мачара',
     addressLink: 'https://yandex.com/maps/-/CDXcYVZa',
     contacts: '+7 (940) 762-00-00',
@@ -80,8 +80,8 @@ const GasStationsSukhum: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.gasStationName}>
-                  {station.nameLink ? (
-                    <a href={station.nameLink} target="_blank" rel="noopener noreferrer">
+                  {station.name_link ? (
+                    <a href={station.name_link} target="_blank" rel="noopener noreferrer">
                       {station.name}
                     </a>
                   ) : (

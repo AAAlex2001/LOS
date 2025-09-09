@@ -10,7 +10,7 @@ import styles from './CarWashesGulripsh.module.scss';
 const carWashes: {
   id: number;
   name: string;
-  nameLink?: string;
+  name_link?: string;
   workingHours?: string;
   address: string;
   addressLink?: string;
@@ -51,8 +51,8 @@ const CarWashesGulripsh: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.carWashName}>
-                  {wash.nameLink ? (
-                    <a href={wash.nameLink} target="_blank" rel="noopener noreferrer">
+                  {wash.name_link ? (
+                    <a href={wash.name_link} target="_blank" rel="noopener noreferrer">
                       {wash.name}
                     </a>
                   ) : (

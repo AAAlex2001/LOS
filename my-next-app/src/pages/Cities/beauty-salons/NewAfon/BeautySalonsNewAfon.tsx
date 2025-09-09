@@ -10,7 +10,7 @@ import styles from './BeautySalonsNewAfon.module.scss';
 const beautySalons: {
   id: number;
   name: string;
-  nameLink?: string;
+  name_link?: string;
   address: string;
   addressLink?: string;
   phone?: string;
@@ -21,7 +21,7 @@ const beautySalons: {
   {
     id: 1,
     name: 'Cosmos',
-    nameLink: 'https://instagram.com/cosmos_afon?igshid=MzRlODBiNWFlZA==',
+    name_link: 'https://instagram.com/cosmos_afon?igshid=MzRlODBiNWFlZA==',
     address: 'Новый Афон, ул. Лакоба, 32',
     addressLink: 'https://yandex.com/maps/-/CDxHUC8X',
     phone: '+7 (940) 970-10-10',
@@ -53,9 +53,9 @@ const BeautySalonsNewAfon: React.FC = () => {
               </div>
 
               <div className={styles.infoContainer}>
-                <h2 className={`${styles.beautySalonName} ${salon.nameLink ? styles.clickable : ''}`}>
-                  {salon.nameLink ? (
-                    <a href={salon.nameLink} target="_blank" rel="noopener noreferrer">{salon.name}</a>
+                <h2 className={`${styles.beautySalonName} ${salon.name_link ? styles.clickable : ''}`}>
+                  {salon.name_link ? (
+                    <a href={salon.name_link} target="_blank" rel="noopener noreferrer">{salon.name}</a>
                   ) : (
                     salon.name
                   )}

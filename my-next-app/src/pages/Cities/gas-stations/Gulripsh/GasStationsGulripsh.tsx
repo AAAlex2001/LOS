@@ -12,7 +12,7 @@ const gasStations = [
   {
     id: 1,
     name: 'Азид',
-    nameLink: 'https://www.instagram.com/azid_abh/?igsh=MWNrOWZ5dGplMzM5MQ%3D%3D',
+    name_link: 'https://www.instagram.com/azid_abh/?igsh=MWNrOWZ5dGplMzM5MQ%3D%3D',
     address: 'посёлок Тхубын, Абжуйское ш., 41',
     addressLink: 'https://yandex.com/maps/-/CDxHiB3G',
     contacts: null,
@@ -21,7 +21,7 @@ const gasStations = [
   {
     id: 2,
     name: 'Азид',
-    nameLink: 'https://www.azid.org/',
+    name_link: 'https://www.azid.org/',
     address: 'Гулрыпшский район, село Мачара',
     addressLink: 'https://yandex.com/maps/-/CDxHiJMc',
     contacts: '+7 (840) 226-34-04',
@@ -30,7 +30,7 @@ const gasStations = [
   {
     id: 3,
     name: 'Подорожник',
-    nameLink: 'https://apsny-oil.info/',
+    name_link: 'https://apsny-oil.info/',
     address: 'Гулрыпшский район, село Мачара',
     addressLink: 'https://yandex.com/maps/-/CDxHiGyC',
     contacts: '+7 (940) 762-00-00',
@@ -62,8 +62,8 @@ const GasStationsGulripsh: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.gasStationName}>
-                  {station.nameLink ? (
-                    <a href={station.nameLink} target="_blank" rel="noopener noreferrer">
+                  {station.name_link ? (
+                    <a href={station.name_link} target="_blank" rel="noopener noreferrer">
                       {station.name}
                     </a>
                   ) : (

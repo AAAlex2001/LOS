@@ -16,13 +16,13 @@ const restaurants = [
         phone: '+7 (940) 713-33-21',
         workingHours: 'с 10:00 до 00:00',
         image: '/assets/RestaurantsGulripsh1.jpg',
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
         id: 2,
         name: 'Апсхара',
-        nameLink: 'https://instagram.com/_apsxara_restoran_',
+        name_link: 'https://instagram.com/_apsxara_restoran_',
         address: 'Гулрыпшский район, поселок Тхубын',
         addressLink: 'https://yandex.com/maps/-/CDxHqDM7',
         workingHours: 'с 10:00 до 00:00',
@@ -38,7 +38,7 @@ const restaurants = [
         workingHours: 'с 09:00 до 21:00',
         image: '/assets/RestaurantsGulripsh3.jpg',
         phone: null,
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
@@ -49,7 +49,7 @@ const restaurants = [
         workingHours: 'с 10:00 до 22:00',
         image: '/assets/RestaurantsGulripsh4.jpg',
         phone: null,
-        nameLink: null,
+        name_link: null,
         website: null,
     },
 ];
@@ -74,9 +74,9 @@ const RestaurantsGulripsh: React.FC = () => {
                                 />
                             </div>
                             <div className={styles.infoContainer}>
-                                <h2 className={`${styles.restaurantName} ${restaurant.nameLink ? styles.clickable : ''}`}>
-                                    {restaurant.nameLink ? (
-                                        <a href={restaurant.nameLink} target="_blank" rel="noopener noreferrer">{restaurant.name}</a>
+                                <h2 className={`${styles.restaurantName} ${restaurant.name_link ? styles.clickable : ''}`}>
+                                    {restaurant.name_link ? (
+                                        <a href={restaurant.name_link} target="_blank" rel="noopener noreferrer">{restaurant.name}</a>
                                     ) : (
                                         restaurant.name
                                     )}

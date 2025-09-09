@@ -51,3 +51,4 @@ class CustomSectionViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = CustomSection.objects.all().order_by('order', 'id')
     serializer_class = CustomSectionSerializer
+

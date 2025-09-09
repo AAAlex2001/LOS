@@ -19,7 +19,7 @@ class BeachInline(admin.TabularInline):
 
 @admin.register(BeachesPage)
 class BeachesPageAdmin(admin.ModelAdmin):
-    list_display = ("id", "main_title", "created_at", "updated_at")
+    list_display = ("id", "created_at", "updated_at")
     inlines = [CityInline, BeachInline]
 
     def has_add_permission(self, request):

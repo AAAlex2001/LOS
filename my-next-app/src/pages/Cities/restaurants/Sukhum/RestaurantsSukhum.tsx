@@ -20,7 +20,7 @@ const restaurants = [
     {
         id: 2,
         name: 'Дольче Вита',
-        nameLink: 'https://www.instagram.com/_dolce_vita_restaurant_/?igshid=MXdrdWd3NXl3NWNtMw%3D%3D',
+        name_link: 'https://www.instagram.com/_dolce_vita_restaurant_/?igshid=MXdrdWd3NXl3NWNtMw%3D%3D',
         address: 'Сухум, Красноармейский тупик, 3',
         addressLink: 'https://yandex.com/maps/-/CDtHjB5I',
         phone: '+7 (940) 733-35-33',
@@ -30,7 +30,7 @@ const restaurants = [
     {
         id: 3,
         name: 'Ерцаху',
-        nameLink: 'https://www.instagram.com/restaurant_ertsahu',
+        name_link: 'https://www.instagram.com/restaurant_ertsahu',
         address: 'Сухум, наб. Махаджиров, 1',
         addressLink: 'https://yandex.com/maps/-/CDtHnEnQ',
         phone: '+7 (940) 740-18-18',
@@ -40,7 +40,7 @@ const restaurants = [
     {
         id: 4,
         name: 'Леон',
-        nameLink: 'http://instagram.com/hotel_restaurant_leon',
+        name_link: 'http://instagram.com/hotel_restaurant_leon',
         website: 'https://leonhotel.net/',
         address: 'Сухум, наб. Махаджиров, 6',
         addressLink: 'https://yandex.com/maps/-/CDtHzL-k',
@@ -51,7 +51,7 @@ const restaurants = [
     {
         id: 5,
         name: 'Амгьал',
-        nameLink: 'https://www.instagram.com/amgyal?igsh=cmZkd252djVudTdn',
+        name_link: 'https://www.instagram.com/amgyal?igsh=cmZkd252djVudTdn',
         address: 'Сухум, просп. Аиааира, 46',
         addressLink: 'https://yandex.com/maps/-/CDtLAK5l',
         phone: '+7 (940) 750-07-50, +7 (940) 950-09-50',
@@ -61,7 +61,7 @@ const restaurants = [
     {
         id: 6,
         name: 'Вершина',
-        nameLink: 'http://restoran.vershina.tilda.ws/',
+        name_link: 'http://restoran.vershina.tilda.ws/',
         address: 'Сухум, просп. Леона, 2',
         addressLink: 'https://yandex.com/maps/-/CDtLMOnJ',
         phone: '+7 (940) 788-80-80',
@@ -71,7 +71,7 @@ const restaurants = [
     {
         id: 7,
         name: 'Ресторан Абхазия',
-        nameLink: 'https://www.instagram.com/cafe.restaurant.abkhazia',
+        name_link: 'https://www.instagram.com/cafe.restaurant.abkhazia',
         address: 'Сухум, просп. Леона, 1',
         addressLink: 'https://yandex.com/maps/-/CDtLQH8h',
         phone: '+7 (940) 711-47-20, +7 (940) 943-55-55',
@@ -98,7 +98,7 @@ const restaurants = [
     {
         id: 10,
         name: 'SMOG',
-        nameLink: 'https://www.instagram.com/smog_hookah_bar',
+        name_link: 'https://www.instagram.com/smog_hookah_bar',
         address: 'Сухум, ул. Генерала В.Г. Аршба, 1',
         addressLink: 'https://yandex.com/maps/-/CDtLqMMF',
         phone: '+7 (940) 799-09-09',
@@ -108,7 +108,7 @@ const restaurants = [
     {
         id: 11,
         name: 'Abi',
-        nameLink: 'https://instagram.com/abi_sukhum?igshid=MzRlODBiNWFlZA==',
+        name_link: 'https://instagram.com/abi_sukhum?igshid=MzRlODBiNWFlZA==',
         address: 'Сухум, наб. Махаджиров, 70',
         addressLink: 'https://yandex.com/maps/-/CDtLqSm2',
         phone: '+7 (940) 938-08-00',
@@ -118,7 +118,7 @@ const restaurants = [
     {
         id: 12,
         name: 'Vinograd',
-        nameLink: 'https://www.instagram.com/cafe__vinograd?igsh=eXE5ZG4yMnR0cXE5',
+        name_link: 'https://www.instagram.com/cafe__vinograd?igsh=eXE5ZG4yMnR0cXE5',
         address: 'Сухум, наб. Махаджиров, 1А',
         addressLink: 'https://yandex.com/maps/-/CDxeYXzZ',
         phone: '+7 (940) 998-10-08',
@@ -128,7 +128,7 @@ const restaurants = [
     {
         id: 13,
         name: 'Soho',
-        nameLink: 'https://instagram.com/sohosukhum?igshid=8dqp2yf603wc',
+        name_link: 'https://instagram.com/sohosukhum?igshid=8dqp2yf603wc',
         address: 'Сухум, наб. Махаджиров, 3',
         addressLink: 'https://yandex.com/maps/-/CDxe4Pyz',
         phone: '+7 (940) 921-77-71',
@@ -138,7 +138,7 @@ const restaurants = [
     {
         id: 14,
         name: 'Дэм',
-        nameLink: 'https://www.instagram.com/sukhumdem?igsh=bzdyb3BudXRzM2Q4',
+        name_link: 'https://www.instagram.com/sukhumdem?igsh=bzdyb3BudXRzM2Q4',
         address: 'Сухум, наб. Диоскуров, 4',
         addressLink: 'https://yandex.com/maps/-/CDxe502T',
         phone: '+7 (940) 999-39-59',
@@ -148,7 +148,7 @@ const restaurants = [
     {
         id: 15,
         name: 'Big Buffet',
-        nameLink: 'https://instagram.com/big_buffet_/',
+        name_link: 'https://instagram.com/big_buffet_/',
         address: 'Сухум, ул. Конфедератов, 3',
         addressLink: 'https://yandex.com/maps/-/CDxeN6Ju',
         phone: '+7 (940) 956-20-90',
@@ -158,7 +158,7 @@ const restaurants = [
     {
         id: 16,
         name: 'Bristol Café',
-        nameLink: 'https://www.instagram.com/bristol.cafe.sukhum',
+        name_link: 'https://www.instagram.com/bristol.cafe.sukhum',
         address: 'Сухум, ул. Конфедератов, 5',
         addressLink: 'https://yandex.com/maps/-/CDxeVLj7',
         phone: '+7 (940) 912-12-12',
@@ -168,7 +168,7 @@ const restaurants = [
     {
         id: 17,
         name: 'Appetit',
-        nameLink: 'https://www.instagram.com/cafe_appetit/',
+        name_link: 'https://www.instagram.com/cafe_appetit/',
         address: 'Сухум, ул. Конфедератов, 29',
         addressLink: 'https://yandex.com/maps/-/CDxeZKME',
         phone: '+7 (940) 777-42-42',
@@ -178,7 +178,7 @@ const restaurants = [
     {
         id: 18,
         name: 'Rossini Pizza&Pasta',
-        nameLink: 'https://www.instagram.com/rossini_trattoria?igsh=MWFrNmdpYXhkbWw4dw==',
+        name_link: 'https://www.instagram.com/rossini_trattoria?igsh=MWFrNmdpYXhkbWw4dw==',
         address: 'Сухум, ул. Пушкина, 16',
         addressLink: 'https://yandex.com/maps/-/CDxebVOG',
         phone: '+7 (940) 737-78-78',
@@ -188,7 +188,7 @@ const restaurants = [
     {
         id: 19,
         name: 'Мухус',
-        nameLink: 'https://www.instagram.com/hinkalnaya_muhus/',
+        name_link: 'https://www.instagram.com/hinkalnaya_muhus/',
         address: 'Сухум, ул. Фазиля Искандера, 1',
         addressLink: 'https://yandex.com/maps/-/CDxen43F',
         phone: '+7 (940) 725-35-90',
@@ -198,7 +198,7 @@ const restaurants = [
     {
         id: 20,
         name: 'Ковчег',
-        nameLink: 'https://www.instagram.com/kovcheg__restaurant/',
+        name_link: 'https://www.instagram.com/kovcheg__restaurant/',
         address: 'Сухум, ул. Эшба, 166',
         addressLink: 'https://yandex.com/maps/-/CDxen2JE',
         phone: '+7 (940) 747-37-37, +7 (940) 748-37-37',
@@ -208,7 +208,7 @@ const restaurants = [
     {
         id: 21,
         name: 'Royal Xinkal',
-        nameLink: 'https://instagram.com/royal_hinkal',
+        name_link: 'https://instagram.com/royal_hinkal',
         address: 'Сухум, ул. Героев-Пограничников, 22',
         addressLink: 'https://yandex.com/maps/-/CDxerCns',
         phone: '+7 (940) 700-20-00',
@@ -218,7 +218,7 @@ const restaurants = [
     {
         id: 22,
         name: 'Гастробар Маяк',
-        nameLink: 'https://www.instagram.com/mayak_gastrobar/',
+        name_link: 'https://www.instagram.com/mayak_gastrobar/',
         address: 'г.Сухум ул. Адлейба Б. 88',
         phone: '+79407270555',
         workingHours: 'с 12:00 до 23:00',
@@ -227,7 +227,7 @@ const restaurants = [
     {
         id: 23,
         name: 'Хорошее место',
-        nameLink: 'https://www.instagram.com/good_place_sukhum/',
+        name_link: 'https://www.instagram.com/good_place_sukhum/',
         address: 'г. Сухум ул.Адлейба 1А ( Маякский поворот)',
         phone: '+79409790707',
         workingHours: 'с 10:00 до 23:00',
@@ -280,9 +280,9 @@ const RestaurantsSukhum: React.FC = () => {
                                 />
                             </div>
                             <div className={styles.infoContainer}>
-                                <h2 className={`${styles.restaurantName} ${restaurant.nameLink ? styles.clickable : ''}`}>
-                                    {restaurant.nameLink ? (
-                                        <a href={restaurant.nameLink} target="_blank" rel="noopener noreferrer">{restaurant.name}</a>
+                                <h2 className={`${styles.restaurantName} ${restaurant.name_link ? styles.clickable : ''}`}>
+                                    {restaurant.name_link ? (
+                                        <a href={restaurant.name_link} target="_blank" rel="noopener noreferrer">{restaurant.name}</a>
                                     ) : (
                                         restaurant.name
                                     )}

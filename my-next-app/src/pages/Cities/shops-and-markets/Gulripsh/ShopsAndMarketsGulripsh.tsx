@@ -16,7 +16,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDxHmP4d',
     contacts: null,
     image: '/assets/ShopAndMarketsGulripsh1.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDxHm26f',
     contacts: null,
     image: '/assets/ShopAndMarketsGulripsh2.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 3,
@@ -36,7 +36,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDxHqAzm',
     contacts: null,
     image: '/assets/ShopAndMarketsGulripsh3.jpg',
-    nameLink: null,
+    name_link: null,
   },
 ];
 
@@ -64,8 +64,8 @@ const ShopsAndMarketsGulripsh: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.shopName}>
-                  {shop.nameLink ? (
-                    <a href={shop.nameLink} target="_blank" rel="noopener noreferrer">
+                  {shop.name_link ? (
+                    <a href={shop.name_link} target="_blank" rel="noopener noreferrer">
                       {shop.name}
                     </a>
                   ) : (

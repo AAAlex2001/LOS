@@ -16,7 +16,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDxGvRLE',
     contacts: '+7 (940) 910-39-59',
     image: '/assets/ShopAndMarketsGudauta1.jpg',
-    nameLink: 'http://instagram.com/premium_abkhazia',
+    name_link: 'http://instagram.com/premium_abkhazia',
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDxGv0ph',
     contacts: null,
     image: '/assets/ShopAndMarketsGudauta2.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 3,
@@ -36,7 +36,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDxKIWiT',
     contacts: null,
     image: '/assets/ShopAndMarketsGudauta3.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 4,
@@ -46,7 +46,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDxKI-7J',
     contacts: null,
     image: '/assets/ShopAndMarketsGudauta4.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 5,
@@ -56,7 +56,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDxKQE0D',
     contacts: '+7 (940) 920-62-00',
     image: '/assets/ShopAndMarketsGudauta5.jpg',
-    nameLink: 'https://vavilongu.ru/',
+    name_link: 'https://vavilongu.ru/',
   },
   {
     id: 6,
@@ -66,7 +66,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDxKQJp1',
     contacts: null,
     image: '/assets/ShopAndMarketsGudauta6.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 7,
@@ -76,7 +76,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDxKQW~v',
     contacts: null,
     image: '/assets/ShopAndMarketsGudauta7.jpg',
-    nameLink: null,
+    name_link: null,
   },
 ];
 
@@ -104,8 +104,8 @@ const ShopsAndMarketsGudauta: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.shopName}>
-                  {shop.nameLink ? (
-                    <a href={shop.nameLink} target="_blank" rel="noopener noreferrer">
+                  {shop.name_link ? (
+                    <a href={shop.name_link} target="_blank" rel="noopener noreferrer">
                       {shop.name}
                     </a>
                   ) : (

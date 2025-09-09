@@ -12,7 +12,7 @@ const gasStations = [
   {
     id: 1,
     name: 'Роснефть',
-    nameLink: null,
+    name_link: null,
     address: 'Гагрский район, посёлок Бзыпта, Сухумское шоссе',
     addressLink: 'https://yandex.com/maps/-/CDHbZFnh',
     contacts: '+7 (940) 777-67-51',
@@ -45,8 +45,8 @@ const GasStationsPitsunda: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.gasStationName}>
-                  {station.nameLink ? (
-                    <a href={station.nameLink} target="_blank" rel="noopener noreferrer">
+                  {station.name_link ? (
+                    <a href={station.name_link} target="_blank" rel="noopener noreferrer">
                       {station.name}
                     </a>
                   ) : (

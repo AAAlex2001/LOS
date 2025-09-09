@@ -17,7 +17,7 @@ const wineries = [
     addressLink: null,
     contacts: '+79407770780',
     image: '/assets/WineriesTkuarchal1.jpg',
-    nameLink: null,
+    name_link: null,
   }
 ];
 
@@ -45,8 +45,8 @@ const WineriesTkuarchal: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.wineryName}>
-                  {winery.nameLink ? (
-                    <a href={winery.nameLink} target="_blank" rel="noopener noreferrer">
+                  {winery.name_link ? (
+                    <a href={winery.name_link} target="_blank" rel="noopener noreferrer">
                       {winery.name}
                     </a>
                   ) : (

@@ -39,21 +39,24 @@ type HomeData = {
   tabs?: { group: 'about' | 'activities' | 'booking' | 'essentials'; label: string; href?: string; order: number }[];
 };
 
-const API_BASE = config.API_BASE;
+const API_BASE = (config.API_BASE || '').replace(/\/+$/, '');
 
 const HomePage = () => {
   const [activePopup, setActivePopup] = useState<string | null>(null);
   const [data, setData] = useState<HomeData | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/home/`, { cache: 'no-store' });
+        const url = `${API_BASE}/api/home/`;
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load homepage');
         const json = await res.json();
         setData(json);
       } catch (e) {
         console.error(e);
+        setError('Ошибка загрузки данных');
       }
     };
     load();
@@ -80,6 +83,18 @@ const HomePage = () => {
     booking: (data?.popup_items || []).filter(i => i.group === 'booking').map(i => ({ label: i.label, href: i.href })),
     essentials: (data?.popup_items || []).filter(i => i.group === 'essentials').map(i => ({ label: i.label, href: i.href })),
   };
+
+  if (error) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!data) return null; // не рендерим до загрузки
 

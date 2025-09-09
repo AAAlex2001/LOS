@@ -142,3 +142,4 @@ class HomePageSerializer(serializers.ModelSerializer):
 
     def get_twitter_image_url(self, obj: HomePage) -> str:
         return obj.twitter_image.url if obj.twitter_image else ""
+

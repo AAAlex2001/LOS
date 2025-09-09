@@ -16,7 +16,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDxcyPyL',
     contacts: null,
     image: '/assets/ShopAndMarketsNewAfon1.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDxc5A3B',
     contacts: null,
     image: '/assets/ShopAndMarketsNewAfon2.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 3,
@@ -36,7 +36,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDxc5Qou',
     contacts: null,
     image: '/assets/ShopAndMarketsNewAfon3.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 4,
@@ -46,7 +46,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDxc5NmM',
     contacts: null,
     image: '/assets/ShopAndMarketsNewAfon4.jpg',
-    nameLink: null,
+    name_link: null,
   },
   {
     id: 5,
@@ -56,7 +56,7 @@ const shopsAndMarkets = [
     addressLink: 'https://yandex.com/maps/-/CDxc5K4w',
     contacts: '+7 (940) 711-29-38',
     image: '/assets/ShopAndMarketsNewAfon5.jpg',
-    nameLink: null,
+    name_link: null,
   },
 ];
 
@@ -84,8 +84,8 @@ const ShopsAndMarketsNewAfon: React.FC = () => {
 
               <div className={styles.infoContainer}>
                 <h2 className={styles.shopName}>
-                  {shop.nameLink ? (
-                    <a href={shop.nameLink} target="_blank" rel="noopener noreferrer">
+                  {shop.name_link ? (
+                    <a href={shop.name_link} target="_blank" rel="noopener noreferrer">
                       {shop.name}
                     </a>
                   ) : (

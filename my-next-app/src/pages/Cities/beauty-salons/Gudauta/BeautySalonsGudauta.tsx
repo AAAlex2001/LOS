@@ -10,7 +10,7 @@ import styles from './BeautySalonsGudauta.module.scss';
 const beautySalons: {
   id: number;
   name: string;
-  nameLink?: string;
+  name_link?: string;
   address: string;
   addressLink?: string;
   phone?: string;
@@ -52,9 +52,9 @@ const BeautySalonsGudauta: React.FC = () => {
               </div>
 
               <div className={styles.infoContainer}>
-                <h2 className={`${styles.beautySalonName} ${salon.nameLink ? styles.clickable : ''}`}>
-                  {salon.nameLink ? (
-                    <a href={salon.nameLink} target="_blank" rel="noopener noreferrer">{salon.name}</a>
+                <h2 className={`${styles.beautySalonName} ${salon.name_link ? styles.clickable : ''}`}>
+                  {salon.name_link ? (
+                    <a href={salon.name_link} target="_blank" rel="noopener noreferrer">{salon.name}</a>
                   ) : (
                     salon.name
                   )}

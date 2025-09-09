@@ -16,13 +16,13 @@ const restaurants = [
         phone: '+7 (940) 996-28-48',
         workingHours: 'с 09:00 до 00:00',
         image: '/assets/RestaurantsOchamchira1.jpg',
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
         id: 2,
         name: 'Акьафурта',
-        nameLink: 'https://www.instagram.com/akiafurta_ochamchira',
+        name_link: 'https://www.instagram.com/akiafurta_ochamchira',
         address: 'Очамчыра, ул. Баграта Шинкуба, 41',
         addressLink: 'https://yandex.com/maps/-/CDxdaV4R',
         phone: '+7 (940) 927-55-12',
@@ -38,7 +38,7 @@ const restaurants = [
         workingHours: 'с 10:00 до 23:00',
         image: '/assets/RestaurantsOchamchira3.jpg',
         phone: null,
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
@@ -49,13 +49,13 @@ const restaurants = [
         phone: '+7 (940) 714-00-00',
         workingHours: 'с 08:00 до 20:00',
         image: '/assets/RestaurantsOchamchira4.jpg',
-        nameLink: null,
+        name_link: null,
         website: null,
     },
     {
         id: 5,
         name: 'Alagamta',
-        nameLink: 'https://www.instagram.com/naala.kubrava?igsh=NzNhbWd4d3lvMm9j',
+        name_link: 'https://www.instagram.com/naala.kubrava?igsh=NzNhbWd4d3lvMm9j',
         address: 'Очамчыра, улица Владислава Ардзинба',
         addressLink: 'https://yandex.com/maps/-/CDxdeW9p',
         phone: '+7 (940) 700-99-97',
@@ -85,9 +85,9 @@ const RestaurantsOchamchira: React.FC = () => {
                                 />
                             </div>
                             <div className={styles.infoContainer}>
-                                <h2 className={`${styles.restaurantName} ${restaurant.nameLink ? styles.clickable : ''}`}>
-                                    {restaurant.nameLink ? (
-                                        <a href={restaurant.nameLink} target="_blank" rel="noopener noreferrer">{restaurant.name}</a>
+                                <h2 className={`${styles.restaurantName} ${restaurant.name_link ? styles.clickable : ''}`}>
+                                    {restaurant.name_link ? (
+                                        <a href={restaurant.name_link} target="_blank" rel="noopener noreferrer">{restaurant.name}</a>
                                     ) : (
                                         restaurant.name
                                     )}

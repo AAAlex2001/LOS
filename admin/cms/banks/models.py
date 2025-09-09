@@ -55,3 +55,4 @@ class Bank(TimestampedModel):
 
     def __str__(self) -> str:
         return self.name
+

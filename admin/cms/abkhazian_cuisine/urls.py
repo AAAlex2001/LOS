@@ -11,3 +11,4 @@ router.register(r'dishes', MainDishViewSet)
 urlpatterns = [
     path('', include(router.urls)),
 ]
+
