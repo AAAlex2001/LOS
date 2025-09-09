@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
+// next/image удалён; используем обычные <img> как в банках
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
@@ -88,10 +88,9 @@ const HotelsSukhum: React.FC = () => {
           {data.hotels.map((hotel) => (
             <div key={hotel.id} className={styles.hotelCard}>
               <div className={styles.imageContainer}>
-                <Image
+                <img
                   src={hotel.image_url ? `${API_BASE}/media/${hotel.image_url}` : '/assets/placeholder.png'}
                   alt={hotel.name}
-                  fill
                   className={styles.hotelImage}
                 />
               </div>

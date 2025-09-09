@@ -1,109 +1,81 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
+// next/image удаляем; используем <img> как в банках
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './PharmacySukhum.module.scss';
+import config from '@/config';
 
-// Данные аптек
-const pharmacies = [
-  {
-    id: 1,
-    name: 'Аптека',
-    workingHours: 'с 09:00 до 23:00',
-    address: 'ул. А.Читанава, 14',
-    addressLink: 'https://yandex.com/maps/-/CDXqmL6F',
-    image: '/assets/PharmacySukhum1.jpg'
-  },
-  {
-    id: 2,
-    name: 'Ракета Маркет',
-    name_link: 'https://www.instagram.com/raketa_market_/',
-    workingHours: 'с 09:00 до 22:00',
-    address: 'просп. Аиааира, 48',
-    addressLink: 'https://yandex.com/maps/-/CDXqm-5r',
-    contacts: '+7 (940) 709-21-21',
-    image: '/assets/PharmacySukhum2.png'
-  },
-  {
-    id: 3,
-    name: 'Республиканская аптека',
-    name_link: 'https://yandex.com/maps/-/CDXqqRnF',
-    workingHours: '08:30 до 23:00',
-    address: 'просп. Леона, 12',
-    image: '/assets/PharmacySukhum3.png'
-  },
-  {
-    id: 4,
-    name: 'Аптека N1',
-    workingHours: 'с 09:00 до 21:00',
-    address: 'Проспект Леона, 17',
-    image: '/assets/PharmacySukhum4.png'
-  },
-  {
-    id: 5,
-    name: 'Лекарь',
-    workingHours: 'круглосуточно',
-    address: 'Сухум, ул. Конфедератов, 30',
-    addressLink: 'https://yandex.com/maps/-/CDXquKjg',
-    contacts: '+7 (940) 717-00-02',
-    image: '/assets/PharmacySukhum5.jpg'
-  },
-  {
-    id: 6,
-    name: 'Аптека',
-    workingHours: 'с 09:00 до 22:00',
-    address: 'Сухум, ул. Дзидзария, 64',
-    addressLink: 'https://yandex.com/maps/-/CDXqu85V',
-    image: '/assets/PharmacySukhum6'
-  },
-  {
-    id: 7,
-    name: 'Аптека Пульс',
-    workingHours: 'с 08:30 до 00:00',
-    address: 'Сухум, улица Лакоба',
-    addressLink: 'https://yandex.com/maps/-/CDXquX1A',
-    image: '/assets/PharmacySukhum7.jpg'
-  },
-  {
-    id: 8,
-    name: 'ВитАмин',
-    workingHours: 'с 09:00 до 22:00',
-    address: 'Сухум, ул. Б. Адлейба, 218',
-    addressLink: 'https://yandex.com/maps/-/CDXqB6Ns',
-    image: '/assets/PharmacySukhum8.png'
-  },
-  {
-    id: 9,
-    name: 'Лекфарм',
-    workingHours: 'с 09:00 до 22:00',
-    address: 'Сухум, улица Эшба 175',
-    addressLink: 'https://yandex.com/maps/-/CDXJ6ZY-',
-    image: '/assets/PharmacySukhum9.jpg'
-  },
-  {
-    id: 10,
-    name: 'Республиканская Аптека',
-    workingHours: 'круглосуточно',
-    address: 'Сухум, Новый район',
-    addressLink: 'https://yandex.com/maps/-/CDXJbMzU',
-    image: '/assets/PharmacySukhum10.jpg'
-  },
-  {
-    id: 11,
-    name: 'Аптека АЛОЭ',
-    name_link: 'https://www.instagram.com/apteka__aloe?igsh=ZmExcXE4NG9lM21v',
-    workingHours: 'с 09:00 до 23:00',
-    address: 'улица Акиртава, 20',
-    addressLink: 'https://yandex.com/maps/-/CDXJb8OE',
-    contacts: '+7 (940) 956-92-94',
-    image: '/assets/PharmacySukhum11.jpg'
-  }
-];
+type Pharmacy = {
+  id: number;
+  name: string;
+  name_link?: string;
+  working_hours?: string;
+  address: string;
+  address_link?: string;
+  contacts?: string;
+  image_url?: string;
+  order: number;
+};
+
+type CityPayload = {
+  title: string;
+  pharmacies: Pharmacy[];
+};
+
+const API_BASE = config.API_BASE;
 
 const PharmacySukhum: React.FC = () => {
+  const [data, setData] = React.useState<CityPayload | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/pharmacy/page/city/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load');
+        const json = (await res.json()) as CityPayload;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>Загрузка...</h1>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
   return (
     <div className={styles.pageWrapper}>
       <Header />
@@ -111,19 +83,18 @@ const PharmacySukhum: React.FC = () => {
       <main className={styles.mainContent}>
         {/* Заголовок */}
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Сухум: аптеки</h1>
+          <h1 className={styles.mainTitle}>{data.title || 'Сухум: аптеки'}</h1>
         </section>
 
         {/* Карточки аптек */}
         <section className={styles.cardsSection}>
-          {pharmacies.map((pharmacy) => (
+          {data.pharmacies.map((pharmacy) => (
             <div key={pharmacy.id} className={styles.pharmacyCard}>
               {/* Изображение */}
               <div className={styles.imageContainer}>
-                <Image
-                  src={pharmacy.image}
+                <img
+                  src={pharmacy.image_url ? `${API_BASE}/media/${pharmacy.image_url}` : '/assets/placeholder.png'}
                   alt={pharmacy.name}
-                  fill
                   className={styles.pharmacyImage}
                 />
               </div>
@@ -143,9 +114,9 @@ const PharmacySukhum: React.FC = () => {
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Адрес:</span>
-                    <span className={`${styles.infoValue} ${pharmacy.addressLink ? styles.addressLink : ''}`}>
-                      {pharmacy.addressLink ? (
-                        <a href={pharmacy.addressLink} target="_blank" rel="noopener noreferrer">{pharmacy.address}</a>
+                    <span className={`${styles.infoValue} ${pharmacy.address_link ? styles.addressLink : ''}`}>
+                      {pharmacy.address_link ? (
+                        <a href={pharmacy.address_link} target="_blank" rel="noopener noreferrer">{pharmacy.address}</a>
                       ) : (
                         pharmacy.address
                       )}
@@ -161,7 +132,7 @@ const PharmacySukhum: React.FC = () => {
                   
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Часы работы:</span>
-                    <span className={styles.infoValue}>{pharmacy.workingHours}</span>
+                    <span className={styles.infoValue}>{pharmacy.working_hours || ''}</span>
                   </div>
                 </div>
               </div>
