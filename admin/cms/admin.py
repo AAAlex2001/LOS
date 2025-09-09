@@ -31,3 +31,4 @@ from .taxi.admin import TaxiPageAdmin
 from .your_doctor.admin import YourDoctorPageAdmin
 from .administrative_buildings.admin import AdministrativeBuildingsPageAdmin
 from .beaches.admin import BeachesPageAdmin
+from .beauty_salons.admin import BeautySalonsPageAdmin

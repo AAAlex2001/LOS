@@ -1,127 +1,145 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './BeautySalonsGagra.module.scss';
+import config from '@/config';
 
-// TODO: Add actual images for Gagra beauty salons
-const beautySalons: {
+type City = { id: number; name: string; title?: string; order: number };
+type BeautySalon = {
   id: number;
+  city: number;
   name: string;
   name_link?: string;
   address: string;
-  addressLink?: string;
+  address_link?: string;
   phone?: string;
-  website?: string;
-  workingHours?: string;
-  image: string;
-}[] = [
-  {
-    id: 1,
-    name: 'Студия красоты "Малина"',
-    address: 'просп. Ардзинба, 187',
-    addressLink: 'https://yandex.ru/maps/-/CDcIV2Y5',
-    phone: '+7 (940) 722-72-36',
-    workingHours: 'ежедневно с 09:00 до 19:00',
-    image: '/assets/BeautySalonsGagra1.jpg',
-  },
-  {
-    id: 2,
-    name: 'Элида',
-    address: 'Гагра, улица Абазгаа',
-    addressLink: 'https://yandex.ru/maps/-/CDcI6F1j',
-    phone: '+7 (940) 901-44-33',
-    workingHours: 'ежедневно с 09:00 до 18:00',
-    image: '/assets/BeautySalonsGagra2.jpg',
-  },
-  {
-    id: 3,
-    name: 'ASA',
-    address: 'ул. Демерджипа, 18',
-    addressLink: 'https://yandex.ru/maps/-/CDcInXld',
-    phone: '+7 (940) 907-75-55',
-    workingHours: 'с 10:00 до 18:00',
-    image: '/assets/BeautySalonsGagra3.jpg',
-  },
-  {
-    id: 4,
-    name: 'Beauty CAMP Gagra',
-    address: 'ул. Абазгаа, 53/2',
-    addressLink: 'https://yandex.ru/maps/10280/gagra/house/YEkYdAFoSkUEQFppfX52dHhnbA==/',
-    phone: '+7 (940) 900-22-25\n+7 (940)234-40-90',
-    workingHours: 'с 09:00 до 19:00',
-    image: '/assets/BeautySalonsGagra4.jpg',
-  },
-];
+  working_hours?: string;
+  services?: string;
+  image_url: string;
+  order: number;
+};
+
+type CityPageData = {
+  title: string;
+  city?: City;
+  beauty_salons: BeautySalon[];
+};
+
+const API_BASE = config.API_BASE;
 
 const BeautySalonsGagra: React.FC = () => {
+  const [data, setData] = React.useState<CityPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/beauty-salons/page/city/${encodeURIComponent('Гагра')}/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load beauty salons');
+        const json = (await res.json()) as CityPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Гагра: салоны красоты</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Гагра: салоны красоты'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
-          {beautySalons.map((salon) => (
+          {data.beauty_salons.map((salon) => (
             <div key={salon.id} className={styles.beautySalonCard}>
               <div className={styles.imageContainer}>
-                <Image
-                  src={salon.image}
-                  alt={salon.name}
-                  fill
-                  className={styles.beautySalonImage}
-                />
+                {salon.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${salon.image_url}`}
+                    alt={salon.name}
+                    className={styles.beautySalonImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
               <div className={styles.infoContainer}>
-                <h2 className={`${styles.beautySalonName} ${salon.name_link ? styles.clickable : ''}`}>
+                <h2 className={styles.beautySalonName}>
                   {salon.name_link ? (
-                    <a href={salon.name_link} target="_blank" rel="noopener noreferrer">{salon.name}</a>
+                    <a href={salon.name_link} target="_blank" rel="noopener noreferrer">
+                      {salon.name}
+                    </a>
                   ) : (
                     salon.name
                   )}
                 </h2>
                 
                 <div className={styles.infoBlock}>
-                  {salon.address && (
-                    <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Адрес:</span>
-                      <span className={`${styles.infoValue} ${salon.addressLink ? styles.addressLink : ''}`}>
-                        {salon.addressLink ? (
-                          <a href={salon.addressLink} target="_blank" rel="noopener noreferrer">{salon.address}</a>
-                        ) : (
-                          salon.address
-                        )}
-                      </span>
-                    </div>
-                  )}
-
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={`${styles.infoValue} ${salon.address_link ? styles.addressLink : ''}`}>
+                      {salon.address_link ? (
+                        <a href={salon.address_link} target="_blank" rel="noopener noreferrer">{salon.address}</a>
+                      ) : (
+                        salon.address
+                      )}
+                    </span>
+                  </div>
+                  
                   {salon.phone && (
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>Телефон:</span>
-                      <span className={styles.infoValue} style={{whiteSpace: 'pre-line'}}>{salon.phone}</span>
+                      <span className={styles.infoValue}>{salon.phone}</span>
                     </div>
                   )}
-
-                  {salon.website && (
+                  
+                  {salon.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Сайт:</span>
-                      <span className={styles.infoValue}>
-                        <a href={salon.website} target="_blank" rel="noopener noreferrer">{salon.website}</a>
-                      </span>
+                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoValue}>{salon.working_hours}</span>
                     </div>
                   )}
-
-                  {salon.workingHours && (
+                  
+                  {salon.services && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Часы работы:</span>
-                      <span className={styles.infoValue}>{salon.workingHours}</span>
+                      <span className={styles.infoLabel}>Услуги:</span>
+                      <span className={styles.infoValue}>{salon.services}</span>
                     </div>
                   )}
                 </div>
@@ -137,4 +155,4 @@ const BeautySalonsGagra: React.FC = () => {
   );
 };
 
-export default BeautySalonsGagra; 
+export default BeautySalonsGagra;
