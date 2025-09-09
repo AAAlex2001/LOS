@@ -7,7 +7,7 @@ from .models import ParkingLotsPage, ParkingLotCity, ParkingLot
 class ParkingLotInline(admin.TabularInline):
     model = ParkingLot
     extra = 1
-    fields = ("name", "working_hours", "address", "address_link", "contacts", "image", "order", "preview")
+    fields = ("city", "name", "address", "address_link", "image", "order", "preview")
     readonly_fields = ("preview",)
 
     def preview(self, obj):
@@ -17,18 +17,33 @@ class ParkingLotInline(admin.TabularInline):
     
     preview.short_description = "Предпросмотр"
 
+    def get_parent_object(self, request):
+        try:
+            object_id = request.resolver_match.kwargs.get("object_id")
+        except Exception:
+            object_id = None
+        if not object_id:
+            return None
+        return ParkingLotsPage.objects.filter(pk=object_id).first()
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "city":
+            page = self.get_parent_object(request)
+            if page is not None:
+                kwargs["queryset"] = ParkingLotCity.objects.filter(page=page)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
 
 class ParkingLotCityInline(admin.TabularInline):
     model = ParkingLotCity
     extra = 1
     fields = ("name", "title", "order")
-    inlines = [ParkingLotInline]
 
 
 @admin.register(ParkingLotsPage)
 class ParkingLotsPageAdmin(admin.ModelAdmin):
     list_display = ("id", "updated_at")
-    inlines = [ParkingLotCityInline]
+    inlines = [ParkingLotCityInline, ParkingLotInline]
     readonly_fields = ("seo_preview",)
 
     def has_add_permission(self, request):

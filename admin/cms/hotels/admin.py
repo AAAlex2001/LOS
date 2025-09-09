@@ -7,7 +7,7 @@ from .models import HotelsPage, HotelCity, Hotel
 class HotelInline(admin.TabularInline):
     model = Hotel
     extra = 1
-    fields = ("name", "name_link", "working_hours", "address", "address_link", "contacts", "image", "order", "preview")
+    fields = ("city", "name", "address", "address_link", "contacts", "price", "image", "order", "preview")
     readonly_fields = ("preview",)
 
     def preview(self, obj):
@@ -17,18 +17,33 @@ class HotelInline(admin.TabularInline):
     
     preview.short_description = "Предпросмотр"
 
+    def get_parent_object(self, request):
+        try:
+            object_id = request.resolver_match.kwargs.get("object_id")
+        except Exception:
+            object_id = None
+        if not object_id:
+            return None
+        return HotelsPage.objects.filter(pk=object_id).first()
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "city":
+            page = self.get_parent_object(request)
+            if page is not None:
+                kwargs["queryset"] = HotelCity.objects.filter(page=page)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
 
 class HotelCityInline(admin.TabularInline):
     model = HotelCity
     extra = 1
     fields = ("name", "title", "order")
-    inlines = [HotelInline]
 
 
 @admin.register(HotelsPage)
 class HotelsPageAdmin(admin.ModelAdmin):
     list_display = ("id", "updated_at")
-    inlines = [HotelCityInline]
+    inlines = [HotelCityInline, HotelInline]
     readonly_fields = ("seo_preview",)
 
     def has_add_permission(self, request):

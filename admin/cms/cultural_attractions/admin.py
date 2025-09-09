@@ -7,7 +7,7 @@ from .models import CulturalAttractionsPage, CulturalAttractionCity, CulturalAtt
 class CulturalAttractionInline(admin.TabularInline):
     model = CulturalAttraction
     extra = 1
-    fields = ("name", "name_link", "working_hours", "address", "address_link", "contacts", "description", "image", "order", "preview")
+    fields = ("city", "name", "name_link", "working_hours", "address", "address_link", "contacts", "description", "image", "order", "preview")
     readonly_fields = ("preview",)
 
     def preview(self, obj):
@@ -17,18 +17,33 @@ class CulturalAttractionInline(admin.TabularInline):
     
     preview.short_description = "Предпросмотр"
 
+    def get_parent_object(self, request):
+        try:
+            object_id = request.resolver_match.kwargs.get("object_id")
+        except Exception:
+            object_id = None
+        if not object_id:
+            return None
+        return CulturalAttractionsPage.objects.filter(pk=object_id).first()
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "city":
+            page = self.get_parent_object(request)
+            if page is not None:
+                kwargs["queryset"] = CulturalAttractionCity.objects.filter(page=page)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
 
 class CulturalAttractionCityInline(admin.TabularInline):
     model = CulturalAttractionCity
     extra = 1
     fields = ("name", "title", "order")
-    inlines = [CulturalAttractionInline]
 
 
 @admin.register(CulturalAttractionsPage)
 class CulturalAttractionsPageAdmin(admin.ModelAdmin):
     list_display = ("id", "updated_at")
-    inlines = [CulturalAttractionCityInline]
+    inlines = [CulturalAttractionCityInline, CulturalAttractionInline]
     readonly_fields = ("seo_preview",)
 
     def has_add_permission(self, request):

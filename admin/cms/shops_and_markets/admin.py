@@ -7,7 +7,7 @@ from .models import ShopsAndMarketsPage, ShopCity, ShopOrMarket
 class ShopOrMarketInline(admin.TabularInline):
     model = ShopOrMarket
     extra = 1
-    fields = ("name", "working_hours", "address", "address_link", "contacts", "image", "order", "preview")
+    fields = ("city", "name", "working_hours", "address", "address_link", "contacts", "image", "order", "preview")
     readonly_fields = ("preview",)
 
     def preview(self, obj):
@@ -17,18 +17,33 @@ class ShopOrMarketInline(admin.TabularInline):
     
     preview.short_description = "Предпросмотр"
 
+    def get_parent_object(self, request):
+        try:
+            object_id = request.resolver_match.kwargs.get("object_id")
+        except Exception:
+            object_id = None
+        if not object_id:
+            return None
+        return ShopsAndMarketsPage.objects.filter(pk=object_id).first()
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "city":
+            page = self.get_parent_object(request)
+            if page is not None:
+                kwargs["queryset"] = ShopCity.objects.filter(page=page)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
 
 class ShopCityInline(admin.TabularInline):
     model = ShopCity
     extra = 1
     fields = ("name", "title", "order")
-    inlines = [ShopOrMarketInline]
 
 
 @admin.register(ShopsAndMarketsPage)
 class ShopsAndMarketsPageAdmin(admin.ModelAdmin):
     list_display = ("id", "updated_at")
-    inlines = [ShopCityInline]
+    inlines = [ShopCityInline, ShopOrMarketInline]
     readonly_fields = ("seo_preview",)
 
     def has_add_permission(self, request):

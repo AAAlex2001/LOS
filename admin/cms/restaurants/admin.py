@@ -7,7 +7,7 @@ from .models import RestaurantsPage, RestaurantCity, Restaurant
 class RestaurantInline(admin.TabularInline):
     model = Restaurant
     extra = 1
-    fields = ("name", "name_link", "working_hours", "address", "address_link", "contacts", "image", "order", "preview")
+    fields = ("city", "name", "name_link", "website", "address", "address_link", "phone", "working_hours", "image", "order", "preview")
     readonly_fields = ("preview",)
 
     def preview(self, obj):
@@ -17,18 +17,33 @@ class RestaurantInline(admin.TabularInline):
     
     preview.short_description = "Предпросмотр"
 
+    def get_parent_object(self, request):
+        try:
+            object_id = request.resolver_match.kwargs.get("object_id")
+        except Exception:
+            object_id = None
+        if not object_id:
+            return None
+        return RestaurantsPage.objects.filter(pk=object_id).first()
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "city":
+            page = self.get_parent_object(request)
+            if page is not None:
+                kwargs["queryset"] = RestaurantCity.objects.filter(page=page)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
 
 class RestaurantCityInline(admin.TabularInline):
     model = RestaurantCity
     extra = 1
     fields = ("name", "title", "order")
-    inlines = [RestaurantInline]
 
 
 @admin.register(RestaurantsPage)
 class RestaurantsPageAdmin(admin.ModelAdmin):
     list_display = ("id", "updated_at")
-    inlines = [RestaurantCityInline]
+    inlines = [RestaurantCityInline, RestaurantInline]
     readonly_fields = ("seo_preview",)
 
     def has_add_permission(self, request):
