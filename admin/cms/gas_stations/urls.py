@@ -1,13 +1,11 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from .views import GasStationsPageViewSet, CityViewSet, GasStationViewSet
+from .views import GasStationsPageViewSet
 
 
 router = DefaultRouter()
 router.register(r'page', GasStationsPageViewSet)
-router.register(r'cities', CityViewSet)
-router.register(r'gas-stations', GasStationViewSet)
 
 
 urlpatterns = [

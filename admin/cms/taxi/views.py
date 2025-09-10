@@ -2,8 +2,8 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import TaxiPage, TaxiService
-from .serializers import TaxiPageSerializer, TaxiServiceSerializer
+from .models import TaxiPage
+from .serializers import TaxiPageSerializer
 
 
 class TaxiPageViewSet(viewsets.ReadOnlyModelViewSet):

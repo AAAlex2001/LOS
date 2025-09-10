@@ -54,19 +54,3 @@ class AbkhazianCuisinePageViewSet(viewsets.ReadOnlyModelViewSet):
             
         except Exception as e:
             return Response({"error": str(e)}, status=500)
-
-
-class CuisineSectionViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    API для секций абхазской кухни
-    """
-    queryset = CuisineSection.objects.all().order_by('order', 'id')
-    serializer_class = CuisineSectionSerializer
-
-
-class MainDishViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    API для основных блюд абхазской кухни
-    """
-    queryset = MainDish.objects.all().order_by('order', 'id')
-    serializer_class = MainDishSerializer
