@@ -58,13 +58,3 @@ class PharmacyPageViewSet(viewsets.ReadOnlyModelViewSet):
         except Exception as e:
             return Response({"error": str(e)}, status=500)
 
-
-class CityViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = PharmacyCity.objects.all().order_by('order', 'id')
-    serializer_class = CitySerializer
-
-
-class PharmacyViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = PharmacyItem.objects.all().order_by('order', 'id')
-    serializer_class = PharmacySerializer
-

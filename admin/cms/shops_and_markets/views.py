@@ -58,13 +58,3 @@ class ShopsAndMarketsPageViewSet(viewsets.ReadOnlyModelViewSet):
         except Exception as e:
             return Response({"error": str(e)}, status=500)
 
-
-class CityViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = ShopCity.objects.all().order_by('order', 'id')
-    serializer_class = CitySerializer
-
-
-class ShopViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = ShopOrMarket.objects.all().order_by('order', 'id')
-    serializer_class = ShopSerializer
-

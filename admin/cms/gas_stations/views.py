@@ -59,12 +59,3 @@ class GasStationsPageViewSet(viewsets.ReadOnlyModelViewSet):
             return Response({"error": str(e)}, status=500)
 
 
-class CityViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = GasStationCity.objects.all().order_by('order', 'id')
-    serializer_class = CitySerializer
-
-
-class GasStationViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = GasStation.objects.all().order_by('order', 'id')
-    serializer_class = GasStationSerializer
-

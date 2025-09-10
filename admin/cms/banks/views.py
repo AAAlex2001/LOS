@@ -26,11 +26,3 @@ class BanksPageViewSet(viewsets.ReadOnlyModelViewSet):
             
         except Exception as e:
             return Response({"error": str(e)}, status=500)
-
-
-class BankViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    API для отдельных банков
-    """
-    queryset = Bank.objects.all().order_by('order', 'id')
-    serializer_class = BankSerializer

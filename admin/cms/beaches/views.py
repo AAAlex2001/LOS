@@ -59,13 +59,3 @@ class BeachesPageViewSet(viewsets.ReadOnlyModelViewSet):
             return Response({"error": str(e)}, status=500)
 
 
-class CityViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = BeachCity.objects.all().order_by('order', 'id')
-    serializer_class = CitySerializer
-
-
-class BeachViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Beach.objects.all().order_by('order', 'id')
-    serializer_class = BeachSerializer
-
-

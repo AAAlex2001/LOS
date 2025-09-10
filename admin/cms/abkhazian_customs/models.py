@@ -36,7 +36,7 @@ class AbkhazianCustomsPage(TimestampedModel):
 
     class Meta:
         verbose_name = "Страница абхазских обычаев"
-        verbose_name_plural = "Страница абхазских обычаев"
+        verbose_name_plural = "Страницы абхазских обычаев"
 
     def __str__(self) -> str:
         return "Страница абхазских обычаев"
@@ -54,7 +54,7 @@ class CustomSection(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Секция обычаев"
-        verbose_name_plural = "Секция обычаев"
+        verbose_name_plural = "Секции обычаев"
 
     def __str__(self) -> str:
         return self.title

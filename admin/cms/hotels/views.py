@@ -59,12 +59,3 @@ class HotelsPageViewSet(viewsets.ReadOnlyModelViewSet):
             return Response({"error": str(e)}, status=500)
 
 
-class CityViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = HotelCity.objects.all().order_by('order', 'id')
-    serializer_class = CitySerializer
-
-
-class HotelViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Hotel.objects.all().order_by('order', 'id')
-    serializer_class = HotelSerializer
-

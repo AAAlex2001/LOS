@@ -24,11 +24,3 @@ class TaxiPageViewSet(viewsets.ReadOnlyModelViewSet):
         except Exception as e:
             return Response({"error": str(e)}, status=500)
 
-
-class TaxiServiceViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = TaxiService.objects.all().order_by('order', 'id')
-    serializer_class = TaxiServiceSerializer
-
-
-
-

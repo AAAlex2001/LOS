@@ -58,13 +58,3 @@ class WineriesPageViewSet(viewsets.ReadOnlyModelViewSet):
         except Exception as e:
             return Response({"error": str(e)}, status=500)
 
-
-class CityViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = WineryCity.objects.all().order_by('order', 'id')
-    serializer_class = CitySerializer
-
-
-class WineryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Winery.objects.all().order_by('order', 'id')
-    serializer_class = WinerySerializer
-

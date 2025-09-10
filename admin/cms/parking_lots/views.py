@@ -59,12 +59,3 @@ class ParkingLotsPageViewSet(viewsets.ReadOnlyModelViewSet):
             return Response({"error": str(e)}, status=500)
 
 
-class CityViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = ParkingLotCity.objects.all().order_by('order', 'id')
-    serializer_class = CitySerializer
-
-
-class ParkingLotViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = ParkingLot.objects.all().order_by('order', 'id')
-    serializer_class = ParkingLotSerializer
-
