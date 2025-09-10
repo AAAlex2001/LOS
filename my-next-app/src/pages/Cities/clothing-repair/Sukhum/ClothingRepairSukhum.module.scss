@@ -10,15 +10,14 @@
   max-width: 1920px;
   width: 100%;
   margin: 0 auto;
-  padding: 120px 20px 60px;
+  padding: 30px 20px 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 80px;
-  margin-top: -80px;
+  gap: 40px;
   
   @media (min-width: 1200px) {
-    padding: 120px 344px 60px;
+    padding: 30px 344px 60px;
   }
 }
 
@@ -27,10 +26,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 10px 32px;
   width: 100%;
   max-width: 920px;
-  min-height: 130px;
 }
 
 .mainTitle {
@@ -53,13 +50,13 @@
   max-width: 1232px;
 }
 
-// Clothing card
+// Clothing card (identично buildingCard)
 .clothingCard {
   display: grid;
-  grid-template-columns: 49.19% 50.81%;
+  grid-template-columns: 50% 50%;
   column-gap: 32px;
   width: 100%;
-  min-height: 390px;
+  min-height: 320px;
   position: relative;
 }
 
@@ -68,7 +65,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 390px;
+  min-height: 320px;
   border-radius: 15px;
   overflow: hidden;
 }
@@ -87,14 +84,16 @@
   padding: 40px;
   gap: 24px;
   width: 100%;
-  min-height: 390px;
+  min-height: 320px;
   background: rgba(17, 41, 189, 0.1);
   border: 1px solid #d5daef;
   border-radius: 15px;
   box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
-// Clothing name
+// Clothing name (buildingName)
 .clothingName {
   font-family: 'Inter', sans-serif;
   font-weight: 800;
@@ -103,6 +102,7 @@
   color: #1129bd;
   margin: 0;
   width: 100%;
+  text-align: left;
   
   &.clickable {
     text-decoration: underline;
@@ -130,12 +130,17 @@
   flex-direction: column;
   gap: 8px;
   width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .infoItem {
   display: flex;
   flex-direction: column;
   width: 100%;
+  gap: 8px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .infoLabel {
@@ -154,12 +159,16 @@
   line-height: 31px;
   color: #1129bd;
   margin: 0;
-  white-space: pre-line; // Для переносов строк в контактах
-  
-  &.addressLink {
+  white-space: pre-line; // Для переносов строк
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  // underline only for links when .link class applied
+
+  &.link {
+    text-decoration: underline;
     cursor: pointer;
-    a {
-      text-decoration: underline;
+    &:hover {
+      opacity: 0.8;
     }
   }
 }
@@ -169,14 +178,14 @@
 /* Large Desktop (1441px+) */
 @media (min-width: 1441px) {
   .mainContent {
-    padding: 120px calc((100vw - 1232px) / 2) 60px;
+    padding: 30px calc((100vw - 1232px) / 2) 60px;
   }
 }
 
 /* Desktop (1200px - 1440px) */
 @media (max-width: 1440px) and (min-width: 1200px) {
   .mainContent {
-    padding: 100px 5% 50px;
+    padding: 30px 5% 50px;
   }
   
   .titleSection {
@@ -198,7 +207,7 @@
 /* Tablet Large (900px - 1199px) */
 @media (max-width: 1199px) and (min-width: 900px) {
   .mainContent {
-    padding: 100px 4% 40px;
+    padding: 30px 4% 40px;
     gap: 60px;
   }
   
@@ -219,8 +228,8 @@
     gap: 30px;
   }
   
-  .repairCard {
-    grid-template-columns: 49.19% 50.81%;
+  .clothingCard {
+    grid-template-columns: 50% 50%;
     min-height: 350px;
   }
   
@@ -238,12 +247,16 @@
     font-size: 22px;
     line-height: 27px;
   }
+  
+  .infoItem {
+    gap: 6px;
+  }
 }
 
 /* Tablet (769px - 899px) */
 @media (max-width: 899px) and (min-width: 769px) {
   .mainContent {
-    padding: 100px 3% 30px;
+    padding: 30px 3% 30px;
     gap: 50px;
   }
   
@@ -263,7 +276,7 @@
     height: auto;
     min-height: auto;
     border-radius: 15px;
-    aspect-ratio: 1/1;
+    aspect-ratio: 4/3;
   }
   
   .infoContainer {
@@ -282,12 +295,16 @@
     font-size: 20px;
     line-height: 25px;
   }
+  
+  .infoItem {
+    gap: 6px;
+  }
 }
 
 /* Mobile Large (481px - 768px) */
 @media (max-width: 768px) and (min-width: 481px) {
   .mainContent {
-    padding: 100px 4% 25px;
+    padding: 30px 4% 25px;
     gap: 40px;
   }
   
@@ -312,7 +329,7 @@
     height: auto;
     min-height: auto;
     border-radius: 15px;
-    aspect-ratio: 1/1;
+    aspect-ratio: 4/3;
   }
   
   .infoContainer {
@@ -332,12 +349,16 @@
     font-size: 18px;
     line-height: 23px;
   }
+  
+  .infoItem {
+    gap: 5px;
+  }
 }
 
 /* Mobile (320px - 480px) */
 @media (max-width: 480px) {
   .mainContent {
-    padding: 100px 5% 20px;
+    padding: 30px 5% 20px;
     gap: 30px;
   }
   
@@ -362,7 +383,7 @@
     height: auto;
     min-height: auto;
     border-radius: 15px;
-    aspect-ratio: 1/1;
+    aspect-ratio: 4/3;
   }
   
   .infoContainer {
@@ -386,12 +407,16 @@
   .infoBlock {
     gap: 2px;
   }
+  
+  .infoItem {
+    gap: 4px;
+  }
 }
 
 /* Mobile Small (< 320px) */
 @media (max-width: 319px) {
   .mainContent {
-    padding: 100px 3% 15px;
+    padding: 30px 3% 15px;
   }
   
   .mainTitle {
@@ -411,7 +436,7 @@
     height: auto;
     min-height: auto;
     border-radius: 15px;
-    aspect-ratio: 1/1;
+    aspect-ratio: 4/3;
   }
   
   .infoContainer {
@@ -431,11 +456,15 @@
     font-size: 14px;
     line-height: 18px;
   }
+  
+  .infoItem {
+    gap: 3px;
+  }
 }
 
 // Preserve full-width layout on ultra-wide screens
 @media (min-width: 1920px) {
   .mainContent {
-    padding: 120px 20px 60px;
+    padding: 30px 20px 60px;
   }
-} 
+}
