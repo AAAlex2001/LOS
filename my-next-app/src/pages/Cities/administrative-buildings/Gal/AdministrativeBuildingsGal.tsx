@@ -21,37 +21,45 @@ type Building = {
   order: number;
 };
 
-type PageData = {
-  cities: City[];
+type CityPageData = {
+  title: string;
+  city?: City;
   buildings: Building[];
 };
 
 const API_BASE = config.API_BASE;
 
 const AdministrativeBuildingsGal: React.FC = () => {
-  const [data, setData] = React.useState<PageData | null>(null);
+  const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/administrative-buildings/page/content/`, { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to load administrative buildings');
-        const json = (await res.json()) as PageData;
+        const res = await fetch(`${API_BASE}/api/administrative-buildings/page/city_page/${encodeURIComponent('Гал')}/`, { cache: 'no-store' });
+        
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
+        const json = (await res.json()) as CityPageData;
         setData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
       } finally {
         setLoading(false);
       }
     };
     load();
   }, []);
-
-  const city = data?.cities.find(c => c.name.toLowerCase().includes('гал'));
-  const buildings = (data?.buildings || []).filter(b => b.city === (city?.id || -1));
+  
+  const buildings = data?.buildings || [];
 
   if (loading) {
     return (
@@ -84,7 +92,7 @@ const AdministrativeBuildingsGal: React.FC = () => {
       <main className={styles.mainContent}>
         {/* Заголовок */}
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{city?.title || 'Гал: административные здания, правоохранительный блок'}</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Гал: административные здания, правоохранительный блок'}</h1>
         </section>
 
         {/* Карточки зданий */}
