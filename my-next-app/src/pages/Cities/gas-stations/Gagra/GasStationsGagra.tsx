@@ -8,26 +8,29 @@ import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './GasStationsGagra.module.scss';
 import config from '@/config';
 
+type City = { id: number; name: string; title?: string; order: number };
 type GasStation = {
   id: number;
+  city: number;
   name: string;
   name_link?: string;
   address: string;
   address_link?: string;
   contacts?: string;
-  image_url?: string;
+  image_url: string;
   order: number;
 };
 
-type CityPayload = {
+type CityPageData = {
   title: string;
+  city?: City;
   gas_stations: GasStation[];
 };
 
 const API_BASE = config.API_BASE;
 
 const GasStationsGagra: React.FC = () => {
-  const [data, setData] = React.useState<CityPayload | null>(null);
+  const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -44,7 +47,7 @@ const GasStationsGagra: React.FC = () => {
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }
         
-        const json = (await res.json()) as CityPayload;
+        const json = (await res.json()) as CityPageData;
         setData(json);
       } catch (e) {
         console.error(e);
@@ -61,9 +64,7 @@ const GasStationsGagra: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>Загрузка...</h1>
-          </section>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
         </main>
         <Footer />
       </div>
@@ -75,9 +76,7 @@ const GasStationsGagra: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
-          </section>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
         </main>
         <Footer />
       </div>
@@ -89,18 +88,21 @@ const GasStationsGagra: React.FC = () => {
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data.title || 'Гагра: автозаправочные станции'}</h1>
+          <h1 className={styles.mainTitle}>{data?.title || 'Гагра: автозаправочные станции'}</h1>
         </section>
 
         <section className={styles.cardsSection}>
           {data.gas_stations.map((station) => (
             <div key={station.id} className={styles.gasStationCard}>
               <div className={styles.imageContainer}>
-                <img
-                  src={station.image_url ? `${API_BASE}/media/${station.image_url}` : '/assets/placeholder.png'}
-                  alt={station.name}
-                  className={styles.gasStationImage}
-                />
+                {station.image_url && (
+                  <img
+                    src={`${API_BASE}/media/${station.image_url}`}
+                    alt={station.name}
+                    className={styles.gasStationImage}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
               </div>
 
               <div className={styles.infoContainer}>
@@ -126,10 +128,12 @@ const GasStationsGagra: React.FC = () => {
                     </span>
                   </div>
                   
-                  <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Контакты:</span>
-                    <span className={styles.infoValue}>{station.contacts || ''}</span>
-                  </div>
+                  {station.contacts && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoValue}>{station.contacts}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
