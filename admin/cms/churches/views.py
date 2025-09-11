@@ -19,7 +19,7 @@ class ChurchesPageViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = self.get_serializer(page)
         return Response(serializer.data)
 
-    @action(detail=False, methods=['get'], url_path='city/(?P<city_name>[^/]+)')
+    @action(detail=False, methods=['get'], url_path='city_page/(?P<city_name>[^/]+)')
     def city_page(self, request, city_name=None):
         """Получить данные страницы церквей для конкретного города"""
         page = self.get_queryset().first()
