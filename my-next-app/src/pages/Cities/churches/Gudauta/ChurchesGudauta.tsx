@@ -84,19 +84,6 @@ const ChurchesGudauta: React.FC = () => {
     );
   }
 
-  // Проверка на пустые данные
-  if (data?.churches?.length === 0) {
-    return (
-      <div className={styles.pageWrapper}>
-        <Header />
-        <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Нет данных о церквях для этого города</h1>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
   return (
     <div className={styles.pageWrapper}>
       <Header />
