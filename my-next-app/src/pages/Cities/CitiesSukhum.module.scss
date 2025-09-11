@@ -71,6 +71,7 @@
 .descriptionParagraph {
   @extend .description;
   margin-bottom: 24px;
+  white-space: pre-line;
   
   &:last-child {
     margin-bottom: 0;
