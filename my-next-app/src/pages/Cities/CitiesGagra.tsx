@@ -1,20 +1,47 @@
-'use client';
+"use client";
 
 import React from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './CitiesGagra.module.scss';
+import config from '@/config';
 
-// Полное описание города Гагра
-const gagraDescription = `Гагра — популярный курортный город на черноморском побережье Абхазии, расположенный в 80 км от Сухума, у подножия Гагрского хребта. Благодаря горам, защищающим город от холодных ветров, здесь царит мягкий субтропический климат: зимой температура редко опускается ниже +6°C, а летом достигает +26°C. Морская вода прогревается до +28°C, что делает пляжный сезон комфортным с мая по октябрь.
+const API_BASE = config.API_BASE;
 
-Гагра была основана в 1903 году принцем Александром Ольденбургским, который мечтал превратить её в «русскую Ниццу». Он построил здесь климатическую станцию, парк и первые виллы, заложив основы курорта. В советское время Гагра стала одним из самых популярных мест отдыха в СССР, привлекая гостей своими санаториями и пляжами. Среди достопримечательностей города — замок принца Ольденбургского, построенный в стиле модерн, и колоннада 1950-х годов, ставшая символом Гагры.
+type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number };
 
-Природа Гагры восхищает: галечные пляжи, чистейшее море и пышная растительность, включая пальмы и эвкалипты. Через город протекает река Жоэквара, а в окрестностях находится ущелье с водопадами и тропами для прогулок. Гагра делится на Старую и Новую части: Старая Гагра — тихая и историческая, Новая — оживлённая, с отелями, ресторанами и аквапарком. Местные кафе предлагают абхазские блюда, такие как ачаш и мясо по-абхазски.
+type CitiesPageData = {
+  title: string;
+  city?: City;
+};
 
-Одно из любимых мест для прогулок — Приморский парк, где растут магнолии и кипарисы, а с набережной открывается вид на море и горы. В городе действует небольшой музей, посвящённый истории Гагры, а в окрестностях можно посетить крепость Абаата VI века.
+const CitiesGagra: React.FC = () => {
+  const router = useRouter();
+  const [data, setData] = React.useState<CitiesPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
 
-Из Гагры легко добраться до Сухума, Пицунды или Нового Афона на автобусе или маршрутке. Город связан с Россией через Сочи, который находится в 30 км, а ближайший аэропорт — Международный аэропорт Сухум имени В.Г. Ардзинба. Внутри Гагры передвигаться удобно на маршрутках или такси, а многие достопримечательности доступны пешком.`;
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/cities/page/city_page/${encodeURIComponent('Гагра')}/`, { cache: 'no-store' });
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        const json = (await res.json()) as CitiesPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
 
 // Список категорий для Гагры
 const gagraItems: string[] = [
@@ -50,8 +77,25 @@ const activeCategories: string[] = [
   'Церкви',
 ];
 
-const CitiesGagra: React.FC = () => {
-  const router = useRouter();
+  if (loading) {
+    return (
+      <div className={styles.gagraWrapper}>
+        <main className={styles.gagraContent}>
+          <h1 className={styles.gagraTitle}>Загрузка...</h1>
+        </main>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.gagraWrapper}>
+        <main className={styles.gagraContent}>
+          <h1 className={styles.gagraTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+      </div>
+    );
+  }
 
   const handleItemClick = (item: string) => {
     if (!activeCategories.includes(item)) {
@@ -108,20 +152,17 @@ const CitiesGagra: React.FC = () => {
       <main className={styles.gagraContent}>
         <h1 className={styles.gagraTitle}>ГАГРА</h1>
 
-        {/* Баннер с фоновым изображением */}
         <section className={styles.gagraBanner}>
-          <Image
-            src="/assets/city_gagra.jpg"
+          <img
+            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '/assets/city_gagra.jpg'}
             alt="Вид на город Гагра"
-            fill
-            priority
             className={styles.gagraImage}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </section>
 
-        {/* Описание города */}
         <section className={styles.gagraDescription}>
-          {gagraDescription.split('\n\n').map((para, idx) => (
+          {(data?.city?.description || '').split('\n\n').map((para, idx) => (
             <p key={idx} className={styles.gagraParagraph}>
               {para}
             </p>

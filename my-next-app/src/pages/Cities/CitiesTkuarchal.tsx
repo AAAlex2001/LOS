@@ -1,22 +1,19 @@
-'use client';
+"use client";
 
 import React from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './CitiesTkuarchal.module.scss';
+import config from '@/config';
 
-// Полное описание города Ткуарчал
-const tkuarchalDescription = `Ткуарчал — город в восточной части Абхазии, расположенный в 90 км от Сухума, в живописной долине реки Аалдзга. Окружённый Кавказскими горами, он отличается более континентальным климатом по сравнению с побережьем: зимой температура опускается до +3°C, а летом поднимается до +27°C. Высокая влажность и обилие осадков создают пышную зелень вокруг города.
+const API_BASE = config.API_BASE;
 
-Ткуарчал вырос в советское время как промышленный центр благодаря добыче угля. В 1942 году он получил статус города и стал важным узлом угольной промышленности Абхазии. Здесь сохранились здания советской архитектуры, включая Дворец культуры шахтёров, построенный в 1950-х годах.
+type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number };
 
-Природа вокруг Ткуарчала впечатляет: горные склоны, покрытые лесами, и бурные реки. Рядом с городом находится водопад Акарма, популярный среди туристов, а в окрестностях можно увидеть заброшенные угольные шахты, ставшие своеобразной достопримечательностью. В Ткуарчале есть несколько гостевых домов и кафе, где подают традиционные абхазские блюда, такие как мамалыга и сыр сулугуни.
+type CitiesPageData = {
+  title: string;
+  city?: City;
+};
 
-Восстановление города идёт медленно: ремонтируются дороги, обновляются некоторые здания, но многие сооружения остаются заброшенными. Ткуарчал привлекает тех, кто интересуется историей и ищет уединения вдали от туристических маршрутов. Одно из любимых мест для прогулок — набережная вдоль реки Аалдзга, откуда открывается вид на горы. В центре города действует небольшой музей, посвящённый истории Ткуарчала и угольной промышленности.
-
-Из Ткуарчала можно добраться до Сухума или Очамчыры на автобусе или маршрутке. Город связан с Россией через Сочи, а ближайший аэропорт — Международный аэропорт Сухум имени В.Г. Ардзинба. Внутри Ткуарчала передвижение удобнее пешком или на такси, так как город небольшой, а основные объекты находятся недалеко друг от друга.`;
-
-// Список категорий для Ткуарчала
 const tkuarchalItems: string[] = [
   'Административные здания',
   'Аптеки',
@@ -46,12 +43,37 @@ const activeCategories: string[] = [
 
 const CitiesTkuarchal: React.FC = () => {
   const router = useRouter();
+  const [data, setData] = React.useState<CitiesPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/cities/page/city_page/${encodeURIComponent('Ткуарчал')}/`, { cache: 'no-store' });
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        const json = (await res.json()) as CitiesPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
 
   const handleItemClick = (item: string) => {
     if (!activeCategories.includes(item)) {
       return;
     }
-
     switch (item) {
       case 'Административные здания':
         router.push('/administrative-buildings/Tkuarchal');
@@ -82,32 +104,51 @@ const CitiesTkuarchal: React.FC = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className={styles.tkuarchalWrapper}>
+        <main className={styles.tkuarchalContent}>
+          <h1 className={styles.tkuarchalTitle}>Загрузка...</h1>
+        </main>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.tkuarchalWrapper}>
+        <main className={styles.tkuarchalContent}>
+          <h1 className={styles.tkuarchalTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+      </div>
+    );
+  }
+
+  const bannerSrc = data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '/assets/city_tkuarchal.jpg';
+  const description = data?.city?.description || '';
+
   return (
     <div className={styles.tkuarchalWrapper}>
       <main className={styles.tkuarchalContent}>
-        <h1 className={styles.tkuarchalTitle}>ТКУАРЧАЛ</h1>
+        <h1 className={styles.tkuarchalTitle}>{data?.title || 'ТКУАРЧАЛ'}</h1>
 
-        {/* Баннер с фоновым изображением */}
         <section className={styles.tkuarchalBanner}>
-          <Image
-            src="/assets/city_tkuarchal.jpg"
+          <img
+            src={bannerSrc}
             alt="Вид на город Ткуарчал"
-            fill
-            priority
             className={styles.tkuarchalImage}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </section>
 
-        {/* Описание города */}
         <section className={styles.tkuarchalDescription}>
-          {tkuarchalDescription.split('\n\n').map((para, idx) => (
+          {description.split('\n\n').map((para, idx) => (
             <p key={idx} className={styles.tkuarchalParagraph}>
               {para}
             </p>
           ))}
         </section>
 
-        {/* Список категорий */}
         <section className={styles.tkuarchalListSection}>
           <ul className={styles.tkuarchalList}>
             {tkuarchalItems.map((item) => {
@@ -115,9 +156,7 @@ const CitiesTkuarchal: React.FC = () => {
               return (
                 <li
                   key={item}
-                  className={`${styles.tkuarchalListItem} ${
-                    isClickable ? styles.clickable : styles.disabled
-                  }`}
+                  className={`${styles.tkuarchalListItem} ${isClickable ? styles.clickable : styles.disabled}`}
                   onClick={() => handleItemClick(item)}
                 >
                   <span className={styles.tkuarchalArrow} />

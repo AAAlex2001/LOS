@@ -1,20 +1,47 @@
-'use client';
+"use client";
 
 import React from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './CitiesNewafon.module.scss';
+import config from '@/config';
 
-// Полное описание города Новый Афон
-const newafonDescription = `Новый Афон — живописный город на черноморском побережье Абхазии, расположенный в 22 км от Сухума, у подножия двух гор: Афонской и Иверской. Окружённый пышной субтропической растительностью, он радует мягким климатом: зимой температура редко опускается ниже +6°C, а летом держится на уровне +25°C. Морская вода прогревается до +27°C, делая пляжный сезон комфортным с мая по октябрь.
+const API_BASE = config.API_BASE;
 
-Город основан в III веке как торговый порт Анакопия, а в VIII веке стал центром Анакопийской епархии. Новый Афон известен своим духовным наследием: в 1875 году здесь был основан Новоафонский Симоно-Кананитский монастырь, построенный монахами со Святой горы Афон в Греции. Монастырь с его золотыми куполами и фресками остаётся одной из главных достопримечательностей. Ещё одно знаковое место — Новоафонская пещера, открытая в 1961 году. Этот подземный комплекс с огромными залами и сталактитами привлекает тысячи туристов.
+type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number };
 
-Природа Нового Афона завораживает: галечные пляжи, кристально чистое море, кипарисовые и оливковые рощи. Рядом протекает река Псырцха, образующая небольшой водопад, а на склоне Афонской горы раскинулся Приморский парк с лебединым озером. Город славится своими мандаринами, гранатами и инжиром, которые можно попробовать на местных рынках. Здесь есть гостевые дома, небольшие отели и кафе с абхазской кухней, где подают абысту и аджику.
+type CitiesPageData = {
+  title: string;
+  city?: City;
+};
 
-Популярные достопримечательности включают Анакопийскую крепость VII века на Иверской горе, откуда открывается панорамный вид на море и горы, а также храм Симона Кананита IX века, связанный с раннехристианской историей. В центре города действует небольшой музей, посвящённый истории Нового Афона, а на горе сохранилась келья Симона Кананита, куда ведёт тропа через лес.
+const CitiesNewafon: React.FC = () => {
+  const router = useRouter();
+  const [data, setData] = React.useState<CitiesPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
 
-Из Нового Афона можно доехать до Сухума, Гагры или Пицунды на маршрутке или автобусе. Город связан с Россией через Сочи, а ближайший аэропорт — Международный аэропорт Сухум имени В.Г. Ардзинба. Внутри Нового Афона передвижение удобнее всего пешком или на такси, так как основные достопримечательности находятся в шаговой доступности.`;
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/cities/page/city_page/${encodeURIComponent('Новый Афон')}/`, { cache: 'no-store' });
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        const json = (await res.json()) as CitiesPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
 
 // Список категорий для Нового Афона
 const newafonItems: string[] = [
@@ -48,8 +75,25 @@ const activeCategories: string[] = [
   'Церкви',
 ];
 
-const CitiesNewafon: React.FC = () => {
-  const router = useRouter();
+  if (loading) {
+    return (
+      <div className={styles.newafonWrapper}>
+        <main className={styles.newafonContent}>
+          <h1 className={styles.newafonTitle}>Загрузка...</h1>
+        </main>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.newafonWrapper}>
+        <main className={styles.newafonContent}>
+          <h1 className={styles.newafonTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+      </div>
+    );
+  }
 
   const handleItemClick = (item: string) => {
     if (!activeCategories.includes(item)) {
@@ -98,22 +142,19 @@ const CitiesNewafon: React.FC = () => {
   return (
     <div className={styles.newafonWrapper}>
       <main className={styles.newafonContent}>
-        <h1 className={styles.newafonTitle}>НОВЫЙ АФОН</h1>
+        <h1 className={styles.newafonTitle}>{data?.title || 'НОВЫЙ АФОН'}</h1>
 
-        {/* Баннер с фоновым изображением */}
         <section className={styles.newafonBanner}>
-          <Image
-            src="/assets/city_newafon.jpg"
+          <img
+            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '/assets/city_newafon.jpg'}
             alt="Вид на город Новый Афон"
-            fill
-            priority
             className={styles.newafonImage}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </section>
 
-        {/* Описание города */}
         <section className={styles.newafonDescription}>
-          {newafonDescription.split('\n\n').map((para, idx) => (
+          {(data?.city?.description || '').split('\n\n').map((para, idx) => (
             <p key={idx} className={styles.newafonParagraph}>
               {para}
             </p>

@@ -1,9 +1,18 @@
-'use client';
+"use client";
 
 import React from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './CitiesGulripsh.module.scss';
+import config from '@/config';
+
+const API_BASE = config.API_BASE;
+
+type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number };
+
+type CitiesPageData = {
+  title: string;
+  city?: City;
+};
 
 // Полное описание города Гулрыпш
 const gulripshDescription = `Гулрыпшский район в Абхазии, расположенный в 12 км восточнее Сухума, на берегу Черного моря. Окружённый горами и субтропической растительностью, он радует мягким климатом: зимой температура держится около +5°C, а летом достигает +25°C. Морская вода прогревается до +27°C, что делает пляжный сезон комфортным с мая по сентябрь.
@@ -51,6 +60,32 @@ const activeCategories: string[] = [
 
 const CitiesGulripsh: React.FC = () => {
   const router = useRouter();
+  const [data, setData] = React.useState<CitiesPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/cities/page/city_page/${encodeURIComponent('Гулрыпш')}/`, { cache: 'no-store' });
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        const json = (await res.json()) as CitiesPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
 
   const handleItemClick = (item: string) => {
     if (!activeCategories.includes(item)) {
@@ -99,25 +134,42 @@ const CitiesGulripsh: React.FC = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className={styles.gulripshWrapper}>
+        <main className={styles.gulripshContent}>
+          <h1 className={styles.gulripshTitle}>Загрузка...</h1>
+        </main>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.gulripshWrapper}>
+        <main className={styles.gulripshContent}>
+          <h1 className={styles.gulripshTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.gulripshWrapper}>
       <main className={styles.gulripshContent}>
-        <h1 className={styles.gulripshTitle}>ГУЛРЫПШ</h1>
+        <h1 className={styles.gulripshTitle}>{data?.title || 'ГУЛРЫПШ'}</h1>
 
-        {/* Баннер с фоновым изображением */}
         <section className={styles.gulripshBanner}>
-          <Image
-            src="/assets/city_gulripsh.jpg"
+          <img
+            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '/assets/city_gulripsh.jpg'}
             alt="Вид на город Гулрыпш"
-            fill
-            priority
             className={styles.gulripshImage}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </section>
 
-        {/* Описание города */}
         <section className={styles.gulripshDescription}>
-          {gulripshDescription.split('\n\n').map((para, idx) => (
+          {(data?.city?.description || '').split('\n\n').map((para, idx) => (
             <p key={idx} className={styles.gulripshParagraph}>
               {para}
             </p>

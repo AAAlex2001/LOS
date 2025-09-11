@@ -1,18 +1,19 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './CitiesSukhum.module.scss';
+import config from '@/config';
 
-// Полное описание города – жирный текст согласно ТЗ
-const description = `Столица Абхазии — Сухум, один из древнейших городов мира, расположен в широкой бухте, защищённой с северо-востока горными склонами. Это создаёт благоприятный климат, мягче, чем на остальном черноморском побережье. Город находится в центре республики, в 100 км от границы с Россией. Через него протекают реки Сухумка, Басла, а южную часть огибает Кяласур.
+const API_BASE = config.API_BASE;
 
-Сухум лежит в зоне влажных субтропиков: среднегодовая температура +15°C, морская вода летом прогревается до +30°C. Зима тёплая (+5°C в январе), лето жаркое и влажное (+25°C в июле). Город — культурный, административный и транспортный центр Абхазии, где сосредоточены государственные органы, Абхазский университет, музей, театры, филармония, Академия наук и учебные заведения. Здесь есть католический костёл, православная церковь, мечеть и лютеранская кирха, а также санатории, отели, рестораны и развлечения.
+type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number };
 
-Архитектура Сухума, сформированная в XIX–XX веках, впечатляет: виллы, гостиницы и дома, построенные промышленниками и интеллигенцией, сохранили уникальный стиль. Просторные улицы, скверы и площади подчёркивают продуманную планировку.
+type CitiesPageData = {
+  title: string;
+  city?: City;
+};
 
-Популярное место для прогулок — Сухумская гора со смотровой площадкой, откуда открывается вид на набережную и центр. В городе работают краеведческий музей, драматический театр, картинная галерея, выставочный зал Союза художников и отреставрированная в 2009 году филармония. Из Сухума можно уехать на автобусе в Краснодар, Нальчик, Ростов-на-Дону, Черкесск, Сочи, а с 2004 года действует ж/д сообщение с Москвой. Рядом находится Международный аэропорт Сухум имени В.Г. Ардзинба, обслуживаемый «Абхазскими авиалиниями». Городской транспорт представлен автобусами и троллейбусами.`;
 
 // Список ключевых преимуществ/категорий для блока с иконкой-стрелкой
 const highlightItems: string[] = [
@@ -37,6 +38,32 @@ const activeCategories: string[] = [...highlightItems];
 
 const CitiesSukhum: React.FC = () => {
   const router = useRouter();
+  const [data, setData] = React.useState<CitiesPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/cities/page/city_page/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        const json = (await res.json()) as CitiesPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
 
   const handleItemClick = (item: string) => {
     switch (item) {
@@ -88,27 +115,47 @@ const CitiesSukhum: React.FC = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <main className={styles.mainContent}>
+          <h1 className={styles.pageTitle}>Загрузка...</h1>
+        </main>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <main className={styles.mainContent}>
+          <h1 className={styles.pageTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+      </div>
+    );
+  }
+
+  const bannerSrc = data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '/assets/city_sukhum.jpg';
+  const description = data?.city?.description || '';
+
   return (
     <div className={styles.pageWrapper}>
       <main className={styles.mainContent}>
-        <h1 className={styles.pageTitle}>СУХУМ</h1>
+        <h1 className={styles.pageTitle}>{data?.title || 'СУХУМ'}</h1>
 
-        {/* Баннер с фоновым изображением */}
         <section className={styles.bannerSection}>
-          <Image
-            src="/assets/city_sukhum.jpg"
+          <img
+            src={bannerSrc}
             alt="Вид на город Сухум"
-            fill
-            priority
             className={styles.bannerBackground}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </section>
 
-        {/* Описание города */}
         <section className={styles.descriptionSection}>
           {description.split('\n\n').map((para, idx) => (
             <p key={idx} className={styles.descriptionParagraph}>
-              <strong>{para}</strong>
+              {para}
             </p>
           ))}
         </section>

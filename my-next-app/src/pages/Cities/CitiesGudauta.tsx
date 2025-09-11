@@ -1,9 +1,18 @@
-'use client';
+"use client";
 
 import React from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './CitiesGudauta.module.scss';
+import config from '@/config';
+
+const API_BASE = config.API_BASE;
+
+type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number };
+
+type CitiesPageData = {
+  title: string;
+  city?: City;
+};
 
 // Полное описание города Гудаута
 const gudautaDescription = `Гудаута — уютный город на черноморском побережье Абхазии, расположенный в 37 км от Сухума и 43 км от Гагры. Он раскинулся у подножия Кавказских гор, в окружении субтропической зелени, что создаёт мягкий и комфортный климат. Зима здесь тёплая, с январской температурой около +6°C, а лето жаркое и влажное, с июльскими показателями около +26°C. Морская вода летом прогревается до +27°C, привлекая любителей пляжного отдыха.
@@ -51,6 +60,32 @@ const activeCategories: string[] = [
 
 const CitiesGudauta: React.FC = () => {
   const router = useRouter();
+  const [data, setData] = React.useState<CitiesPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/cities/page/city_page/${encodeURIComponent('Гудаута')}/`, { cache: 'no-store' });
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        const json = (await res.json()) as CitiesPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
 
   const handleItemClick = (item: string) => {
     if (!activeCategories.includes(item)) {
@@ -99,25 +134,42 @@ const CitiesGudauta: React.FC = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className={styles.gudautaWrapper}>
+        <main className={styles.gudautaContent}>
+          <h1 className={styles.gudautaTitle}>Загрузка...</h1>
+        </main>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.gudautaWrapper}>
+        <main className={styles.gudautaContent}>
+          <h1 className={styles.gudautaTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.gudautaWrapper}>
       <main className={styles.gudautaContent}>
-        <h1 className={styles.gudautaTitle}>ГУДАУТА</h1>
+        <h1 className={styles.gudautaTitle}>{data?.title || 'ГУДАУТА'}</h1>
 
-        {/* Баннер с фоновым изображением */}
         <section className={styles.gudautaBanner}>
-          <Image
-            src="/assets/city_gudauta.jpg"
+          <img
+            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '/assets/city_gudauta.jpg'}
             alt="Вид на город Гудаута"
-            fill
-            priority
             className={styles.gudautaImage}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </section>
 
-        {/* Описание города */}
         <section className={styles.gudautaDescription}>
-          {gudautaDescription.split('\n\n').map((para, idx) => (
+          {(data?.city?.description || '').split('\n\n').map((para, idx) => (
             <p key={idx} className={styles.gudautaParagraph}>
               {para}
             </p>

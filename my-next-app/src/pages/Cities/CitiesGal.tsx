@@ -1,20 +1,47 @@
-'use client';
+"use client";
 
 import React from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './CitiesGal.module.scss';
+import config from '@/config';
 
-// Полное описание города Гал
-const galDescription = `Гал — небольшой город на востоке Абхазии, расположенный в 100 км от Сухума, на берегу реки Ингур, которая образует естественную границу с Грузией. Окружённый горами и субтропическими лесами, Гал обладает мягким климатом: зимой температура держится около +4°C, а летом достигает +26°C. Высокая влажность способствует буйной растительности, включая цитрусовые сады и чайные плантации.
+const API_BASE = config.API_BASE;
 
-История Гала уходит корнями в Средние века, когда он был важным торговым пунктом на пути из Абхазии в Грузию. В XIX веке город стал частью Российской империи, а в советское время здесь активно развивалось сельское хозяйство.
+type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number };
 
-Природа вокруг Гала живописна: горные пейзажи, леса из каштана и дуба, а также чистые реки. В окрестностях можно найти заброшенные чайные плантации, которые в советское время были гордостью региона. В городе есть несколько гостевых домов и кафе, где подают местные блюда, такие как копчёная рыба и абхазский сыр. Гал остаётся тихим местом, привлекая тех, кто ищет спокойный отдых вдали от туристических центров.
+type CitiesPageData = {
+  title: string;
+  city?: City;
+};
 
-Восстановление города идёт медленно: ремонтируются дороги, обновляются жилые дома, но многие здания до сих пор стоят в руинах. Одно из популярных мест для прогулок — набережная реки Ингур, откуда открывается вид на горы и леса. В центре города действует небольшой краеведческий музей, рассказывающий об истории региона, а в окрестностях сохранился древний храм XII века, привлекающий любителей истории.
+const CitiesGal: React.FC = () => {
+  const router = useRouter();
+  const [data, setData] = React.useState<CitiesPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
 
-Из Гала можно доехать до Сухума или Ткуарчала на автобусе или маршрутке. Город связан с Россией через Сочи, а ближайший аэропорт — Международный аэропорт Сухум имени В.Г. Ардзинба. Внутри Гала передвигаться удобнее пешком или на такси, так как город компактный, а основные достопримечательности находятся в шаговой доступности.`;
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/cities/page/city_page/${encodeURIComponent('Гал')}/`, { cache: 'no-store' });
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        const json = (await res.json()) as CitiesPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
 
 // Список категорий для Гала
 const galItems: string[] = [
@@ -42,8 +69,25 @@ const activeCategories: string[] = [
   'Административные здания',
 ];
 
-const CitiesGal: React.FC = () => {
-  const router = useRouter();
+  if (loading) {
+    return (
+      <div className={styles.galWrapper}>
+        <main className={styles.galContent}>
+          <h1 className={styles.galTitle}>Загрузка...</h1>
+        </main>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.galWrapper}>
+        <main className={styles.galContent}>
+          <h1 className={styles.galTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+      </div>
+    );
+  }
 
   const handleItemClick = (item: string) => {
     if (!activeCategories.includes(item)) {
@@ -76,20 +120,17 @@ const CitiesGal: React.FC = () => {
       <main className={styles.galContent}>
         <h1 className={styles.galTitle}>ГАЛ</h1>
 
-        {/* Баннер с фоновым изображением */}
         <section className={styles.galBanner}>
-          <Image
-            src="/assets/city_gal2.png"
+          <img
+            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '/assets/city_gal2.png'}
             alt="Вид на город Гал"
-            fill
-            priority
             className={styles.galImage}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </section>
 
-        {/* Описание города */}
         <section className={styles.galDescription}>
-          {galDescription.split('\n\n').map((para, idx) => (
+          {(data?.city?.description || '').split('\n\n').map((para, idx) => (
             <p key={idx} className={styles.galParagraph}>
               {para}
             </p>

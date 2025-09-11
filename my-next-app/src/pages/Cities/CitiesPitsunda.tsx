@@ -1,22 +1,19 @@
-'use client';
+"use client";
 
 import React from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './CitiesPitsunda.module.scss';
+import config from '@/config';
 
-// Полное описание города Пицунда
-const pitsundaDescription = `Пицунда — приморский курортный город в Гагрском районе Абхазии, расположенный на одноимённом мысе Черноморского побережья Кавказа, в 25 км южнее Гагры. Благодаря уникальному микроклимату, созданному сочетанием моря, гор и сосновых рощ, Пицунда славится как один из лучших климатических курортов региона. Зима здесь мягкая, со средней температурой января около +5°C, а лето тёплое и влажное, с июльскими показателями около +25°C. Морская вода прогревается до +28°C, что делает пляжный сезон особенно комфортным.
+const API_BASE = config.API_BASE;
 
-Пицунда — город с богатой историей, основанный греческими колонистами в V веке до н.э. под названием Питиунт. В древности это был крупный и богатый город, а в Средние века — важный политический и религиозный центр. Здесь сохранилась Пицундская соборная церковь X века, построенная Абхазским царем Багратом, с фресками XIII и XVI веков. В советское время Пицунда стала излюбленным местом отдыха — сам Никита Хрущёв предпочитал проводить здесь отпуск. Именно в Пицунде в 1964 году его отстранили от власти, пока он находился на отдыхе.
+type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number };
 
-Город окружён живописной природой: сосновые и самшитовые рощи, чистейшие пляжи с мелкой галькой и прозрачной водой. Неподалёку протекает река Бзыбь, а в горах можно посетить озеро Рица, популярное среди туристов. Пицунда известна своим реликтовым сосновым массивом, который создаёт целебный воздух, богатый фитонцидами. В городе есть санатории, пансионаты и отели, а также множество кафе и развлечений для гостей.
+type CitiesPageData = {
+  title: string;
+  city?: City;
+};
 
-Одно из популярных мест для прогулок — набережная Пицунды, откуда открывается вид на море и горы. Туристы также любят посещать мыс Пицунда, где можно насладиться панорамными видами и свежим морским бризом. В городе действует небольшой краеведческий музей, рассказывающий об истории региона, а в окрестностях сохранились руины древнего Питиунта.
-
-Из Пицунды легко добраться до других городов Абхазии: Сухума, Гагры или Нового Афона. Автобусное сообщение связывает курорт с российскими городами, такими как Сочи, а ближайший аэропорт находится в Сухуме — Международный аэропорт Сухум имени В.Г. Ардзинба. Городской транспорт представлен маршрутками, а для передвижения по побережью популярны такси.`;
-
-// Список категорий для Пицунды
 const pitsundaItems: string[] = [
   'Административные здания',
   'Аптеки',
@@ -51,12 +48,37 @@ const activeCategories: string[] = [
 
 const CitiesPitsunda: React.FC = () => {
   const router = useRouter();
+  const [data, setData] = React.useState<CitiesPageData | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/cities/page/city_page/${encodeURIComponent('Пицунда')}/`, { cache: 'no-store' });
+        if (!res.ok) {
+          if (res.status === 404) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || 'Страница не найдена');
+          }
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        const json = (await res.json()) as CitiesPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
 
   const handleItemClick = (item: string) => {
     if (!activeCategories.includes(item)) {
       return;
     }
-
     switch (item) {
       case 'Административные здания':
         router.push('/administrative-buildings/Pitsunda');
@@ -99,32 +121,51 @@ const CitiesPitsunda: React.FC = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className={styles.pitsundaWrapper}>
+        <main className={styles.pitsundaContent}>
+          <h1 className={styles.pitsundaTitle}>Загрузка...</h1>
+        </main>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pitsundaWrapper}>
+        <main className={styles.pitsundaContent}>
+          <h1 className={styles.pitsundaTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+      </div>
+    );
+  }
+
+  const bannerSrc = data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '/assets/city_pitsunda.jpg';
+  const description = data?.city?.description || '';
+
   return (
     <div className={styles.pitsundaWrapper}>
       <main className={styles.pitsundaContent}>
-        <h1 className={styles.pitsundaTitle}>ПИЦУНДА</h1>
+        <h1 className={styles.pitsundaTitle}>{data?.title || 'ПИЦУНДА'}</h1>
 
-        {/* Баннер с фоновым изображением */}
         <section className={styles.pitsundaBanner}>
-          <Image
-            src="/assets/city_pitsunda.jpg"
+          <img
+            src={bannerSrc}
             alt="Вид на город Пицунда"
-            fill
-            priority
             className={styles.pitsundaImage}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </section>
 
-        {/* Описание города */}
         <section className={styles.pitsundaDescription}>
-          {pitsundaDescription.split('\n\n').map((para, idx) => (
+          {description.split('\n\n').map((para, idx) => (
             <p key={idx} className={styles.pitsundaParagraph}>
               {para}
             </p>
           ))}
         </section>
 
-        {/* Список категорий */}
         <section className={styles.pitsundaListSection}>
           <ul className={styles.pitsundaList}>
             {pitsundaItems.map((item) => {
@@ -132,9 +173,7 @@ const CitiesPitsunda: React.FC = () => {
               return (
                 <li
                   key={item}
-                  className={`${styles.pitsundaListItem} ${
-                    isClickable ? styles.clickable : styles.disabled
-                  }`}
+                  className={`${styles.pitsundaListItem} ${isClickable ? styles.clickable : styles.disabled}`}
                   onClick={() => handleItemClick(item)}
                 >
                   <span className={styles.pitsundaArrow} />
