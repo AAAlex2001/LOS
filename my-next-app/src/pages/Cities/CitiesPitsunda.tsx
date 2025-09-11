@@ -7,44 +7,13 @@ import config from '@/config';
 
 const API_BASE = config.API_BASE;
 
-type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number };
+type Category = { id: number; name: string; url: string; is_active: boolean; order: number };
+type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number; categories?: Category[] };
 
 type CitiesPageData = {
   title: string;
   city?: City;
 };
-
-const pitsundaItems: string[] = [
-  'Административные здания',
-  'Аптеки',
-  'Винодельни',
-  'Заправки',
-  'Культурные достопримечательности',
-  'Магазины и рынки',
-  'Мойки',
-  'Отели',
-  'Парковки',
-  'Пляжи',
-  'Ремонт одежды и обуви',
-  'Рестораны',
-  'Салоны красоты',
-  'Церкви',
-];
-
-const activeCategories: string[] = [
-  'Административные здания',
-  'Аптеки',
-  'Винодельни',
-  'Заправки',
-  'Культурные достопримечательности',
-  'Магазины и рынки',
-  'Мойки',
-  'Отели',
-  'Пляжи',
-  'Рестораны',
-  'Салоны красоты',
-  'Церкви',
-];
 
 const CitiesPitsunda: React.FC = () => {
   const router = useRouter();
@@ -75,52 +44,6 @@ const CitiesPitsunda: React.FC = () => {
     load();
   }, []);
 
-  const handleItemClick = (item: string) => {
-    if (!activeCategories.includes(item)) {
-      return;
-    }
-    switch (item) {
-      case 'Административные здания':
-        router.push('/administrative-buildings/Pitsunda');
-        break;
-      case 'Аптеки':
-        router.push('/pharmacy/Pitsunda');
-        break;
-      case 'Винодельни':
-        router.push('/wineries/Pitsunda');
-        break;
-      case 'Заправки':
-        router.push('/gas-stations/Pitsunda');
-        break;
-      case 'Культурные достопримечательности':
-        router.push('/cultural-attractions/Pitsunda');
-        break;
-      case 'Магазины и рынки':
-        router.push('/shops-and-markets/Pitsunda');
-        break;
-      case 'Мойки':
-        router.push('/car-washes/Pitsunda');
-        break;
-      case 'Отели':
-        router.push('/hotels/Pitsunda');
-        break;
-      case 'Пляжи':
-        router.push('/beaches/Pitsunda');
-        break;
-      case 'Рестораны':
-        router.push('/restaurants/Pitsunda');
-        break;
-      case 'Салоны красоты':
-        router.push('/beauty-salons/Pitsunda');
-        break;
-      case 'Церкви':
-        router.push('/churches/Pitsunda');
-        break;
-      default:
-        break;
-    }
-  };
-
   if (loading) {
     return (
       <div className={styles.pitsundaWrapper}>
@@ -143,6 +66,12 @@ const CitiesPitsunda: React.FC = () => {
 
   const bannerSrc = data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '';
   const description = data?.city?.description || '';
+  const categories: Category[] = (data?.city?.categories || []).slice().sort((a, b) => a.order - b.order || a.id - b.id);
+
+  const handleItemClick = (category: Category) => {
+    if (!category.is_active || !category.url) return;
+    router.push(category.url);
+  };
 
   return (
     <div className={styles.pitsundaWrapper}>
@@ -168,19 +97,16 @@ const CitiesPitsunda: React.FC = () => {
 
         <section className={styles.pitsundaListSection}>
           <ul className={styles.pitsundaList}>
-            {pitsundaItems.map((item) => {
-              const isClickable = activeCategories.includes(item);
-              return (
-                <li
-                  key={item}
-                  className={`${styles.pitsundaListItem} ${isClickable ? styles.clickable : styles.disabled}`}
-                  onClick={() => handleItemClick(item)}
-                >
-                  <span className={styles.pitsundaArrow} />
-                  <span className={styles.pitsundaItemText}>{item}</span>
-                </li>
-              );
-            })}
+            {categories.map((cat) => (
+              <li
+                key={cat.id}
+                className={`${styles.pitsundaListItem} ${cat.is_active ? styles.clickable : styles.disabled}`}
+                onClick={() => handleItemClick(cat)}
+              >
+                <span className={styles.pitsundaArrow} />
+                <span className={styles.pitsundaItemText}>{cat.name}</span>
+              </li>
+            ))}
           </ul>
         </section>
       </main>

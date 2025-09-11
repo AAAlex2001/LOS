@@ -7,39 +7,13 @@ import config from '@/config';
 
 const API_BASE = config.API_BASE;
 
-type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number };
+type Category = { id: number; name: string; url: string; is_active: boolean; order: number };
+type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number; categories?: Category[] };
 
 type CitiesPageData = {
   title: string;
   city?: City;
 };
-
-const tkuarchalItems: string[] = [
-  'Административные здания',
-  'Аптеки',
-  'Винодельни',
-  'Заправки',
-  'Культурные достопримечательности',
-  'Магазины и рынки',
-  'Мойки',
-  'Отели',
-  'Парковки',
-  'Ремонт одежды и обуви',
-  'Рестораны',
-  'Салоны красоты',
-  'Церкви',
-];
-
-const activeCategories: string[] = [
-  'Административные здания',
-  'Аптеки',
-  'Винодельни',
-  'Культурные достопримечательности',
-  'Магазины и рынки',
-  'Отели',
-  'Рестораны',
-  'Церкви',
-];
 
 const CitiesTkuarchal: React.FC = () => {
   const router = useRouter();
@@ -70,40 +44,6 @@ const CitiesTkuarchal: React.FC = () => {
     load();
   }, []);
 
-  const handleItemClick = (item: string) => {
-    if (!activeCategories.includes(item)) {
-      return;
-    }
-    switch (item) {
-      case 'Административные здания':
-        router.push('/administrative-buildings/Tkuarchal');
-        break;
-      case 'Аптеки':
-        router.push('/pharmacy/Tkuarchal');
-        break;
-      case 'Винодельни':
-        router.push('/wineries/Tkuarchal');
-        break;
-      case 'Культурные достопримечательности':
-        router.push('/cultural-attractions/Tkuarchal');
-        break;
-      case 'Магазины и рынки':
-        router.push('/shops-and-markets/Tkuarchal');
-        break;
-      case 'Отели':
-        router.push('/hotels/Tkuarchal');
-        break;
-      case 'Рестораны':
-        router.push('/restaurants/Tkuarchal');
-        break;
-      case 'Церкви':
-        router.push('/churches/Tkuarchal');
-        break;
-      default:
-        break;
-    }
-  };
-
   if (loading) {
     return (
       <div className={styles.tkuarchalWrapper}>
@@ -126,6 +66,12 @@ const CitiesTkuarchal: React.FC = () => {
 
   const bannerSrc = data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '';
   const description = data?.city?.description || '';
+  const categories: Category[] = (data?.city?.categories || []).slice().sort((a, b) => a.order - b.order || a.id - b.id);
+
+  const handleItemClick = (category: Category) => {
+    if (!category.is_active || !category.url) return;
+    router.push(category.url);
+  };
 
   return (
     <div className={styles.tkuarchalWrapper}>
@@ -151,19 +97,16 @@ const CitiesTkuarchal: React.FC = () => {
 
         <section className={styles.tkuarchalListSection}>
           <ul className={styles.tkuarchalList}>
-            {tkuarchalItems.map((item) => {
-              const isClickable = activeCategories.includes(item);
-              return (
-                <li
-                  key={item}
-                  className={`${styles.tkuarchalListItem} ${isClickable ? styles.clickable : styles.disabled}`}
-                  onClick={() => handleItemClick(item)}
-                >
-                  <span className={styles.tkuarchalArrow} />
-                  <span className={styles.tkuarchalItemText}>{item}</span>
-                </li>
-              );
-            })}
+            {categories.map((cat) => (
+              <li
+                key={cat.id}
+                className={`${styles.tkuarchalListItem} ${cat.is_active ? styles.clickable : styles.disabled}`}
+                onClick={() => handleItemClick(cat)}
+              >
+                <span className={styles.tkuarchalArrow} />
+                <span className={styles.tkuarchalItemText}>{cat.name}</span>
+              </li>
+            ))}
           </ul>
         </section>
       </main>

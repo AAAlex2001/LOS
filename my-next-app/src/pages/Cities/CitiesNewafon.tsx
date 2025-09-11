@@ -7,11 +7,7 @@ import config from '@/config';
 
 const API_BASE = config.API_BASE;
 
-type CategoryData = {
-  name: string;
-  url: string;
-  active: boolean;
-};
+type Category = { id: number; name: string; url: string; is_active: boolean; order: number };
 
 type City = { 
   id: number; 
@@ -20,7 +16,7 @@ type City = {
   description?: string; 
   image_url?: string; 
   order: number;
-  categories: CategoryData[];
+  categories?: Category[];
 };
 
 type CitiesPageData = {
@@ -57,8 +53,8 @@ const CitiesNewafon: React.FC = () => {
     load();
   }, []);
 
-  const handleItemClick = (category: CategoryData) => {
-    if (category.active) {
+  const handleItemClick = (category: Category) => {
+    if (category.is_active) {
       router.push(category.url);
     }
   };
@@ -77,36 +73,7 @@ const CitiesNewafon: React.FC = () => {
     return (
       <div className={styles.pageWrapper}>
         <main className={styles.mainContent}>
-          <h1 className={styles.pageTitle}>НОВЫЙ АФОН</h1>
-          
-          <section className={styles.bannerSection}>
-            <div style={{ 
-              width: '100%', 
-              height: '100%', 
-              backgroundColor: '#f0f0f0',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#666'
-            }}>
-              Изображение города
-            </div>
-          </section>
-
-          <section className={styles.descriptionSection}>
-            <p className={styles.newafonParagraph}>
-              {error || 'Описание города загружается...'}
-            </p>
-          </section>
-
-          <section className={styles.newafonListSection}>
-            <ul className={styles.newafonList}>
-              <li className={`${styles.newafonListItem} ${styles.disabled}`}>
-                <span className={styles.arrowIcon} />
-                <span className={styles.itemText}>Загрузка категорий...</span>
-              </li>
-            </ul>
-          </section>
+          <h1 className={styles.pageTitle}>{error || 'Ошибка загрузки данных'}</h1>
         </main>
       </div>
     );
@@ -114,13 +81,13 @@ const CitiesNewafon: React.FC = () => {
 
   const bannerSrc = data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '';
   const description = data?.city?.description || '';
+  const categories = (data?.city?.categories || []).slice().sort((a, b) => a.order - b.order || a.id - b.id);
 
   return (
     <div className={styles.pageWrapper}>
       <main className={styles.mainContent}>
         <h1 className={styles.pageTitle}>{data?.title || 'НОВЫЙ АФОН'}</h1>
 
-        {/* Баннер с фоновым изображением */}
         <section className={styles.bannerSection}>
           {bannerSrc && (
             <img
@@ -132,7 +99,6 @@ const CitiesNewafon: React.FC = () => {
           )}
         </section>
 
-        {/* Описание города */}
         <section className={styles.descriptionSection}>
           {description.split('\n\n').map((para, idx) => (
             <p key={idx} className={styles.newafonParagraph}>
@@ -141,19 +107,18 @@ const CitiesNewafon: React.FC = () => {
           ))}
         </section>
 
-        {/* Список категорий */}
         <section className={styles.newafonListSection}>
           <ul className={styles.newafonList}>
-            {data?.city?.categories?.map((category) => (
+            {categories.map((category) => (
               <li
-                key={category.name}
-                className={`${styles.newafonListItem} ${category.active ? styles.clickable : styles.disabled}`}
+                key={category.id}
+                className={`${styles.newafonListItem} ${category.is_active ? styles.clickable : styles.disabled}`}
                 onClick={() => handleItemClick(category)}
               >
                 <span className={styles.arrowIcon} />
                 <span className={styles.itemText}>{category.name}</span>
               </li>
-            )) || []}
+            ))}
           </ul>
         </section>
       </main>

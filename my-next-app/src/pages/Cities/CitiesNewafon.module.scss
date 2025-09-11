@@ -5,6 +5,9 @@
   min-height: 100vh;
 }
 
+/* Aliases to match common class names */
+.pageWrapper { @extend .newafonWrapper; }
+
 /* Main content wrapper for Newafon */
 .newafonContent {
   flex: 1 0 auto;
@@ -14,6 +17,9 @@
   padding: 20px 24px 60px;
   position: relative;
 }
+
+/* Aliases */
+.mainContent { @extend .newafonContent; }
 
 /* Title for Newafon */
 .newafonTitle {
@@ -30,6 +36,9 @@
   z-index: 5;
 }
 
+/* Aliases */
+.pageTitle { @extend .newafonTitle; }
+
 /* Banner section for Newafon */
 .newafonBanner {
   position: relative;
@@ -43,10 +52,16 @@
   align-items: center;
 }
 
+/* Aliases */
+.bannerSection { @extend .newafonBanner; }
+
 .newafonImage {
   object-fit: cover;
   z-index: 0;
 }
+
+/* Aliases */
+.bannerBackground { @extend .newafonImage; }
 
 .newafonText {
   font-family: 'Inter', sans-serif;
@@ -74,12 +89,26 @@
   }
 }
 
+/* Aliases */
+.descriptionSection {
+  max-width: 1228px;
+  width: 100%;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.descriptionParagraph { @extend .newafonParagraph; }
+
 /* List section for Newafon */
 .newafonListSection {
   width: 100%;
   max-width: 1228px;
   margin-top: 80px;
 }
+
+/* Aliases */
+.listSection { @extend .newafonListSection; }
 
 .newafonList {
   list-style: none;
@@ -93,6 +122,9 @@
   align-items: center;
   align-content: flex-start;
 }
+
+/* Aliases */
+.list { @extend .newafonList; }
 
 .newafonListItem {
   display: flex;
@@ -120,6 +152,9 @@
   }
 }
 
+/* Aliases */
+.listItem { @extend .newafonListItem; }
+
 .newafonArrow {
   width: 11px;
   height: 22px;
@@ -139,6 +174,9 @@
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
+/* Aliases */
+.arrowIcon { @extend .newafonArrow; }
+
 .newafonItemText {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
@@ -148,6 +186,9 @@
   word-break: break-word;
   overflow-wrap: break-word;
 }
+
+/* Aliases */
+.itemText { @extend .newafonItemText; }
 
 /* Description section for Newafon */
 .newafonDescription {
@@ -316,11 +357,11 @@
 .disabled {
   cursor: default;
 
-  .newafonItemText {
+  .itemText {
     color: #888;
   }
 
-  .newafonArrow::before {
+  .arrowIcon::before {
     border-right-color: #888;
     border-bottom-color: #888;
   }

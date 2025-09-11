@@ -7,43 +7,13 @@ import config from '@/config';
 
 const API_BASE = config.API_BASE;
 
-type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number };
+type Category = { id: number; name: string; url: string; is_active: boolean; order: number };
+type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number; categories?: Category[] };
 
 type CitiesPageData = {
   title: string;
   city?: City;
 };
-
-const ochamchiraItems: string[] = [
-  'Административные здания',
-  'Аптеки',
-  'Винодельни',
-  'Заправки',
-  'Культурные достопримечательности',
-  'Магазины и рынки',
-  'Мойки',
-  'Отели',
-  'Парковки',
-  'Пляжи',
-  'Ремонт одежды и обуви',
-  'Рестораны',
-  'Салоны красоты',
-  'Церкви',
-];
-
-const activeCategories: string[] = [
-  'Административные здания',
-  'Аптеки',
-  'Пляжи',
-  'Мойки',
-  'Культурные достопримечательности',
-  'Заправки',
-  'Отели',
-  'Рестораны',
-  'Салоны красоты',
-  'Магазины и рынки',
-  'Церкви',
-];
 
 const CitiesOchamchira: React.FC = () => {
   const router = useRouter();
@@ -74,49 +44,6 @@ const CitiesOchamchira: React.FC = () => {
     load();
   }, []);
 
-  const handleItemClick = (item: string) => {
-    if (!activeCategories.includes(item)) {
-      return;
-    }
-    switch (item) {
-      case 'Административные здания':
-        router.push('/administrative-buildings/Ochamchira');
-        break;
-      case 'Аптеки':
-        router.push('/pharmacy/Ochamchira');
-        break;
-      case 'Пляжи':
-        router.push('/beaches/Ochamchira');
-        break;
-      case 'Мойки':
-        router.push('/car-washes/Ochamchira');
-        break;
-      case 'Культурные достопримечательности':
-        router.push('/cultural-attractions/Ochamchira');
-        break;
-      case 'Заправки':
-        router.push('/gas-stations/Ochamchira');
-        break;
-      case 'Отели':
-        router.push('/hotels/Ochamchira');
-        break;
-      case 'Рестораны':
-        router.push('/restaurants/Ochamchira');
-        break;
-      case 'Салоны красоты':
-        router.push('/beauty-salons/Ochamchira');
-        break;
-      case 'Магазины и рынки':
-        router.push('/shops-and-markets/Ochamchira');
-        break;
-      case 'Церкви':
-        router.push('/churches/Ochamchira');
-        break;
-      default:
-        break;
-    }
-  };
-
   if (loading) {
     return (
       <div className={styles.ochamchiraWrapper}>
@@ -139,6 +66,12 @@ const CitiesOchamchira: React.FC = () => {
 
   const bannerSrc = data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '';
   const description = data?.city?.description || '';
+  const categories: Category[] = (data?.city?.categories || []).slice().sort((a, b) => a.order - b.order || a.id - b.id);
+
+  const handleItemClick = (category: Category) => {
+    if (!category.is_active || !category.url) return;
+    router.push(category.url);
+  };
 
   return (
     <div className={styles.ochamchiraWrapper}>
@@ -164,19 +97,16 @@ const CitiesOchamchira: React.FC = () => {
 
         <section className={styles.ochamchiraListSection}>
           <ul className={styles.ochamchiraList}>
-            {ochamchiraItems.map((item) => {
-              const isClickable = activeCategories.includes(item);
-              return (
-                <li
-                  key={item}
-                  className={`${styles.ochamchiraListItem} ${isClickable ? styles.clickable : styles.disabled}`}
-                  onClick={() => handleItemClick(item)}
-                >
-                  <span className={styles.ochamchiraArrow} />
-                  <span className={styles.ochamchiraItemText}>{item}</span>
-                </li>
-              );
-            })}
+            {categories.map((cat) => (
+              <li
+                key={cat.id}
+                className={`${styles.ochamchiraListItem} ${cat.is_active ? styles.clickable : styles.disabled}`}
+                onClick={() => handleItemClick(cat)}
+              >
+                <span className={styles.ochamchiraArrow} />
+                <span className={styles.ochamchiraItemText}>{cat.name}</span>
+              </li>
+            ))}
           </ul>
         </section>
       </main>
