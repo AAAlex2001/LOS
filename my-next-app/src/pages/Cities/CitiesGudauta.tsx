@@ -7,56 +7,15 @@ import config from '@/config';
 
 const API_BASE = config.API_BASE;
 
-type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number };
+type Category = { id: number; name: string; url: string; is_active: boolean; order: number };
+type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number; categories?: Category[] };
 
 type CitiesPageData = {
   title: string;
   city?: City;
 };
 
-// Полное описание города Гудаута
-const gudautaDescription = `Гудаута — уютный город на черноморском побережье Абхазии, расположенный в 37 км от Сухума и 43 км от Гагры. Он раскинулся у подножия Кавказских гор, в окружении субтропической зелени, что создаёт мягкий и комфортный климат. Зима здесь тёплая, с январской температурой около +6°C, а лето жаркое и влажное, с июльскими показателями около +26°C. Морская вода летом прогревается до +27°C, привлекая любителей пляжного отдыха.
-
-Гудаута известна своей историей, уходящей корнями в древность. На её территории сохранились следы средневековых укреплений, а в окрестностях находятся руины крепости Абахваца, датируемой X–XII веками. Город также стал важным центром во время Отечественной войны народа Абхазии 1992-1993 годов: здесь располагалось законное правительство Абхазии, и Гудаута избежала серьёзных разрушений, став временной административной базой республики. Сегодня это спокойный курортный город, сохранивший свой исторический облик.
-
-Природа вокруг Гудауты впечатляет: песчано-галечные пляжи, чистое море и горные пейзажи. Рядом протекает река Хыпста, а в окрестностях можно посетить карстовые пещеры и водопады. Гудаута славится своими мандариновыми и виноградными садами, а местные рынки изобилуют свежими фруктами и домашним вином. В городе есть небольшие пансионаты, гостевые дома и кафе, где подают традиционные абхазские блюда, такие как мамалыга и ачаш.
-
-Одно из любимых мест для прогулок — центральная набережная, окружённая эвкалиптовыми деревьями, с видом на море и закаты. В Гудауте действует краеведческий музей, где можно узнать о местной истории и культуре, а в центре города сохранился памятник героям войны. Неподалёку находится село Лыхны с древним храмом Успения Пресвятой Богородицы X века, популярное среди туристов.
-
-Из Гудауты можно доехать до Сухума, Гагры или Нового Афона на автобусе или маршрутке. Город связан с Россией через Сочи, куда ходят регулярные рейсы, а ближайший аэропорт — Международный аэропорт Сухум имени В.Г. Ардзинба. Внутри Гудауты передвигаться удобно пешком или на такси, так как город небольшой и компактный.`;
-
-// Список ключевых преимуществ/категорий для блока с иконкой-стрелкой
-const gudautaItems: string[] = [
-  'Административные здания',
-  'Аптеки',
-  'Винодельни',
-  'Заправки',
-  'Культурные достопримечательности',
-  'Магазины и рынки',
-  'Мойки',
-  'Отели',
-  'Парковки',
-  'Пляжи',
-  'Ремонт одежды и обуви',
-  'Рестораны',
-  'Салоны красоты',
-  'Церкви',
-];
-
-const activeCategories: string[] = [
-  'Административные здания',
-  'Аптеки',
-  'Винодельни',
-  'Заправки',
-  'Культурные достопримечательности',
-  'Магазины и рынки',
-  'Мойки',
-  'Отели',
-  'Пляжи',
-  'Рестораны',
-  'Салоны красоты',
-  'Церкви',
-];
+// списки и описания берутся из API
 
 const CitiesGudauta: React.FC = () => {
   const router = useRouter();
@@ -87,52 +46,7 @@ const CitiesGudauta: React.FC = () => {
     load();
   }, []);
 
-  const handleItemClick = (item: string) => {
-    if (!activeCategories.includes(item)) {
-      return;
-    }
-
-    switch (item) {
-      case 'Административные здания':
-        router.push('/administrative-buildings/Gudauta');
-        break;
-      case 'Аптеки':
-        router.push('/pharmacy/Gudauta');
-        break;
-      case 'Винодельни':
-        router.push('/wineries/Gudauta');
-        break;
-      case 'Заправки':
-        router.push('/gas-stations/Gudauta');
-        break;
-      case 'Культурные достопримечательности':
-        router.push('/cultural-attractions/Gudauta');
-        break;
-      case 'Магазины и рынки':
-        router.push('/shops-and-markets/Gudauta');
-        break;
-      case 'Мойки':
-        router.push('/car-washes/Gudauta');
-        break;
-      case 'Отели':
-        router.push('/hotels/Gudauta');
-        break;
-      case 'Пляжи':
-        router.push('/beaches/Gudauta');
-        break;
-      case 'Рестораны':
-        router.push('/restaurants/Gudauta');
-        break;
-      case 'Салоны красоты':
-        router.push('/beauty-salons/Gudauta');
-        break;
-      case 'Церкви':
-        router.push('/churches/Gudauta');
-        break;
-      default:
-        break;
-    }
-  };
+  // обработчик ниже использует категории из API
 
   if (loading) {
     return (
@@ -153,6 +67,12 @@ const CitiesGudauta: React.FC = () => {
       </div>
     );
   }
+
+  const categories: Category[] = (data?.city?.categories || []).slice().sort((a, b) => a.order - b.order || a.id - b.id);
+  const handleItemClick = (category: Category) => {
+    if (!category.is_active || !category.url) return;
+    router.push(category.url);
+  };
 
   return (
     <div className={styles.gudautaWrapper}>
@@ -179,21 +99,16 @@ const CitiesGudauta: React.FC = () => {
         {/* Список категорий */}
         <section className={styles.gudautaListSection}>
           <ul className={styles.gudautaList}>
-            {gudautaItems.map((item) => {
-              const isClickable = activeCategories.includes(item);
-              return (
-                <li
-                  key={item}
-                  className={`${styles.gudautaListItem} ${
-                    isClickable ? styles.clickable : styles.disabled
-                  }`}
-                  onClick={() => handleItemClick(item)}
-                >
-                  <span className={styles.gudautaArrow} />
-                  <span className={styles.gudautaItemText}>{item}</span>
-                </li>
-              );
-            })}
+            {categories.map((cat) => (
+              <li
+                key={cat.id}
+                className={`${styles.gudautaListItem} ${cat.is_active ? styles.clickable : styles.disabled}`}
+                onClick={() => handleItemClick(cat)}
+              >
+                <span className={styles.gudautaArrow} />
+                <span className={styles.gudautaItemText}>{cat.name}</span>
+              </li>
+            ))}
           </ul>
         </section>
       </main>

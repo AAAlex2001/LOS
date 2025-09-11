@@ -7,7 +7,8 @@ import config from '@/config';
 
 const API_BASE = config.API_BASE;
 
-type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number };
+type Category = { id: number; name: string; url: string; is_active: boolean; order: number };
+type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number; categories?: Category[] };
 
 type CitiesPageData = {
   title: string;
@@ -43,32 +44,6 @@ const CitiesGal: React.FC = () => {
     load();
   }, []);
 
-// Список категорий для Гала
-const galItems: string[] = [
-  'Административные здания',
-  'Аптеки',
-  'Винодельни',
-  'Заправки',
-  'Культурные достопримечательности',
-  'Магазины и рынки',
-  'Мойки',
-  'Отели',
-  'Парковки',
-  'Пляжи',
-  'Ремонт одежды и обуви',
-  'Рестораны',
-  'Салоны красоты',
-  'Церкви',
-];
-
-const activeCategories: string[] = [
-  'Магазины и рынки',
-  'Рестораны',
-  'Культурные достопримечательности',
-  'Церкви',
-  'Административные здания',
-];
-
   if (loading) {
     return (
       <div className={styles.galWrapper}>
@@ -89,30 +64,13 @@ const activeCategories: string[] = [
     );
   }
 
-  const handleItemClick = (item: string) => {
-    if (!activeCategories.includes(item)) {
-      return;
-    }
+  const bannerSrc = data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '';
+  const description = data?.city?.description || '';
+  const categories: Category[] = (data?.city?.categories || []).slice().sort((a, b) => a.order - b.order || a.id - b.id);
 
-    switch (item) {
-      case 'Административные здания':
-        router.push('/administrative-buildings/Gal');
-        break;
-      case 'Магазины и рынки':
-        router.push('/shops-and-markets/Gal');
-        break;
-      case 'Рестораны':
-        router.push('/restaurants/Gal');
-        break;
-      case 'Культурные достопримечательности':
-        router.push('/cultural-attractions/Gal');
-        break;
-      case 'Церкви':
-        router.push('/churches/Gal');
-        break;
-      default:
-        break;
-    }
+  const handleItemClick = (category: Category) => {
+    if (!category.is_active || !category.url) return;
+    router.push(category.url);
   };
 
   return (
@@ -122,7 +80,7 @@ const activeCategories: string[] = [
 
         <section className={styles.galBanner}>
           <img
-            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : ''}
+            src={bannerSrc}
             alt="Вид на город Гал"
             className={styles.galImage}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -130,7 +88,7 @@ const activeCategories: string[] = [
         </section>
 
         <section className={styles.galDescription}>
-          {(data?.city?.description || '').split('\n\n').map((para, idx) => (
+          {description.split('\n\n').map((para, idx) => (
             <p key={idx} className={styles.galParagraph}>
               {para}
             </p>
@@ -140,21 +98,16 @@ const activeCategories: string[] = [
         {/* Список категорий */}
         <section className={styles.galListSection}>
           <ul className={styles.galList}>
-            {galItems.map((item) => {
-              const isClickable = activeCategories.includes(item);
-              return (
-                <li
-                  key={item}
-                  className={`${styles.galListItem} ${
-                    isClickable ? styles.clickable : styles.disabled
-                  }`}
-                  onClick={() => handleItemClick(item)}
-                >
-                  <span className={styles.galArrow} />
-                  <span className={styles.galItemText}>{item}</span>
-                </li>
-              );
-            })}
+            {categories.map((cat) => (
+              <li
+                key={cat.id}
+                className={`${styles.galListItem} ${cat.is_active ? styles.clickable : styles.disabled}`}
+                onClick={() => handleItemClick(cat)}
+              >
+                <span className={styles.galArrow} />
+                <span className={styles.galItemText}>{cat.name}</span>
+              </li>
+            ))}
           </ul>
         </section>
       </main>

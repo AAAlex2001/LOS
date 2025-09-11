@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import CitiesPage, City
+from .models import CitiesPage, City, CityCategory
 
 
 class CityInline(admin.TabularInline):
@@ -93,3 +93,20 @@ class CityAdmin(admin.ModelAdmin):
             )
         return "Нет изображения"
     preview.short_description = "Превью"
+
+
+class CityCategoryInline(admin.TabularInline):
+    model = CityCategory
+    extra = 5
+    fields = ("name", "url", "is_active", "order")
+
+
+@admin.register(CityCategory)
+class CityCategoryAdmin(admin.ModelAdmin):
+    list_display = ("city", "name", "is_active", "order")
+    list_filter = ("city", "is_active")
+    search_fields = ("name", "url")
+
+
+# Attach categories inline to City admin
+CityAdmin.inlines = [CityCategoryInline]

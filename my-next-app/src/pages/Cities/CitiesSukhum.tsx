@@ -7,34 +7,13 @@ import config from '@/config';
 
 const API_BASE = config.API_BASE;
 
-type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number };
+type Category = { id: number; name: string; url: string; is_active: boolean; order: number };
+type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number; categories?: Category[] };
 
 type CitiesPageData = {
   title: string;
   city?: City;
 };
-
-
-// Список ключевых преимуществ/категорий для блока с иконкой-стрелкой
-const highlightItems: string[] = [
-  'Административные здания',
-  'Аптеки',
-  'Винодельни',
-  'Заправки',
-  'Культурные достопримечательности',
-  'Магазины и рынки',
-  'Мойки',
-  'Отели',
-  'Парковки',
-  'Пляжи',
-  'Ремонт одежды и обуви',
-  'Рестораны',
-  'Салоны красоты',
-  'Церкви',
-];
-
-// Все категории для Сухума активны
-const activeCategories: string[] = [...highlightItems];
 
 const CitiesSukhum: React.FC = () => {
   const router = useRouter();
@@ -65,56 +44,6 @@ const CitiesSukhum: React.FC = () => {
     load();
   }, []);
 
-  const handleItemClick = (item: string) => {
-    switch (item) {
-      case 'Административные здания':
-        router.push('/administrative-buildings/Sukhum');
-        break;
-      case 'Аптеки':
-        router.push('/pharmacy/Sukhum');
-        break;
-      case 'Винодельни':
-        router.push('/wineries/Sukhum');
-        break;
-      case 'Заправки':
-        router.push('/gas-stations/Sukhum');
-        break;
-      case 'Культурные достопримечательности':
-        router.push('/cultural-attractions/Sukhum');
-        break;
-      case 'Мойки':
-        router.push('/car-washes/Sukhum');
-        break;
-      case 'Магазины и рынки':
-        router.push('/shops-and-markets/Sukhum');
-        break;
-      case 'Отели':
-        router.push('/hotels/Sukhum');
-        break;
-      case 'Парковки':
-        router.push('/parking-lots/Sukhum');
-        break;
-      case 'Пляжи':
-        router.push('/beaches/Sukhum');
-        break;
-      case 'Салоны красоты':
-        router.push('/beauty-salons/Sukhum');
-        break;
-      case 'Церкви':
-        router.push('/churches/Sukhum');
-        break;
-      case 'Рестораны':
-        router.push('/restaurants/Sukhum');
-        break;
-      case 'Ремонт одежды и обуви':
-        router.push('/clothing-repair/Sukhum');
-        break;
-      // Добавить другие категории по мере необходимости
-      default:
-        break;
-    }
-  };
-
   if (loading) {
     return (
       <div className={styles.pageWrapper}>
@@ -137,6 +66,12 @@ const CitiesSukhum: React.FC = () => {
 
   const bannerSrc = data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '';
   const description = data?.city?.description || '';
+  const categories: Category[] = (data?.city?.categories || []).slice().sort((a, b) => a.order - b.order || a.id - b.id);
+
+  const handleItemClick = (category: Category) => {
+    if (!category.is_active || !category.url) return;
+    router.push(category.url);
+  };
 
   return (
     <div className={styles.pageWrapper}>
@@ -163,19 +98,16 @@ const CitiesSukhum: React.FC = () => {
         {/* Список категорий */}
         <section className={styles.listSection}>
           <ul className={styles.list}>
-            {highlightItems.map((item) => {
-              const isClickable = activeCategories.includes(item);
-              return (
-                <li
-                  key={item}
-                  className={`${styles.listItem} ${isClickable ? styles.clickable : styles.disabled}`}
-                  onClick={() => handleItemClick(item)}
-                >
-                  <span className={styles.arrowIcon} />
-                  <span className={styles.itemText}>{item}</span>
-                </li>
-              );
-            })}
+            {categories.map((cat) => (
+              <li
+                key={cat.id}
+                className={`${styles.listItem} ${cat.is_active ? styles.clickable : styles.disabled}`}
+                onClick={() => handleItemClick(cat)}
+              >
+                <span className={styles.arrowIcon} />
+                <span className={styles.itemText}>{cat.name}</span>
+              </li>
+            ))}
           </ul>
         </section>
       </main>

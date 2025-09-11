@@ -7,7 +7,21 @@ import config from '@/config';
 
 const API_BASE = config.API_BASE;
 
-type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number };
+type CategoryData = {
+  name: string;
+  url: string;
+  active: boolean;
+};
+
+type City = { 
+  id: number; 
+  name: string; 
+  title?: string; 
+  description?: string; 
+  image_url?: string; 
+  order: number;
+  categories: CategoryData[];
+};
 
 type CitiesPageData = {
   title: string;
@@ -43,43 +57,17 @@ const CitiesNewafon: React.FC = () => {
     load();
   }, []);
 
-// Список категорий для Нового Афона
-const newafonItems: string[] = [
-  'Административные здания',
-  'Аптеки',
-  'Винодельни',
-  'Заправки',
-  'Культурные достопримечательности',
-  'Магазины и рынки',
-  'Мойки',
-  'Отели',
-  'Парковки',
-  'Пляжи',
-  'Ремонт одежды и обуви',
-  'Рестораны',
-  'Салоны красоты',
-  'Церкви',
-];
-
-const activeCategories: string[] = [
-  'Административные здания',
-  'Аптеки',
-  'Пляжи',
-  'Мойки',
-  'Культурные достопримечательности',
-  'Отели',
-  'Парковки',
-  'Рестораны',
-  'Салоны красоты',
-  'Магазины и рынки',
-  'Церкви',
-];
+  const handleItemClick = (category: CategoryData) => {
+    if (category.active) {
+      router.push(category.url);
+    }
+  };
 
   if (loading) {
     return (
-      <div className={styles.newafonWrapper}>
-        <main className={styles.newafonContent}>
-          <h1 className={styles.newafonTitle}>Загрузка...</h1>
+      <div className={styles.pageWrapper}>
+        <main className={styles.mainContent}>
+          <h1 className={styles.pageTitle}>Загрузка...</h1>
         </main>
       </div>
     );
@@ -87,74 +75,66 @@ const activeCategories: string[] = [
 
   if (error || !data) {
     return (
-      <div className={styles.newafonWrapper}>
-        <main className={styles.newafonContent}>
-          <h1 className={styles.newafonTitle}>{error || 'Ошибка загрузки данных'}</h1>
+      <div className={styles.pageWrapper}>
+        <main className={styles.mainContent}>
+          <h1 className={styles.pageTitle}>НОВЫЙ АФОН</h1>
+          
+          <section className={styles.bannerSection}>
+            <div style={{ 
+              width: '100%', 
+              height: '100%', 
+              backgroundColor: '#f0f0f0',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#666'
+            }}>
+              Изображение города
+            </div>
+          </section>
+
+          <section className={styles.descriptionSection}>
+            <p className={styles.newafonParagraph}>
+              {error || 'Описание города загружается...'}
+            </p>
+          </section>
+
+          <section className={styles.newafonListSection}>
+            <ul className={styles.newafonList}>
+              <li className={`${styles.newafonListItem} ${styles.disabled}`}>
+                <span className={styles.arrowIcon} />
+                <span className={styles.itemText}>Загрузка категорий...</span>
+              </li>
+            </ul>
+          </section>
         </main>
       </div>
     );
   }
 
-  const handleItemClick = (item: string) => {
-    if (!activeCategories.includes(item)) {
-      return;
-    }
-
-    switch (item) {
-      case 'Административные здания':
-        router.push('/administrative-buildings/NewAfon');
-        break;
-      case 'Аптеки':
-        router.push('/pharmacy/NewAfon');
-        break;
-      case 'Пляжи':
-        router.push('/beaches/NewAfon');
-        break;
-      case 'Мойки':
-        router.push('/car-washes/NewAfon');
-        break;
-      case 'Культурные достопримечательности':
-        router.push('/cultural-attractions/NewAfon');
-        break;
-      case 'Отели':
-        router.push('/hotels/NewAfon');
-        break;
-      case 'Парковки':
-        router.push('/parking-lots/NewAfon');
-        break;
-      case 'Рестораны':
-        router.push('/restaurants/NewAfon');
-        break;
-      case 'Салоны красоты':
-        router.push('/beauty-salons/NewAfon');
-        break;
-      case 'Магазины и рынки':
-        router.push('/shops-and-markets/NewAfon');
-        break;
-      case 'Церкви':
-        router.push('/churches/NewAfon');
-        break;
-      default:
-        break;
-    }
-  };
+  const bannerSrc = data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '';
+  const description = data?.city?.description || '';
 
   return (
-    <div className={styles.newafonWrapper}>
-      <main className={styles.newafonContent}>
-        <h1 className={styles.newafonTitle}>{data?.title || 'НОВЫЙ АФОН'}</h1>
+    <div className={styles.pageWrapper}>
+      <main className={styles.mainContent}>
+        <h1 className={styles.pageTitle}>{data?.title || 'НОВЫЙ АФОН'}</h1>
 
-        <section className={styles.newafonBanner}>
-          <img
-            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : ''}
-            alt="Вид на город Новый Афон"
-            className={styles.newafonImage}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          />
+        {/* Баннер с фоновым изображением */}
+        <section className={styles.bannerSection}>
+          {bannerSrc && (
+            <img
+              src={bannerSrc}
+              alt={`Вид на город ${data?.city?.name || 'Новый Афон'}`}
+              className={styles.bannerBackground}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          )}
         </section>
 
-        <section className={styles.newafonDescription}>
-          {(data?.city?.description || '').split('\n\n').map((para, idx) => (
+        {/* Описание города */}
+        <section className={styles.descriptionSection}>
+          {description.split('\n\n').map((para, idx) => (
             <p key={idx} className={styles.newafonParagraph}>
               {para}
             </p>
@@ -164,21 +144,16 @@ const activeCategories: string[] = [
         {/* Список категорий */}
         <section className={styles.newafonListSection}>
           <ul className={styles.newafonList}>
-            {newafonItems.map((item) => {
-              const isClickable = activeCategories.includes(item);
-              return (
-                <li
-                  key={item}
-                  className={`${styles.newafonListItem} ${
-                    isClickable ? styles.clickable : styles.disabled
-                  }`}
-                  onClick={() => handleItemClick(item)}
-                >
-                  <span className={styles.newafonArrow} />
-                  <span className={styles.newafonItemText}>{item}</span>
-                </li>
-              );
-            })}
+            {data?.city?.categories?.map((category) => (
+              <li
+                key={category.name}
+                className={`${styles.newafonListItem} ${category.active ? styles.clickable : styles.disabled}`}
+                onClick={() => handleItemClick(category)}
+              >
+                <span className={styles.arrowIcon} />
+                <span className={styles.itemText}>{category.name}</span>
+              </li>
+            )) || []}
           </ul>
         </section>
       </main>
@@ -186,4 +161,4 @@ const activeCategories: string[] = [
   );
 };
 
-export default CitiesNewafon; 
+export default CitiesNewafon;

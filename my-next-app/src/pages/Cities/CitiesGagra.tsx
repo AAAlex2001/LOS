@@ -7,7 +7,8 @@ import config from '@/config';
 
 const API_BASE = config.API_BASE;
 
-type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number };
+type Category = { id: number; name: string; url: string; is_active: boolean; order: number };
+type City = { id: number; name: string; title?: string; description?: string; image_url?: string; order: number; categories?: Category[] };
 
 type CitiesPageData = {
   title: string;
@@ -43,39 +44,7 @@ const CitiesGagra: React.FC = () => {
     load();
   }, []);
 
-// Список категорий для Гагры
-const gagraItems: string[] = [
-  'Административные здания',
-  'Аптеки',
-  'Винодельни',
-  'Заправки',
-  'Культурные достопримечательности',
-  'Магазины и рынки',
-  'Мойки',
-  'Отели',
-  'Парковки',
-  'Пляжи',
-  'Ремонт одежды и обуви',
-  'Рестораны',
-  'Салоны красоты',
-  'Церкви',
-];
-
-const activeCategories: string[] = [
-  'Административные здания',
-  'Аптеки',
-  'Винодельни',
-  'Заправки',
-  'Культурные достопримечательности',
-  'Магазины и рынки',
-  'Мойки',
-  'Отели',
-  'Парковки',
-  'Пляжи',
-  'Рестораны',
-  'Салоны красоты',
-  'Церкви',
-];
+const categories: Category[] = (data?.city?.categories || []).slice().sort((a, b) => a.order - b.order || a.id - b.id);
 
   if (loading) {
     return (
@@ -97,54 +66,10 @@ const activeCategories: string[] = [
     );
   }
 
-  const handleItemClick = (item: string) => {
-    if (!activeCategories.includes(item)) {
-      return;
-    }
-
-    switch (item) {
-      case 'Административные здания':
-        router.push('/administrative-buildings/Gagra');
-        break;
-      case 'Аптеки':
-        router.push('/pharmacy/Gagra');
-        break;
-      case 'Винодельни':
-        router.push('/wineries/Gagra');
-        break;
-      case 'Заправки':
-        router.push('/gas-stations/Gagra');
-        break;
-      case 'Культурные достопримечательности':
-        router.push('/cultural-attractions/Gagra');
-        break;
-      case 'Магазины и рынки':
-        router.push('/shops-and-markets/Gagra');
-        break;
-      case 'Мойки':
-        router.push('/car-washes/Gagra');
-        break;
-      case 'Отели':
-        router.push('/hotels/Gagra');
-        break;
-      case 'Парковки':
-        router.push('/parking-lots/Gagra');
-        break;
-      case 'Пляжи':
-        router.push('/beaches/Gagra');
-        break;
-      case 'Рестораны':
-        router.push('/restaurants/Gagra');
-        break;
-      case 'Салоны красоты':
-        router.push('/beauty-salons/Gagra');
-        break;
-      case 'Церкви':
-        router.push('/churches/Gagra');
-        break;
-      default:
-        break;
-    }
+  const handleItemClick = (category: Category) => {
+    if (!category.is_active) return;
+    if (!category.url) return;
+    router.push(category.url);
   };
 
   return (
@@ -172,21 +97,16 @@ const activeCategories: string[] = [
         {/* Список категорий */}
         <section className={styles.gagraListSection}>
           <ul className={styles.gagraList}>
-            {gagraItems.map((item) => {
-              const isClickable = activeCategories.includes(item);
-              return (
-                <li
-                  key={item}
-                  className={`${styles.gagraListItem} ${
-                    isClickable ? styles.clickable : styles.disabled
-                  }`}
-                  onClick={() => handleItemClick(item)}
-                >
-                  <span className={styles.gagraArrow} />
-                  <span className={styles.gagraItemText}>{item}</span>
-                </li>
-              );
-            })}
+            {categories.map((cat) => (
+              <li
+                key={cat.id}
+                className={`${styles.gagraListItem} ${cat.is_active ? styles.clickable : styles.disabled}`}
+                onClick={() => handleItemClick(cat)}
+              >
+                <span className={styles.gagraArrow} />
+                <span className={styles.gagraItemText}>{cat.name}</span>
+              </li>
+            ))}
           </ul>
         </section>
       </main>

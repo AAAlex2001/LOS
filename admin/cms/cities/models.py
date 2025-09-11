@@ -46,3 +46,19 @@ class City(TimestampedModel):
 
     def __str__(self) -> str:
         return self.name
+
+
+class CityCategory(TimestampedModel):
+    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name="categories")
+    name = models.CharField("Название категории", max_length=255)
+    url = models.CharField("Ссылка", max_length=255, help_text="Полная или относительная ссылка, например /administrative-buildings/Sukhum")
+    is_active = models.BooleanField("Активна (кликабельна)", default=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "id"]
+        verbose_name = "Категория города"
+        verbose_name_plural = "Категории города"
+
+    def __str__(self) -> str:
+        return f"{self.city.name}: {self.name}"
