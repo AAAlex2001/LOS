@@ -27,7 +27,7 @@ class ChurchesPageViewSet(viewsets.ReadOnlyModelViewSet):
             return Response({"title": "", "churches": []})
         city = ChurchCity.objects.filter(page=page, name__iexact=city_name).first()
         if not city:
-            return Response({"title": "", "churches": []})
+            return Response({"error": f"Город '{city_name}' не найден"}, status=404)
         churches = Church.objects.filter(city=city).order_by('order', 'id')
         title = city.title or f"{city.name}: церкви и храмы"
         data = {
