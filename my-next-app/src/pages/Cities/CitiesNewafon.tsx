@@ -146,7 +146,7 @@ const activeCategories: string[] = [
 
         <section className={styles.newafonBanner}>
           <img
-            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '/assets/city_newafon.jpg'}
+            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : ''}
             alt="Вид на город Новый Афон"
             className={styles.newafonImage}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}

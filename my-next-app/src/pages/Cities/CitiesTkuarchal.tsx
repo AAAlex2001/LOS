@@ -124,7 +124,7 @@ const CitiesTkuarchal: React.FC = () => {
     );
   }
 
-  const bannerSrc = data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '/assets/city_tkuarchal.jpg';
+  const bannerSrc = data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '';
   const description = data?.city?.description || '';
 
   return (

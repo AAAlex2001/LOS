@@ -161,7 +161,7 @@ const CitiesGudauta: React.FC = () => {
 
         <section className={styles.gudautaBanner}>
           <img
-            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '/assets/city_gudauta.jpg'}
+            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : ''}
             alt="Вид на город Гудаута"
             className={styles.gudautaImage}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}

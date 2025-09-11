@@ -154,7 +154,7 @@ const activeCategories: string[] = [
 
         <section className={styles.gagraBanner}>
           <img
-            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '/assets/city_gagra.jpg'}
+            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : ''}
             alt="Вид на город Гагра"
             className={styles.gagraImage}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}

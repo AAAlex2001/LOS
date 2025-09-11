@@ -161,7 +161,7 @@ const CitiesGulripsh: React.FC = () => {
 
         <section className={styles.gulripshBanner}>
           <img
-            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '/assets/city_gulripsh.jpg'}
+            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : ''}
             alt="Вид на город Гулрыпш"
             className={styles.gulripshImage}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}

@@ -43,3 +43,4 @@ from .pharmacy.admin import PharmacyPageAdmin
 from .restaurants.admin import RestaurantsPageAdmin
 from .shops_and_markets.admin import ShopsAndMarketsPageAdmin
 from .wineries.admin import WineriesPageAdmin
+from .cities.admin import CitiesPageAdmin

@@ -122,7 +122,7 @@ const activeCategories: string[] = [
 
         <section className={styles.galBanner}>
           <img
-            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : '/assets/city_gal2.png'}
+            src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : ''}
             alt="Вид на город Гал"
             className={styles.galImage}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
