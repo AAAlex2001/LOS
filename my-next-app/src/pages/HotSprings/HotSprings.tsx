@@ -25,11 +25,20 @@ type SpringsPage = { springs: Spring[]; hero_text?: string; hero_background_url?
 
 const API_BASE = config.API_BASE;
 
-const toParagraphsHtml = (text: string) => {
-  const normalized = (text || '').replace(/\r\n/g, '\n');
-  const escapeHtml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;').replace(/'/g, '&#39;');
-  const applyBold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/__(.+?)__/g, '<strong>$1</strong>');
-  return normalized.split(/\n{2,}/).map(p => applyBold(escapeHtml(p.replace(/\n+/g, ' '))).trim()).filter(Boolean);
+const formatText = (text: string) => {
+  if (!text) return [];
+  
+  // Простая замена всех переносов на <br />
+  let formatted = text
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    .replace(/\n/g, '<br />');
+  
+  // Заменяем **текст** на <strong>текст</strong>
+  formatted = formatted.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  formatted = formatted.replace(/__(.+?)__/g, '<strong>$1</strong>');
+  
+  return [formatted];
 };
 
 const HotSprings: React.FC = () => {
@@ -70,7 +79,7 @@ const HotSprings: React.FC = () => {
 
   const heroBgRaw = data?.hero_background_url || '';
   const heroBg = heroBgRaw ? (heroBgRaw.startsWith('http') ? heroBgRaw : `${API_BASE}${heroBgRaw}`) : '';
-  const heroParagraphs = toParagraphsHtml(data?.hero_text || '');
+  const heroParagraphs = formatText(data?.hero_text || '');
 
   return (
     <div className={styles.pageWrapper}>
