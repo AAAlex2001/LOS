@@ -1,5 +1,53 @@
 import React from 'react';
 import styles from './ImportantTaxiEtiquette.module.scss';
+import config from '@/config';
+
+type ImportantRule = {
+  id: number;
+  rule_type: string;
+  title: string;
+  description: string;
+  order: number;
+};
+
+type ImportantImage = {
+  id: number;
+  image_url: string;
+  alt_text: string;
+  order: number;
+};
+
+type ImportantSection = {
+  id: number;
+  section_type: string;
+  title: string;
+  content: string;
+  order: number;
+  rules: ImportantRule[];
+  images: ImportantImage[];
+};
+
+type Props = {
+  section: ImportantSection;
+};
+
+const API_BASE = config.API_BASE;
+
+const formatText = (text: string) => {
+  if (!text) return '';
+  
+  // Простая замена всех переносов на <br />
+  let formatted = text
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    .replace(/\n/g, '<br />');
+  
+  // Заменяем **текст** на <strong>текст</strong>
+  formatted = formatted.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  formatted = formatted.replace(/__(.+?)__/g, '<strong>$1</strong>');
+  
+  return formatted;
+};
 
 // Компонент для правил этикета
 const EtiquetteRule = ({ number, title, description }: { number: number; title: string; description: string }) => (
@@ -7,89 +55,24 @@ const EtiquetteRule = ({ number, title, description }: { number: number; title: 
     <div className={styles.ruleNumber}>{number}.</div>
     <div className={styles.ruleContent}>
       <h3 className={styles.ruleTitle}>{title}</h3>
-      <p className={styles.ruleDescription}>{description}</p>
+      <p className={styles.ruleDescription} dangerouslySetInnerHTML={{ __html: formatText(description) }} />
     </div>
   </div>
 );
 
-const ImportantTaxiEtiquette: React.FC = () => {
-  const passengerRules = [
-    {
-      title: "Приветствие и благодарность — норма",
-      description: "Всегда начинайте поездку с приветствия и завершайте поездку словами благодарности. Это создаёт доброжелательную атмосферу с первых минут."
-    },
-    {
-      title: "Очередность и вежливость при посадке",
-      description: "Сначала садятся старшие, дети и женщины, затем остальные. При выходе — наоборот: сначала выходят те, кто ближе к двери. Простые вещи — но создают ощущение порядка и уважения."
-    },
-    {
-      title: "Пристёгиваем ремни",
-      description: "Безопасность — превыше всего. Пристёгиваться в такси нужно и водителю, и пассажирам, даже на коротких расстояниях."
-    },
-    {
-      title: "Чистота — обоюдная забота",
-      description: "Песок, еда, напитки — лучше оставить за пределами салона. Не сорите, не начинайте сидеть, не оставляйте личные вещи в салоне автомобиля."
-    },
-    {
-      title: "Не курить без разрешения",
-      description: "Даже если водитель курит, обязательно спросите: «Можно покурить?» В идеале — курение только вне машины."
-    },
-    {
-      title: "Уважайте тишину",
-      description: "Не все настроены на беседу. Если не хотите разговаривать — дайте понять мягко. Если хотите — начните с лёгкой фразы."
-    },
-    {
-      title: "Не торопите водителя",
-      description: "Дороги в Абхазии — не автобаны. Дайте водителю вести безопасно. Если опаздываете — предупредите в начале пути."
-    },
-    {
-      title: "Чаевые — приятный бонус",
-      description: "Необязательно, но если поездка прошла хорошо — округлите сумму или оставьте 50-100 рублей. Это поощряется."
-    }
-  ];
-
-  const driverRules = [
-    {
-      title: "Вежливое приветствие — с порога",
-      description: "Улыбнитесь, поздоровайтесь. Это настраивает пассажира на доверие и делает поездку спокойнее."
-    },
-    {
-      title: "Чистый салон — ваша визитная карточка",
-      description: "Автомобиль должен быть чистым изнутри: без запахов, пыли, мусора и песка на сиденьях. Чистота важна особенно для туристов."
-    },
-    {
-      title: "Помощь при посадке",
-      description: "Откройте дверь, при необходимости помогите с багажом. Это покажет уровень сервиса и уважения."
-    },
-    {
-      title: "Не курите в салоне",
-      description: "Даже если пассажир не возражает — лучше проявить профессионализм и воздержаться."
-    },
-    {
-      title: "Соблюдайте тишину по умолчанию",
-      description: "Не навязывайте разговор. Если пассажир настроен на общение — он сам даст понять. Особенно важно с уставшими туристами."
-    },
-    {
-      title: "Пристёгивайтесь сами и напоминайте пассажирам",
-      description: "Безопасность — в приоритете. Дайте понять, что это правило, а не просьба."
-    },
-    {
-      title: "Водите спокойно",
-      description: "Без резких манёвров, сигналов и обгонов. Особенно — при женщинах, детях, пожилых и туристах, не привыкших к дорогам Абхазии."
-    },
-    {
-      title: "Будьте терпеливы",
-      description: "Если пассажир долго садится, уточняет маршрут или спрашивает дорогу — оставайтесь вежливы. Это часть работы."
-    },
-    {
-      title: "Принимайте оплату корректно",
-      description: "Не намекайте на чаевые. Не раздражайтесь, если дают крупную купюру. Лучше заранее уточните: «Есть мелкие купюры?»"
-    }
-  ];
+const ImportantTaxiEtiquette: React.FC<Props> = ({ section }) => {
+  // Группируем правила по типам
+  const passengerRules = section.rules.filter(rule => rule.rule_type === 'passenger').sort((a, b) => a.order - b.order);
+  const driverRules = section.rules.filter(rule => rule.rule_type === 'driver').sort((a, b) => a.order - b.order);
 
   return (
     <div className={styles.contentSection}>
-      <h2 className={styles.mainTitle}>Такси-этикет</h2>
+      <h2 className={styles.mainTitle}>{section.title}</h2>
+      
+      {/* Отображаем контент секции */}
+      {section.content && (
+        <div dangerouslySetInnerHTML={{ __html: formatText(section.content) }} />
+      )}
       
       <div className={styles.fullWidthSection}>
         <div className={styles.backgroundImageSection}>
@@ -105,7 +88,7 @@ const ImportantTaxiEtiquette: React.FC = () => {
       <div className={styles.rulesContainer}>
         {passengerRules.map((rule, index) => (
           <EtiquetteRule
-            key={index}
+            key={rule.id}
             number={index + 1}
             title={rule.title}
             description={rule.description}
@@ -140,7 +123,7 @@ const ImportantTaxiEtiquette: React.FC = () => {
       <div className={styles.rulesContainer}>
         {driverRules.map((rule, index) => (
           <EtiquetteRule
-            key={`driver-${index}`}
+            key={rule.id}
             number={index + 1}
             title={rule.title}
             description={rule.description}

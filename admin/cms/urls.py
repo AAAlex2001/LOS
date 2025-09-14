@@ -27,6 +27,7 @@ urlpatterns = [
     path("excursions/", include("cms.excursions.urls")),
     path("government-structure/", include("cms.government_structure.urls")),
     path("hot-springs/", include("cms.hot_springs.urls")),
+    path("important/", include("cms.important.urls")),
 ]
 
 
