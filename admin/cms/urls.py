@@ -25,6 +25,7 @@ urlpatterns = [
     path("cities/", include("cms.cities.urls")),
     path("elementary-dictionary/", include("cms.elementary_dictionary.urls")),
     path("excursions/", include("cms.excursions.urls")),
+    path("government-structure/", include("cms.government_structure.urls")),
 ]
 
 

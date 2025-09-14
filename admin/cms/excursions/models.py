@@ -30,7 +30,7 @@ class ExcursionsPage(TimestampedModel):
 class ExcursionService(TimestampedModel):
     page = models.ForeignKey(ExcursionsPage, on_delete=models.CASCADE, related_name="services")
     image = models.ImageField(upload_to="excursions/logos/", blank=True)
-    contacts = models.CharField(max_length=255)
+    contacts = models.CharField(max_length=255, blank=True)
     site = models.URLField(blank=True)
     order = models.PositiveIntegerField(default=0)
 
