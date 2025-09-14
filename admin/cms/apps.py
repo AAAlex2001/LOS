@@ -53,6 +53,7 @@ class CmsConfig(AppConfig):
             'wineries',
             'your_doctor',
             'cities',
+            'elementary_dictionary',
         ):
             try:
                 __import__(f"{self.name}.{module_name}.models")  # noqa: F401

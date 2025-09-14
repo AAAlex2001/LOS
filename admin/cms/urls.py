@@ -23,6 +23,7 @@ urlpatterns = [
     path("shops-and-markets/", include("cms.shops_and_markets.urls")),
     path("wineries/", include("cms.wineries.urls")),
     path("cities/", include("cms.cities.urls")),
+    path("elementary-dictionary/", include("cms.elementary_dictionary.urls")),
 ]
 
 

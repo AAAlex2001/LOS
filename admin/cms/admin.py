@@ -44,3 +44,4 @@ from .restaurants.admin import RestaurantsPageAdmin
 from .shops_and_markets.admin import ShopsAndMarketsPageAdmin
 from .wineries.admin import WineriesPageAdmin
 from .cities.admin import CitiesPageAdmin
+from .elementary_dictionary.admin import ElementaryDictionaryPageAdmin
