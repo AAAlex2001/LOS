@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './Excursions.module.scss';
+import config from '@/config';
 
 interface ExcursionCard {
   id: number;
@@ -12,43 +13,56 @@ interface ExcursionCard {
   site: string;
 }
 
-const excursionServices: ExcursionCard[] = [
-  {
-    id: 1,
-    img: '/assets/Excursions1.svg',
-    contacts: 'Контакты: +7 (940) 910-70-70',
-    site: 'https://welcome-abkhazia.com/',
-  },
-  {
-    id: 2,
-    img: '/assets/Excursions2.svg',
-    contacts: 'Контакты: +7 (940) 771-62-84',
-    site: 'https://new.sukhum-travel.ru/',
-  },
-  {
-    id: 3,
-    img: '/assets/Excursions3.svg',
-    contacts: 'Контакты: +7 (940) 932-51-51',
-    site: 'https://apsny-travel.com/tours_catalog.php',
-  },
-  {
-    id: 4,
-    img: '/assets/Excursions4.svg',
-    contacts: 'Контакты: +7 (940) 770-22-20',
-    site: 'https://kruizgagra.ru/ekskursii',
-  },
-  {
-    id: 5,
-    img: '/assets/Excursions5.svg',
-    contacts: 'Контакты: +7 (940) 996-72-76,\nWhatsapp +7 (940) 996-72-76',
-    site: 'https://continent-gagra.ru/excursionsabkhazia',
-  },
-];
+const API_BASE = config.API_BASE;
 
-const topRowServices = excursionServices.slice(0, 3);
-const bottomRowServices = excursionServices.slice(3);
+const splitRows = (items: ExcursionCard[]) => ({
+  top: items.slice(0, 3),
+  bottom: items.slice(3)
+});
 
 const Excursions: React.FC = () => {
+  const [services, setServices] = useState<ExcursionCard[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/excursions/page/content/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load excursions');
+        const json = await res.json();
+        const srv = (json?.services || []).map((s: any): ExcursionCard => ({
+          id: s.id,
+          img: s.image_url ? `${API_BASE}/media/${s.image_url}` : undefined,
+          contacts: s.contacts,
+          site: s.site,
+        }));
+        setServices(srv);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+        setServices([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  const { top, bottom } = splitRows(services);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
@@ -57,7 +71,7 @@ const Excursions: React.FC = () => {
         
         <section className={styles.excursionContainer}>
           <div className={styles.row}>
-            {topRowServices.map((excursion) => (
+            {top.map((excursion) => (
               <article key={excursion.id} className={styles.card}>
                 {excursion.img && (
                   <img
@@ -81,7 +95,7 @@ const Excursions: React.FC = () => {
             ))}
           </div>
           <div className={styles.row}>
-            {bottomRowServices.map((excursion) => (
+            {bottom.map((excursion) => (
               <article key={excursion.id} className={styles.card}>
                 {excursion.img && (
                   <img
