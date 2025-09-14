@@ -1,31 +1,58 @@
 import React from 'react';
 import cardStyles from './MarkheulCard.module.scss';
 
-const MarkheulCard: React.FC = () => {
+type Props = {
+  title?: string;
+  description?: string;
+  imageUrl?: string;
+};
+
+const toParagraphsHtml = (text: string) => {
+  const normalized = (text || '').replace(/\r\n/g, '\n');
+  const escapeHtml = (s: string) =>
+    s
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  const applyBold = (s: string) =>
+    s
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/__(.+?)__/g, '<strong>$1</strong>');
+
+  return normalized
+    .split(/\n{2,}/)
+    .map((raw) => {
+      const hasBullets = /(^|\n)\s*[—\-•]\s+/.test(raw);
+      const escaped = escapeHtml(raw.trim());
+      const withBreaks = escaped.replace(/\n+/g, hasBullets ? '<br />' : ' ');
+      return applyBold(withBreaks).trim();
+    })
+    .filter(Boolean);
+};
+
+const MarkheulCard: React.FC<Props> = ({ title, description, imageUrl }) => {
+  const paragraphs = toParagraphsHtml(description || '');
   return (
     <section className={cardStyles.markheulCard}>
-      <div className={cardStyles.imageSection}></div>
+      <div className={cardStyles.imageSection}>
+        {imageUrl ? (
+          <img src={imageUrl} alt={title || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        ) : null}
+      </div>
       <div className={cardStyles.titleSection}>
         <h2 className={cardStyles.titleText}>
-          <span className={cardStyles.titleDesktop}>Мархеул</span>
-          <span className={cardStyles.titleMobile}>Мархеул</span>
+          <span className={cardStyles.titleDesktop}>{title || ''}</span>
+          <span className={cardStyles.titleMobile}>{title || ''}</span>
         </h2>
       </div>
       <div className={cardStyles.contentSection}>
         <div className={cardStyles.textContent}>
           <div className={cardStyles.textBlock}>
-            <p className={cardStyles.contentText}>
-              В посёлке Мархеул расположился целебный минеральный ключ. Воды в Мархеульском ключе натриево-кальциево-гидрокарбонатные, температурой +18 градусов. На поверхность выходит ключ с глубины 110 метров. Особенность их в том, что они содержат не только минеральные, но и органические вещества. Однако это питьевой источник, поэтому бассейнов здесь нет.
-            </p>
-            <p className={cardStyles.contentText}>
-              <strong>Мархеульский источник лечит заболевания</strong> почек, урологической сферы, обмена веществ, имеет хороший мочегонный эффект.
-            </p>
-            <p className={cardStyles.contentText}>
-              О лечебном эффекте Мархеульского ключа ходят легенды: по утверждениям местных жителей, данная вода выводит камни из почек, но пить её нужно дозированно, курсом в 2–4 недели, иначе может спровоцироваться нежелательно обострение.
-            </p>
-            <p className={cardStyles.contentText}>
-              Находится питьевой фонтан в небольшой белой арке, и набрать воды в нём может любой желающий совершенно бесплатно.
-            </p>
+            {paragraphs.map((html, idx) => (
+              <p key={idx} className={cardStyles.contentText} dangerouslySetInnerHTML={{ __html: html }} />
+            ))}
           </div>
         </div>
       </div>

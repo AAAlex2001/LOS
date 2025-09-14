@@ -47,3 +47,4 @@ from .cities.admin import CitiesPageAdmin
 from .elementary_dictionary.admin import ElementaryDictionaryPageAdmin
 from .excursions.admin import ExcursionsPageAdmin
 from .government_structure.admin import GovernmentStructurePageAdmin
+from .hot_springs.admin import HotSpringsPageAdmin

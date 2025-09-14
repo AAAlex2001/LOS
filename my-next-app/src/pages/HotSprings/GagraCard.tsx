@@ -1,34 +1,60 @@
 import React from 'react';
 import cardStyles from './GagraCard.module.scss';
 
-const GagraCard: React.FC = () => {
+type Props = {
+  title?: string;
+  description?: string; // supports **bold** and \n\n paragraphs
+  imageUrl?: string;
+};
+
+const toParagraphsHtml = (text: string) => {
+  const normalized = (text || '').replace(/\r\n/g, '\n');
+  const escapeHtml = (s: string) =>
+    s
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  const applyBold = (s: string) =>
+    s
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/__(.+?)__/g, '<strong>$1</strong>');
+
+  return normalized
+    .split(/\n{2,}/)
+    .map((raw) => {
+      const hasBullets = /(^|\n)\s*[—\-•]\s+/.test(raw);
+      const escaped = escapeHtml(raw.trim());
+      const withBreaks = escaped.replace(/\n+/g, hasBullets ? '<br />' : ' ');
+      return applyBold(withBreaks).trim();
+    })
+    .filter(Boolean);
+};
+
+const GagraCard: React.FC<Props> = ({ title, description, imageUrl }) => {
+  const paragraphs = toParagraphsHtml(description || '');
   return (
     <section className={cardStyles.gagraCard}>
-      <div className={cardStyles.imageSection}></div>
+      <div className={cardStyles.imageSection}>
+        {imageUrl ? (
+          <img src={imageUrl} alt={title || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        ) : null}
+      </div>
       <div className={cardStyles.titleSection}>
         <h2 className={cardStyles.titleText}>
-          <span className={cardStyles.titleDesktop}>Источники и&nbsp;грязи в&nbsp;Гаграх</span>
-          <span className={cardStyles.titleMobile}>Источники и&nbsp;грязи<br/>в&nbsp;Гаграх</span>
+          <span className={cardStyles.titleDesktop}>{title || ''}</span>
+          <span className={cardStyles.titleMobile}>{title || ''}</span>
         </h2>
       </div>
       <div className={cardStyles.contentSection}>
         <div className={cardStyles.textContent}>
           <div className={cardStyles.textBlock}>
-            <p className={cardStyles.contentText}>
-              В&nbsp;городе Гагра расположился бальнеологический санаторий, эта&nbsp;здравница была знаменита ещё&nbsp;во&nbsp;времена русских царей&nbsp;— в&nbsp;1903&nbsp;году по&nbsp;приказу Российского Императора в&nbsp;этом месте, на&nbsp;берегу Чёрного моря, построили климатическую станцию&nbsp;— и&nbsp;она&nbsp;стала первым русским курортом на&nbsp;Черноморском побережье.
-            </p>
-            <p className={cardStyles.contentText}>
-              Природных гейзеров в&nbsp;Гагре два: их&nbsp;минеральный состав примерно одинаков (азот, сульфиды, сульфаты, кальций и&nbsp;магний), температура&nbsp;же&nbsp;немного отличается: +42&nbsp;и&nbsp;+44&nbsp;градуса.
-            </p>
-            <p className={cardStyles.contentText}>
-              Сегодня на&nbsp;территории Гагры работают десятки лечебниц, это&nbsp;самый популярный оздоровительный курорт Абхазии. Все&nbsp;здравницы используют термальные минеральные воды сероводородного источника «Гагра».
-            </p>
-            <p className={cardStyles.contentText}>
-              <strong>Данные воды используются для&nbsp;лечения</strong> системы кровообращения, дыхательной системы и&nbsp;ЛОР-органов.
-            </p>
-            <p className={cardStyles.contentText}>
-              Общекурортная лечебница Гагры сегодня расположилась по&nbsp;адресу:<br/>ул.&nbsp;Демерджипа, 49.
-            </p>
+            {paragraphs.length === 0 ? null : (
+              paragraphs.map((html, idx) => (
+                <p key={idx} className={cardStyles.contentText} dangerouslySetInnerHTML={{ __html: html }} />
+              ))
+            )}
           </div>
         </div>
       </div>

@@ -56,6 +56,7 @@ class CmsConfig(AppConfig):
             'elementary_dictionary',
             'excursions',
             'government_structure',
+            'hot_springs',
         ):
             try:
                 __import__(f"{self.name}.{module_name}.models")  # noqa: F401
