@@ -32,9 +32,24 @@ $color-background: #ffffff;
   text-align: center;
   margin-bottom: 60px;
   .image {
-    max-width: 100%;
+    width: 100%;
+    max-width: 1000px;
     height: auto;
     display: inline-block;
+  }
+  
+  .flag {
+    width: 800px;
+    max-width: 100%;
+    height: 533px;
+    object-fit: contain;
+  }
+  
+  .coatOfArms {
+    width: 400px;
+    max-width: 100%;
+    height: 400px;
+    object-fit: contain;
   }
 }
 

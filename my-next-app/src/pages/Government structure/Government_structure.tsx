@@ -81,9 +81,11 @@ const GovernmentStructure = () => {
                 <img
                   src={`${API_BASE}/media/${b.image_url}`}
                   alt={b.title}
-                  width={1200}
-                  height={800}
-                  className={styles.image}
+                  className={`${styles.image} ${
+                    b.title.toLowerCase().includes('флаг') ? styles.flag :
+                    b.title.toLowerCase().includes('герб') ? styles.coatOfArms :
+                    styles.image
+                  }`}
                 />
               </div>
             ) : null}
