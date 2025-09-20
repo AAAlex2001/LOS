@@ -118,4 +118,7 @@ _csrf_env = os.environ.get(
 )
 CSRF_TRUSTED_ORIGINS = [o for o in _csrf_env.split(",") if o]
 
+# Increase form field limits for large admin forms (dictionary page)
+DATA_UPLOAD_MAX_NUMBER_FIELDS = int(os.environ.get("DJANGO_DATA_UPLOAD_MAX_NUMBER_FIELDS", "100000"))
+
 

@@ -29,7 +29,7 @@ interface ElementaryDictionaryPageData {
 const API_BASE = config.API_BASE;
 
 const getColumns = (list: WordPair[], forceSplit = false): WordPair[][] => {
-  if (forceSplit || list.length > 18) {
+  if (forceSplit) {
     const mid = Math.ceil(list.length / 2);
     const col1 = [...list.slice(0, mid)];
     const col2 = [...list.slice(mid)];
@@ -67,8 +67,8 @@ const ElementaryDictionary: React.FC = () => {
   const renderTable = (items: WordPair[]) => (
     <div className={styles.dictionaryTable}>
       <div className={styles.row}>
-        <div className={styles.cellHeader}>На русском</div>
-        <div className={styles.cellHeader}>На абхазском</div>
+        <div className={styles.cellHeader} style={{ textAlign: 'center' }}>На русском</div>
+        <div className={styles.cellHeader} style={{ textAlign: 'center' }}>На абхазском</div>
       </div>
       {items.map((w, idx) => (
         <div key={`${w.id}-${idx}`} className={styles.row}>
@@ -118,33 +118,60 @@ const ElementaryDictionary: React.FC = () => {
           {(!pageData.categories || pageData.categories.length === 0) ? (
             <div className={styles.noData}>Нет данных о словаре</div>
           ) : (
-            pageData.categories.map((category) => {
-              const words = category.words || [];
-              const forceTwo = category.split_two_columns || words.length > 18;
-              const columns = getColumns(words, forceTwo);
-              
-              const blockClass = forceTwo ? styles.sectionBlockFullWidth : styles.sectionBlock;
-              
-              return (
-                <div key={category.id} className={blockClass}>
-                  <h2 className={`${styles.sectionTitle} ${forceTwo ? styles.titleCenter : ''}`}>
-                    {`${category.title} (${words.length} ${words.length === 1 ? 'слово' : words.length < 5 ? 'слова' : 'слов'})`}
-                  </h2>
-                  
-                  {forceTwo ? (
-                    <div className={styles.tablesRow}>
-                      {columns.map((col, idx) => (
-                        <div key={idx} className={styles.sectionBlock}>
-                          {renderTable(col)}
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    renderTable(words)
-                  )}
+            (() => {
+              const items = (pageData.categories || []).map((category) => {
+                const words = category.words || [];
+                const forceTwo = !!category.split_two_columns;
+                const columns = getColumns(words, forceTwo);
+                return { category, words, forceTwo, columns };
+              });
+
+              const rows: Array<typeof items> = [] as any;
+              let currentRow: typeof items = [] as any;
+
+              items.forEach((item) => {
+                if (item.forceTwo) {
+                  if (currentRow.length) {
+                    rows.push(currentRow);
+                    currentRow = [] as any;
+                  }
+                  rows.push([item]);
+                } else {
+                  currentRow.push(item);
+                  if (currentRow.length === 2) {
+                    rows.push(currentRow);
+                    currentRow = [] as any;
+                  }
+                }
+              });
+              if (currentRow.length) rows.push(currentRow);
+
+              return rows.map((row, rowIdx) => (
+                <div key={rowIdx} className={styles.tablesRow}>
+                  {row.map(({ category, words, forceTwo, columns }) => {
+                    const blockClass = forceTwo ? styles.sectionBlockFullWidth : styles.sectionBlock;
+                    return (
+                      <div key={category.id} className={blockClass}>
+                        <h2 className={`${styles.sectionTitle} ${styles.titleCenter}`}>
+                          {`${category.title} (${words.length} ${words.length === 1 ? 'слово' : words.length < 5 ? 'слова' : 'слов'})`}
+                        </h2>
+                        {forceTwo ? (
+                          <div className={styles.tablesRow}>
+                            {columns.map((col, idx) => (
+                              <div key={idx} className={styles.sectionBlock}>
+                                {renderTable(col)}
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          renderTable(words)
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
-              );
-            })
+              ));
+            })()
           )}
         </section>
       </main>
