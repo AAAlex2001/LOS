@@ -43,9 +43,9 @@ from .pharmacy.admin import PharmacyPageAdmin
 from .restaurants.admin import RestaurantsPageAdmin
 from .shops_and_markets.admin import ShopsAndMarketsPageAdmin
 from .wineries.admin import WineriesPageAdmin
-from .cities.admin import CitiesPageAdmin
 from .elementary_dictionary.admin import ElementaryDictionaryPageAdmin
 from .excursions.admin import ExcursionsPageAdmin
 from .government_structure.admin import GovernmentStructurePageAdmin
 from .hot_springs.admin import HotSpringsPageAdmin
 from .important.admin import ImportantPageAdmin
+from .cities.admin import CityAdmin

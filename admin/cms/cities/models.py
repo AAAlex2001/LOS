@@ -43,7 +43,7 @@ class City(TimestampedModel):
     class Meta:
         ordering = ["order", "id"]
         verbose_name = "Город"
-        verbose_name_plural = "Города"
+        verbose_name_plural = "Страница Городов"
 
     def __str__(self) -> str:
         return self.name
