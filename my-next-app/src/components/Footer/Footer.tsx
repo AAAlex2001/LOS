@@ -87,12 +87,14 @@ const Footer = () => {
               alt="Download on App Store"
               width={180}
               height={52}
+              style={{ width: '100%', height: 'auto', maxWidth: '180px' }}
             />
             <Image
               src="/assets/googleplay.svg"
               alt="Get it on Google Play"
               width={180}
               height={52}
+              style={{ width: '100%', height: 'auto', maxWidth: '180px' }}
             />
           </div>
         </div>

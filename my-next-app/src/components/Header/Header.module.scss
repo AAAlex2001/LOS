@@ -72,7 +72,7 @@ $break-xxl: 1920px;
   position: fixed;
   top: 16px;
   right: 16px;
-  z-index: 1003; // Above everything
+  z-index: 1004; // Above everything including overlay
 
   span {
     display: block;

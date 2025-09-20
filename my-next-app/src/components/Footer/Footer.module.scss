@@ -17,8 +17,8 @@ $break-xxl: 1920px;
 
 .footerContent {
   max-width: 1920px;
-  margin: 0 auto;
   width: 100%;
+  margin: 0 auto;
 }
 
 .topRow {
@@ -161,6 +161,13 @@ $break-xxl: 1920px;
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
+  
+  img {
+    max-width: 100%;
+    height: auto;
+    width: 100%;
+    max-width: 180px;
+  }
 }
 
 // --- Contact Block ---
@@ -215,7 +222,7 @@ $break-xxl: 1920px;
 
 .legalLinks {
   display: flex;
-  flex-direction: column; // Stack on mobile
+  flex-direction: column; // Always stack in column
   gap: 12px;
   align-items: flex-start;
 }
@@ -236,6 +243,45 @@ $break-xxl: 1920px;
   color: rgba(255, 255, 255, 0.5);
 }
 
+// --- Very small screens ---
+@media (max-width: 480px) {
+  .footer {
+    padding: 30px 12px 20px;
+  }
+  
+  .brandTitle {
+    font-size: 24px;
+  }
+  
+  .brandSubtitle,
+  .quickLinksTitle,
+  .appBlockTitle,
+  .contactTitle {
+    font-size: 18px;
+  }
+  
+  .brandDescription,
+  .quickLinkItem,
+  .contactInfo {
+    font-size: 14px;
+  }
+  
+  .appBadges {
+    img {
+      max-width: 140px;
+    }
+  }
+  
+  .socials {
+    gap: 12px;
+  }
+  
+  .socialLink img {
+    width: 36px;
+    height: 36px;
+  }
+}
+
 // --- Tablet and Up ---
 @media (min-width: $break-md) {
   // 768px+
@@ -250,18 +296,14 @@ $break-xxl: 1920px;
   .appBadges {
     flex-direction: row; // Side-by-side
     flex-wrap: wrap;
+    
+    img {
+      max-width: 120px;
+    }
   }
+}
 
-  .bottomRow {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
 
-  .legalLinks {
-    flex-direction: row;
-    gap: 24px;
-  }
 
   .legalLink,
   .rights {
@@ -274,11 +316,24 @@ $break-xxl: 1920px;
   .contactInfo {
     font-size: 17px;
   }
+
+// --- Large screens (1200px+) - Row layout ---
+@media (min-width: 1200px) {
+  .bottomRow {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .legalLinks {
+    flex-direction: row;
+    gap: 24px;
+  }
 }
 
 // --- Desktop and Up ---
-@media (min-width: $break-lg) {
-  // 1024px+
+@media (min-width: 1200px) {
+  // 1200px+
   .topRow {
     flex-direction: row;
     justify-content: space-between;
@@ -332,6 +387,12 @@ $break-xxl: 1920px;
   }
   .contactInfo {
     font-size: 18px;
+  }
+  
+  .appBadges {
+    img {
+      max-width: 180px;
+    }
   }
 }
 
