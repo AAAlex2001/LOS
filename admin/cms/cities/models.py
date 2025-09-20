@@ -38,6 +38,7 @@ class City(TimestampedModel):
     description = models.TextField("Описание города", blank=True)
     image = models.ImageField("Изображение города", upload_to="cities/images/", blank=True)
     order = models.PositiveIntegerField(default=0)
+    administrative_buildings = models.TextField("Административные здания", blank=True, default="", help_text="Описание административных зданий города")
 
     class Meta:
         ordering = ["order", "id"]
@@ -46,6 +47,11 @@ class City(TimestampedModel):
 
     def __str__(self) -> str:
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.administrative_buildings is None:
+            self.administrative_buildings = ""
+        super().save(*args, **kwargs)
 
 
 class CityCategory(TimestampedModel):
