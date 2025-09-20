@@ -194,7 +194,7 @@ const HomePage = () => {
         </section>
 
         {/* Section 3: CTA */}
-        <section id="booking" className={styles.ctaSection}>
+        {/* <section id="booking" className={styles.ctaSection}>
             {data.cta_title && <h2 className={styles.sectionTitle}>{data.cta_title}</h2>}
             <div className={styles.promoBannerWrapper}>
                 {data.cta_overlay_image_url && (
@@ -229,7 +229,7 @@ const HomePage = () => {
                 )}
                 <p className={styles.bookingFinePrint}>Без&nbsp;комиссий · Поддержка 24/7 · Гарантия заселения</p>
              </div>
-        </section>
+        </section> */}
 
         {/* Section 4: Activities */}
         <section id="activities" className={styles.activitiesSection}>
