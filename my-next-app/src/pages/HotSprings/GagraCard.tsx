@@ -21,15 +21,12 @@ const toParagraphsHtml = (text: string) => {
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
       .replace(/__(.+?)__/g, '<strong>$1</strong>');
 
-  return normalized
-    .split(/\n{2,}/)
-    .map((raw) => {
-      const hasBullets = /(^|\n)\s*[—\-•]\s+/.test(raw);
-      const escaped = escapeHtml(raw.trim());
-      const withBreaks = escaped.replace(/\n+/g, hasBullets ? '<br />' : ' ');
-      return applyBold(withBreaks).trim();
-    })
-    .filter(Boolean);
+  // Заменяем все переносы строк на <br> теги
+  const escaped = escapeHtml(normalized);
+  const withBreaks = escaped.replace(/\n/g, '<br />');
+  const withBold = applyBold(withBreaks);
+  
+  return [withBold]; // Возвращаем как один абзац с <br> тегами
 };
 
 const GagraCard: React.FC<Props> = ({ title, description, imageUrl }) => {
@@ -38,7 +35,7 @@ const GagraCard: React.FC<Props> = ({ title, description, imageUrl }) => {
     <section className={cardStyles.gagraCard}>
       <div className={cardStyles.imageSection}>
         {imageUrl ? (
-          <img src={imageUrl} alt={title || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <img src={imageUrl} alt={title || ''} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '15px' }} />
         ) : null}
       </div>
       <div className={cardStyles.titleSection}>

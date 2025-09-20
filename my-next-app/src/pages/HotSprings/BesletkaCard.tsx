@@ -7,13 +7,35 @@ type Props = {
   imageUrl?: string;
 };
 
+const toParagraphsHtml = (text: string) => {
+  const normalized = (text || '').replace(/\r\n/g, '\n');
+  const escapeHtml = (s: string) =>
+    s
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  const applyBold = (s: string) =>
+    s
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/__(.+?)__/g, '<strong>$1</strong>');
+
+  // Заменяем все переносы строк на <br> теги
+  const escaped = escapeHtml(normalized);
+  const withBreaks = escaped.replace(/\n/g, '<br />');
+  const withBold = applyBold(withBreaks);
+  
+  return [withBold]; // Возвращаем как один абзац с <br> тегами
+};
+
 const BesletkaCard: React.FC<Props> = ({ title, description, imageUrl }) => {
-  const paragraphs = (description || '').split('\n\n').filter(Boolean);
+  const paragraphs = toParagraphsHtml(description || '');
   return (
     <section className={cardStyles.besletkaCard}>
       <div className={cardStyles.imageSection}>
         {imageUrl ? (
-          <img src={imageUrl} alt={title || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <img src={imageUrl} alt={title || ''} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '15px' }} />
         ) : null}
       </div>
       <div className={cardStyles.titleSection}>
@@ -25,8 +47,8 @@ const BesletkaCard: React.FC<Props> = ({ title, description, imageUrl }) => {
       <div className={cardStyles.contentSection}>
         <div className={cardStyles.textContent}>
           <div className={cardStyles.textBlock}>
-            {paragraphs.map((p, idx) => (
-              <p key={idx} className={cardStyles.contentText}>{p}</p>
+            {paragraphs.map((html, idx) => (
+              <p key={idx} className={cardStyles.contentText} dangerouslySetInnerHTML={{ __html: html }} />
             ))}
           </div>
         </div>
