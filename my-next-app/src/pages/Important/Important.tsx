@@ -12,7 +12,7 @@ import config from '@/config';
 
 type ImportantRule = {
   id: number;
-  rule_type: string;
+  rule_type?: string;
   title: string;
   description: string;
   order: number;
@@ -29,7 +29,9 @@ type ImportantSection = {
   id: number;
   section_type: string;
   title: string;
+  subtitle: string;
   content: string;
+  image_url: string;
   order: number;
   rules: ImportantRule[];
   images: ImportantImage[];
@@ -117,6 +119,20 @@ const Important: React.FC = () => {
         return <ImportantPublicBehavior section={section} />;
       case 'taxi-etiquette':
         return <ImportantTaxiEtiquette section={section} />;
+      case 'emergency-phones':
+        return (
+          <div className={styles.contentSection}>
+            <h2 className={styles.sectionTitle}>{section.title}</h2>
+            {section.subtitle && (
+              <h3 className={styles.sectionSubtitle}>{section.subtitle}</h3>
+            )}
+            <div className={styles.sectionText}>
+              {section.content && (
+                <div dangerouslySetInnerHTML={{ __html: formatText(section.content) }} />
+              )}
+            </div>
+          </div>
+        );
       default:
         return (
           <div className={styles.contentSection}>

@@ -59,8 +59,9 @@ const Header = () => {
       </div>
 
       <header className={styles.header}>
-        {/* Left block: Logo */}
-        <Link href="/" className={styles.logoSection} onClick={closeMenu}>
+        <div className={styles.headerContent}>
+          {/* Left block: Logo */}
+          <Link href="/" className={styles.logoSection} onClick={closeMenu}>
           <Image
             src="/assets/IMG_1557.png"
             alt="Logo"
@@ -112,13 +113,15 @@ const Header = () => {
           </svg>
         </div> */}
 
-        {/* Burger button */}
-        <button className={`${styles.burgerButton} ${menuOpen ? styles.active : ''}`} onClick={toggleMenu} aria-label="Menu">
-          <span />
-          <span />
-          <span />
-        </button>
+        </div>
       </header>
+
+      {/* Burger button - fixed position */}
+      <button className={`${styles.burgerButton} ${menuOpen ? styles.active : ''}`} onClick={toggleMenu} aria-label="Menu">
+        <span />
+        <span />
+        <span />
+      </button>
     </>
   );
 };

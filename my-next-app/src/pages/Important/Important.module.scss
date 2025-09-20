@@ -72,6 +72,19 @@
   margin-bottom: 30px;
 }
 
+.sectionSubtitle {
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 34px;
+  text-align: center;
+  color: #000000;
+  padding: 5px;
+  margin-bottom: 20px;
+}
+
 .sectionText {
   display: flex;
   flex-direction: column;
@@ -159,6 +172,10 @@
     font-size: 28px;
     line-height: 34px;
   }
+  .sectionSubtitle {
+    font-size: 22px;
+    line-height: 28px;
+  }
   .sectionText, .emergencyNotice, .emergencyPhones p {
     font-size: 18px;
     line-height: 24px;
@@ -182,6 +199,10 @@
   .sectionTitle {
     font-size: 24px;
     line-height: 30px;
+  }
+  .sectionSubtitle {
+    font-size: 18px;
+    line-height: 24px;
   }
   .sectionText, .emergencyNotice, .emergencyPhones p {
     font-size: 16px;

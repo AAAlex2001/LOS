@@ -6,12 +6,40 @@ $font-family: 'Inter', sans-serif;
 $color-primary: #1129bd;
 $color-text: #000000;
 
+
 .contentSection {
   width: 100%;
   max-width: 1238px;
   margin: 0 auto;
   position: relative;
   padding: 40px 20px;
+  text-align: left;
+}
+
+.mainContentText {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 10px;
+  gap: 10px;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  color: #000000;
+  text-align: left;
+  
+  p {
+    width: 100%;
+    text-align: left;
+    font-size: 24px;
+    line-height: 29px;
+    font-weight: 400;
+    margin: 0;
+  }
 }
 
 .mainTitle {
@@ -40,6 +68,18 @@ $color-text: #000000;
   }
 }
 
+.sectionContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 10px;
+  gap: 10px;
+  width: 100%;
+  color: #000000;
+  text-align: left;
+}
+
 .textSection {
   max-width: 1238px;
   margin: 0 auto 60px;
@@ -54,20 +94,30 @@ $color-text: #000000;
     text-align: left;
   }
 
-  p {
+  div {
+    width: 100%;
+    text-align: left;
     font-family: $font-family;
     font-weight: 400;
-    font-size: 24px;
-    line-height: 29px;
+    font-size: 26px;
+    line-height: 31px;
     color: $color-text;
     margin: 0;
-    text-align: left;
   }
 }
 
 // --- Responsive ---
 @media (max-width: $break-lg) {
-  .textSection p {
+  .mainContentText {
+    font-size: 22px;
+    p {
+      font-size: 22px;
+    }
+  }
+  .sectionContent {
+    font-size: 22px;
+  }
+  .textSection div {
     font-size: 22px;
   }
   .contentSection {
@@ -81,11 +131,17 @@ $color-text: #000000;
     line-height: 38px;
     margin-bottom: 40px;
   }
+  .sectionContent {
+    font-size: 20px;
+  }
   .textSection {
     .sectionTitle {
       font-size: 28px;
     }
-    p {
+    div {
+      font-size: 20px;
+    }
+    .contentText {
       font-size: 20px;
     }
   }
@@ -103,12 +159,18 @@ $color-text: #000000;
     line-height: 34px;
     margin-bottom: 30px;
   }
+  .sectionContent {
+    font-size: 18px;
+  }
   .textSection {
     margin-bottom: 40px;
     .sectionTitle {
       font-size: 24px;
     }
-    p {
+    div {
+      font-size: 18px;
+    }
+    .contentText {
       font-size: 18px;
     }
   }

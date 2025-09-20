@@ -7,14 +7,18 @@ $break-xxl: 1920px;
 // --- Base Styles (Mobile First) ---
 .footer {
   width: 100%;
-  max-width: 1920px;
-  margin: 0 auto;
   background: #1129bd;
   color: #ffffff;
   font-family: "Inter", sans-serif;
   padding: 40px 16px 24px;
   box-sizing: border-box;
   height: auto;
+}
+
+.footerContent {
+  max-width: 1920px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .topRow {

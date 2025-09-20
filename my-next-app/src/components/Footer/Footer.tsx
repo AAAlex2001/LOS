@@ -27,8 +27,9 @@ const quickLinks = [
 const Footer = () => {
   return (
     <footer className={styles.footer}>
-      {/* Top area */}
-      <div className={styles.topRow}>
+      <div className={styles.footerContent}>
+        {/* Top area */}
+        <div className={styles.topRow}>
         {/* Branding */}
         <div className={styles.brand}>
           <h2 className={styles.brandTitle}>Land of Soul Abkhazia</h2>
@@ -111,6 +112,7 @@ const Footer = () => {
           </Link>
         </nav>
         <span className={styles.rights}>© 2025 Land of soul Abkhazia. Все права защищены.</span>
+        </div>
       </div>
     </footer>
   );

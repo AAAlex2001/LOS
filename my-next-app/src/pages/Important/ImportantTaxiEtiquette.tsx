@@ -4,7 +4,7 @@ import config from '@/config';
 
 type ImportantRule = {
   id: number;
-  rule_type: string;
+  rule_type?: string;
   title: string;
   description: string;
   order: number;
@@ -21,10 +21,19 @@ type ImportantSection = {
   id: number;
   section_type: string;
   title: string;
+  subtitle: string;
   content: string;
+  image_url: string;
   order: number;
   rules: ImportantRule[];
   images: ImportantImage[];
+  passenger_intro_text: string;
+  passenger_background_url: string;
+  passenger_conclusion_text: string;
+  driver_intro_text: string;
+  driver_background_url: string;
+  driver_description_text: string;
+  driver_conclusion_text: string;
 };
 
 type Props = {
@@ -75,11 +84,17 @@ const ImportantTaxiEtiquette: React.FC<Props> = ({ section }) => {
       )}
       
       <div className={styles.fullWidthSection}>
-        <div className={styles.backgroundImageSection}>
+        <div 
+          className={styles.backgroundImageSection}
+          style={{
+            backgroundImage: section.passenger_background_url 
+              ? `url(${API_BASE}/media/${section.passenger_background_url})`
+              : "url('/assets/IMG_1932.jpg')"
+          }}
+        >
           <div className={styles.introOverlay}>
             <p className={styles.introText}>
-              Этикет для пассажиров: чтобы ваша поездка на такси прошла без недопонимания и оставила 
-              только положительные впечатления, рекомендуем соблюдать простые правила.
+              {section.passenger_intro_text || "Этикет для пассажиров: чтобы ваша поездка на такси прошла без недопонимания и оставила только положительные впечатления, рекомендуем соблюдать простые правила."}
             </p>
           </div>
         </div>
@@ -98,15 +113,22 @@ const ImportantTaxiEtiquette: React.FC<Props> = ({ section }) => {
 
       <div className={styles.conclusionSection}>
         <p className={styles.conclusionText}>
-          Такси — это тоже часть путешествия. Уважение, вежливость и спокойствие делают его лучше для всех!
+          {section.passenger_conclusion_text || "Такси — это тоже часть путешествия. Уважение, вежливость и спокойствие делают его лучше для всех!"}
         </p>
       </div>
 
       <div className={styles.fullWidthSection}>
-        <div className={styles.backgroundImageSection}>
+        <div 
+          className={styles.backgroundImageSection}
+          style={{
+            backgroundImage: section.driver_background_url 
+              ? `url(${API_BASE}/media/${section.driver_background_url})`
+              : "url('/assets/IMG_1932.jpg')"
+          }}
+        >
           <div className={styles.introOverlay}>
             <p className={styles.introText}>
-              Этикет водителя такси: как создать комфорт для пассажира и заработать уважение
+              {section.driver_intro_text || "Этикет водителя такси: как создать комфорт для пассажира и заработать уважение"}
             </p>
           </div>
         </div>
@@ -114,9 +136,7 @@ const ImportantTaxiEtiquette: React.FC<Props> = ({ section }) => {
 
       <div className={styles.driverIntroSection}>
         <p className={styles.driverIntroText}>
-          Таксист в Абхазии — это не просто перевозчик, а представитель 
-          гостеприимной страны. Вот несколько простых правил, которые 
-          сделают вашу работу приятнее, а сервис — качественнее.
+          {section.driver_description_text || "Таксист в Абхазии — это не просто перевозчик, а представитель гостеприимной страны. Вот несколько простых правил, которые сделают вашу работу приятнее, а сервис — качественнее."}
         </p>
       </div>
 
@@ -133,9 +153,7 @@ const ImportantTaxiEtiquette: React.FC<Props> = ({ section }) => {
 
       <div className={styles.finalConclusionSection}>
         <p className={styles.finalConclusionText}>
-          Уважение к пассажиру — это уважение к себе. Таксист с хорошим 
-          сервисом всегда выигрывает в репутации, чаевых и количестве 
-          клиентов.
+          {section.driver_conclusion_text || "Уважение к пассажиру — это уважение к себе. Таксист с хорошим сервисом всегда выигрывает в репутации, чаевых и количестве клиентов."}
         </p>
       </div>
     </div>
