@@ -29,6 +29,7 @@ urlpatterns = [
     path("hot-springs/", include("cms.hot_springs.urls")),
     path("important/", include("cms.important.urls")),
     path("mobile-communication/", include("cms.mobile_communication.urls")),
+    path("mountain-routes/", include("cms.mountain_routes.urls")),
 ]
 
 

@@ -59,6 +59,7 @@ class CmsConfig(AppConfig):
             'hot_springs',
             'important',
             'mobile_communication',
+            'mountain_routes',
         ):
             try:
                 __import__(f"{self.name}.{module_name}.models")  # noqa: F401

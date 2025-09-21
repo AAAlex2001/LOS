@@ -1,58 +1,87 @@
-import React from 'react';
+"use client";
+
+import React, { useEffect, useState } from 'react';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './MountainRoutes.module.scss';
+import config from '@/config';
 
-interface RouteCard {
+interface RouteItem {
   id: number;
-  img?: string;
-  phone?: string;
-  site?: string;
-  text?: string;
   title?: string;
   name?: string;
+  image?: string;
+  site_url?: string;
+  phone?: string;
+  order: number;
 }
 
-const routes: RouteCard[] = [
-  {
-    id: 1,
-    img: '/assets/logoMountain.svg',
-    site: 'САЙТ: https://highlandabkhazia.ru',
-  },
-  {
-    id: 2,
-    img: '/assets/MountainCar.png',
-    site: 'САЙТ: https://www.instagram.com/dzhiping_abkhazia/',
-  },
-  {
-    id: 3,
-    img: '/assets/logoMountain2.png',
-    site: 'САЙТ: https://apsny.world/mountain-night',
-  },
-  {
-    id: 4,
-    img: '/assets/MountainApp.png',
-    text: 'Контакты: +7 (940) 932-51-51',
-    site: 'САЙТ: https://apsny-travel.com/tours_catalog.php',
-  },
-  {
-    id: 5,
-    title: 'ИНДИВИДУАЛЬНЫЕ МАРШРУТЫ',
-    name: 'Астамур Кация',
-    phone: '+7–940–772–67–70',
-    img: '/assets/activity_gornye_marshruty.jpg',
-  },
-];
+interface MountainRoutesPageData {
+  id: number;
+  main_title: string;
+  section_title: string;
+  routes: RouteItem[];
+}
 
-const topRowServices = routes.slice(0, 3);
-const bottomRowServices = routes.slice(3);
+const API_BASE = config.API_BASE;
 
 const MountainRoutes: React.FC = () => {
+  const [data, setData] = useState<MountainRoutesPageData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/mountain-routes/page/content/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load mountain routes');
+        const json = (await res.json()) as MountainRoutesPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+        setError('Ошибка загрузки данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>Загрузка...</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  const routes = (data.routes || []).slice().sort((a, b) => a.order - b.order);
+  const topRowServices = routes.slice(0, 3);
+  const bottomRowServices = routes.slice(3);
+
+  const toImageUrl = (p?: string) => (p ? (p.startsWith('http') ? p : `${API_BASE}${p}`) : '');
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       <main className={styles.mainContent}>
-        <h1 className={styles.mainTitle}>Горные маршруты</h1>
+        <h1 className={styles.mainTitle}>{data.main_title}</h1>
         
         <section className={styles.routesContainer}>
           <div className={styles.row}>
@@ -61,31 +90,30 @@ const MountainRoutes: React.FC = () => {
                 key={route.id}
                 className={route.text ? `${styles.card} ${styles.textCard}` : styles.card}
               >
-                {route.img && (
+                {route.image && (
                   <img
                     className={styles.cardImg}
-                    src={route.img}
-                    alt={route.site || route.title || 'mountain route'}
+                    src={toImageUrl(route.image)}
+                    alt={route.title || route.name || 'mountain route'}
                   />
                 )}
                 <div className={styles.cardBody}>
                   {route.title && <h3 className={styles.cardTitle}>{route.title}</h3>}
                   {route.name && <p className={styles.cardName}>{route.name}</p>}
-                  {route.phone && !route.img && (
+                  {route.phone && !route.image && (
                     <p className={styles.cardPhone}>Тел.: {route.phone}</p>
                   )}
-                  {route.phone && route.img && <p className={styles.phone}>Контакты: {route.phone}</p>}
-                  {route.site && (
+                  {route.phone && route.image && <p className={styles.phone}>Контакты: {route.phone}</p>}
+                  {route.site_url && (
                     <a
-                      href={route.site.includes('http') ? route.site.replace('САЙТ: ', '') : route.site}
+                      href={route.site_url}
                       className={styles.link}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {route.site}
+                      {'САЙТ: '}{route.site_url}
                     </a>
                   )}
-                  {route.text && <p className={styles.text}>{route.text}</p>}
                 </div>
               </article>
             ))}
@@ -96,31 +124,30 @@ const MountainRoutes: React.FC = () => {
                 key={route.id}
                 className={route.text ? `${styles.card} ${styles.textCard}` : styles.card}
               >
-                {route.img && (
+                {route.image && (
                   <img
                     className={styles.cardImg}
-                    src={route.img}
-                    alt={route.site || route.title || 'mountain route'}
+                    src={toImageUrl(route.image)}
+                    alt={route.title || route.name || 'mountain route'}
                   />
                 )}
                 <div className={styles.cardBody}>
                   {route.title && <h3 className={styles.cardTitle}>{route.title}</h3>}
                   {route.name && <p className={styles.cardName}>{route.name}</p>}
-                  {route.phone && !route.img && (
+                  {route.phone && !route.image && (
                     <p className={styles.cardPhone}>Тел.: {route.phone}</p>
                   )}
-                  {route.phone && route.img && <p className={styles.phone}>Контакты: {route.phone}</p>}
-                  {route.site && (
+                  {route.phone && route.image && <p className={styles.phone}>Контакты: {route.phone}</p>}
+                  {route.site_url && (
                     <a
-                      href={route.site.includes('http') ? route.site.replace('САЙТ: ', '') : route.site}
+                      href={route.site_url}
                       className={styles.link}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {route.site}
+                      {'САЙТ: '}{route.site_url}
                     </a>
                   )}
-                  {route.text && <p className={styles.text}>{route.text}</p>}
                 </div>
               </article>
             ))}

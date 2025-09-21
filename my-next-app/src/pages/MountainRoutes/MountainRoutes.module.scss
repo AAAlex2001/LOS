@@ -130,6 +130,7 @@ $color-text: #000000;
     text-transform: uppercase;
     color: $primary-color;
     margin: 0;
+    white-space: pre-line; // переносы строк из админки
   }
 }
 
