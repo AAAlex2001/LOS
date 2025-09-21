@@ -1,34 +1,55 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import PartiesPage, PartyCity, PartyEvent
+from .models import PartiesPage, PartyCity, PartyEvent, PartySliderItem
 
 
-class PartyEventInline(admin.TabularInline):
-    model = PartyEvent
-    extra = 0
-    fields = ("title", "date_info", "location", "description", "event_url", "order")
-    ordering = ("order", "id")
 
 
 class PartyCityInline(admin.TabularInline):
     model = PartyCity
-    extra = 0
+    extra = 1
     fields = ("name", "slug", "city_image", "city_image_preview", "order")
     readonly_fields = ("city_image_preview",)
     ordering = ("order", "id")
 
     def city_image_preview(self, obj):
         if obj.city_image:
-            return format_html('<img src="{}" style="max-height: 60px; max-width: 120px;"/>', obj.city_image.url)
+            return format_html('<img src="{}" style="max-height: 60px; max-width: 100px;"/>', obj.city_image.url)
         return "—"
     city_image_preview.short_description = "Превью"
+
+
+class PartyEventInline(admin.StackedInline):
+    model = PartyEvent
+    extra = 2
+    fields = ("city", "title", "date_info", "location", "description", "event_url", "order")
+    ordering = ("city__order", "order", "id")
+    classes = ("collapse",)
+
+
+class PartySliderItemInline(admin.StackedInline):
+    model = PartySliderItem
+    extra = 2
+    fields = ("city", "media_type", "media_file", "media_preview", "order")
+    readonly_fields = ("media_preview",)
+    ordering = ("city__order", "order", "id")
+    classes = ("collapse",)
+
+    def media_preview(self, obj):
+        if obj.media_file:
+            if obj.media_type == 'video':
+                return format_html('<video controls style="max-height: 100px; max-width: 150px;"><source src="{}" type="video/mp4"></video>', obj.media_file.url)
+            else:
+                return format_html('<img src="{}" style="max-height: 100px; max-width: 150px;"/>', obj.media_file.url)
+        return "—"
+    media_preview.short_description = "Превью"
 
 
 @admin.register(PartiesPage)
 class PartiesPageAdmin(admin.ModelAdmin):
     list_display = ("id", "main_title", "created_at", "updated_at")
-    inlines = [PartyCityInline]
+    inlines = [PartyCityInline, PartyEventInline, PartySliderItemInline]
     readonly_fields = (
         "background_image_preview", "center_icon_preview", 
         "decor_image_1_preview", "decor_image_2_preview", "decor_image_3_preview", 
@@ -48,11 +69,11 @@ class PartiesPageAdmin(admin.ModelAdmin):
         }),
         ("Декоративные изображения", {
             "fields": (
-                "decor_image_1", "decor_image_1_preview",
-                "decor_image_2", "decor_image_2_preview",
-                "decor_image_3", "decor_image_3_preview",
-                "decor_image_4", "decor_image_4_preview",
-                "decor_image_5", "decor_image_5_preview",
+                ("decor_image_1", "decor_image_1_preview"),
+                ("decor_image_2", "decor_image_2_preview"),
+                ("decor_image_3", "decor_image_3_preview"),
+                ("decor_image_4", "decor_image_4_preview"),
+                ("decor_image_5", "decor_image_5_preview"),
             ),
             "classes": ("collapse",)
         }),
@@ -134,17 +155,4 @@ class PartiesPageAdmin(admin.ModelAdmin):
         return super().has_add_permission(request)
 
 
-@admin.register(PartyCity)
-class PartyCityAdmin(admin.ModelAdmin):
-    list_display = ("name", "slug", "order")
-    list_editable = ("order",)
-    search_fields = ("name",)
-    inlines = [PartyEventInline]
-
-
-@admin.register(PartyEvent)
-class PartyEventAdmin(admin.ModelAdmin):
-    list_display = ("title", "city", "date_info", "order")
-    list_editable = ("order",)
-    list_filter = ("city",)
-    search_fields = ("title", "city__name")
+# Убираем отдельные админки - все редактируется inline на странице PartiesPage

@@ -26,6 +26,19 @@ interface PartyEvent {
   description?: string;
   event_url?: string;
   order: number;
+  city: number;
+  city_name: string;
+  city_slug: string;
+}
+
+interface PartySliderItem {
+  id: number;
+  media_type: 'video' | 'image';
+  media_file: string;
+  order: number;
+  city: number;
+  city_name: string;
+  city_slug: string;
 }
 
 interface PartyCity {
@@ -49,6 +62,8 @@ interface PartiesPageData {
   decor_image_5?: string;
   intro_text?: string;
   cities: PartyCity[];
+  events: PartyEvent[];
+  slider_items: PartySliderItem[];
 }
 
 const API_BASE = config.API_BASE;
@@ -119,6 +134,8 @@ const Parties: React.FC = () => {
   }
 
   const cities = (data.cities || []).slice().sort((a, b) => a.order - b.order);
+  const events = (data.events || []).slice().sort((a, b) => a.order - b.order);
+  const sliderItems = (data.slider_items || []).slice().sort((a, b) => a.order - b.order);
 
   return (
     <div className={styles.pageWrapper}>
@@ -245,7 +262,7 @@ const Parties: React.FC = () => {
           
           return (
             <div key={city.id} id={city.slug} className={styles.cityCardContainer}>
-              <CityComponent city={city} />
+              <CityComponent city={city} events={events} sliderItems={sliderItems} />
             </div>
           );
         })}

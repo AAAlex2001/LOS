@@ -73,6 +73,7 @@ class PartyEvent(TimestampedModel):
     """
     Событие вечеринки
     """
+    page = models.ForeignKey(PartiesPage, on_delete=models.CASCADE, related_name="events", default=1)
     city = models.ForeignKey(PartyCity, on_delete=models.CASCADE, related_name="events")
     title = models.CharField("Название события", max_length=255)
     date_info = models.CharField("Информация о дате", max_length=500, blank=True)
@@ -88,3 +89,27 @@ class PartyEvent(TimestampedModel):
 
     def __str__(self) -> str:
         return f"{self.city.name} - {self.title}"
+
+
+class PartySliderItem(TimestampedModel):
+    """
+    Элемент слайдера для города (видео или изображение)
+    """
+    MEDIA_TYPE_CHOICES = [
+        ('video', 'Видео'),
+        ('image', 'Изображение'),
+    ]
+    
+    page = models.ForeignKey(PartiesPage, on_delete=models.CASCADE, related_name="slider_items", default=1)
+    city = models.ForeignKey(PartyCity, on_delete=models.CASCADE, related_name="slider_items")
+    media_type = models.CharField("Тип медиа", max_length=10, choices=MEDIA_TYPE_CHOICES, default='image')
+    media_file = models.FileField("Медиа файл", upload_to="parties/slider/", help_text="Видео (.mp4) или изображение (.jpg, .png)")
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "id"]
+        verbose_name = "Элемент слайдера"
+        verbose_name_plural = "Элементы слайдера"
+
+    def __str__(self) -> str:
+        return f"{self.city.name} - {self.media_type} {self.order}"

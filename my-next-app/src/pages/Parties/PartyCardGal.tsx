@@ -21,11 +21,23 @@ interface PartyCity {
   order: number;
 }
 
-interface PartyCardGalProps {
-  city?: PartyCity;
+interface PartySliderItem {
+  id: number;
+  media_type: 'video' | 'image';
+  media_file: string;
+  order: number;
+  city: number;
+  city_name: string;
+  city_slug: string;
 }
 
-const PartyCardGal: React.FC<PartyCardGalProps> = ({ city }) => {
+interface PartyCardGalProps {
+  city?: PartyCity;
+  events?: PartyEvent[];
+  sliderItems?: PartySliderItem[];
+}
+
+const PartyCardGal: React.FC<PartyCardGalProps> = ({ city, events, sliderItems }) => {
   const toImageUrl = (p?: string) => {
     if (!p) return '';
     return p.startsWith('http') ? p : `http://109.196.103.12:8000${p}`;
@@ -52,8 +64,9 @@ const PartyCardGal: React.FC<PartyCardGalProps> = ({ city }) => {
 
         {/* Events Container */}
         <div className={cardStyles.eventsContainer}>
-          {city?.events && city.events.length > 0 ? (
-            city.events
+          {events && events.filter(event => event.city_slug === 'gal').length > 0 ? (
+            events
+              .filter(event => event.city_slug === 'gal')
               .slice()
               .sort((a, b) => a.order - b.order)
               .map((event) => (
@@ -84,14 +97,15 @@ const PartyCardGal: React.FC<PartyCardGalProps> = ({ city }) => {
                         <div className={cardStyles.eventLink}>
                           <span className={cardStyles.linkText}>
                             <span className={cardStyles.linkLabel}>Ссылка на мероприятие: </span>
-                            <a 
-                              href={event.event_url} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className={cardStyles.linkUrl}
-                            >
-                              {event.event_url}
-                            </a>
+                                   <a
+                                     href={event.event_url}
+                                     target="_blank"
+                                     rel="noopener noreferrer"
+                                     className={cardStyles.linkUrl}
+                                     style={{ wordBreak: 'break-all' }}
+                                   >
+                                     {event.event_url}
+                                   </a>
                           </span>
                         </div>
                       )}
@@ -108,6 +122,21 @@ const PartyCardGal: React.FC<PartyCardGalProps> = ({ city }) => {
               lineHeight: '1.2'
             }}>
               Пока нет информации
+            </div>
+          )}
+
+          {/* Slider Block */}
+          {sliderItems && sliderItems.filter(item => item.city_slug === 'gal').length > 0 && (
+            <div className={cardStyles.adBlock}>
+              <AdSlider 
+                items={sliderItems
+                  .filter(item => item.city_slug === 'gal')
+                  .map(item => ({
+                    type: item.media_type,
+                    src: toImageUrl(item.media_file)
+                  }))
+                } 
+              />
             </div>
           )}
         </div>

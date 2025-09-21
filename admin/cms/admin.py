@@ -52,4 +52,4 @@ from .cities.admin import CityAdmin
 from .mobile_communication.admin import MobileCommunicationPageAdmin
 from .mountain_routes.admin import MountainRoutesPageAdmin
 from .transport_communications.admin import TransportCommunicationsPageAdmin
-from .parties.admin import PartiesPageAdmin, PartyCityAdmin, PartyEventAdmin
+from .parties.admin import PartiesPageAdmin
