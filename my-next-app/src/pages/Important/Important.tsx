@@ -21,6 +21,8 @@ type ImportantRule = {
 type ImportantImage = {
   id: number;
   image_url: string;
+  title?: string;
+  description?: string;
   alt_text: string;
   order: number;
 };
@@ -35,13 +37,31 @@ type ImportantSection = {
   order: number;
   rules: ImportantRule[];
   images: ImportantImage[];
+  // Поля для такси-этикета
+  passenger_intro_text: string;
+  passenger_background_url: string;
+  passenger_conclusion_text: string;
+  driver_intro_text: string;
+  driver_background_url: string;
+  driver_description_text: string;
+  driver_conclusion_text: string;
 };
 
 type ImportantPage = {
   id: number;
   title: string;
-  meta_title: string;
-  meta_description: string;
+  seo_title: string;
+  seo_description: string;
+  seo_keywords: string;
+  canonical_url: string;
+  robots_index: boolean;
+  robots_follow: boolean;
+  og_title: string;
+  og_description: string;
+  og_image: string;
+  twitter_title: string;
+  twitter_description: string;
+  twitter_image: string;
   sections: ImportantSection[];
 };
 

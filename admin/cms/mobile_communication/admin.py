@@ -93,3 +93,4 @@ class MobileCommunicationPageAdmin(admin.ModelAdmin):
         if MobileCommunicationPage.objects.exists():
             return False
         return super().has_add_permission(request)
+

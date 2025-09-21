@@ -88,7 +88,7 @@ const MountainRoutes: React.FC = () => {
             {topRowServices.map((route) => (
               <article
                 key={route.id}
-                className={route.text ? `${styles.card} ${styles.textCard}` : styles.card}
+                className={styles.card}
               >
                 {route.image && (
                   <img
@@ -122,7 +122,7 @@ const MountainRoutes: React.FC = () => {
             {bottomRowServices.map((route) => (
               <article
                 key={route.id}
-                className={route.text ? `${styles.card} ${styles.textCard}` : styles.card}
+                className={styles.card}
               >
                 {route.image && (
                   <img

@@ -10,6 +10,9 @@ interface PartyEvent {
   description?: string;
   event_url?: string;
   order: number;
+  city: number;
+  city_name: string;
+  city_slug: string;
 }
 
 interface PartyCity {

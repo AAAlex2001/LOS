@@ -37,3 +37,4 @@ class ExcursionsPageSerializer(serializers.ModelSerializer):
 
 
 
+

@@ -70,9 +70,14 @@ const EtiquetteRule = ({ number, title, description }: { number: number; title: 
 );
 
 const ImportantTaxiEtiquette: React.FC<Props> = ({ section }) => {
+  // Проверяем существование section
+  if (!section) {
+    return <div>Загрузка...</div>;
+  }
+
   // Группируем правила по типам
-  const passengerRules = section.rules.filter(rule => rule.rule_type === 'passenger').sort((a, b) => a.order - b.order);
-  const driverRules = section.rules.filter(rule => rule.rule_type === 'driver').sort((a, b) => a.order - b.order);
+  const passengerRules = (section.rules || []).filter(rule => rule.rule_type === 'passenger').sort((a, b) => a.order - b.order);
+  const driverRules = (section.rules || []).filter(rule => rule.rule_type === 'driver').sort((a, b) => a.order - b.order);
 
   return (
     <div className={styles.contentSection}>

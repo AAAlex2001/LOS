@@ -24,3 +24,4 @@ class HotSpringViewSet(viewsets.ModelViewSet):
 
 
 
+

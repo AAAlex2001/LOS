@@ -54,7 +54,7 @@ const formatText = (text: string) => {
 };
 
 // Компонент для текстовых блоков
-const TextBlock = ({ title, children }: { title: string; children: string }) => (
+const TextBlock = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <section className={styles.textSection}>
     <h3 className={styles.sectionTitle}>{title}</h3>
     <div>{children}</div>
@@ -75,12 +75,18 @@ const ImageBlock = ({ src, alt, title, description }: { src: string; alt: string
 );
 
 const ImportantPublicBehavior: React.FC<Props> = ({ section }) => {
+  // Проверяем существование section
+  if (!section) {
+    return <div>Загрузка...</div>;
+  }
+
   // Группируем правила по типам
-  const rulesByType = section.rules.reduce((acc, rule) => {
-    if (!acc[rule.rule_type]) {
-      acc[rule.rule_type] = [];
+  const rulesByType = (section.rules || []).reduce((acc, rule) => {
+    const ruleType = rule.rule_type || 'default';
+    if (!acc[ruleType]) {
+      acc[ruleType] = [];
     }
-    acc[rule.rule_type].push(rule);
+    acc[ruleType].push(rule);
     return acc;
   }, {} as Record<string, ImportantRule[]>);
 
@@ -93,7 +99,7 @@ const ImportantPublicBehavior: React.FC<Props> = ({ section }) => {
         <div className={styles.imageContainer}>
           <img 
             src={section.image_url.startsWith('http') ? section.image_url : `${API_BASE}/media/${section.image_url}`} 
-            alt={section.title} 
+            alt={section.title || ''} 
             className={styles.image} 
             style={{ width: '100%', height: 'auto' }} 
           />
@@ -112,7 +118,7 @@ const ImportantPublicBehavior: React.FC<Props> = ({ section }) => {
       ))}
       
       {/* Отображаем дополнительные изображения */}
-      {section.images.map((image) => (
+      {(section.images || []).map((image) => (
         <ImageBlock
           key={image.id}
           src={image.image_url.startsWith('http') ? image.image_url : `${API_BASE}/media/${image.image_url}`}

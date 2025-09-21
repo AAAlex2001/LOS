@@ -113,8 +113,8 @@ const AdministrativeBuildingsGagra: React.FC = () => {
               {/* Информация */}
               <div className={styles.infoContainer}>
                 <h2 className={styles.buildingName}>
-                  {building.nameLink ? (
-                    <a href={building.nameLink} target="_blank" rel="noopener noreferrer">
+                  {building.name_link ? (
+                    <a href={building.name_link} target="_blank" rel="noopener noreferrer">
                       {building.name}
                     </a>
                   ) : (
