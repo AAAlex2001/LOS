@@ -31,6 +31,7 @@ urlpatterns = [
     path("mobile-communication/", include("cms.mobile_communication.urls")),
     path("mountain-routes/", include("cms.mountain_routes.urls")),
     path("transport-communications/", include("cms.transport_communications.urls")),
+    path("parties/", include("cms.parties.urls")),
 ]
 
 
