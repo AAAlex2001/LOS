@@ -42,3 +42,4 @@ class DictionaryWordViewSet(viewsets.ModelViewSet):
     """
     queryset = DictionaryWord.objects.all()
     serializer_class = DictionaryWordSerializer
+

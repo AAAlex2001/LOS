@@ -18,3 +18,4 @@ class ImportantPageViewSet(viewsets.ReadOnlyModelViewSet):
         
         serializer = self.get_serializer(page)
         return Response(serializer.data)
+

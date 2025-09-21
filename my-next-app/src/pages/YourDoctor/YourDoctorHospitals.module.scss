@@ -49,27 +49,24 @@
   flex-direction: column;
   gap: 40px;
   width: 100%;
-  max-width: 1100px; /* Увеличил с 1000px до 1100px */
+  max-width: 1100px;
   margin-top: 30px;
-  padding: 0 10px; /* Уменьшил с 40px до 10px */
+  padding: 0 10px;
 }
 
 // Hospital card
 .hospitalCard {
   display: grid;
-  grid-template-columns: 49.19% 50.81%;
+  grid-template-columns: 50% 50%;
   column-gap: 32px;
   width: 100%;
   min-height: 390px;
-  position: relative;
 }
 
 // Image container (left side)
 .imageContainer {
-  position: relative;
   width: 100%;
-  height: 100%;
-  min-height: 390px;
+  max-height: 550px;
   border-radius: 15px;
   overflow: hidden;
 }
@@ -77,7 +74,6 @@
 .hospitalImage {
   object-fit: cover;
   width: 100%;
-  height: 100%;
 }
 
 // Info container (right side)
@@ -88,7 +84,7 @@
   padding: 40px;
   gap: 24px;
   width: 100%;
-  min-height: 390px;
+  max-height: 550px;
   background: rgba(17, 41, 189, 0.1);
   border: 1px solid #d5daef;
   border-radius: 15px;

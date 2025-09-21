@@ -23,3 +23,4 @@ class ExcursionServiceViewSet(viewsets.ModelViewSet):
     serializer_class = ExcursionServiceSerializer
 
 
+

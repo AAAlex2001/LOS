@@ -23,3 +23,4 @@ class HotSpringViewSet(viewsets.ModelViewSet):
     serializer_class = HotSpringSerializer
 
 
+

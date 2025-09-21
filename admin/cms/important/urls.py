@@ -8,3 +8,4 @@ router.register(r'page', ImportantPageViewSet)
 urlpatterns = [
     path('', include(router.urls)),
 ]
+
