@@ -28,6 +28,7 @@ urlpatterns = [
     path("government-structure/", include("cms.government_structure.urls")),
     path("hot-springs/", include("cms.hot_springs.urls")),
     path("important/", include("cms.important.urls")),
+    path("mobile-communication/", include("cms.mobile_communication.urls")),
 ]
 
 

@@ -68,6 +68,7 @@ $color-text: #000000;
       text-align: center;
       margin: 0;
       max-width: 100%;
+  white-space: pre-line; // отображать \n как перенос строки
     }
   }
 }
@@ -132,6 +133,7 @@ $color-text: #000000;
   text-align: center;
   color: $primary-color; // Синий цвет для описания
   margin: 0;
+  white-space: pre-line; // отображать \n как перенос строки
 }
 
 .link {

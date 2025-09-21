@@ -58,6 +58,7 @@ class CmsConfig(AppConfig):
             'government_structure',
             'hot_springs',
             'important',
+            'mobile_communication',
         ):
             try:
                 __import__(f"{self.name}.{module_name}.models")  # noqa: F401

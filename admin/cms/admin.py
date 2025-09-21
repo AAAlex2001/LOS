@@ -49,3 +49,4 @@ from .government_structure.admin import GovernmentStructurePageAdmin
 from .hot_springs.admin import HotSpringsPageAdmin
 from .important.admin import ImportantPageAdmin
 from .cities.admin import CityAdmin
+from .mobile_communication.admin import MobileCommunicationPageAdmin
