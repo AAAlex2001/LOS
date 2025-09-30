@@ -54,6 +54,7 @@ class CulturalAttraction(TimestampedModel):
     description = models.TextField("Описание", help_text="Подробное описание достопримечательности")
     address = models.CharField("Адрес", max_length=500)
     address_link = models.URLField("Ссылка на карту", blank=True)
+    working_hours = models.CharField("Режим работы", max_length=255, blank=True)
     image = models.ImageField("Изображение", upload_to="cultural_attractions/images/", blank=True)
     order = models.PositiveIntegerField(default=0)
 

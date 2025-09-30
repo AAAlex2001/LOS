@@ -111,6 +111,33 @@
   word-wrap: break-word;
 }
 
+// Attraction working hours
+.attractionWorkingHours {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+}
+
+.workingHoursLabel {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 26px;
+  color: #333333;
+  margin: 0;
+}
+
+.workingHoursValue {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 26px;
+  color: #333333;
+  margin: 0;
+}
+
 // Attraction address
 .attractionAddress {
   display: flex;

@@ -111,6 +111,33 @@
   word-wrap: break-word;
 }
 
+// Attraction working hours
+.attractionWorkingHours {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+}
+
+.workingHoursLabel {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 26px;
+  color: #333333;
+  margin: 0;
+}
+
+.workingHoursValue {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 26px;
+  color: #333333;
+  margin: 0;
+}
+
 // Attraction address
 .attractionAddress {
   display: flex;
@@ -200,6 +227,11 @@
     line-height: 26px;
   }
   
+  .workingHoursLabel, .workingHoursValue {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  
   .addressLabel, .addressValue {
     font-size: 20px;
     line-height: 24px;
@@ -234,6 +266,11 @@
   .attractionDescription {
     font-size: 18px;
     line-height: 24px;
+  }
+  
+  .workingHoursLabel, .workingHoursValue {
+    font-size: 18px;
+    line-height: 22px;
   }
   
   .addressLabel, .addressValue {
@@ -272,6 +309,11 @@
     line-height: 22px;
   }
   
+  .workingHoursLabel, .workingHoursValue {
+    font-size: 17px;
+    line-height: 21px;
+  }
+  
   .addressLabel, .addressValue {
     font-size: 17px;
     line-height: 21px;
@@ -308,6 +350,11 @@
     line-height: 20px;
   }
   
+  .workingHoursLabel, .workingHoursValue {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  
   .addressLabel, .addressValue {
     font-size: 16px;
     line-height: 20px;
@@ -340,6 +387,11 @@
   }
   
   .attractionDescription {
+    font-size: 15px;
+    line-height: 19px;
+  }
+  
+  .workingHoursLabel, .workingHoursValue {
     font-size: 15px;
     line-height: 19px;
   }

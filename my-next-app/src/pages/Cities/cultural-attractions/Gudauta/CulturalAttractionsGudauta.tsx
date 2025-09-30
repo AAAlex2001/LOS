@@ -122,6 +122,13 @@ const CulturalAttractionsGudauta: React.FC = () => {
                 </div>
               )}
               
+              {attraction.working_hours && (
+                <div className={styles.attractionWorkingHours}>
+                  <span className={styles.workingHoursLabel}>Режим работы:</span>
+                  <span className={styles.workingHoursValue}>{attraction.working_hours}</span>
+                </div>
+              )}
+              
               <div className={styles.attractionAddress}>
                 <span className={styles.addressLabel}>Адрес:</span>
                 <span className={styles.addressValue}>

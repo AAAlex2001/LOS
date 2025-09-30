@@ -16,7 +16,7 @@ class CulturalAttractionSerializer(serializers.ModelSerializer):
         model = CulturalAttraction
         fields = [
             "id", "city", "name", "name_link", "description", "address", "address_link",
-            "image_url", "order"
+            "working_hours", "image_url", "order"
         ]
 
     def get_image_url(self, obj: CulturalAttraction) -> str:

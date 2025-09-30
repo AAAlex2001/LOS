@@ -7,7 +7,7 @@ from .models import CulturalAttractionsPage, CulturalAttractionCity, CulturalAtt
 class CulturalAttractionInline(admin.TabularInline):
     model = CulturalAttraction
     extra = 1
-    fields = ("city", "name", "name_link", "address", "address_link", "description", "image", "order", "preview")
+    fields = ("city", "name", "name_link", "address", "address_link", "working_hours", "description", "image", "order", "preview")
     readonly_fields = ("preview",)
 
     def preview(self, obj):

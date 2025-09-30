@@ -95,3 +95,4 @@ class MobileCommunicationPageAdmin(admin.ModelAdmin):
         return super().has_add_permission(request)
 
 
+
