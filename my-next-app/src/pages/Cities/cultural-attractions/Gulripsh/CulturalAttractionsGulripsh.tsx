@@ -93,64 +93,44 @@ const CulturalAttractionsGulripsh: React.FC = () => {
           <h1 className={styles.mainTitle}>{data?.title || 'Гулрыпш: культурные достопримечательности'}</h1>
         </section>
 
-        <section className={styles.cardsSection}>
+        <section className={styles.attractionsSection}>
           {data.attractions.map((attraction) => (
-            <div key={attraction.id} className={styles.attractionCard}>
+            <div key={attraction.id} className={styles.attractionItem}>
               <div className={styles.imageContainer}>
                 {attraction.image_url && (
                   <img
                     src={`${API_BASE}/media/${attraction.image_url}`}
                     alt={attraction.name}
                     className={styles.attractionImage}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 )}
               </div>
 
-              <div className={styles.infoContainer}>
-                <h2 className={styles.attractionName}>
-                  {attraction.name_link ? (
-                    <a href={attraction.name_link} target="_blank" rel="noopener noreferrer">
-                      {attraction.name}
-                    </a>
-                  ) : (
-                    attraction.name
-                  )}
-                </h2>
-                
-                <div className={styles.infoBlock}>
-                  <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Адрес:</span>
-                    <span className={`${styles.infoValue} ${attraction.address_link ? styles.addressLink : ''}`}>
-                      {attraction.address_link ? (
-                        <a href={attraction.address_link} target="_blank" rel="noopener noreferrer">{attraction.address}</a>
-                      ) : (
-                        attraction.address
-                      )}
-                    </span>
-                  </div>
-                  
-                  {attraction.working_hours && (
-                    <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
-                      <span className={styles.infoValue}>{attraction.working_hours}</span>
-                    </div>
-                  )}
-                  
-                  {attraction.description && (
-                    <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Описание:</span>
-                      <span className={styles.infoValue}>{attraction.description}</span>
-                    </div>
-                  )}
-                  
-                  {attraction.contacts && (
-                    <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
-                      <span className={styles.infoValue}>{attraction.contacts}</span>
-                    </div>
-                  )}
+              <h2 className={styles.attractionTitle}>
+                {attraction.name_link ? (
+                  <a href={attraction.name_link} target="_blank" rel="noopener noreferrer">
+                    {attraction.name}
+                  </a>
+                ) : (
+                  attraction.name
+                )}
+              </h2>
+              
+              {attraction.description && (
+                <div className={styles.attractionDescription}>
+                  {attraction.description}
                 </div>
+              )}
+              
+              <div className={styles.attractionAddress}>
+                <span className={styles.addressLabel}>Адрес:</span>
+                <span className={styles.addressValue}>
+                  {attraction.address_link ? (
+                    <a href={attraction.address_link} target="_blank" rel="noopener noreferrer">{attraction.address}</a>
+                  ) : (
+                    attraction.address
+                  )}
+                </span>
               </div>
             </div>
           ))}

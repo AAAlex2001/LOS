@@ -41,33 +41,32 @@
   margin: 0;
 }
 
-// Cards section
-.cardsSection {
+// Attractions section
+.attractionsSection {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 60px;
   width: 100%;
-  max-width: 1232px;
+  max-width: 1200px;
 }
 
-// Attraction card
-.attractionCard {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  column-gap: 32px;
+// Attraction item
+.attractionItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
   width: 100%;
-  min-height: 320px;
-  position: relative;
 }
 
-// Image container (left side)
+// Image container
 .imageContainer {
   position: relative;
   width: 100%;
-  height: 100%;
-  min-height: 320px;
+  height: auto;
   border-radius: 15px;
   overflow: hidden;
+  aspect-ratio: 16/9;
 }
 
 .attractionImage {
@@ -76,42 +75,15 @@
   height: 100%;
 }
 
-// Info container (right side)
-.infoContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 40px;
-  gap: 24px;
-  width: 100%;
-  min-height: 320px;
-  background: rgba(17, 41, 189, 0.1);
-  border: 1px solid #d5daef;
-  border-radius: 15px;
-  box-sizing: border-box;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-}
-
-// Attraction name
-.attractionName {
+// Attraction title
+.attractionTitle {
   font-family: 'Inter', sans-serif;
   font-weight: 800;
-  font-size: 32px;
-  line-height: 39px;
+  font-size: 36px;
+  line-height: 44px;
   color: #1129bd;
   margin: 0;
-  width: 100%;
-  text-align: left;
-  
-  &.clickable {
-    text-decoration: underline;
-    cursor: pointer;
-    
-    &:hover {
-      opacity: 0.8;
-    }
-  }
+  text-align: center;
   
   a {
     text-decoration: underline;
@@ -124,47 +96,52 @@
   }
 }
 
-// Info block
-.infoBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-}
-
-.infoItem {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 8px;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-}
-
-.infoLabel {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 26px;
-  line-height: 31px;
-  color: #1129bd;
-  margin: 0;
-}
-
-.infoValue {
+// Attraction description
+.attractionDescription {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
-  font-size: 26px;
-  line-height: 31px;
-  color: #1129bd;
+  font-size: 22px;
+  line-height: 28px;
+  color: #333333;
   margin: 0;
-  white-space: pre-line; // Для переносов строк
+  text-align: left;
+  width: 100%;
+  white-space: pre-line;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  // underline only for links when .link class applied
+}
 
-  &.link {
+// Attraction address
+.attractionAddress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+}
+
+.addressLabel {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 26px;
+  color: #333333;
+  margin: 0;
+}
+
+.addressValue {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 26px;
+  color: #333333;
+  margin: 0;
+  
+  a {
     text-decoration: underline;
     cursor: pointer;
+    color: inherit;
+
     &:hover {
       opacity: 0.8;
     }
@@ -176,7 +153,7 @@
 /* Large Desktop (1441px+) */
 @media (min-width: 1441px) {
   .mainContent {
-    padding: 30px calc((100vw - 1232px) / 2) 60px;
+    padding: 30px calc((100vw - 1200px) / 2) 60px;
   }
 }
 
@@ -188,17 +165,12 @@
   
   .titleSection {
     width: 100%;
-    max-width: 920px;
-    height: auto;
+    max-width: 1200px;
   }
   
-  .cardsSection {
+  .attractionsSection {
     width: 100%;
-    max-width: 1232px;
-  }
-  
-  .attractionCard {
-    width: 100%;
+    max-width: 1200px;
   }
 }
 
@@ -206,48 +178,31 @@
 @media (max-width: 1199px) and (min-width: 900px) {
   .mainContent {
     padding: 30px 4% 40px;
-    gap: 60px;
+    gap: 50px;
   }
   
   .mainTitle {
     font-size: 32px;
-    line-height: 27px;
+    line-height: 39px;
   }
   
-  .titleSection {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    padding: 10px;
+  .attractionsSection {
+    gap: 50px;
   }
   
-  .cardsSection {
-    width: 100%;
-    gap: 30px;
+  .attractionTitle {
+    font-size: 32px;
+    line-height: 39px;
   }
   
-  .attractionCard {
-    grid-template-columns: 50% 50%;
-    min-height: 350px;
+  .attractionDescription {
+    font-size: 20px;
+    line-height: 26px;
   }
   
-  .imageContainer,
-  .infoContainer {
-    min-height: 350px;
-  }
-  
-  .attractionName {
-    font-size: 28px;
-    line-height: 34px;
-  }
-  
-  .infoLabel, .infoValue {
-    font-size: 22px;
-    line-height: 27px;
-  }
-  
-  .infoItem {
-    gap: 6px;
+  .addressLabel, .addressValue {
+    font-size: 20px;
+    line-height: 24px;
   }
 }
 
@@ -255,7 +210,7 @@
 @media (max-width: 899px) and (min-width: 769px) {
   .mainContent {
     padding: 30px 3% 30px;
-    gap: 50px;
+    gap: 40px;
   }
   
   .mainTitle {
@@ -263,39 +218,27 @@
     line-height: 36px;
   }
   
-  .attractionCard {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  .attractionsSection {
+    gap: 40px;
   }
   
-  .imageContainer {
-    width: 100%;
-    height: auto;
-    min-height: auto;
-    border-radius: 15px;
-    aspect-ratio: 4/3;
+  .attractionItem {
+    gap: 18px;
   }
   
-  .infoContainer {
-    width: 100%;
-    border-radius: 15px;
-    padding: 30px;
-    min-height: auto;
+  .attractionTitle {
+    font-size: 28px;
+    line-height: 36px;
   }
   
-  .attractionName {
-    font-size: 26px;
-    line-height: 32px;
+  .attractionDescription {
+    font-size: 18px;
+    line-height: 24px;
   }
   
-  .infoLabel, .infoValue {
-    font-size: 20px;
-    line-height: 25px;
-  }
-  
-  .infoItem {
-    gap: 6px;
+  .addressLabel, .addressValue {
+    font-size: 18px;
+    line-height: 22px;
   }
 }
 
@@ -303,7 +246,7 @@
 @media (max-width: 768px) and (min-width: 481px) {
   .mainContent {
     padding: 30px 4% 25px;
-    gap: 40px;
+    gap: 35px;
   }
   
   .mainTitle {
@@ -311,45 +254,27 @@
     line-height: 30px;
   }
   
-  .cardsSection {
-    gap: 25px;
+  .attractionsSection {
+    gap: 35px;
   }
   
-  .attractionCard {
-    display: flex;
-    flex-direction: column;
-    min-height: auto;
-    gap: 15px;
+  .attractionItem {
+    gap: 16px;
   }
   
-  .imageContainer {
-    width: 100%;
-    height: auto;
-    min-height: auto;
-    border-radius: 15px;
-    aspect-ratio: 4/3;
+  .attractionTitle {
+    font-size: 24px;
+    line-height: 30px;
   }
   
-  .infoContainer {
-    width: 100%;
-    padding: 25px;
-    gap: 20px;
-    border-radius: 15px;
-    min-height: auto;
+  .attractionDescription {
+    font-size: 17px;
+    line-height: 22px;
   }
   
-  .attractionName {
-    font-size: 22px;
-    line-height: 28px;
-  }
-  
-  .infoLabel, .infoValue {
-    font-size: 18px;
-    line-height: 23px;
-  }
-  
-  .infoItem {
-    gap: 5px;
+  .addressLabel, .addressValue {
+    font-size: 17px;
+    line-height: 21px;
   }
 }
 
@@ -365,49 +290,27 @@
     line-height: 26px;
   }
   
-  .cardsSection {
-    gap: 20px;
+  .attractionsSection {
+    gap: 30px;
   }
   
-  .attractionCard {
-    display: flex;
-    flex-direction: column;
-    min-height: auto;
-    gap: 12px;
+  .attractionItem {
+    gap: 14px;
   }
   
-  .imageContainer {
-    width: 100%;
-    height: auto;
-    min-height: auto;
-    border-radius: 15px;
-    aspect-ratio: 4/3;
+  .attractionTitle {
+    font-size: 20px;
+    line-height: 26px;
   }
   
-  .infoContainer {
-    width: 100%;
-    padding: 20px;
-    gap: 16px;
-    border-radius: 15px;
-    min-height: auto;
-  }
-  
-  .attractionName {
-    font-size: 18px;
-    line-height: 24px;
-  }
-  
-  .infoLabel, .infoValue {
+  .attractionDescription {
     font-size: 16px;
     line-height: 20px;
   }
   
-  .infoBlock {
-    gap: 2px;
-  }
-  
-  .infoItem {
-    gap: 4px;
+  .addressLabel, .addressValue {
+    font-size: 16px;
+    line-height: 20px;
   }
 }
 
@@ -415,6 +318,7 @@
 @media (max-width: 319px) {
   .mainContent {
     padding: 30px 3% 15px;
+    gap: 25px;
   }
   
   .mainTitle {
@@ -422,41 +326,27 @@
     line-height: 24px;
   }
   
-  .attractionCard {
-    display: flex;
-    flex-direction: column;
-    min-height: auto;
-    gap: 10px;
+  .attractionsSection {
+    gap: 25px;
   }
   
-  .imageContainer {
-    width: 100%;
-    height: auto;
-    min-height: auto;
-    border-radius: 15px;
-    aspect-ratio: 4/3;
-  }
-  
-  .infoContainer {
-    width: 100%;
-    border-radius: 15px;
-    padding: 15px;
+  .attractionItem {
     gap: 12px;
-    min-height: auto;
   }
   
-  .attractionName {
-    font-size: 16px;
-    line-height: 22px;
+  .attractionTitle {
+    font-size: 18px;
+    line-height: 24px;
   }
   
-  .infoLabel, .infoValue {
-    font-size: 14px;
-    line-height: 18px;
+  .attractionDescription {
+    font-size: 15px;
+    line-height: 19px;
   }
   
-  .infoItem {
-    gap: 3px;
+  .addressLabel, .addressValue {
+    font-size: 15px;
+    line-height: 19px;
   }
 }
 

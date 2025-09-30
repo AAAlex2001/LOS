@@ -45,3 +45,4 @@ class MobileCommunicationPageSerializer(serializers.ModelSerializer):
             'updated_at'
         ]
 
+

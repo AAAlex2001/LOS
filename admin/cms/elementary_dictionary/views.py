@@ -44,3 +44,4 @@ class DictionaryWordViewSet(viewsets.ModelViewSet):
     serializer_class = DictionaryWordSerializer
 
 
+

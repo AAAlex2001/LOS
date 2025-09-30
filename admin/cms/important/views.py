@@ -20,3 +20,4 @@ class ImportantPageViewSet(viewsets.ReadOnlyModelViewSet):
         return Response(serializer.data)
 
 
+
