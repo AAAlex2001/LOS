@@ -52,6 +52,8 @@ class ParkingLot(TimestampedModel):
     name = models.CharField("Название", max_length=255)
     address = models.CharField("Адрес", max_length=500)
     address_link = models.URLField("Ссылка на карту", blank=True)
+    working_hours = models.CharField("Режим работы", max_length=255, blank=True)
+    contacts = models.CharField("Контакты", max_length=255, blank=True)
     image = models.ImageField("Изображение", upload_to="parking_lots/images/", blank=True)
     order = models.PositiveIntegerField(default=0)
 

@@ -38,7 +38,7 @@ class ClothingRepairPageViewSet(viewsets.ReadOnlyModelViewSet):
                 return Response({"error": f"Город '{city_name}' не найден"}, status=404)
             
             # Получить мастерские для этого города
-            repairs = ClothingRepair.objects.filter(city=city)
+            repairs = ClothingRepair.objects.filter(city=city).order_by('order', 'id')
             
             # Формируем заголовок
             title = city.title or f"{city.name}: ремонт одежды и обуви"

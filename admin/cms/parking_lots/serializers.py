@@ -16,7 +16,7 @@ class ParkingLotSerializer(serializers.ModelSerializer):
         model = ParkingLot
         fields = [
             "id", "city", "name", "address", "address_link",
-            "image_url", "order"
+            "working_hours", "contacts", "image_url", "order"
         ]
 
     def get_image_url(self, obj: ParkingLot) -> str:

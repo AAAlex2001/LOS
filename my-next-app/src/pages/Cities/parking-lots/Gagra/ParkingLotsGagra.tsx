@@ -15,8 +15,8 @@ type ParkingLot = {
   name_link?: string;
   address: string;
   address_link?: string;
-  phone?: string;
   working_hours?: string;
+  contacts?: string;
   image_url: string;
   order: number;
 };
@@ -136,10 +136,10 @@ const ParkingLotsGagra: React.FC = () => {
                     </div>
                   )}
                   
-                  {lot.phone && (
+                  {lot.contacts && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Телефон:</span>
-                      <span className={styles.infoValue}>{lot.phone}</span>
+                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoValue}>{lot.contacts}</span>
                     </div>
                   )}
                 </div>

@@ -7,7 +7,7 @@ from .models import ParkingLotsPage, ParkingLotCity, ParkingLot
 class ParkingLotInline(admin.TabularInline):
     model = ParkingLot
     extra = 1
-    fields = ("city", "name", "address", "address_link", "image", "order", "preview")
+    fields = ("city", "name", "address", "address_link", "working_hours", "contacts", "image", "order", "preview")
     readonly_fields = ("preview",)
 
     def preview(self, obj):

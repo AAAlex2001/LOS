@@ -7,7 +7,7 @@ from .models import ClothingRepairPage, ClothingRepairCity, ClothingRepair
 class ClothingRepairInline(admin.TabularInline):
     model = ClothingRepair
     extra = 1
-    fields = ("name", "name_link", "working_hours", "address", "address_link", "contacts", "description", "services", "image", "order", "preview")
+    fields = ("city", "name", "name_link", "address", "address_link", "working_hours", "contacts", "description", "services", "image", "order", "preview")
     readonly_fields = ("preview",)
 
     def preview(self, obj):
@@ -17,18 +17,33 @@ class ClothingRepairInline(admin.TabularInline):
     
     preview.short_description = "Предпросмотр"
 
+    def get_parent_object(self, request):
+        try:
+            object_id = request.resolver_match.kwargs.get("object_id")
+        except Exception:
+            object_id = None
+        if not object_id:
+            return None
+        return ClothingRepairPage.objects.filter(pk=object_id).first()
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "city":
+            page = self.get_parent_object(request)
+            if page is not None:
+                kwargs["queryset"] = ClothingRepairCity.objects.filter(page=page)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
 
 class ClothingRepairCityInline(admin.TabularInline):
     model = ClothingRepairCity
     extra = 1
     fields = ("name", "title", "order")
-    inlines = [ClothingRepairInline]
 
 
 @admin.register(ClothingRepairPage)
 class ClothingRepairPageAdmin(admin.ModelAdmin):
     list_display = ("id", "updated_at")
-    inlines = [ClothingRepairCityInline]
+    inlines = [ClothingRepairCityInline, ClothingRepairInline]
     readonly_fields = ("seo_preview",)
 
     def has_add_permission(self, request):
