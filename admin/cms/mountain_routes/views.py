@@ -24,3 +24,5 @@ class MountainRoutesPageViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 
+
+

@@ -1,8 +1,5 @@
 import AdministrativeBuildingsTkuarchal from '@/pages/Cities/administrative-buildings/Tkuarchal/AdministrativeBuildingsTkuarchal';
-import { FC } from 'react';
 
-const AdministrativeBuildingsTkuarchalPage: FC = () => {
+export default function Page() {
   return <AdministrativeBuildingsTkuarchal />;
-};
-
-export default AdministrativeBuildingsTkuarchalPage; 
+} 

@@ -1,8 +1,5 @@
 import AdministrativeBuildingsNewAfon from '@/pages/Cities/administrative-buildings/NewAfon/AdministrativeBuildingsNewAfon';
-import { FC } from 'react';
 
-const AdministrativeBuildingsNewAfonPage: FC = () => {
+export default function Page() {
   return <AdministrativeBuildingsNewAfon />;
-};
-
-export default AdministrativeBuildingsNewAfonPage; 
+} 

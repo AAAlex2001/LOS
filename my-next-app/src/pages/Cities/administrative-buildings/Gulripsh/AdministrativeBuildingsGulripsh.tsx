@@ -90,13 +90,14 @@ const AdministrativeBuildingsGulripsh: React.FC = () => {
       <Header />
       
       <main className={styles.mainContent}>
-        {/* Заголовок */}
-        <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data?.title || 'Гулрыпш: административные здания, правоохранительный блок'}</h1>
-        </section>
+        <div className={styles.buildingsWrapper}>
+          {/* Заголовок */}
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>{data?.title || 'Гулрыпш: административные здания, правоохранительный блок'}</h1>
+          </section>
 
-        {/* Карточки зданий */}
-        <section className={styles.cardsSection}>
+          {/* Карточки зданий */}
+          <section className={styles.cardsSection}>
           {buildings.map((building) => (
             <div key={building.id} className={styles.buildingCard}>
               {/* Изображение */}
@@ -152,7 +153,8 @@ const AdministrativeBuildingsGulripsh: React.FC = () => {
               </div>
             </div>
           ))}
-        </section>
+          </section>
+        </div>
       </main>
 
       <Footer />

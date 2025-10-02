@@ -1,8 +1,5 @@
 import AdministrativeBuildingsOchamchira from '@/pages/Cities/administrative-buildings/Ochamchira/AdministrativeBuildingsOchamchira';
-import { FC } from 'react';
 
-const AdministrativeBuildingsOchamchiraPage: FC = () => {
+export default function Page() {
   return <AdministrativeBuildingsOchamchira />;
-};
-
-export default AdministrativeBuildingsOchamchiraPage; 
+} 

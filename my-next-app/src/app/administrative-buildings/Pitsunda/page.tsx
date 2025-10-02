@@ -1,8 +1,5 @@
 import AdministrativeBuildingsPitsunda from '@/pages/Cities/administrative-buildings/Pitsunda/AdministrativeBuildingsPitsunda';
-import { FC } from 'react';
 
-const AdministrativeBuildingsPitsundaPage: FC = () => {
+export default function Page() {
   return <AdministrativeBuildingsPitsunda />;
-};
-
-export default AdministrativeBuildingsPitsundaPage; 
+} 

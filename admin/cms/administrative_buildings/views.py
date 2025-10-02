@@ -34,6 +34,7 @@ class AdministrativeBuildingsPageViewSet(viewsets.ReadOnlyModelViewSet):
             
             # Найти город по имени
             city = AdministrativeBuildingCity.objects.filter(
+                page=page,
                 name__icontains=city_name
             ).first()
             

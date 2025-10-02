@@ -1,8 +1,5 @@
 import AdministrativeBuildingsGudauta from '@/pages/Cities/administrative-buildings/Gudauta/AdministrativeBuildingsGudauta';
-import { FC } from 'react';
 
-const AdministrativeBuildingsGudautaPage: FC = () => {
+export default function Page() {
   return <AdministrativeBuildingsGudauta />;
-};
-
-export default AdministrativeBuildingsGudautaPage; 
+} 

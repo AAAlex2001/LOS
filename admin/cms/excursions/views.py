@@ -27,3 +27,5 @@ class ExcursionServiceViewSet(viewsets.ModelViewSet):
 
 
 
+
+
