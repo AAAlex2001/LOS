@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://landofsoul-apsny.ru/sitemap.xml
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /assets/
+
+# Allow important pages
+Allow: /
+Allow: /cities/
+Allow: /hotels/
+Allow: /restaurants/
+Allow: /beaches/
+Allow: /excursions/
