@@ -48,3 +48,5 @@ class DictionaryWordViewSet(viewsets.ModelViewSet):
 
 
 
+
+

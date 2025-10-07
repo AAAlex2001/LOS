@@ -10,7 +10,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-secret-key-change-me")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "1") == "1"
 
-ALLOWED_HOSTS = [h for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,109.196.103.12").split(",") if h]
+ALLOWED_HOSTS = [h for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,109.196.103.12,landofsoul-apsny.ru,www.landofsoul-apsny.ru").split(",") if h]
 
 
 INSTALLED_APPS = [
@@ -107,18 +107,25 @@ REST_FRAMEWORK = {
 # CORS / CSRF
 _cors_env = os.environ.get(
     "DJANGO_CORS_ALLOWED_ORIGINS",
-    "http://localhost,http://localhost:3000,http://127.0.0.1,http://127.0.0.1:3000,http://109.196.103.12,http://109.196.103.12:3000",
+    "http://localhost,http://localhost:3000,http://127.0.0.1,http://127.0.0.1:3000,http://109.196.103.12,http://109.196.103.12:3000,http://landofsoul-apsny.ru,https://landofsoul-apsny.ru,http://www.landofsoul-apsny.ru,https://www.landofsoul-apsny.ru",
 )
 CORS_ALLOWED_ORIGINS = [o for o in _cors_env.split(",") if o]
 CORS_ALLOW_CREDENTIALS = True
 
 _csrf_env = os.environ.get(
     "DJANGO_CSRF_TRUSTED_ORIGINS",
-    "http://localhost,http://localhost:3000,http://127.0.0.1,http://127.0.0.1:3000,http://109.196.103.12,http://109.196.103.12:3000",
+    "http://localhost,http://localhost:3000,http://127.0.0.1,http://127.0.0.1:3000,http://109.196.103.12,http://109.196.103.12:3000,http://landofsoul-apsny.ru,https://landofsoul-apsny.ru,http://www.landofsoul-apsny.ru,https://www.landofsoul-apsny.ru",
 )
 CSRF_TRUSTED_ORIGINS = [o for o in _csrf_env.split(",") if o]
 
 # Increase form field limits for large admin forms (dictionary page)
 DATA_UPLOAD_MAX_NUMBER_FIELDS = int(os.environ.get("DJANGO_DATA_UPLOAD_MAX_NUMBER_FIELDS", "100000"))
 
+
+# Behind reverse proxy (nginx) with HTTPS termination
+# Ensures request.is_secure() is True and absolute URLs use https
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+USE_X_FORWARDED_HOST = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
