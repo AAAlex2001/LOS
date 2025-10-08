@@ -53,19 +53,27 @@ const RouteLoader = () => {
       
       // Добавляем обработчики к событиям истории браузера
       window.addEventListener('popstate', handleBeforeNavigate);
-      document.addEventListener('click', (e) => {
+      
+      const handleLinkClick = (e: MouseEvent) => {
         const target = e.target as HTMLElement;
         const link = target.closest('a');
         if (link && link.getAttribute('href')?.startsWith('/')) {
-          showLoader();
+          const href = link.getAttribute('href');
+          // Не показываем лоадер если кликаем на текущую страницу
+          if (href !== pathname) {
+            showLoader();
+          }
         }
-      });
+      };
+      
+      document.addEventListener('click', handleLinkClick);
       
       return () => {
         window.removeEventListener('popstate', handleBeforeNavigate);
+        document.removeEventListener('click', handleLinkClick);
       };
     }
-  }, [showLoader]);
+  }, [showLoader, pathname]);
   
   if (!loading) return null;
   
