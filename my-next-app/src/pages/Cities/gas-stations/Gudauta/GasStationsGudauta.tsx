@@ -82,31 +82,38 @@ const GasStationsGudauta: React.FC = () => {
     );
   }
 
+  const gasStations = data?.gas_stations || [];
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
-        <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data?.title || 'Гудаута: автозаправочные станции'}</h1>
-        </section>
+        <div className={styles.buildingsWrapper}>
+          {/* Заголовок */}
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>{data?.title || 'Гудаута: автозаправочные станции'}</h1>
+          </section>
 
-        <section className={styles.cardsSection}>
-          {data.gas_stations.map((station) => (
-            <div key={station.id} className={styles.gasStationCard}>
+          {/* Карточки автозаправок */}
+          <section className={styles.cardsSection}>
+          {gasStations.map((station) => (
+            <div key={station.id} className={styles.buildingCard}>
+              {/* Изображение */}
               <div className={styles.imageContainer}>
                 {station.image_url && (
                   <img
                     src={`${API_BASE}/media/${station.image_url}`}
                     alt={station.name}
-                    className={styles.gasStationImage}
+                    className={styles.buildingImage}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 )}
               </div>
 
+              {/* Информация */}
               <div className={styles.infoContainer}>
-                <h2 className={styles.gasStationName}>
+                <h2 className={styles.buildingName}>
                   {station.name_link ? (
                     <a href={station.name_link} target="_blank" rel="noopener noreferrer">
                       {station.name}
@@ -138,7 +145,8 @@ const GasStationsGudauta: React.FC = () => {
               </div>
             </div>
           ))}
-        </section>
+          </section>
+        </div>
       </main>
 
       <Footer />

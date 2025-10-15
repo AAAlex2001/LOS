@@ -4,7 +4,7 @@ import React from 'react';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
-import styles from './GasStationsGagra.module.scss';
+import styles from './GasStationsTkuarchal.module.scss';
 import config from '@/config';
 
 type City = { id: number; name: string; title?: string; order: number };
@@ -28,7 +28,7 @@ type CityPageData = {
 
 const API_BASE = config.API_BASE;
 
-const GasStationsGagra: React.FC = () => {
+const GasStationsTkuarchal: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
@@ -36,7 +36,7 @@ const GasStationsGagra: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/gas-stations/page/city_page/${encodeURIComponent('Гагра')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/gas-stations/page/city_page/${encodeURIComponent('Ткуарчал')}/`, { cache: 'no-store' });
         
         if (!res.ok) {
           if (res.status === 404) {
@@ -92,7 +92,7 @@ const GasStationsGagra: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Гагра: автозаправочные станции'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || 'Ткуарчал: автозаправочные станции'}</h1>
           </section>
 
           {/* Карточки автозаправок */}
@@ -155,4 +155,5 @@ const GasStationsGagra: React.FC = () => {
   );
 };
 
-export default GasStationsGagra;
+export default GasStationsTkuarchal;
+
