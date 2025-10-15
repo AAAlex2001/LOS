@@ -84,31 +84,38 @@ const RestaurantsGulripsh: React.FC = () => {
     );
   }
 
+  const restaurants = data?.restaurants || [];
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
-        <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data?.title || 'Гулрыпш: рестораны'}</h1>
-        </section>
+        <div className={styles.buildingsWrapper}>
+          {/* Заголовок */}
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>{data?.title || 'Гулрыпш: рестораны'}</h1>
+          </section>
 
-        <section className={styles.cardsSection}>
-          {data.restaurants.map((restaurant) => (
-            <div key={restaurant.id} className={styles.restaurantCard}>
+          {/* Карточки ресторанов */}
+          <section className={styles.cardsSection}>
+          {restaurants.map((restaurant) => (
+            <div key={restaurant.id} className={styles.buildingCard}>
+              {/* Изображение */}
               <div className={styles.imageContainer}>
                 {restaurant.image_url && (
                   <img
                     src={`${API_BASE}/media/${restaurant.image_url}`}
                     alt={restaurant.name}
-                    className={styles.restaurantImage}
+                    className={styles.buildingImage}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 )}
               </div>
 
+              {/* Информация */}
               <div className={styles.infoContainer}>
-                <h2 className={styles.restaurantName}>
+                <h2 className={styles.buildingName}>
                   {restaurant.name_link ? (
                     <a href={restaurant.name_link} target="_blank" rel="noopener noreferrer">
                       {restaurant.name}
@@ -154,7 +161,8 @@ const RestaurantsGulripsh: React.FC = () => {
               </div>
             </div>
           ))}
-        </section>
+          </section>
+        </div>
       </main>
 
       <Footer />
