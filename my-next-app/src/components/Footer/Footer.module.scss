@@ -197,7 +197,7 @@ $break-xxl: 1920px;
 .contactEmail {
   color: #fff;
   text-decoration: underline;
-  word-break: break-all;
+  white-space: nowrap;
   transition: color 0.2s;
 }
 .contactEmail:hover {
