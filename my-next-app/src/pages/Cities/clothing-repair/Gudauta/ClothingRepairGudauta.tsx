@@ -4,7 +4,7 @@ import React from 'react';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
-import styles from './ClothingRepairGagra.module.scss';
+import styles from './ClothingRepairGudauta.module.scss';
 import config from '@/config';
 
 type City = { id: number; name: string; title?: string; order: number };
@@ -31,7 +31,7 @@ type CityPageData = {
 
 const API_BASE = config.API_BASE;
 
-const ClothingRepairGagra: React.FC = () => {
+const ClothingRepairGudauta: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
@@ -39,7 +39,7 @@ const ClothingRepairGagra: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/clothing-repair/page/city_page/${encodeURIComponent('Гагра')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/clothing-repair/page/city_page/${encodeURIComponent('Гудаута')}/`, { cache: 'no-store' });
         
         if (!res.ok) {
           if (res.status === 404) {
@@ -95,7 +95,7 @@ const ClothingRepairGagra: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Гагра: ремонт одежды и обуви'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || 'Гудаута: ремонт одежды и обуви'}</h1>
           </section>
 
           {/* Карточки ремонта */}
@@ -179,5 +179,5 @@ const ClothingRepairGagra: React.FC = () => {
   );
 };
 
-export default ClothingRepairGagra;
+export default ClothingRepairGudauta;
 

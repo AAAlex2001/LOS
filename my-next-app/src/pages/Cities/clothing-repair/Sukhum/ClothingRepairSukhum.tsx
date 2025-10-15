@@ -85,31 +85,38 @@ const ClothingRepairSukhum: React.FC = () => {
     );
   }
 
+  const repairs = data?.repairs || [];
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
-        <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data?.title || 'Сухум: ремонт одежды и обуви'}</h1>
-        </section>
+        <div className={styles.buildingsWrapper}>
+          {/* Заголовок */}
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>{data?.title || 'Сухум: ремонт одежды и обуви'}</h1>
+          </section>
 
-        <section className={styles.cardsSection}>
-          {data.repairs.map((repair) => (
-            <div key={repair.id} className={styles.clothingCard}>
+          {/* Карточки ремонта */}
+          <section className={styles.cardsSection}>
+          {repairs.map((repair) => (
+            <div key={repair.id} className={styles.buildingCard}>
+              {/* Изображение */}
               <div className={styles.imageContainer}>
                 {repair.image_url && (
                   <img
                     src={`${API_BASE}/media/${repair.image_url}`}
                     alt={repair.name}
-                    className={styles.clothingImage}
+                    className={styles.buildingImage}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 )}
               </div>
 
+              {/* Информация */}
               <div className={styles.infoContainer}>
-                <h2 className={styles.clothingName}>
+                <h2 className={styles.buildingName}>
                   {repair.name_link ? (
                     <a href={repair.name_link} target="_blank" rel="noopener noreferrer">
                       {repair.name}
@@ -162,7 +169,8 @@ const ClothingRepairSukhum: React.FC = () => {
               </div>
             </div>
           ))}
-        </section>
+          </section>
+        </div>
       </main>
 
       <Footer />
