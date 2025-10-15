@@ -83,31 +83,38 @@ const ShopsAndMarketsGudauta: React.FC = () => {
     );
   }
 
+  const shops = data?.shops || [];
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
-        <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data?.title || 'Гудаута: магазины и рынки'}</h1>
-        </section>
+        <div className={styles.buildingsWrapper}>
+          {/* Заголовок */}
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>{data?.title || 'Гудаута: магазины и рынки'}</h1>
+          </section>
 
-        <section className={styles.cardsSection}>
-          {data.shops.map((shop) => (
-            <div key={shop.id} className={styles.shopCard}>
+          {/* Карточки магазинов */}
+          <section className={styles.cardsSection}>
+          {shops.map((shop) => (
+            <div key={shop.id} className={styles.buildingCard}>
+              {/* Изображение */}
               <div className={styles.imageContainer}>
                 {shop.image_url && (
                   <img
                     src={`${API_BASE}/media/${shop.image_url}`}
                     alt={shop.name}
-                    className={styles.shopImage}
+                    className={styles.buildingImage}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 )}
               </div>
 
+              {/* Информация */}
               <div className={styles.infoContainer}>
-                <h2 className={styles.shopName}>
+                <h2 className={styles.buildingName}>
                   {shop.name_link ? (
                     <a href={shop.name_link} target="_blank" rel="noopener noreferrer">
                       {shop.name}
@@ -146,7 +153,8 @@ const ShopsAndMarketsGudauta: React.FC = () => {
               </div>
             </div>
           ))}
-        </section>
+          </section>
+        </div>
       </main>
 
       <Footer />
