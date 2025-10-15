@@ -84,31 +84,38 @@ const ChurchesPitsunda: React.FC = () => {
     );
   }
 
+  const churches = data?.churches || [];
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
-        <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data?.title || 'Пицунда: церкви и храмы'}</h1>
-        </section>
+        <div className={styles.buildingsWrapper}>
+          {/* Заголовок */}
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>{data?.title || 'Пицунда: церкви и храмы'}</h1>
+          </section>
 
-        <section className={styles.cardsSection}>
-          {data.churches.map((church) => (
-            <div key={church.id} className={styles.churchCard}>
+          {/* Карточки церквей */}
+          <section className={styles.cardsSection}>
+          {churches.map((church) => (
+            <div key={church.id} className={styles.buildingCard}>
+              {/* Изображение */}
               <div className={styles.imageContainer}>
                 {church.image_url && (
                   <img
                     src={`${API_BASE}/media/${church.image_url}`}
                     alt={church.name}
-                    className={styles.churchImage}
+                    className={styles.buildingImage}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 )}
               </div>
 
+              {/* Информация */}
               <div className={styles.infoContainer}>
-                <h2 className={styles.churchName}>
+                <h2 className={styles.buildingName}>
                   {church.name_link ? (
                     <a href={church.name_link} target="_blank" rel="noopener noreferrer">
                       {church.name}
@@ -154,7 +161,8 @@ const ChurchesPitsunda: React.FC = () => {
               </div>
             </div>
           ))}
-        </section>
+          </section>
+        </div>
       </main>
 
       <Footer />
