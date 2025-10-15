@@ -4,20 +4,19 @@ import React from 'react';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
-import styles from './BeautySalonsNewAfon.module.scss';
+import styles from './BeachesGal.module.scss';
 import config from '@/config';
 
 type City = { id: number; name: string; title?: string; order: number };
-type BeautySalon = {
+type Beach = {
   id: number;
   city: number;
   name: string;
   name_link?: string;
   address: string;
   address_link?: string;
+  description?: string;
   phone?: string;
-  working_hours?: string;
-  services?: string;
   image_url: string;
   order: number;
 };
@@ -25,12 +24,12 @@ type BeautySalon = {
 type CityPageData = {
   title: string;
   city?: City;
-  beauty_salons: BeautySalon[];
+  beaches: Beach[];
 };
 
 const API_BASE = config.API_BASE;
 
-const BeautySalonsNewAfon: React.FC = () => {
+const BeachesGal: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
@@ -38,7 +37,7 @@ const BeautySalonsNewAfon: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/beauty-salons/page/city_page/${encodeURIComponent('Новый Афон')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/beaches/page/city_page/${encodeURIComponent('Гал')}/`, { cache: 'no-store' });
         
         if (!res.ok) {
           if (res.status === 404) {
@@ -84,7 +83,7 @@ const BeautySalonsNewAfon: React.FC = () => {
     );
   }
 
-  const salons = data?.beauty_salons || [];
+  const beaches = data?.beaches || [];
 
   return (
     <div className={styles.pageWrapper}>
@@ -94,19 +93,19 @@ const BeautySalonsNewAfon: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Новый Афон: салоны красоты'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || 'Гал: пляжи'}</h1>
           </section>
 
-          {/* Карточки салонов */}
+          {/* Карточки пляжей */}
           <section className={styles.cardsSection}>
-          {salons.map((salon) => (
-            <div key={salon.id} className={styles.buildingCard}>
+          {beaches.map((beach) => (
+            <div key={beach.id} className={styles.buildingCard}>
               {/* Изображение */}
               <div className={styles.imageContainer}>
-                {salon.image_url && (
+                {beach.image_url && (
                   <img
-                    src={`${API_BASE}/media/${salon.image_url}`}
-                    alt={salon.name}
+                    src={`${API_BASE}/media/${beach.image_url}`}
+                    alt={beach.name}
                     className={styles.buildingImage}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
@@ -116,45 +115,38 @@ const BeautySalonsNewAfon: React.FC = () => {
               {/* Информация */}
               <div className={styles.infoContainer}>
                 <h2 className={styles.buildingName}>
-                  {salon.name_link ? (
-                    <a href={salon.name_link} target="_blank" rel="noopener noreferrer">
-                      {salon.name}
+                  {beach.name_link ? (
+                    <a href={beach.name_link} target="_blank" rel="noopener noreferrer">
+                      {beach.name}
                     </a>
                   ) : (
-                    salon.name
+                    beach.name
                   )}
                 </h2>
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Адрес:</span>
-                    <span className={`${styles.infoValue} ${salon.address_link ? styles.addressLink : ''}`}>
-                      {salon.address_link ? (
-                        <a href={salon.address_link} target="_blank" rel="noopener noreferrer">{salon.address}</a>
+                    <span className={`${styles.infoValue} ${beach.address_link ? styles.addressLink : ''}`}>
+                      {beach.address_link ? (
+                        <a href={beach.address_link} target="_blank" rel="noopener noreferrer">{beach.address}</a>
                       ) : (
-                        salon.address
+                        beach.address
                       )}
                     </span>
                   </div>
                   
-                  {salon.phone && (
+                  {beach.phone && (
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>Телефон:</span>
-                      <span className={styles.infoValue}>{salon.phone}</span>
+                      <span className={styles.infoValue}>{beach.phone}</span>
                     </div>
                   )}
                   
-                  {salon.working_hours && (
+                  {beach.description && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
-                      <span className={styles.infoValue}>{salon.working_hours}</span>
-                    </div>
-                  )}
-                  
-                  {salon.services && (
-                    <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Услуги:</span>
-                      <span className={styles.infoValue}>{salon.services}</span>
+                      <span className={styles.infoLabel}>Информация:</span>
+                      <span className={styles.infoValue}>{beach.description}</span>
                     </div>
                   )}
                 </div>
@@ -171,4 +163,5 @@ const BeautySalonsNewAfon: React.FC = () => {
   );
 };
 
-export default BeautySalonsNewAfon;
+export default BeachesGal;
+

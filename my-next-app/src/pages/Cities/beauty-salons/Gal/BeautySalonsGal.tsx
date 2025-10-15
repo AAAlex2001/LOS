@@ -4,7 +4,7 @@ import React from 'react';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
-import styles from './BeautySalonsNewAfon.module.scss';
+import styles from './BeautySalonsGal.module.scss';
 import config from '@/config';
 
 type City = { id: number; name: string; title?: string; order: number };
@@ -30,7 +30,7 @@ type CityPageData = {
 
 const API_BASE = config.API_BASE;
 
-const BeautySalonsNewAfon: React.FC = () => {
+const BeautySalonsGal: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
@@ -38,7 +38,7 @@ const BeautySalonsNewAfon: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/beauty-salons/page/city_page/${encodeURIComponent('Новый Афон')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/beauty-salons/page/city_page/${encodeURIComponent('Гал')}/`, { cache: 'no-store' });
         
         if (!res.ok) {
           if (res.status === 404) {
@@ -94,7 +94,7 @@ const BeautySalonsNewAfon: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Новый Афон: салоны красоты'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || 'Гал: салоны красоты'}</h1>
           </section>
 
           {/* Карточки салонов */}
@@ -171,4 +171,5 @@ const BeautySalonsNewAfon: React.FC = () => {
   );
 };
 
-export default BeautySalonsNewAfon;
+export default BeautySalonsGal;
+

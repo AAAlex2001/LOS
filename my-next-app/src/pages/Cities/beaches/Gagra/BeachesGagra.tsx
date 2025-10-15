@@ -83,33 +83,42 @@ const BeachesGagra: React.FC = () => {
     );
   }
 
+  const beaches = data?.beaches || [];
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
-        <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data?.title || 'Гагра: пляжи'}</h1>
-        </section>
+        <div className={styles.buildingsWrapper}>
+          {/* Заголовок */}
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>{data?.title || 'Гагра: пляжи'}</h1>
+          </section>
 
-        <section className={styles.cardsSection}>
-          {data.beaches.map((beach) => (
-            <div key={beach.id} className={styles.beachCard}>
+          {/* Карточки пляжей */}
+          <section className={styles.cardsSection}>
+          {beaches.map((beach) => (
+            <div key={beach.id} className={styles.buildingCard}>
+              {/* Изображение */}
               <div className={styles.imageContainer}>
                 {beach.image_url && (
                   <img
                     src={`${API_BASE}/media/${beach.image_url}`}
                     alt={beach.name}
-                    className={styles.beachImage}
+                    className={styles.buildingImage}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 )}
               </div>
 
+              {/* Информация */}
               <div className={styles.infoContainer}>
-                <h2 className={`${styles.beachName} ${beach.name_link ? styles.clickable : ''}`}>
+                <h2 className={styles.buildingName}>
                   {beach.name_link ? (
-                    <a href={beach.name_link} target="_blank" rel="noopener noreferrer">{beach.name}</a>
+                    <a href={beach.name_link} target="_blank" rel="noopener noreferrer">
+                      {beach.name}
+                    </a>
                   ) : (
                     beach.name
                   )}
@@ -126,25 +135,26 @@ const BeachesGagra: React.FC = () => {
                       )}
                     </span>
                   </div>
-
+                  
                   {beach.phone && (
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>Телефон:</span>
                       <span className={styles.infoValue}>{beach.phone}</span>
                     </div>
                   )}
-
+                  
                   {beach.description && (
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>Информация:</span>
-                      <span className={styles.infoValue} style={{whiteSpace: 'pre-line'}}>{beach.description}</span>
+                      <span className={styles.infoValue}>{beach.description}</span>
                     </div>
                   )}
                 </div>
               </div>
             </div>
           ))}
-        </section>
+          </section>
+        </div>
       </main>
 
       <Footer />
