@@ -4,7 +4,7 @@ import React from 'react';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
-import styles from './PharmacyGulripsh.module.scss';
+import styles from './PharmacyGal.module.scss';
 import config from '@/config';
 
 type City = { id: number; name: string; title?: string; order: number };
@@ -29,7 +29,7 @@ type CityPageData = {
 
 const API_BASE = config.API_BASE;
 
-const PharmacyGulripsh: React.FC = () => {
+const PharmacyGal: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
@@ -37,7 +37,7 @@ const PharmacyGulripsh: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/pharmacy/page/city_page/${encodeURIComponent('Гулрыпш')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/pharmacy/page/city_page/${encodeURIComponent('Гал')}/`, { cache: 'no-store' });
         
         if (!res.ok) {
           if (res.status === 404) {
@@ -93,7 +93,7 @@ const PharmacyGulripsh: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Гулрыпш: аптеки'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || 'Гал: аптеки'}</h1>
           </section>
 
           {/* Карточки аптек */}
@@ -163,4 +163,5 @@ const PharmacyGulripsh: React.FC = () => {
   );
 };
 
-export default PharmacyGulripsh;
+export default PharmacyGal;
+
