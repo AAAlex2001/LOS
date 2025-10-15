@@ -83,31 +83,38 @@ const ParkingLotsGagra: React.FC = () => {
     );
   }
 
+  const parkingLots = data?.parking_lots || [];
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
-        <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data?.title || 'Гагра: парковки для автомобилей'}</h1>
-        </section>
+        <div className={styles.buildingsWrapper}>
+          {/* Заголовок */}
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>{data?.title || 'Гагра: парковки для автомобилей'}</h1>
+          </section>
 
-        <section className={styles.cardsSection}>
-          {data.parking_lots.map((lot) => (
-            <div key={lot.id} className={styles.parkingLotCard}>
+          {/* Карточки парковок */}
+          <section className={styles.cardsSection}>
+          {parkingLots.map((lot) => (
+            <div key={lot.id} className={styles.buildingCard}>
+              {/* Изображение */}
               <div className={styles.imageContainer}>
                 {lot.image_url && (
                   <img
                     src={`${API_BASE}/media/${lot.image_url}`}
                     alt={lot.name}
-                    className={styles.parkingLotImage}
+                    className={styles.buildingImage}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 )}
               </div>
 
+              {/* Информация */}
               <div className={styles.infoContainer}>
-                <h2 className={styles.parkingLotName}>
+                <h2 className={styles.buildingName}>
                   {lot.name_link ? (
                     <a href={lot.name_link} target="_blank" rel="noopener noreferrer">
                       {lot.name}
@@ -146,7 +153,8 @@ const ParkingLotsGagra: React.FC = () => {
               </div>
             </div>
           ))}
-        </section>
+          </section>
+        </div>
       </main>
 
       <Footer />

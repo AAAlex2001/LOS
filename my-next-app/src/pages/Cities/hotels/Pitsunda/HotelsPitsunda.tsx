@@ -82,31 +82,38 @@ const HotelsPitsunda: React.FC = () => {
     );
   }
 
+  const hotels = data?.hotels || [];
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
-        <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data?.title || 'Пицунда: отели'}</h1>
-        </section>
+        <div className={styles.buildingsWrapper}>
+          {/* Заголовок */}
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>{data?.title || 'Пицунда: отели'}</h1>
+          </section>
 
-        <section className={styles.cardsSection}>
-          {data.hotels.map((hotel) => (
-            <div key={hotel.id} className={styles.hotelCard}>
+          {/* Карточки отелей */}
+          <section className={styles.cardsSection}>
+          {hotels.map((hotel) => (
+            <div key={hotel.id} className={styles.buildingCard}>
+              {/* Изображение */}
               <div className={styles.imageContainer}>
                 {hotel.image_url && (
                   <img
                     src={`${API_BASE}/media/${hotel.image_url}`}
                     alt={hotel.name}
-                    className={styles.hotelImage}
+                    className={styles.buildingImage}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 )}
               </div>
 
+              {/* Информация */}
               <div className={styles.infoContainer}>
-                <h2 className={styles.hotelName}>{hotel.name}</h2>
+                <h2 className={styles.buildingName}>{hotel.name}</h2>
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
@@ -137,7 +144,8 @@ const HotelsPitsunda: React.FC = () => {
               </div>
             </div>
           ))}
-        </section>
+          </section>
+        </div>
       </main>
 
       <Footer />

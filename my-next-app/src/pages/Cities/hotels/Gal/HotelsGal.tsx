@@ -4,19 +4,18 @@ import React from 'react';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
-import styles from './ParkingLotsSukhum.module.scss';
+import styles from './HotelsGal.module.scss';
 import config from '@/config';
 
 type City = { id: number; name: string; title?: string; order: number };
-type ParkingLot = {
+type Hotel = {
   id: number;
   city: number;
   name: string;
-  name_link?: string;
   address: string;
   address_link?: string;
-  working_hours?: string;
   contacts?: string;
+  price?: string;
   image_url: string;
   order: number;
 };
@@ -24,12 +23,12 @@ type ParkingLot = {
 type CityPageData = {
   title: string;
   city?: City;
-  parking_lots: ParkingLot[];
+  hotels: Hotel[];
 };
 
 const API_BASE = config.API_BASE;
 
-const ParkingLotsSukhum: React.FC = () => {
+const HotelsGal: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
@@ -37,7 +36,7 @@ const ParkingLotsSukhum: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/parking-lots/page/city_page/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/hotels/page/city_page/${encodeURIComponent('Гал')}/`, { cache: 'no-store' });
         
         if (!res.ok) {
           if (res.status === 404) {
@@ -83,7 +82,7 @@ const ParkingLotsSukhum: React.FC = () => {
     );
   }
 
-  const parkingLots = data?.parking_lots || [];
+  const hotels = data?.hotels || [];
 
   return (
     <div className={styles.pageWrapper}>
@@ -93,19 +92,19 @@ const ParkingLotsSukhum: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Сухум: парковки для автомобилей'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || 'Гал: отели'}</h1>
           </section>
 
-          {/* Карточки парковок */}
+          {/* Карточки отелей */}
           <section className={styles.cardsSection}>
-          {parkingLots.map((lot) => (
-            <div key={lot.id} className={styles.buildingCard}>
+          {hotels.map((hotel) => (
+            <div key={hotel.id} className={styles.buildingCard}>
               {/* Изображение */}
               <div className={styles.imageContainer}>
-                {lot.image_url && (
+                {hotel.image_url && (
                   <img
-                    src={`${API_BASE}/media/${lot.image_url}`}
-                    alt={lot.name}
+                    src={`${API_BASE}/media/${hotel.image_url}`}
+                    alt={hotel.name}
                     className={styles.buildingImage}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
@@ -114,39 +113,31 @@ const ParkingLotsSukhum: React.FC = () => {
 
               {/* Информация */}
               <div className={styles.infoContainer}>
-                <h2 className={styles.buildingName}>
-                  {lot.name_link ? (
-                    <a href={lot.name_link} target="_blank" rel="noopener noreferrer">
-                      {lot.name}
-                    </a>
-                  ) : (
-                    lot.name
-                  )}
-                </h2>
+                <h2 className={styles.buildingName}>{hotel.name}</h2>
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>Адрес:</span>
-                    <span className={`${styles.infoValue} ${lot.address_link ? styles.addressLink : ''}`}>
-                      {lot.address_link ? (
-                        <a href={lot.address_link} target="_blank" rel="noopener noreferrer">{lot.address}</a>
+                    <span className={`${styles.infoValue} ${hotel.address_link ? styles.addressLink : ''}`}>
+                      {hotel.address_link ? (
+                        <a href={hotel.address_link} target="_blank" rel="noopener noreferrer">{hotel.address}</a>
                       ) : (
-                        lot.address
+                        hotel.address
                       )}
                     </span>
                   </div>
                   
-                  {lot.working_hours && (
+                  {hotel.contacts && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
-                      <span className={styles.infoValue}>{lot.working_hours}</span>
+                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoValue}>{hotel.contacts}</span>
                     </div>
                   )}
                   
-                  {lot.contacts && (
+                  {hotel.price && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
-                      <span className={styles.infoValue}>{lot.contacts}</span>
+                      <span className={styles.infoLabel}>Цена:</span>
+                      <span className={styles.infoValue}>{hotel.price}</span>
                     </div>
                   )}
                 </div>
@@ -163,4 +154,5 @@ const ParkingLotsSukhum: React.FC = () => {
   );
 };
 
-export default ParkingLotsSukhum;
+export default HotelsGal;
+
