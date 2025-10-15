@@ -83,31 +83,38 @@ const WineriesGulripsh: React.FC = () => {
     );
   }
 
+  const wineries = data?.wineries || [];
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
       
       <main className={styles.mainContent}>
-        <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data?.title || 'Гулрыпш: винодельни'}</h1>
-        </section>
+        <div className={styles.buildingsWrapper}>
+          {/* Заголовок */}
+          <section className={styles.titleSection}>
+            <h1 className={styles.mainTitle}>{data?.title || 'Гулрыпш: винодельни'}</h1>
+          </section>
 
-        <section className={styles.cardsSection}>
-          {data.wineries.map((winery) => (
-            <div key={winery.id} className={styles.wineryCard}>
+          {/* Карточки виноделен */}
+          <section className={styles.cardsSection}>
+          {wineries.map((winery) => (
+            <div key={winery.id} className={styles.buildingCard}>
+              {/* Изображение */}
               <div className={styles.imageContainer}>
                 {winery.image_url && (
                   <img
                     src={`${API_BASE}/media/${winery.image_url}`}
                     alt={winery.name}
-                    className={styles.wineryImage}
+                    className={styles.buildingImage}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 )}
               </div>
 
+              {/* Информация */}
               <div className={styles.infoContainer}>
-                <h2 className={styles.wineryName}>
+                <h2 className={styles.buildingName}>
                   {winery.name_link ? (
                     <a href={winery.name_link} target="_blank" rel="noopener noreferrer">
                       {winery.name}
@@ -146,7 +153,8 @@ const WineriesGulripsh: React.FC = () => {
               </div>
             </div>
           ))}
-        </section>
+          </section>
+        </div>
       </main>
 
       <Footer />

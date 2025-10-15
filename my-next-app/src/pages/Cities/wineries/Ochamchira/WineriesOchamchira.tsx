@@ -4,7 +4,7 @@ import React from 'react';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
-import styles from './WineriesTkuarchal.module.scss';
+import styles from './WineriesOchamchira.module.scss';
 import config from '@/config';
 
 type City = { id: number; name: string; title?: string; order: number };
@@ -29,7 +29,7 @@ type CityPageData = {
 
 const API_BASE = config.API_BASE;
 
-const WineriesTkuarchal: React.FC = () => {
+const WineriesOchamchira: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
@@ -37,7 +37,7 @@ const WineriesTkuarchal: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/wineries/page/city_page/${encodeURIComponent('Ткуарчал')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/wineries/page/city_page/${encodeURIComponent('Очамчыра')}/`, { cache: 'no-store' });
         
         if (!res.ok) {
           if (res.status === 404) {
@@ -93,7 +93,7 @@ const WineriesTkuarchal: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Ткуарчал: винодельни'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || 'Очамчыра: винодельни'}</h1>
           </section>
 
           {/* Карточки виноделен */}
@@ -163,4 +163,5 @@ const WineriesTkuarchal: React.FC = () => {
   );
 };
 
-export default WineriesTkuarchal;
+export default WineriesOchamchira;
+
