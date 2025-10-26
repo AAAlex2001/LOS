@@ -61,7 +61,6 @@
   flex-grow: 0;
   width: 100%;
   white-space: normal !important;
-  overflow-wrap: anywhere;
 }
 
 /* Ensure full title always visible */
@@ -77,7 +76,6 @@
   .titleDesktop {
     display: inline !important;
     white-space: normal !important;
-    word-break: break-word;
   }
   .titleMobile {
     display: none !important;

@@ -33,7 +33,6 @@ $line-thickness: 1px;
 
 .sectionBlock {
   width: 100%;
-  max-width: 604px;
   display: flex;
   flex-direction: column;
 }
@@ -182,7 +181,7 @@ $line-thickness: 1px;
     font-size: 12px;
     line-height: 16px;
     min-height: 70px;
-    word-break: break-word; // Принудительный перенос слов
+    overflow-wrap: break-word; // Перенос длинных слов
   }
 
   .cellHeader {
@@ -209,7 +208,12 @@ $line-thickness: 1px;
 
 @media (min-width: 1300px) {
   .mainContent {
-    max-width: 1300px;
+    max-width: 1228px;
+    margin: 0 auto;
+  }
+
+  .sectionsContainer {
+    align-items: center;
   }
 
   .tablesRow {
@@ -217,12 +221,22 @@ $line-thickness: 1px;
     flex-wrap: nowrap;
     gap: 48px;
     align-items: stretch; // Одинаковая высота таблиц на десктопе
+    justify-content: center;
+    max-width: 1228px;
+    width: 100%;
+    margin: 0 auto;
   }
   
   .sectionBlock {
     width: calc(50% - 24px);
     display: flex;
     flex-direction: column;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .sectionBlockFullWidth {
+    width: 100%;
   }
 
   .dictionaryTable {
