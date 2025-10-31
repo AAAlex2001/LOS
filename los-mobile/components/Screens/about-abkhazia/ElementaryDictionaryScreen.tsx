@@ -94,7 +94,7 @@ export default function ElementaryDictionaryScreen({ visible, onClose }: { visib
           {loading ? (
             <View style={styles.loadingContainer}>
               <Text style={styles.loadingText}>Загрузка...</Text>
-            </View>
+                </View>
           ) : (
             pageData?.categories && pageData.categories.map((category) => {
               const words = category.words || [];
@@ -111,13 +111,13 @@ export default function ElementaryDictionaryScreen({ visible, onClose }: { visib
                       {columns.map((col, idx) => (
                         <View key={idx} style={styles.tableContainer}>
                           {renderTable(col)}
-                        </View>
-                      ))}
-                    </View>
+                  </View>
+                ))}
+              </View>
                   ) : (
                     renderTable(words)
                   )}
-                </View>
+            </View>
               );
             })
           )}
@@ -138,8 +138,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#fff',
-    height: 110,
-    paddingTop: 50,
+    minHeight: 96,
+    paddingTop: 44,
+    paddingBottom: 10,
     paddingHorizontal: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#E2E4E6',
@@ -149,21 +150,22 @@ const styles = StyleSheet.create({
     height: 36,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 30,
+    marginTop: 24,
   },
   headerTitleWrap: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    marginLeft: 20,
   },
   headerTitle: {
     fontFamily: 'Inter',
     fontWeight: '700',
-    fontSize: 18,
+    fontSize: 16,
     color: '#000',
     textTransform: 'uppercase',
     letterSpacing: 0.2,
-    marginTop: 30,
+    marginTop: 24,
     marginLeft: 0,
   },
   scrollContent: {
@@ -224,4 +226,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#666',
   },
-});
+}); 

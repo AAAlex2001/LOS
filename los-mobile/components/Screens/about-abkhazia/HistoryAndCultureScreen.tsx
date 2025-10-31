@@ -100,14 +100,14 @@ export default function HistoryAndCultureScreen({ visible, onClose }: { visible:
             </View>
           ) : (
             <>
-              {/* История */}
+          {/* История */}
               <View ref={historyRef}>
-                <Text style={styles.contentTitle}>История Абхазии</Text>
-              </View>
+            <Text style={styles.contentTitle}>История Абхазии</Text>
+          </View>
               {historySections.length === 0 ? (
                 <View style={styles.noDataContainer}>
                   <Text style={styles.noDataText}>Нет данных о секциях истории</Text>
-                </View>
+            </View>
               ) : (
                 historySections.map((section) => (
                   <View key={section.id}>
@@ -121,15 +121,15 @@ export default function HistoryAndCultureScreen({ visible, onClose }: { visible:
                     <View style={styles.textBlock}>
                       <Text style={styles.sectionTitle}>{section.title}</Text>
                       <Text style={styles.sectionText}>{section.content}</Text>
-                    </View>
-                  </View>
+            </View>
+            </View>
                 ))
               )}
 
-              {/* Культура */}
+          {/* Культура */}
               <View ref={cultureRef}>
-                <Text style={[styles.contentTitle, styles.spacedTitle]}>Культура Абхазии</Text>
-              </View>
+            <Text style={[styles.contentTitle, styles.spacedTitle]}>Культура Абхазии</Text>
+          </View>
               {cultureSections.length === 0 ? (
                 <View style={styles.noDataContainer}>
                   <Text style={styles.noDataText}>Нет данных о секциях культуры</Text>
@@ -147,8 +147,8 @@ export default function HistoryAndCultureScreen({ visible, onClose }: { visible:
                     <View style={styles.textBlock}>
                       <Text style={styles.sectionTitle}>{section.title}</Text>
                       <Text style={styles.sectionText}>{section.content}</Text>
-                    </View>
-                  </View>
+            </View>
+            </View>
                 ))
               )}
             </>
@@ -170,8 +170,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#fff',
-    height: 110,
-    paddingTop: 50,
+    minHeight: 96,
+    paddingTop: 44,
+    paddingBottom: 10,
     paddingHorizontal: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#E2E4E6',
@@ -181,21 +182,22 @@ const styles = StyleSheet.create({
     height: 36,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 30,
+    marginTop: 24,
   },
   headerTitleWrap: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    marginLeft: 20,
   },
   headerTitle: {
     fontFamily: 'Inter',
     fontWeight: '700',
-    fontSize: 18,
+    fontSize: 16,
     color: '#000',
     textTransform: 'uppercase',
     letterSpacing: 0.2,
-    marginTop: 30,
+    marginTop: 24,
     marginLeft: 0,
   },
   tabsContainer: {
@@ -277,4 +279,4 @@ const styles = StyleSheet.create({
     color: '#666',
     textAlign: 'center',
   },
-});
+}); 

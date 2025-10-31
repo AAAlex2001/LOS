@@ -114,11 +114,11 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   headerBar: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-    backgroundColor: '#fff', height: 96, paddingTop: 44, paddingHorizontal: 12,
+    backgroundColor: '#fff', minHeight: 96, paddingTop: 44, paddingBottom: 10, paddingHorizontal: 12,
     borderBottomWidth: 1, borderBottomColor: '#E2E4E6',
   },
   backButton: { width: 36, height: 36, alignItems: 'center', justifyContent: 'center', marginTop: 24 },
-  headerTitleWrap: { flex: 1, flexDirection: 'row', alignItems: 'center' },
+  headerTitleWrap: { flex: 1, flexDirection: 'row', alignItems: 'center', marginLeft: 20 },
   headerTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 16, color: '#000', textTransform: 'uppercase', letterSpacing: 0.2, marginTop: 24, textAlign: 'center' },
   scrollContent: { padding: 16, paddingBottom: 40 },
   pageTitle: { fontFamily: 'Inter', fontWeight: '800', fontSize: 22, color: '#1129BD', marginBottom: 12, textAlign: 'center' },
