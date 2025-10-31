@@ -124,8 +124,6 @@ const styles = StyleSheet.create({
     paddingTop: 44,
     paddingBottom: 10,
     paddingHorizontal: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E2E4E6',
   },
   backButton: {
     width: 36,

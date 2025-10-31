@@ -27,14 +27,14 @@ export default function HistoryAndCultureScreen({ visible, onClose }: { visible:
   const scrollRef = useRef<ScrollView>(null);
   const historyRef = useRef<View>(null);
   const cultureRef = useRef<View>(null);
-  
+
   const [historySections, setHistorySections] = useState<HistorySection[]>([]);
   const [cultureSections, setCultureSections] = useState<CultureSection[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!visible) return;
-    
+
     const loadData = async () => {
       try {
         const historyRes = await fetch(`${API_BASE}/api/history-and-culture/history-sections/`, { cache: 'no-store' });
@@ -174,8 +174,6 @@ const styles = StyleSheet.create({
     paddingTop: 44,
     paddingBottom: 10,
     paddingHorizontal: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E2E4E6',
   },
   backButton: {
     width: 36,
@@ -204,8 +202,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E2E4E6',
   },
   tabItem: {
     paddingVertical: 8,

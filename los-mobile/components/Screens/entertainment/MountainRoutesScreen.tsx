@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
   headerBar: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     backgroundColor: '#fff', minHeight: 96, paddingTop: 44, paddingBottom: 10, paddingHorizontal: 12,
-    borderBottomWidth: 1, borderBottomColor: '#E2E4E6',
   },
   backButton: { width: 36, height: 36, alignItems: 'center', justifyContent: 'center', marginTop: 24 },
   headerTitleWrap: { flex: 1, flexDirection: 'row', alignItems: 'center', marginLeft: 20 },
