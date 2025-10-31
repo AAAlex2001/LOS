@@ -38,6 +38,7 @@ export default function MountainRoutesScreen({ visible, onClose }: Props) {
         const res = await fetch(`${API_BASE}/api/mountain-routes/page/content/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load mountain routes');
         const json = await res.json() as MountainRoutesPageData;
+        console.log('Mountain routes data:', json);
         setData(json);
       } catch (e) {
         console.error(e);
@@ -49,8 +50,6 @@ export default function MountainRoutesScreen({ visible, onClose }: Props) {
   }, [visible]);
 
   const routes = (data?.routes || []).slice().sort((a, b) => a.order - b.order);
-  const topRow = routes.slice(0, 3);
-  const bottomRow = routes.slice(3);
 
   const openLink = (url?: string) => {
     if (!url) return;
@@ -58,24 +57,31 @@ export default function MountainRoutesScreen({ visible, onClose }: Props) {
     Linking.openURL(clean).catch(() => {});
   };
 
-  const toImageUrl = (p?: string) => (p ? (p.startsWith('http') ? p : `${API_BASE}${p}`) : '');
+  const toImageUrl = (p?: string) => {
+    if (!p) return '';
+    if (p.startsWith('http')) return p;
+    if (p.startsWith('/media/')) return `${API_BASE}${p}`;
+    return `${API_BASE}/media/${p}`;
+  };
 
-  const renderCard = (route: RouteItem) => (
-    <View key={route.id} style={styles.card}>
-      {route.image && (
-        <Image source={{ uri: toImageUrl(route.image) }} style={styles.cardImg} resizeMode="contain" />
-      )}
-      <View style={styles.cardBody}>
-        {route.title && <Text style={styles.cardTitle}>{route.title}</Text>}
-        {route.name && <Text style={styles.cardName}>{route.name}</Text>}
-        {route.phone && !route.image && <Text style={styles.cardPhone}>Тел.: {route.phone}</Text>}
-        {route.phone && route.image && <Text style={styles.phone}>Контакты: {route.phone}</Text>}
-        {route.site_url && (
-          <Text onPress={() => openLink(route.site_url)} style={styles.link}>САЙТ: {route.site_url}</Text>
+  const renderCard = (route: RouteItem) => {
+    console.log('Rendering card:', route.id, 'image:', route.image);
+    return (
+      <View key={route.id} style={styles.card}>
+        {route.image && (
+          <Image source={{ uri: toImageUrl(route.image) }} style={styles.cardImg} resizeMode="contain" />
         )}
+        <View style={styles.cardBody}>
+          {route.title && <Text style={styles.cardTitle}>{route.title}</Text>}
+          {route.name && <Text style={styles.cardName}>{route.name}</Text>}
+          {route.phone && <Text style={styles.cardPhone}>{route.phone}</Text>}
+          {route.site_url && (
+            <Text onPress={() => openLink(route.site_url)} style={styles.link}>САЙТ: {route.site_url}</Text>
+          )}
+        </View>
       </View>
-    </View>
-  );
+    );
+  };
 
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
@@ -96,19 +102,13 @@ export default function MountainRoutesScreen({ visible, onClose }: Props) {
               <Text style={styles.loadingText}>Загрузка...</Text>
             </View>
           ) : (
-            <>
-              <Text style={styles.pageTitle}>{data?.main_title || 'Горные маршруты'}</Text>
-              <View style={styles.row}>{topRow.map(renderCard)}</View>
-              <View style={styles.row}>{bottomRow.map(renderCard)}</View>
-            </>
+            routes.map(renderCard)
           )}
         </ScrollView>
       </View>
     </Modal>
   );
 }
-
-const CARD_WIDTH = screenWidth - 32;
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
@@ -119,17 +119,14 @@ const styles = StyleSheet.create({
   backButton: { width: 36, height: 36, alignItems: 'center', justifyContent: 'center', marginTop: 24 },
   headerTitleWrap: { flex: 1, flexDirection: 'row', alignItems: 'center', marginLeft: 20 },
   headerTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 16, color: '#000', textTransform: 'uppercase', letterSpacing: 0.2, marginTop: 24, textAlign: 'center' },
-  scrollContent: { padding: 20, paddingBottom: 40 },
-  pageTitle: { fontFamily: 'Inter', fontWeight: '800', fontSize: 22, color: '#1129BD', marginBottom: 12, textAlign: 'center' },
-  row: { gap: 16, marginBottom: 16 },
-  card: { width: CARD_WIDTH, borderRadius: 12, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: '#E2E4E6', overflow: 'hidden' },
-  cardImg: { width: '100%', height: 160, backgroundColor: '#F5F7FF' },
-  cardBody: { padding: 12, gap: 6 },
-  cardTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 18, color: '#000' },
-  cardName: { fontFamily: 'Inter', fontWeight: '600', fontSize: 16, color: '#000' },
-  cardPhone: { fontFamily: 'Inter', fontWeight: '400', fontSize: 16, color: '#000' },
-  phone: { fontFamily: 'Inter', fontWeight: '400', fontSize: 16, color: '#000' },
-  link: { fontFamily: 'Inter', fontWeight: '600', fontSize: 16, color: '#1129BD', textDecorationLine: 'underline' },
+  scrollContent: { padding: 20, paddingBottom: 40, gap: 20 },
+  card: { flexDirection: 'column', alignItems: 'center', padding: 20, gap: 20, backgroundColor: 'rgba(17, 41, 189, 0.1)', borderWidth: 1, borderColor: '#D5DAEF', borderRadius: 15 },
+  cardImg: { width: '100%', height: 178, borderRadius: 15 },
+  cardBody: { flexDirection: 'column', alignItems: 'center', gap: 10 },
+  cardTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 14, lineHeight: 17, textTransform: 'uppercase', textAlign: 'center', color: '#1129BD' },
+  cardName: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: '#1129BD' },
+  cardPhone: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: '#1129BD' },
+  link: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: '#1129BD', textDecorationLine: 'underline' },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',

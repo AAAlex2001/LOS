@@ -7,3 +7,4 @@ class FooterConfig(AppConfig):
     verbose_name = 'Футер'
 
 
+

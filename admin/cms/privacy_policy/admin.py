@@ -16,3 +16,4 @@ class AccessibilityAndTermsPageAdmin(admin.ModelAdmin):
     search_fields = ('title',)
 
 
+

@@ -57,9 +57,6 @@ export default function ExcursionsScreen({ visible, onClose }: Props) {
     </View>
   );
 
-  const topRow = services.slice(0, 3);
-  const bottomRow = services.slice(3);
-
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
       <View style={styles.container}>
@@ -79,19 +76,13 @@ export default function ExcursionsScreen({ visible, onClose }: Props) {
               <Text style={styles.loadingText}>Загрузка...</Text>
             </View>
           ) : (
-            <>
-              <Text style={styles.pageTitle}>Экскурсии</Text>
-              <View style={styles.row}>{topRow.map(renderCard)}</View>
-              <View style={styles.row}>{bottomRow.map(renderCard)}</View>
-            </>
+            services.map(renderCard)
           )}
         </ScrollView>
       </View>
     </Modal>
   );
 }
-
-const CARD_WIDTH = screenWidth - 32;
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
@@ -102,14 +93,12 @@ const styles = StyleSheet.create({
   backButton: { width: 36, height: 36, alignItems: 'center', justifyContent: 'center', marginTop: 24 },
   headerTitleWrap: { flex: 1, flexDirection: 'row', alignItems: 'center', marginLeft: 20 },
   headerTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 16, color: '#000', textTransform: 'uppercase', letterSpacing: 0.2, marginTop: 24, textAlign: 'center' },
-  scrollContent: { padding: 20, paddingBottom: 40 },
-  pageTitle: { fontFamily: 'Inter', fontWeight: '800', fontSize: 22, color: '#1129BD', marginBottom: 12, textAlign: 'center' },
-  row: { gap: 16, marginBottom: 16 },
-  card: { width: CARD_WIDTH, borderRadius: 12, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: '#E2E4E6', overflow: 'hidden' },
-  cardImg: { width: '100%', height: 140, backgroundColor: '#F5F7FF' },
-  cardBody: { padding: 12, gap: 6 },
-  cardContacts: { fontFamily: 'Inter', fontWeight: '400', fontSize: 16, color: '#000' },
-  link: { fontFamily: 'Inter', fontWeight: '600', fontSize: 16, color: '#1129BD', textDecorationLine: 'underline' },
+  scrollContent: { padding: 20, paddingBottom: 40, gap: 10 },
+  card: { flexDirection: 'column', alignItems: 'center', padding: 20, gap: 10, backgroundColor: 'rgba(17, 41, 189, 0.1)', borderWidth: 1, borderColor: '#D5DAEF', borderRadius: 15 },
+  cardImg: { width: '100%', maxWidth: 240, aspectRatio: 240/145 },
+  cardBody: { width: '100%', flexDirection: 'column', alignItems: 'center', gap: 10 },
+  cardContacts: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: '#1129BD' },
+  link: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: '#1129BD', textDecorationLine: 'underline' },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',

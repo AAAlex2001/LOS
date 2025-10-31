@@ -7,3 +7,4 @@ class PrivacyPolicyConfig(AppConfig):
     verbose_name = 'Политика конфиденциальности'
 
 
+

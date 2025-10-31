@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dimensions } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dimensions, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
 
@@ -61,6 +61,14 @@ export default function HotSpringsScreen({ visible, onClose }: Props) {
   }, [visible]);
 
   const springs = (data?.springs || []).slice().sort((a, b) => a.order - b.order);
+  const heroBgRaw = data?.hero_background_url || '';
+  const heroBg = heroBgRaw ? (heroBgRaw.startsWith('http') ? heroBgRaw : `${API_BASE}${heroBgRaw}`) : '';
+
+  const toImageUrl = (url: string) => {
+    if (!url) return undefined;
+    if (url.startsWith('http://') || url.startsWith('https://')) return url;
+    return `${API_BASE}/media/${url}`;
+  };
 
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
@@ -82,10 +90,16 @@ export default function HotSpringsScreen({ visible, onClose }: Props) {
             </View>
           ) : (
             <>
-              <Text style={styles.pageTitle}>Горячие источники</Text>
-              {data?.hero_text && (
-                <View style={styles.banner}>
-                  <Text style={styles.bannerText}>{data.hero_text}</Text>
+              {data?.hero_text && heroBg && (
+                <View style={styles.bannerContainer}>
+                  <ImageBackground
+                    source={{ uri: heroBg }}
+                    style={styles.banner}
+                    resizeMode="cover"
+                    imageStyle={styles.bannerImage}
+                  >
+                    <Text style={styles.bannerText}>{data.hero_text}</Text>
+                  </ImageBackground>
                 </View>
               )}
 
@@ -93,7 +107,7 @@ export default function HotSpringsScreen({ visible, onClose }: Props) {
                 {springs.map((s) => (
                   <View key={s.id} style={styles.card}>
                     <Image
-                      source={{ uri: `${API_BASE}/media/${s.image_url}` }}
+                      source={{ uri: toImageUrl(s.image_url) }}
                       style={styles.cardImg}
                       resizeMode="cover"
                     />
@@ -112,8 +126,6 @@ export default function HotSpringsScreen({ visible, onClose }: Props) {
   );
 }
 
-const CARD_WIDTH = screenWidth - 40;
-
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   headerBar: {
@@ -124,33 +136,41 @@ const styles = StyleSheet.create({
   headerTitleWrap: { flex: 1, flexDirection: 'row', alignItems: 'center', marginLeft: 20 },
   headerTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 16, color: '#000', textTransform: 'uppercase', letterSpacing: 0.2, marginTop: 24, textAlign: 'center' },
   scrollContent: { padding: 20, paddingBottom: 40 },
-  pageTitle: { fontFamily: 'Inter', fontWeight: '800', fontSize: 22, color: '#1129BD', marginBottom: 12, textAlign: 'center' },
-  banner: { backgroundColor: '#EFF3FF', borderRadius: 12, padding: 12, marginBottom: 16 },
-  bannerText: { fontFamily: 'Inter', fontWeight: '600', fontSize: 14, lineHeight: 17, color: 'rgba(0,0,0,0.85)', textAlign: 'center' },
+  bannerContainer: { marginBottom: 20, borderRadius: 15, width: '100%' },
+  banner: { width: '100%', paddingTop: 16,  paddingBottom: 16, justifyContent: 'center', alignItems: 'center', minHeight: 219 },
+  bannerImage: { borderRadius: 15 },
+  bannerText: { fontFamily: 'Inter', fontWeight: '600', fontSize: 14, lineHeight: 17, color: 'rgba(0, 0, 0, 0.85)', textAlign: 'center', flexShrink: 1, padding: 20, },
   cardsContainer: { gap: 77 },
-  card: { width: CARD_WIDTH, alignSelf: 'center' },
-  cardImg: { width: '100%', height: 220, borderRadius: 15, backgroundColor: '#F5F7FF' },
+  card: { flexDirection: 'column', gap: 7 },
+  cardImg: { width: '100%', height: 264, borderRadius: 15 },
   cardTitle: { 
     fontFamily: 'Inter', 
-    fontWeight: '700', 
-    fontSize: 18, 
+    fontWeight: '800', 
+    fontSize: 14, 
+    lineHeight: 17,
     color: '#1129BD', 
-    marginTop: 27, 
+    marginTop: 0, 
     textAlign: 'center',
     textDecorationLine: 'underline',
+    paddingHorizontal: 0,
+    paddingTop: 30,
+    paddingBottom: 30,
   },
   cardDescription: { 
     fontFamily: 'Inter', 
     fontWeight: '400', 
-    fontSize: 16, 
+    fontSize: 14,
+    lineHeight: 17, 
     color: '#000', 
-    marginTop: 27,
+    marginTop: 0,
     textAlign: 'left',
+    paddingHorizontal: 0,
   },
   boldText: {
     fontFamily: 'Inter',
     fontWeight: '700',
-    fontSize: 16,
+    fontSize: 14,
+    lineHeight: 17,
     color: '#000',
   },
   loadingContainer: {

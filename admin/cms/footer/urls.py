@@ -7,3 +7,4 @@ router.register(r'footer', FooterViewSet, basename='footer')
 urlpatterns = router.urls
 
 
+

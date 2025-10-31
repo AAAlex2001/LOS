@@ -20,3 +20,4 @@ class FooterViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+
