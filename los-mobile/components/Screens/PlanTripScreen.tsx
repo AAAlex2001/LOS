@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo, FontAwesome } from '@expo/vector-icons';
 import BanksScreen from './plan-to-trip/BanksScreen';
+import TaxiScreen from './plan-to-trip/TaxiScreen';
 
 const buttons = [
   { title: 'Города Абхазии', icon: <MaterialCommunityIcons name="city-variant-outline" size={40} color="#fff" /> },
@@ -13,6 +14,7 @@ const buttons = [
 
 export default function PlanTripScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [banksVisible, setBanksVisible] = useState(false);
+  const [taxiVisible, setTaxiVisible] = useState(false);
 
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
@@ -33,6 +35,8 @@ export default function PlanTripScreen({ visible, onClose }: { visible: boolean,
                 onPress={() => {
                   if (btn.title === 'Банки') {
                     setBanksVisible(true);
+                  } else if (btn.title === 'Службы такси') {
+                    setTaxiVisible(true);
                   }
                 }}
               >
@@ -52,6 +56,8 @@ export default function PlanTripScreen({ visible, onClose }: { visible: boolean,
                 onPress={() => {
                   if (btn.title === 'Банки') {
                     setBanksVisible(true);
+                  } else if (btn.title === 'Службы такси') {
+                    setTaxiVisible(true);
                   }
                 }}
               >
@@ -64,6 +70,7 @@ export default function PlanTripScreen({ visible, onClose }: { visible: boolean,
           </View>
         </View>
         <BanksScreen visible={banksVisible} onClose={() => setBanksVisible(false)} />
+        <TaxiScreen visible={taxiVisible} onClose={() => setTaxiVisible(false)} />
       </View>
     </Modal>
   );

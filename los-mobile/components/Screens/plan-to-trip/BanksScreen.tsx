@@ -179,9 +179,8 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   scrollContent: {
+    padding: 20,
     paddingBottom: 40,
-    paddingHorizontal: 20,
-    paddingTop: 15,
   },
   loadingContainer: {
     flex: 1,

@@ -66,9 +66,6 @@ export default function TransportCommunicationsScreen({ visible, onClose }: { vi
             </View>
           ) : (
             <>
-              {data?.main_title && (
-                <Text style={styles.mainTitle}>{data.main_title}</Text>
-              )}
               {transportBlocks.map((block) => (
                 <View key={block.id} style={styles.transportBlock}>
                   <Text style={styles.blockTitle}>{block.title}</Text>
@@ -138,49 +135,39 @@ const styles = StyleSheet.create({
     marginLeft: 0,
   },
   scrollContent: {
+    padding: 20,
     paddingBottom: 40,
+      paddingTop: 0,
     alignItems: 'center',
-    paddingTop: 0,
-  },
-  mainTitle: {
-    fontFamily: 'Inter',
-    fontWeight: '800',
-    fontSize: 28,
-    lineHeight: 34,
-    textAlign: 'center',
-    color: '#1129BD',
-    marginBottom: 40,
-    marginTop: 10,
   },
   transportBlock: {
-    width: screenWidth - 40,
-    marginBottom: 60,
+    width: '100%',
+    marginBottom: 40,
     alignSelf: 'center',
   },
   blockTitle: {
     fontFamily: 'Inter',
     fontWeight: '700',
-    fontSize: 18,
-    lineHeight: 24,
+    fontSize: 14,
+    lineHeight: 17,
     textAlign: 'center',
     textDecorationLine: 'underline',
     color: '#1129BD',
     textTransform: 'uppercase',
-    marginBottom: 24,
-    marginTop: 16,
+    marginBottom: 10,
+    padding: 10,
   },
   imagesContainer: {
-    flexDirection: screenWidth > 768 ? 'row' : 'column',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 20,
+    width: '100%',
   },
   image: {
-    width: screenWidth > 700 ? 320 : screenWidth - 60,
-    height: 180,
-    borderRadius: 15,
-    marginBottom: screenWidth > 768 ? 0 : 20,
-    marginHorizontal: 10,
+    width: '100%',
+    height: 230,
+    borderRadius: 0,
+    marginBottom: 20,
   },
   loadingContainer: {
     flex: 1,

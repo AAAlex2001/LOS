@@ -55,7 +55,7 @@ export default function GovernmentStructureScreen({ visible, onClose }: { visibl
           </View>
           <View style={{ width: 36 }} />
         </View>
-        <ScrollView contentContainerStyle={[styles.scrollContent, { paddingTop: 20 }]} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
               <Text style={styles.loadingText}>Загрузка...</Text>
@@ -125,26 +125,29 @@ const styles = StyleSheet.create({
     marginLeft: 0,
   },
   scrollContent: {
+    padding: 20,
     paddingBottom: 40,
+      paddingTop: 0,
     alignItems: 'center',
-    paddingTop: 0,
   },
   mapImage: {
-    width: screenWidth - 40,
-    height: ((screenWidth - 40) * 272) / 350.4,
+    width: '100%',
+    minHeight: 278,
     borderRadius: 12,
-    marginBottom: 32,
+    marginBottom: 20,
   },
   textBlock: {
-    width: screenWidth - 40,
+    width: '100%',
     alignItems: 'flex-start',
-    paddingTop: 24,
+    paddingTop: 0,
     marginBottom: 20,
+    gap: 8,
   },
   sectionTitle: {
     fontFamily: 'Inter',
     fontWeight: '700',
-    fontSize: 22,
+    fontSize: 14,
+    lineHeight: 17,
     color: '#1129BD',
     marginBottom: 8,
     textTransform: 'uppercase',
@@ -152,9 +155,9 @@ const styles = StyleSheet.create({
   sectionText: {
     fontFamily: 'Inter',
     fontWeight: '400',
-    fontSize: 18,
+    fontSize: 14,
+    lineHeight: 17,
     color: '#000',
-    lineHeight: 24,
   },
   gerbImage: {
     width: 120,
