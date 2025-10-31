@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo, FontAwesome } from '@expo/vector-icons';
+import BanksScreen from './plan-to-trip/BanksScreen';
 
 const buttons = [
   { title: 'Города Абхазии', icon: <MaterialCommunityIcons name="city-variant-outline" size={40} color="#fff" /> },
@@ -11,6 +12,8 @@ const buttons = [
 ];
 
 export default function PlanTripScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const [banksVisible, setBanksVisible] = useState(false);
+
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
       <View style={styles.fullscreen}>
@@ -24,26 +27,43 @@ export default function PlanTripScreen({ visible, onClose }: { visible: boolean,
           {/* Первый ряд — 3 элемента */}
           <View style={styles.row}>
             {buttons.slice(0, 3).map((btn, idx) => (
-              <View key={idx} style={styles.item}>
+              <TouchableOpacity 
+                key={idx} 
+                style={styles.item}
+                onPress={() => {
+                  if (btn.title === 'Банки') {
+                    setBanksVisible(true);
+                  }
+                }}
+              >
                 <View style={styles.iconCircle}>
                   {btn.icon}
                 </View>
                 <Text style={styles.label}>{btn.title}</Text>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
           {/* Второй ряд — 2 элемента, прижаты к левому краю */}
           <View style={styles.row}>
             {buttons.slice(3, 5).map((btn, idx) => (
-              <View key={idx} style={styles.item}>
+              <TouchableOpacity 
+                key={idx} 
+                style={styles.item}
+                onPress={() => {
+                  if (btn.title === 'Банки') {
+                    setBanksVisible(true);
+                  }
+                }}
+              >
                 <View style={styles.iconCircle}>
                   {btn.icon}
                 </View>
                 <Text style={styles.label}>{btn.title}</Text>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         </View>
+        <BanksScreen visible={banksVisible} onClose={() => setBanksVisible(false)} />
       </View>
     </Modal>
   );
