@@ -90,7 +90,7 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
   const { width } = useWindowDimensions();
   const [data, setData] = useState<PartiesPageData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [adWidth, setAdWidth] = useState(0);
 
   useEffect(() => {
     if (!visible) return;
@@ -248,7 +248,7 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                         <View key={event.id} style={styles.eventItem}>
                           <View style={styles.eventHeader}>
                             <View style={styles.eventIconWrap}>
-                              <ArrowIcon width={32} height={64} />
+                              <ArrowIcon width={35} height={35} />
                             </View>
                             <Text style={styles.eventTitle} numberOfLines={1}>
                               {event.title}
@@ -257,7 +257,7 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                           {event.date_info && (
                             <View style={styles.eventRow}>
                               <View style={styles.eventIconWrap}>
-                                <CalendarIcon width={30} height={30} />
+                                <CalendarIcon width={35} height={35} />
                               </View>
                               <Text style={styles.eventRowText}>{event.date_info}</Text>
                             </View>
@@ -265,7 +265,7 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                           {event.location && (
                             <View style={styles.eventRow}>
                               <View style={styles.eventIconWrap}>
-                                <LocationIcon width={32} height={32} />
+                                <LocationIcon width={35} height={35} />
                               </View>
                               <Text style={styles.eventRowText} numberOfLines={1}>{event.location}</Text>
                             </View>
@@ -290,16 +290,17 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
 
                     {/* Ad Slider - after events */}
                     {city.slider_items && city.slider_items.length > 0 && (
-                      <View style={styles.adBlock}>
+                      <View style={styles.adBlock} onLayout={(e) => setAdWidth(e.nativeEvent.layout.width)}>
                         <FlatList
                           data={city.slider_items.sort((a, b) => a.order - b.order)}
                           keyExtractor={(item) => `${city.id}-${item.id}`}
                           renderItem={({ item }) => (
-                            <View style={styles.adSlide}>
+                            <View style={[styles.adSlide, { width: adWidth || (width - 40) }]}>
                               {item.media_type === 'video' ? (
                                 <Video
                                   source={{ uri: toImageUrl(item.media_file) }}
                                   style={styles.adImage}
+                                  resizeMode={ResizeMode.COVER}
                                   shouldPlay
                                   isLooping
                                   isMuted
@@ -311,9 +312,9 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                             </View>
                           )}
                           horizontal
-                          pagingEnabled
                           showsHorizontalScrollIndicator={false}
-                          snapToInterval={350}
+                          snapToInterval={adWidth || (width - 40)}
+                          snapToAlignment="start"
                           decelerationRate="fast"
                         />
                       </View>
@@ -370,16 +371,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   banner: {
-    width: 349,
-    minHeight: 132,
+    width: "100%",
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 32,
     borderRadius: 15,
   },
   bannerWrapper: {
-    marginTop: 50,
+    marginTop: 30,
     alignSelf: 'center',
     borderRadius: 15,
     overflow: 'visible',
@@ -388,7 +386,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   bannerOverlay: {
-    width: 309,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -399,6 +397,8 @@ const styles = StyleSheet.create({
     lineHeight: 17,
     color: 'rgba(0, 0, 0, 0.85)',
     textAlign: 'center',
+      paddingHorizontal: 20,
+    paddingVertical: 32,
   },
   decorImage: {
     position: 'absolute',
@@ -417,18 +417,18 @@ const styles = StyleSheet.create({
     transform: [{ rotate: '-10deg' }],
   },
   decor2: {
-    left: 20,
-    top: 210,
+    left: 10,
+    top: 190,
     transform: [{ rotate: '-8deg' }],
   },
   decor3: {
-    left: 160,
-    top: 230,
+    left: 170,
+    top: 200,
     transform: [{ rotate: '8deg' }],
   },
   decor4: {
-    right: 20,
-    top: 210,
+    right: 10,
+    top: 190,
     transform: [{ rotate: '-8deg' }],
   },
   decor5: {
@@ -454,7 +454,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   tabsStickyWrap: {
-    marginBottom: 50,
+    marginBottom: 30,
     marginHorizontal: -20,
   },
   tabsContent: {
@@ -529,7 +529,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    width: 350,
+    width: '100%',
     height: 64,
   },
   eventIconWrap: {
@@ -622,7 +622,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   adSlide: {
-    width: 350,
+    width: '100%',
     height: 200,
   },
   adImage: {
