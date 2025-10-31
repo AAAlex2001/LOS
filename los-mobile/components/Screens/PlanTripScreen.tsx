@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo, FontAwesome } from '@expo/vector-icons';
 import BanksScreen from './plan-to-trip/BanksScreen';
 import TaxiScreen from './plan-to-trip/TaxiScreen';
+import CitiesScreen from './plan-to-trip/CitiesScreen';
 
 const buttons = [
   { title: 'Города Абхазии', icon: <MaterialCommunityIcons name="city-variant-outline" size={40} color="#fff" /> },
@@ -13,6 +14,7 @@ const buttons = [
 ];
 
 export default function PlanTripScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const [citiesVisible, setCitiesVisible] = useState(false);
   const [banksVisible, setBanksVisible] = useState(false);
   const [taxiVisible, setTaxiVisible] = useState(false);
 
@@ -33,7 +35,9 @@ export default function PlanTripScreen({ visible, onClose }: { visible: boolean,
                 key={idx} 
                 style={styles.item}
                 onPress={() => {
-                  if (btn.title === 'Банки') {
+                  if (btn.title === 'Города Абхазии') {
+                    setCitiesVisible(true);
+                  } else if (btn.title === 'Банки') {
                     setBanksVisible(true);
                   } else if (btn.title === 'Службы такси') {
                     setTaxiVisible(true);
@@ -54,7 +58,9 @@ export default function PlanTripScreen({ visible, onClose }: { visible: boolean,
                 key={idx} 
                 style={styles.item}
                 onPress={() => {
-                  if (btn.title === 'Банки') {
+                  if (btn.title === 'Города Абхазии') {
+                    setCitiesVisible(true);
+                  } else if (btn.title === 'Банки') {
                     setBanksVisible(true);
                   } else if (btn.title === 'Службы такси') {
                     setTaxiVisible(true);
@@ -69,6 +75,7 @@ export default function PlanTripScreen({ visible, onClose }: { visible: boolean,
             ))}
           </View>
         </View>
+        <CitiesScreen visible={citiesVisible} onClose={() => setCitiesVisible(false)} />
         <BanksScreen visible={banksVisible} onClose={() => setBanksVisible(false)} />
         <TaxiScreen visible={taxiVisible} onClose={() => setTaxiVisible(false)} />
       </View>
