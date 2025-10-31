@@ -26,17 +26,8 @@ interface ElementaryDictionaryPageData {
 
 const API_BASE = config.API_BASE;
 
-const getColumns = (list: WordPair[], forceSplit = false): WordPair[][] => {
-  if (forceSplit) {
-    const mid = Math.ceil(list.length / 2);
-    const col1 = [...list.slice(0, mid)];
-    const col2 = [...list.slice(mid)];
-
-    while (col2.length < col1.length) {
-      col2.push({ id: 0, russian: '\u00A0', abkhazian: '', order: 0 });
-    }
-    return [col1, col2];
-  }
+const getColumns = (list: WordPair[]): WordPair[][] => {
+  // All dictionaries in one column
   return [list];
 };
 
@@ -68,6 +59,8 @@ export default function ElementaryDictionaryScreen({ visible, onClose }: { visib
         <Text style={styles.cellHeader}>На русском</Text>
         <Text style={styles.cellHeader}>На абхазском</Text>
       </View>
+      {/* Center vertical divider across entire card */}
+      <View pointerEvents="none" style={styles.verticalDividerAbs} />
       {items.map((w, idx) => (
         <View key={`${w.id}-${idx}`} style={styles.row}>
           <Text style={styles.cell}>{w.russian}</Text>
@@ -98,26 +91,15 @@ export default function ElementaryDictionaryScreen({ visible, onClose }: { visib
           ) : (
             pageData?.categories && pageData.categories.map((category) => {
               const words = category.words || [];
-              const forceTwo = !!category.split_two_columns;
-              const columns = getColumns(words, forceTwo);
+              const columns = getColumns(words);
               
               return (
                 <View key={category.id} style={styles.sectionBlock}>
                   <Text style={styles.sectionTitle}>
                     {`${category.title} (${words.length} ${words.length === 1 ? 'слово' : words.length < 5 ? 'слова' : 'слов'})`}
                   </Text>
-                  {forceTwo ? (
-                    <View style={styles.tablesRow}>
-                      {columns.map((col, idx) => (
-                        <View key={idx} style={styles.tableContainer}>
-                          {renderTable(col)}
+                  {renderTable(words)}
                   </View>
-                ))}
-              </View>
-                  ) : (
-                    renderTable(words)
-                  )}
-            </View>
               );
             })
           )}
@@ -170,6 +152,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingBottom: 40,
+    paddingTop: 15,
     paddingHorizontal: 20,
   },
   sectionBlock: {
@@ -191,10 +174,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   dictionaryTable: {
+    position: 'relative',
     borderWidth: 1,
     borderColor: '#E2E4E6',
     borderRadius: 8,
     overflow: 'hidden',
+  },
+  verticalDividerAbs: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    width: 1,
+    left: '50%',
+    transform: [{ translateX: -0.5 }],
+    backgroundColor: '#E2E4E6',
   },
   row: {
     flexDirection: 'row',
@@ -206,9 +199,9 @@ const styles = StyleSheet.create({
     padding: 12,
     fontWeight: '700',
     fontSize: 14,
-    color: '#000',
-    backgroundColor: '#F5F5F5',
-    textAlign: 'center',
+    color: '#fff',
+    backgroundColor: '#0A1977',
+    textAlign: 'left',
   },
   cell: {
     flex: 1,
