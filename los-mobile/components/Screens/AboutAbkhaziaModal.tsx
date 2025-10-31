@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
-import GovernmentStructureScreen from './GovernmentStructureScreen';
-import HistoryAndCultureScreen from './HistoryAndCultureScreen';
-import TransportCommunicationsScreen from './TransportCommunicationsScreen';
-import AbkhazianCuizineScreen from './AbkhazianCuizineScreen';
-import AbkhazianCustomsScreen from './AbkhazianCustomsScreen';
-import ElementaryDictionaryScreen from './ElementaryDictionaryScreen';
+import GovernmentStructureScreen from './about-abkhazia/GovernmentStructureScreen';
+import HistoryAndCultureScreen from './about-abkhazia/HistoryAndCultureScreen';
+import TransportCommunicationsScreen from './about-abkhazia/TransportCommunicationsScreen';
+import AbkhazianCuizineScreen from './about-abkhazia/AbkhazianCuizineScreen';
+import AbkhazianCustomsScreen from './about-abkhazia/AbkhazianCustomsScreen';
+import ElementaryDictionaryScreen from './about-abkhazia/ElementaryDictionaryScreen';
 
 const buttons = [
   { title: 'Государственное\nустройство', icon: <MaterialCommunityIcons name="flag-variant" size={40} color="#fff" /> },

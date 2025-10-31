@@ -19,3 +19,4 @@ class FooterViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(footer, context={'request': request})
         return Response(serializer.data)
 
+

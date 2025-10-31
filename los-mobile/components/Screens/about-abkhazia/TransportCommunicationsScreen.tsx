@@ -1,10 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import config from '@/config';
 
 const { width: screenWidth } = Dimensions.get('window');
 
+interface TransportBlock {
+  id: number;
+  title: string;
+  image_1?: string;
+  image_2?: string;
+  order: number;
+}
+
+interface TransportCommunicationsPageData {
+  id: number;
+  main_title: string;
+  transport_blocks: TransportBlock[];
+}
+
+const API_BASE = config.API_BASE;
+
 export default function TransportCommunicationsScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const [data, setData] = useState<TransportCommunicationsPageData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!visible) return;
+    
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/transport-communications/page/content/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load transport communications');
+        const json = await res.json() as TransportCommunicationsPageData;
+        setData(json);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, [visible]);
+
+  const transportBlocks = (data?.transport_blocks || []).slice().sort((a, b) => a.order - b.order);
+  const toImageUrl = (p?: string) => (p ? (p.startsWith('http') ? p : `${API_BASE}${p}`) : '');
+
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
       <View style={styles.container}>
@@ -19,25 +60,38 @@ export default function TransportCommunicationsScreen({ visible, onClose }: { vi
           <View style={{ width: 36 }} />
         </View>
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          {/* <Text style={styles.mainTitle}>Транспортное сообщение республики Абхазия</Text> */}
-
-          {/* Аэропорт */}
-          <View style={styles.transportBlock}>
-            <Text style={styles.blockTitle}>СУХУМСКИЙ МЕЖДУНАРОДНЫЙ АЭРОПОРТ ИМЕНИ В.Г. АРДЗИНБА</Text>
-            <View style={styles.imagesContainer}>
-              <Image source={require('../../assets/images/airport1.jpg')} style={styles.image} resizeMode="cover" />
-              <Image source={require('../../assets/images/airport2.png')} style={styles.image} resizeMode="cover" />
+          {loading ? (
+            <View style={styles.loadingContainer}>
+              <Text style={styles.loadingText}>Загрузка...</Text>
             </View>
-          </View>
-
-          {/* Вокзал */}
-          <View style={styles.transportBlock}>
-            <Text style={styles.blockTitle}>ЖЕЛЕЗНОДОРОЖНЫЙ ВОКЗАЛ СУХУМ</Text>
-            <View style={styles.imagesContainer}>
-              <Image source={require('../../assets/images/vokzal1.jpg')} style={styles.image} resizeMode="cover" />
-              <Image source={require('../../assets/images/vokzal2.png')} style={styles.image} resizeMode="cover" />
-            </View>
-          </View>
+          ) : (
+            <>
+              {data?.main_title && (
+                <Text style={styles.mainTitle}>{data.main_title}</Text>
+              )}
+              {transportBlocks.map((block) => (
+                <View key={block.id} style={styles.transportBlock}>
+                  <Text style={styles.blockTitle}>{block.title}</Text>
+                  <View style={styles.imagesContainer}>
+                    {block.image_1 && (
+                      <Image
+                        source={{ uri: toImageUrl(block.image_1) }}
+                        style={styles.image}
+                        resizeMode="cover"
+                      />
+                    )}
+                    {block.image_2 && (
+                      <Image
+                        source={{ uri: toImageUrl(block.image_2) }}
+                        style={styles.image}
+                        resizeMode="cover"
+                      />
+                    )}
+                  </View>
+                </View>
+              ))}
+            </>
+          )}
         </ScrollView>
       </View>
     </Modal>
@@ -128,4 +182,14 @@ const styles = StyleSheet.create({
     marginBottom: screenWidth > 768 ? 0 : 20,
     marginHorizontal: 10,
   },
-}); 
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 100,
+  },
+  loadingText: {
+    fontSize: 18,
+    color: '#666',
+  },
+});

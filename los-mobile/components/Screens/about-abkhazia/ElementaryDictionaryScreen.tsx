@@ -1,0 +1,227 @@
+import React, { useEffect, useState } from 'react';
+import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import config from '@/config';
+
+const { width: screenWidth } = Dimensions.get('window');
+
+interface WordPair {
+  id: number;
+  russian: string;
+  abkhazian: string;
+  order: number;
+}
+
+interface DictionaryCategory {
+  id: number;
+  title: string;
+  split_two_columns: boolean;
+  order: number;
+  words: WordPair[];
+}
+
+interface ElementaryDictionaryPageData {
+  categories: DictionaryCategory[];
+}
+
+const API_BASE = config.API_BASE;
+
+const getColumns = (list: WordPair[], forceSplit = false): WordPair[][] => {
+  if (forceSplit) {
+    const mid = Math.ceil(list.length / 2);
+    const col1 = [...list.slice(0, mid)];
+    const col2 = [...list.slice(mid)];
+
+    while (col2.length < col1.length) {
+      col2.push({ id: 0, russian: '\u00A0', abkhazian: '', order: 0 });
+    }
+    return [col1, col2];
+  }
+  return [list];
+};
+
+export default function ElementaryDictionaryScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const [pageData, setPageData] = useState<ElementaryDictionaryPageData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!visible) return;
+    
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/elementary-dictionary/page/content/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load dictionary');
+        const json = await res.json() as ElementaryDictionaryPageData;
+        setPageData(json);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, [visible]);
+
+  const renderTable = (items: WordPair[]) => (
+    <View style={styles.dictionaryTable}>
+      <View style={styles.row}>
+        <Text style={styles.cellHeader}>На русском</Text>
+        <Text style={styles.cellHeader}>На абхазском</Text>
+      </View>
+      {items.map((w, idx) => (
+        <View key={`${w.id}-${idx}`} style={styles.row}>
+          <Text style={styles.cell}>{w.russian}</Text>
+          <Text style={styles.cell}>{w.abkhazian}</Text>
+        </View>
+      ))}
+    </View>
+  );
+
+  return (
+    <Modal visible={visible} animationType="slide" transparent={false}>
+      <View style={styles.container}>
+        {/* Header */}
+        <View style={styles.headerBar}>
+          <TouchableOpacity onPress={onClose} style={styles.backButton}>
+            <Ionicons name="arrow-back" size={24} color="#000" />
+          </TouchableOpacity>
+          <View style={styles.headerTitleWrap}>
+            <Text style={styles.headerTitle}>ЭЛЕМЕНТАРНЫЙ СЛОВАРЬ</Text>
+          </View>
+          <View style={{ width: 36 }} />
+        </View>
+        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+          {loading ? (
+            <View style={styles.loadingContainer}>
+              <Text style={styles.loadingText}>Загрузка...</Text>
+            </View>
+          ) : (
+            pageData?.categories && pageData.categories.map((category) => {
+              const words = category.words || [];
+              const forceTwo = !!category.split_two_columns;
+              const columns = getColumns(words, forceTwo);
+              
+              return (
+                <View key={category.id} style={styles.sectionBlock}>
+                  <Text style={styles.sectionTitle}>
+                    {`${category.title} (${words.length} ${words.length === 1 ? 'слово' : words.length < 5 ? 'слова' : 'слов'})`}
+                  </Text>
+                  {forceTwo ? (
+                    <View style={styles.tablesRow}>
+                      {columns.map((col, idx) => (
+                        <View key={idx} style={styles.tableContainer}>
+                          {renderTable(col)}
+                        </View>
+                      ))}
+                    </View>
+                  ) : (
+                    renderTable(words)
+                  )}
+                </View>
+              );
+            })
+          )}
+        </ScrollView>
+      </View>
+    </Modal>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+  },
+  headerBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    height: 110,
+    paddingTop: 50,
+    paddingHorizontal: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E2E4E6',
+  },
+  backButton: {
+    width: 36,
+    height: 36,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+  },
+  headerTitleWrap: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerTitle: {
+    fontFamily: 'Inter',
+    fontWeight: '700',
+    fontSize: 18,
+    color: '#000',
+    textTransform: 'uppercase',
+    letterSpacing: 0.2,
+    marginTop: 30,
+    marginLeft: 0,
+  },
+  scrollContent: {
+    paddingBottom: 40,
+    paddingHorizontal: 20,
+  },
+  sectionBlock: {
+    marginBottom: 32,
+  },
+  sectionTitle: {
+    fontFamily: 'Inter',
+    fontWeight: '700',
+    fontSize: 20,
+    color: '#1129BD',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  tablesRow: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  tableContainer: {
+    flex: 1,
+  },
+  dictionaryTable: {
+    borderWidth: 1,
+    borderColor: '#E2E4E6',
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  row: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E2E4E6',
+  },
+  cellHeader: {
+    flex: 1,
+    padding: 12,
+    fontWeight: '700',
+    fontSize: 14,
+    color: '#000',
+    backgroundColor: '#F5F5F5',
+    textAlign: 'center',
+  },
+  cell: {
+    flex: 1,
+    padding: 12,
+    fontSize: 14,
+    color: '#000',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 100,
+  },
+  loadingText: {
+    fontSize: 18,
+    color: '#666',
+  },
+});

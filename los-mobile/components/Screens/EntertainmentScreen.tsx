@@ -2,10 +2,10 @@ import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
-import PartiesScreen from './PartiesScreen';
-import MountainRoutesScreen from './MountainRoutesScreen';
-import ExcursionsScreen from './ExcursionsScreen';
-import HotSpringsScreen from './HotSpringsScreen';
+import PartiesScreen from './entertainment/PartiesScreen';
+import MountainRoutesScreen from './entertainment/MountainRoutesScreen';
+import ExcursionsScreen from './entertainment/ExcursionsScreen';
+import HotSpringsScreen from './entertainment/HotSpringsScreen';
 
 const buttons = [
   { title: 'Вечеринки и яркие впечатления', icon: <MaterialCommunityIcons name="party-popper" size={40} color="#fff" /> },

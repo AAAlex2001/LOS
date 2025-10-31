@@ -15,3 +15,4 @@ class AccessibilityAndTermsPageAdmin(admin.ModelAdmin):
     list_filter = ('created_at', 'updated_at')
     search_fields = ('title',)
 
+

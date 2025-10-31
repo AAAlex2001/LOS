@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dimensions, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import config from '@/config';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -8,34 +9,56 @@ type Props = { visible: boolean; onClose: () => void };
 
 type ExcursionCard = {
   id: number;
-  img?: any;
+  img?: string;
   contacts: string;
   site: string;
 };
 
-const excursionServices: ExcursionCard[] = [
-  { id: 1, img: require('../../assets/images/Excursions1.svg'), contacts: 'Контакты: +7 (940) 910-70-70', site: 'https://welcome-abkhazia.com/' },
-  { id: 2, img: require('../../assets/images/Excursions2.svg'), contacts: 'Контакты: +7 (940) 771-62-84', site: 'https://new.sukhum-travel.ru/' },
-  { id: 3, img: require('../../assets/images/Excursions3.svg'), contacts: 'Контакты: +7 (940) 932-51-51', site: 'https://apsny-travel.com/tours_catalog.php' },
-  { id: 4, img: require('../../assets/images/Excursions4.svg'), contacts: 'Контакты: +7 (940) 770-22-20', site: 'https://kruizgagra.ru/ekskursii' },
-  { id: 5, img: require('../../assets/images/Excursions5.svg'), contacts: 'Контакты: +7 (940) 996-72-76,\nWhatsapp +7 (940) 996-72-76', site: 'https://continent-gagra.ru/excursionsabkhazia' },
-];
+const API_BASE = config.API_BASE;
 
 export default function ExcursionsScreen({ visible, onClose }: Props) {
-  const topRow = excursionServices.slice(0, 3);
-  const bottomRow = excursionServices.slice(3);
+  const [services, setServices] = useState<ExcursionCard[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!visible) return;
+    
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/excursions/page/content/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load excursions');
+        const json = await res.json();
+        const srv = (json?.services || []).map((s: any): ExcursionCard => ({
+          id: s.id,
+          img: s.image_url ? `${API_BASE}/media/${s.image_url}` : undefined,
+          contacts: s.contacts,
+          site: s.site,
+        }));
+        setServices(srv);
+      } catch (e) {
+        console.error(e);
+        setServices([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, [visible]);
 
   const openLink = (url: string) => Linking.openURL(url).catch(() => {});
 
   const renderCard = (item: ExcursionCard) => (
     <View key={item.id} style={styles.card}>
-      {item.img && <Image source={item.img} style={styles.cardImg} resizeMode="contain" />}
+      {item.img && <Image source={{ uri: item.img }} style={styles.cardImg} resizeMode="contain" />}
       <View style={styles.cardBody}>
         <Text style={styles.cardContacts}>{item.contacts}</Text>
         <Text style={styles.link} onPress={() => openLink(item.site)}>САЙТ: {item.site}</Text>
       </View>
     </View>
   );
+
+  const topRow = services.slice(0, 3);
+  const bottomRow = services.slice(3);
 
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
@@ -51,10 +74,17 @@ export default function ExcursionsScreen({ visible, onClose }: Props) {
         </View>
 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          <Text style={styles.pageTitle}>Экскурсии</Text>
-
-          <View style={styles.row}>{topRow.map(renderCard)}</View>
-          <View style={styles.row}>{bottomRow.map(renderCard)}</View>
+          {loading ? (
+            <View style={styles.loadingContainer}>
+              <Text style={styles.loadingText}>Загрузка...</Text>
+            </View>
+          ) : (
+            <>
+              <Text style={styles.pageTitle}>Экскурсии</Text>
+              <View style={styles.row}>{topRow.map(renderCard)}</View>
+              <View style={styles.row}>{bottomRow.map(renderCard)}</View>
+            </>
+          )}
         </ScrollView>
       </View>
     </Modal>
@@ -81,6 +111,14 @@ const styles = StyleSheet.create({
   cardBody: { padding: 12, gap: 6 },
   cardContacts: { fontFamily: 'Inter', fontWeight: '400', fontSize: 16, color: '#000' },
   link: { fontFamily: 'Inter', fontWeight: '600', fontSize: 16, color: '#1129BD', textDecorationLine: 'underline' },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 100,
+  },
+  loadingText: {
+    fontSize: 18,
+    color: '#666',
+  },
 });
-
-

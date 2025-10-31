@@ -6,3 +6,4 @@ class PrivacyPolicyConfig(AppConfig):
     name = 'cms.privacy_policy'
     verbose_name = 'Политика конфиденциальности'
 
+

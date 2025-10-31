@@ -6,3 +6,4 @@ class FooterConfig(AppConfig):
     name = 'cms.footer'
     verbose_name = 'Футер'
 
+
