@@ -13,14 +13,26 @@ import {
   ImageBackground,
   useWindowDimensions,
   Linking,
+  FlatList,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Video, ResizeMode } from 'expo-av';
 import ArrowIcon from '../../../assets/images/VectorParties1.svg';
 import CalendarIcon from '../../../assets/images/VectorParties2.svg';
 import LocationIcon from '../../../assets/images/VectorParties3.svg';
 import config from '@/config';
 
 const { width: screenWidth } = Dimensions.get('window');
+
+type PartySliderItem = {
+  id: number;
+  media_type: 'video' | 'image';
+  media_file: string;
+  order: number;
+  city: number;
+  city_name: string;
+  city_slug: string;
+};
 
 type PartyEvent = {
   id: number;
@@ -41,6 +53,7 @@ type PartyCity = {
   slug: string;
   city_image?: string;
   events: PartyEvent[];
+  slider_items: PartySliderItem[];
   order: number;
 };
 
@@ -79,6 +92,7 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
   const { width } = useWindowDimensions();
   const [data, setData] = useState<PartiesPageData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     if (!visible) return;
@@ -104,17 +118,14 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
     return Math.max(base * 0.6, Math.min(scaled, base * 1.6));
   };
 
-  const bannerMinHeight = Math.round(scaleForWidth(240));
-  const centerIconSize = Math.round(scaleForWidth(80));
-  const decorSize = Math.round(scaleForWidth(64));
-  const cityImageHeight = Math.round(scaleForWidth(220));
-  const bannerTitleSize = Math.round(scaleForWidth(22));
-  const bannerTextSize = Math.round(scaleForWidth(16));
-  const eventTextSize = bannerTextSize;
-  const eventIconSize = Math.max(12, Math.round(bannerTextSize));
-  const tabTextSize = Math.max(12, Math.round(scaleForWidth(14)));
-  const cityTitleSize = Math.max(16, Math.round(scaleForWidth(18)));
-  const sectionTitleSize = Math.max(14, Math.round(scaleForWidth(16)));
+  const centerIconSize = 60;  // Vecherinka1 4: 59.81px
+  const decorSize = 44;       // vecherinka1 3, IMG_3949, etc: 43.86px
+  const cityImageHeight = 281;  // city slider image height
+  const bannerTextSize = 14;
+  const eventTextSize = 14;
+  const eventIconSize = 30;  // date: 30px, address: 32px
+  const tabTextSize = 12;
+  const cityTitleSize = 14;  // Сухум: 14px
 
   const scrollRef = useRef<ScrollView | null>(null);
   const sectionRefs = useMemo(() => {
@@ -179,7 +190,7 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                       onPress={() => scrollToCity(c.slug)}
                       activeOpacity={0.8}
                     >
-                      <Text style={[styles.tabText, { fontSize: tabTextSize }]}>{c.name}</Text>
+                      <Text style={styles.tabText}>{c.name}</Text>
                     </TouchableOpacity>
                   ))}
                 </ScrollView>
@@ -189,15 +200,12 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
               <View style={styles.bannerWrapper}>
                 <ImageBackground
                   source={{ uri: data?.background_image ? toImageUrl(data.background_image) : undefined }}
-                  style={[styles.banner, { minHeight: bannerMinHeight }]}
+                  style={styles.banner}
                   imageStyle={styles.bannerImage}
                   defaultSource={require('../../../assets/images/IMG_1932.jpg')}
                 >
                   {data?.center_icon && (
-                    <View style={[
-                      styles.centerIcon,
-                      { width: centerIconSize, height: centerIconSize, top: -Math.round(centerIconSize * 0.6) - 7 }
-                    ]}>
+                    <View style={styles.centerIcon}>
                       <Image
                         source={{ uri: toImageUrl(data.center_icon) }}
                         style={{ width: centerIconSize, height: centerIconSize }}
@@ -207,26 +215,26 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                   )}
                   <View style={styles.bannerOverlay}>
                     {data?.intro_text && (
-                      <Text style={[styles.bannerText, { fontSize: bannerTextSize }]}>{data.intro_text}</Text>
+                      <Text style={styles.bannerText}>{data.intro_text}</Text>
                     )}
                   </View>
                 </ImageBackground>
 
                 {/* Decorative images */}
                 {data?.decor_image_1 && (
-                  <Image source={{ uri: toImageUrl(data.decor_image_1) }} style={[styles.decorImage, { width: decorSize, height: decorSize, left: -16, top: -Math.round(decorSize * 0.55) - 10, transform: [{ rotate: '-10deg' }] }]} />
+                  <Image source={{ uri: toImageUrl(data.decor_image_1) }} style={[styles.decorImage, styles.decor1]} />
                 )}
                 {data?.decor_image_2 && (
-                  <Image source={{ uri: toImageUrl(data.decor_image_2) }} style={[styles.decorImage, { width: decorSize, height: decorSize, left: -16, bottom: -Math.round(decorSize * 0.7), transform: [{ rotate: '-8deg' }] }]} />
+                  <Image source={{ uri: toImageUrl(data.decor_image_2) }} style={[styles.decorImage, styles.decor2]} />
                 )}
                 {data?.decor_image_3 && (
-                  <Image source={{ uri: toImageUrl(data.decor_image_3) }} style={[styles.decorImage, { width: decorSize, height: decorSize, left: Math.max(8, Math.round(width / 2 - decorSize / 2) - 26), bottom: -Math.round(decorSize * 0.75), transform: [{ rotate: '8deg' }] }]} />
+                  <Image source={{ uri: toImageUrl(data.decor_image_3) }} style={[styles.decorImage, styles.decor3]} />
                 )}
                 {data?.decor_image_4 && (
-                  <Image source={{ uri: toImageUrl(data.decor_image_4) }} style={[styles.decorImage, { width: decorSize, height: decorSize, right: -16, top: -Math.round(decorSize * 0.55) - 10, transform: [{ rotate: '15deg' }] }]} />
+                  <Image source={{ uri: toImageUrl(data.decor_image_4) }} style={[styles.decorImage, styles.decor4]} />
                 )}
                 {data?.decor_image_5 && (
-                  <Image source={{ uri: toImageUrl(data.decor_image_5) }} style={[styles.decorImage, { width: decorSize, height: decorSize, right: -16, bottom: -Math.round(decorSize * 0.7), transform: [{ rotate: '-8deg' }] }]} />
+                  <Image source={{ uri: toImageUrl(data.decor_image_5) }} style={[styles.decorImage, styles.decor5]} />
                 )}
               </View>
 
@@ -239,49 +247,50 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                   onLayout={(e) => {
                     cityPositionsRef.current[city.slug] = e.nativeEvent.layout.y;
                   }}
-                  style={[styles.card, { width: width - 40 }]}
+                  style={styles.card}
                 >
                   <ImageBackground
                     source={{ uri: city.city_image ? toImageUrl(city.city_image) : undefined }}
-                    style={[styles.cityImage, { height: cityImageHeight }]}
+                    style={styles.cityImage}
                     imageStyle={styles.cityImageInner}
                     defaultSource={require('../../../assets/images/city_sukhum.jpg')}
                   />
-                  <Text style={[styles.cityTitle, { fontSize: cityTitleSize }]}>{city.name}</Text>
+                  <Text style={styles.cityTitle}>{city.name}</Text>
+
                   <View style={styles.eventsContainer}>
                     {city.events && city.events.length > 0 ? (
                       city.events.map((event) => (
                         <View key={event.id} style={styles.eventItem}>
                           <View style={styles.eventHeader}>
                             <View style={styles.eventIconWrap}>
-                              <ArrowIcon width={eventIconSize} height={eventIconSize} />
+                              <ArrowIcon width={32} height={64} />
                             </View>
-                            <Text style={[styles.eventTitle, { fontSize: eventTextSize }]} numberOfLines={1}>
+                            <Text style={styles.eventTitle} numberOfLines={1}>
                               {event.title}
                             </Text>
                           </View>
                           {event.date_info && (
                             <View style={styles.eventRow}>
                               <View style={styles.eventIconWrap}>
-                                <CalendarIcon width={eventIconSize} height={eventIconSize} />
+                                <CalendarIcon width={30} height={30} />
                               </View>
-                              <Text style={[styles.eventRowText, { fontSize: eventTextSize }]}>{event.date_info}</Text>
+                              <Text style={styles.eventRowText}>{event.date_info}</Text>
                             </View>
                           )}
                           {event.location && (
                             <View style={styles.eventRow}>
                               <View style={styles.eventIconWrap}>
-                                <LocationIcon width={eventIconSize} height={eventIconSize} />
+                                <LocationIcon width={32} height={32} />
                               </View>
-                              <Text style={[styles.eventRowText, { fontSize: eventTextSize }]} numberOfLines={1}>{event.location}</Text>
+                              <Text style={styles.eventRowText} numberOfLines={1}>{event.location}</Text>
                             </View>
                           )}
                           {event.description && (
                             <View style={styles.eventDescription}>
-                              <Text style={[styles.descriptionTitle, { fontSize: eventTextSize }]}>О событии</Text>
-                              <Text style={[styles.descriptionText, { fontSize: eventTextSize }]}>{parseBoldText(event.description)}</Text>
+                              <Text style={styles.descriptionTitle}>О событии</Text>
+                              <Text style={styles.descriptionText}>{parseBoldText(event.description)}</Text>
                               {event.event_url && (
-                                <Text style={[styles.linkText, { fontSize: eventTextSize }]}>
+                                <Text style={styles.linkText}>
                                   <Text style={styles.linkLabel}>Ссылка на мероприятие: </Text>
                                   <Text style={styles.linkUrl} onPress={() => openLink(event.event_url!)}>{event.event_url}</Text>
                                 </Text>
@@ -292,6 +301,38 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                       ))
                     ) : (
                       <Text style={styles.emptyText}>Нет событий в этом городе</Text>
+                    )}
+
+                    {/* Ad Slider - after events */}
+                    {city.slider_items && city.slider_items.length > 0 && (
+                      <View style={styles.adBlock}>
+                        <FlatList
+                          data={city.slider_items.sort((a, b) => a.order - b.order)}
+                          keyExtractor={(item) => `${city.id}-${item.id}`}
+                          renderItem={({ item }) => (
+                            <View style={styles.adSlide}>
+                              {item.media_type === 'video' ? (
+                                <Video
+                                  source={{ uri: toImageUrl(item.media_file) }}
+                                  style={styles.adImage}
+                                  resizeMode={ResizeMode.COVER}
+                                  shouldPlay
+                                  isLooping
+                                  isMuted
+                                  useNativeControls={false}
+                                />
+                              ) : (
+                                <Image source={{ uri: toImageUrl(item.media_file) }} style={styles.adImage} resizeMode="cover" />
+                              )}
+                            </View>
+                          )}
+                          horizontal
+                          pagingEnabled
+                          showsHorizontalScrollIndicator={false}
+                          snapToInterval={350}
+                          decelerationRate="fast"
+                        />
+                      </View>
                     )}
                   </View>
                 </View>
@@ -345,94 +386,112 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   banner: {
-    width: '100%',
-    minHeight: 240,
+    width: 349,
+    minHeight: 132,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 32,
+    borderRadius: 15,
   },
   bannerWrapper: {
     marginTop: 50,
-    marginHorizontal: 16,
-    borderRadius: 12,
+    alignSelf: 'center',
+    borderRadius: 15,
     overflow: 'visible',
   },
   bannerImage: {
-    borderRadius: 12,
+    borderRadius: 15,
   },
   bannerOverlay: {
-    width: '100%',
-    paddingHorizontal: 16,
-    paddingVertical: 24,
-    backgroundColor: 'rgba(255,255,255,0.8)',
+    width: 309,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   bannerText: {
     fontFamily: 'Inter',
-    fontWeight: '500',
-    fontSize: 16,
-    color: 'rgba(0,0,0,0.85)',
+    fontWeight: '600',
+    fontSize: 14,
+    lineHeight: 17,
+    color: 'rgba(0, 0, 0, 0.85)',
     textAlign: 'center',
+  },
+  decorImage: {
+    position: 'absolute',
+    width: 44,
+    height: 44,
+    borderRadius: 8,
+    shadowColor: '#D5DAEF',
+    shadowOpacity: 1,
+    shadowRadius: 15.4,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 8,
+  },
+  decor1: {
+    left: 10,
+    top: -10,
+    transform: [{ rotate: '-10deg' }],
+  },
+  decor2: {
+    left: 20,
+    top: 210,
+    transform: [{ rotate: '-8deg' }],
+  },
+  decor3: {
+    left: 160,
+    top: 230,
+    transform: [{ rotate: '8deg' }],
+  },
+  decor4: {
+    right: 20,
+    top: 210,
+    transform: [{ rotate: '-8deg' }],
+  },
+  decor5: {
+    right: 10,
+    top: -10,
+    transform: [{ rotate: '15deg' }],
   },
   centerIcon: {
     position: 'absolute',
     top: -30,
     alignSelf: 'center',
-    width: 90,
-    height: 90,
-    borderRadius: 45,
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: 60,
+    height: 60,
     zIndex: 10,
   },
-  decorImage: {
-    position: 'absolute',
-    width: 80,
-    height: 80,
-    borderRadius: 12,
-    shadowColor: '#1129BD',
-    shadowOpacity: 0.25,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 8,
-  },
   tabsBar: {
-    marginTop: 0,
-    minHeight: 64,
-    paddingVertical: 8,
-    backgroundColor: 'transparent',
-    marginBottom: 0,
+    height: 46,
+    backgroundColor: '#FFFFFF',
+    shadowColor: 'rgba(0, 0, 0, 0.05)',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 1,
+    shadowRadius: 11,
+    elevation: 2,
   },
   tabsStickyWrap: {
-    backgroundColor: '#0000000D',
-    borderTopWidth: 0,
-    borderBottomWidth: 0,
     marginBottom: 50,
     marginHorizontal: -20,
-    paddingHorizontal: 20,
   },
   tabsContent: {
-    paddingLeft: 5,
-    paddingRight: 5,
+    paddingLeft: 0,
+    paddingRight: 0,
     paddingVertical: 0,
     alignItems: 'center',
+    gap: 10,
   },
   tab: {
-    paddingVertical: 12,
-    borderRadius: 18,
-    borderWidth: 0,
-    marginRight: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 4,
+    height: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: 'transparent',
-    shadowOpacity: 0,
-    shadowRadius: 0,
-    shadowOffset: { width: 0, height: 0 },
-    elevation: 0,
   },
   tabText: {
-    fontFamily: 'Inter',
+    fontFamily: 'Roboto',
     fontWeight: '700',
-    fontSize: 16,
+    fontSize: 12,
+    lineHeight: 14,
     color: '#000',
     textAlign: 'center',
     paddingHorizontal: 4,
@@ -446,13 +505,13 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   card: {
-    width: screenWidth - 40,
+    width: 350,
     alignSelf: 'center',
     marginBottom: 40,
   },
   cityImage: {
-    width: '100%',
-    height: 240,
+    width: 350,
+    height: 281,
     backgroundColor: '#EEF1FA',
     borderRadius: 15,
     overflow: 'hidden',
@@ -464,10 +523,14 @@ const styles = StyleSheet.create({
   cityTitle: {
     fontFamily: 'Inter',
     fontWeight: '700',
-    fontSize: 22,
+    fontSize: 14,
+    lineHeight: 17,
     color: '#1129BD',
     marginTop: 10,
+    marginBottom: 10,
+    paddingHorizontal: 10,
     textAlign: 'center',
+    textTransform: 'uppercase',
   },
   eventsContainer: {
     width: '100%',
@@ -481,44 +544,53 @@ const styles = StyleSheet.create({
   eventHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
-    minHeight: 60,
+    gap: 8,
+    width: 350,
+    height: 64,
   },
   eventIconWrap: {
-    width: 40,
-    height: 40,
+    width: 32,
     alignItems: 'center',
     justifyContent: 'center',
   },
   eventTitle: {
     fontFamily: 'Inter',
     fontWeight: '700',
-    color: 'rgba(0,0,0,0.85)',
+    fontSize: 14,
+    lineHeight: 17,
+    color: 'rgba(0, 0, 0, 0.85)',
     flexShrink: 1,
   },
   eventRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
-    minHeight: 40,
+    gap: 10,
+    width: 350,
   },
   eventRowText: {
     fontFamily: 'Inter',
     fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 17,
     color: '#000',
     flexShrink: 1,
   },
   eventDescription: {
-    gap: 10,
+    width: 350,
+    gap: 14,
   },
   descriptionTitle: {
     fontFamily: 'Inter',
     fontWeight: '700',
+    fontSize: 14,
+    lineHeight: 17,
     color: '#000',
   },
   descriptionText: {
     fontFamily: 'Inter',
     fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 17,
     color: '#000',
   },
   boldText: {
@@ -528,7 +600,9 @@ const styles = StyleSheet.create({
   },
   linkText: {
     fontFamily: 'Inter',
-    fontWeight: '400',
+    fontWeight: '700',
+    fontSize: 14,
+    lineHeight: 17,
     color: '#000',
   },
   linkLabel: {
@@ -554,5 +628,41 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 18,
     color: '#666',
+  },
+  sliderWrapper: {
+    width: '100%',
+    marginVertical: 20,
+  },
+  sliderContent: {
+    gap: 10,
+  },
+  sliderSlide: {
+    width: 350,
+    height: 281,
+    borderRadius: 15,
+    overflow: 'hidden',
+    marginRight: 10,
+  },
+  sliderImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 15,
+  },
+  adBlock: {
+    width: 350,
+    height: 200,
+    backgroundColor: '#D5DAEF',
+    borderRadius: 15,
+    overflow: 'hidden',
+    position: 'relative',
+    marginTop: 20,
+  },
+  adSlide: {
+    width: 350,
+    height: 200,
+  },
+  adImage: {
+    width: '100%',
+    height: '100%',
   },
 });
