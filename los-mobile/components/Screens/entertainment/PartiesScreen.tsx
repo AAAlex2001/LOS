@@ -22,8 +22,6 @@ import CalendarIcon from '../../../assets/images/VectorParties2.svg';
 import LocationIcon from '../../../assets/images/VectorParties3.svg';
 import config from '@/config';
 
-const { width: screenWidth } = Dimensions.get('window');
-
 type PartySliderItem = {
   id: number;
   media_type: 'video' | 'image';
@@ -112,20 +110,7 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
     load();
   }, [visible]);
 
-  const scaleForWidth = (base: number) => {
-    const k = width / 390;
-    const scaled = base * k;
-    return Math.max(base * 0.6, Math.min(scaled, base * 1.6));
-  };
-
-  const centerIconSize = 60;  // Vecherinka1 4: 59.81px
-  const decorSize = 44;       // vecherinka1 3, IMG_3949, etc: 43.86px
-  const cityImageHeight = 281;  // city slider image height
-  const bannerTextSize = 14;
-  const eventTextSize = 14;
-  const eventIconSize = 30;  // date: 30px, address: 32px
-  const tabTextSize = 12;
-  const cityTitleSize = 14;  // Сухум: 14px
+  const centerIconSize = 60;
 
   const scrollRef = useRef<ScrollView | null>(null);
   const sectionRefs = useMemo(() => {
@@ -315,7 +300,6 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                                 <Video
                                   source={{ uri: toImageUrl(item.media_file) }}
                                   style={styles.adImage}
-                                  resizeMode={ResizeMode.COVER}
                                   shouldPlay
                                   isLooping
                                   isMuted
@@ -505,12 +489,12 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   card: {
-    width: 350,
+    width: '100%',
     alignSelf: 'center',
     marginBottom: 40,
   },
   cityImage: {
-    width: 350,
+    width: '100%',
     height: 281,
     backgroundColor: '#EEF1FA',
     borderRadius: 15,
@@ -565,7 +549,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-    width: 350,
   },
   eventRowText: {
     fontFamily: 'Inter',
@@ -576,7 +559,6 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   eventDescription: {
-    width: 350,
     gap: 14,
   },
   descriptionTitle: {
@@ -629,27 +611,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#666',
   },
-  sliderWrapper: {
-    width: '100%',
-    marginVertical: 20,
-  },
-  sliderContent: {
-    gap: 10,
-  },
-  sliderSlide: {
-    width: 350,
-    height: 281,
-    borderRadius: 15,
-    overflow: 'hidden',
-    marginRight: 10,
-  },
-  sliderImage: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 15,
-  },
+
   adBlock: {
-    width: 350,
+    width: '100%',
     height: 200,
     backgroundColor: '#D5DAEF',
     borderRadius: 15,
