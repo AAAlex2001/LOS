@@ -13,6 +13,15 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
+import AdministrativeBuildingsSukhumScreen from './sukhum/AdministrativeBuildingsSukhumScreen';
+import ChurchesSukhumScreen from './sukhum/ChurchesSukhumScreen';
+import BeautySalonsSukhumScreen from './sukhum/BeautySalonsSukhumScreen';
+import PharmacySukhumScreen from './sukhum/PharmacySukhumScreen';
+import WineriesSukhumScreen from './sukhum/WineriesSukhumScreen';
+import GasStationsSukhumScreen from './sukhum/GasStationsSukhumScreen';
+import CulturalAttractionsSukhumScreen from './sukhum/CulturalAttractionsSukhumScreen';
+import ShopsAndMarketsSukhumScreen from './sukhum/ShopsAndMarketsSukhumScreen';
+import CarWashesSukhumScreen from './sukhum/CarWashesSukhumScreen';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -47,6 +56,15 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
   const [data, setData] = useState<CitiesPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [expandedCity, setExpandedCity] = useState<number[]>([]);
+  const [adminBuildingsVisible, setAdminBuildingsVisible] = useState(false);
+  const [churchesVisible, setChurchesVisible] = useState(false);
+  const [beautySalonsVisible, setBeautySalonsVisible] = useState(false);
+  const [pharmacyVisible, setPharmacyVisible] = useState(false);
+  const [wineriesVisible, setWineriesVisible] = useState(false);
+  const [gasStationsVisible, setGasStationsVisible] = useState(false);
+  const [culturalAttractionsVisible, setCulturalAttractionsVisible] = useState(false);
+  const [shopsAndMarketsVisible, setShopsAndMarketsVisible] = useState(false);
+  const [carWashesVisible, setCarWashesVisible] = useState(false);
 
   useEffect(() => {
     if (!visible) return;
@@ -80,6 +98,68 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
         ? prev.filter((id) => id !== cityId)
         : [...prev, cityId]
     );
+  };
+
+  const handleCategoryClick = (category: CityCategory, cityName: string) => {
+    if (!category.is_active || !category.url) return;
+    
+    // Парсим URL для определения типа категории
+    const url = category.url.toLowerCase();
+    const city = cityName.toLowerCase();
+    
+    // Для административных зданий Сухума
+    if (url.includes('administrative-buildings') && city.includes('сухум')) {
+      setAdminBuildingsVisible(true);
+      return;
+    }
+    
+    // Для церквей Сухума
+    if (url.includes('churches') && city.includes('сухум')) {
+      setChurchesVisible(true);
+      return;
+    }
+    
+    // Для салонов красоты Сухума
+    if (url.includes('beauty-salo') && city.includes('сухум')) {
+      setBeautySalonsVisible(true);
+      return;
+    }
+    
+    // Для аптек Сухума
+    if (url.includes('pharmacy') && city.includes('сухум')) {
+      setPharmacyVisible(true);
+      return;
+    }
+    
+    // Для виноделен Сухума
+    if (url.includes('winer') && city.includes('сухум')) {
+      setWineriesVisible(true);
+      return;
+    }
+    
+    // Для заправок Сухума
+    if (url.includes('gas-station') && city.includes('сухум')) {
+      setGasStationsVisible(true);
+      return;
+    }
+    
+    // Для культурных достопримечательностей Сухума
+    if (url.includes('cultural-attraction') && city.includes('сухум')) {
+      setCulturalAttractionsVisible(true);
+      return;
+    }
+    
+    // Для магазинов и рынков Сухума
+    if (url.includes('shop') && city.includes('сухум')) {
+      setShopsAndMarketsVisible(true);
+      return;
+    }
+    
+    // Для моек Сухума
+    if (url.includes('car-wash') && city.includes('сухум')) {
+      setCarWashesVisible(true);
+      return;
+    }
   };
 
   return (
@@ -123,10 +203,18 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
                     {city.categories && city.categories.length > 0 && (
                       <View style={styles.categoriesContainer}>
                         {city.categories.map((category) => (
-                          <View key={category.id} style={styles.categoryItem}>
+                          <TouchableOpacity
+                            key={category.id}
+                            style={styles.categoryItem}
+                            onPress={() => handleCategoryClick(category, city.name)}
+                            disabled={!category.is_active}
+                            activeOpacity={category.is_active ? 0.7 : 1}
+                          >
                             <Text style={styles.categoryArrow}>›</Text>
-                            <Text style={styles.categoryName}>{category.name}</Text>
-                          </View>
+                            <Text style={[styles.categoryName, !category.is_active && styles.categoryDisabled]}>
+                              {category.name}
+                            </Text>
+                          </TouchableOpacity>
                         ))}
                       </View>
                     )}
@@ -136,6 +224,60 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
             ))}
           </ScrollView>
         )}
+        
+        {/* Administrative Buildings Modal */}
+        <AdministrativeBuildingsSukhumScreen
+          visible={adminBuildingsVisible}
+          onClose={() => setAdminBuildingsVisible(false)}
+        />
+        
+        {/* Churches Modal */}
+        <ChurchesSukhumScreen
+          visible={churchesVisible}
+          onClose={() => setChurchesVisible(false)}
+        />
+        
+        {/* Beauty Salons Modal */}
+        <BeautySalonsSukhumScreen
+          visible={beautySalonsVisible}
+          onClose={() => setBeautySalonsVisible(false)}
+        />
+        
+        {/* Pharmacy Modal */}
+        <PharmacySukhumScreen
+          visible={pharmacyVisible}
+          onClose={() => setPharmacyVisible(false)}
+        />
+        
+        {/* Wineries Modal */}
+        <WineriesSukhumScreen
+          visible={wineriesVisible}
+          onClose={() => setWineriesVisible(false)}
+        />
+        
+        {/* Gas Stations Modal */}
+        <GasStationsSukhumScreen
+          visible={gasStationsVisible}
+          onClose={() => setGasStationsVisible(false)}
+        />
+        
+        {/* Cultural Attractions Modal */}
+        <CulturalAttractionsSukhumScreen
+          visible={culturalAttractionsVisible}
+          onClose={() => setCulturalAttractionsVisible(false)}
+        />
+        
+        {/* Shops and Markets Modal */}
+        <ShopsAndMarketsSukhumScreen
+          visible={shopsAndMarketsVisible}
+          onClose={() => setShopsAndMarketsVisible(false)}
+        />
+        
+        {/* Car Washes Modal */}
+        <CarWashesSukhumScreen
+          visible={carWashesVisible}
+          onClose={() => setCarWashesVisible(false)}
+        />
       </View>
     </Modal>
   );
@@ -258,6 +400,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 17,
     color: '#000000',
+  },
+  categoryDisabled: {
+    opacity: 0.5,
   },
 });
 

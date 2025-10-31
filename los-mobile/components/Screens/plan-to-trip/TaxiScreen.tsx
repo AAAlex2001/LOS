@@ -4,8 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 
-const { width: screenWidth } = Dimensions.get('window');
-
 interface TaxiService {
   id: number;
   name: string;
@@ -203,16 +201,13 @@ const styles = StyleSheet.create({
   },
   banner: {
     width: '100%',
-    paddingTop: 16,
-    paddingRight: 16,
-    paddingBottom: 16,
-    paddingLeft: 8,
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: 83,
   },
   bannerImage: {
     borderRadius: 15,
+      width: '100%'
   },
   bannerText: {
     fontFamily: 'Inter',
@@ -222,6 +217,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'rgba(0, 0, 0, 0.85)',
     flexShrink: 1,
+      padding: 15,
   },
   card: {
     flexDirection: 'column',
