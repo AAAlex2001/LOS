@@ -22,6 +22,11 @@ import GasStationsSukhumScreen from './sukhum/GasStationsSukhumScreen';
 import CulturalAttractionsSukhumScreen from './sukhum/CulturalAttractionsSukhumScreen';
 import ShopsAndMarketsSukhumScreen from './sukhum/ShopsAndMarketsSukhumScreen';
 import CarWashesSukhumScreen from './sukhum/CarWashesSukhumScreen';
+import HotelsSukhumScreen from './sukhum/HotelsSukhumScreen';
+import ParkingLotsSukhumScreen from './sukhum/ParkingLotsSukhumScreen';
+import BeachesSukhumScreen from './sukhum/BeachesSukhumScreen';
+import ClothingRepairSukhumScreen from './sukhum/ClothingRepairSukhumScreen';
+import RestaurantsSukhumScreen from './sukhum/RestaurantsSukhumScreen';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -65,6 +70,11 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
   const [culturalAttractionsVisible, setCulturalAttractionsVisible] = useState(false);
   const [shopsAndMarketsVisible, setShopsAndMarketsVisible] = useState(false);
   const [carWashesVisible, setCarWashesVisible] = useState(false);
+  const [hotelsVisible, setHotelsVisible] = useState(false);
+  const [parkingLotsVisible, setParkingLotsVisible] = useState(false);
+  const [beachesVisible, setBeachesVisible] = useState(false);
+  const [clothingRepairVisible, setClothingRepairVisible] = useState(false);
+  const [restaurantsVisible, setRestaurantsVisible] = useState(false);
 
   useEffect(() => {
     if (!visible) return;
@@ -158,6 +168,36 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
     // Для моек Сухума
     if (url.includes('car-wash') && city.includes('сухум')) {
       setCarWashesVisible(true);
+      return;
+    }
+    
+    // Для отелей Сухума
+    if (url.includes('hotel') && city.includes('сухум')) {
+      setHotelsVisible(true);
+      return;
+    }
+    
+    // Для парковок Сухума
+    if (url.includes('parking') && city.includes('сухум')) {
+      setParkingLotsVisible(true);
+      return;
+    }
+    
+    // Для пляжей Сухума
+    if (url.includes('beach') && city.includes('сухум')) {
+      setBeachesVisible(true);
+      return;
+    }
+    
+    // Для ремонта одежды Сухума
+    if (url.includes('repair') && city.includes('сухум')) {
+      setClothingRepairVisible(true);
+      return;
+    }
+    
+    // Для ресторанов Сухума
+    if (url.includes('restaurant') && city.includes('сухум')) {
+      setRestaurantsVisible(true);
       return;
     }
   };
@@ -277,6 +317,36 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
         <CarWashesSukhumScreen
           visible={carWashesVisible}
           onClose={() => setCarWashesVisible(false)}
+        />
+        
+        {/* Hotels Modal */}
+        <HotelsSukhumScreen
+          visible={hotelsVisible}
+          onClose={() => setHotelsVisible(false)}
+        />
+        
+        {/* Parking Lots Modal */}
+        <ParkingLotsSukhumScreen
+          visible={parkingLotsVisible}
+          onClose={() => setParkingLotsVisible(false)}
+        />
+        
+        {/* Beaches Modal */}
+        <BeachesSukhumScreen
+          visible={beachesVisible}
+          onClose={() => setBeachesVisible(false)}
+        />
+        
+        {/* Clothing Repair Modal */}
+        <ClothingRepairSukhumScreen
+          visible={clothingRepairVisible}
+          onClose={() => setClothingRepairVisible(false)}
+        />
+        
+        {/* Restaurants Modal */}
+        <RestaurantsSukhumScreen
+          visible={restaurantsVisible}
+          onClose={() => setRestaurantsVisible(false)}
         />
       </View>
     </Modal>

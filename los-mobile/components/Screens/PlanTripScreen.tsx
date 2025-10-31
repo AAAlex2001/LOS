@@ -4,6 +4,7 @@ import { Ionicons, MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo, 
 import BanksScreen from './plan-to-trip/BanksScreen';
 import TaxiScreen from './plan-to-trip/TaxiScreen';
 import CitiesScreen from './plan-to-trip/CitiesScreen';
+import MobileCommunicationScreen from './plan-to-trip/MobileCommunicationScreen';
 
 const buttons = [
   { title: 'Города Абхазии', icon: <MaterialCommunityIcons name="city-variant-outline" size={40} color="#fff" /> },
@@ -17,6 +18,7 @@ export default function PlanTripScreen({ visible, onClose }: { visible: boolean,
   const [citiesVisible, setCitiesVisible] = useState(false);
   const [banksVisible, setBanksVisible] = useState(false);
   const [taxiVisible, setTaxiVisible] = useState(false);
+  const [mobileCommunicationVisible, setMobileCommunicationVisible] = useState(false);
 
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
@@ -37,10 +39,12 @@ export default function PlanTripScreen({ visible, onClose }: { visible: boolean,
                 onPress={() => {
                   if (btn.title === 'Города Абхазии') {
                     setCitiesVisible(true);
-                  } else if (btn.title === 'Банки') {
-                    setBanksVisible(true);
+                  } else if (btn.title === 'Мобильная связь\nи интернет') {
+                    setMobileCommunicationVisible(true);
                   } else if (btn.title === 'Службы такси') {
                     setTaxiVisible(true);
+                  } else if (btn.title === 'Банки') {
+                    setBanksVisible(true);
                   }
                 }}
               >
@@ -60,10 +64,12 @@ export default function PlanTripScreen({ visible, onClose }: { visible: boolean,
                 onPress={() => {
                   if (btn.title === 'Города Абхазии') {
                     setCitiesVisible(true);
-                  } else if (btn.title === 'Банки') {
-                    setBanksVisible(true);
+                  } else if (btn.title === 'Мобильная связь\nи интернет') {
+                    setMobileCommunicationVisible(true);
                   } else if (btn.title === 'Службы такси') {
                     setTaxiVisible(true);
+                  } else if (btn.title === 'Банки') {
+                    setBanksVisible(true);
                   }
                 }}
               >
@@ -78,6 +84,7 @@ export default function PlanTripScreen({ visible, onClose }: { visible: boolean,
         <CitiesScreen visible={citiesVisible} onClose={() => setCitiesVisible(false)} />
         <BanksScreen visible={banksVisible} onClose={() => setBanksVisible(false)} />
         <TaxiScreen visible={taxiVisible} onClose={() => setTaxiVisible(false)} />
+        <MobileCommunicationScreen visible={mobileCommunicationVisible} onClose={() => setMobileCommunicationVisible(false)} />
       </View>
     </Modal>
   );
