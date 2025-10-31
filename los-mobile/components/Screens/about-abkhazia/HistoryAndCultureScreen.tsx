@@ -215,7 +215,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '600',
     fontSize: 16,
-    color: '#1129BD',
   },
   scrollContent: {
     paddingBottom: 40,

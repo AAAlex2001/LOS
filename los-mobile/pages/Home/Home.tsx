@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -12,19 +12,22 @@ import {
   NativeScrollEvent,
 } from 'react-native';
 import { Image } from 'expo-image';
-import { Video } from 'expo-av';
+import { Video, ResizeMode } from 'expo-av';
 import AboutAbkhaziaModal from '../../components/Screens/AboutAbkhaziaModal';
 import EntertainmentScreen from '../../components/Screens/EntertainmentScreen';
 import PlanTripScreen from '../../components/Screens/PlanTripScreen';
 import ImportantTripScreen from '../../components/Screens/ImportantTripScreen';
 import SidebarScreen from '../../components/Screens/SidebarScreen';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo, FontAwesome } from '@expo/vector-icons';
+import config from '@/config';
 
 const { width: screenWidth } = Dimensions.get('window');
+const API_BASE = config.API_BASE;
+
 // --- Универсальные смещения ---
-const topEllipseShiftX = 20; // подстройка верхнего полукруга по горизонтали
-const bottomEllipseShiftX = -20; // подстройка нижнего (влево)
-const topEllipseShiftY = -10; // вертикальные сдвиги
+const topEllipseShiftX = 20;
+const bottomEllipseShiftX = -20;
+const topEllipseShiftY = -10;
 const bottomEllipseShiftY = 0;
 
 // Нижний полукруг
@@ -40,60 +43,37 @@ const topEllipseLeft = -((topEllipseWidth - screenWidth) / 2) + topEllipseShiftX
 const sliderTop = 100;
 const topEllipseTop = sliderTop - topEllipseHeight + topEllipseShiftY;
 
-// Типизация для слайдера
 interface SliderItem {
   type: 'video' | 'image';
-  src: any; // Для require() пока оставляем any, но можно создать более специфичный тип
+  src: string | any;
 }
 
-// Типизация для табов
 interface TabItem {
   title: string;
   icon: React.ReactNode;
   multiline?: boolean;
+  action?: () => void;
 }
 
-const sliderItems: SliderItem[] = [
-  { type: 'video', src: require('../../assets/images/Video12.mp4') },
-  { type: 'image', src: require('../../assets/images/Main1.jpg') },
-  { type: 'image', src: require('../../assets/images/Main2.jpg') },
-  { type: 'image', src: require('../../assets/images/Main3.jpg') },
-  { type: 'image', src: require('../../assets/images/Main4.jpg') },
-  { type: 'image', src: require('../../assets/images/Main5.png') },
-  { type: 'image', src: require('../../assets/images/Main6.jpg') },
-  { type: 'image', src: require('../../assets/images/Main7.jpg') },
-  { type: 'image', src: require('../../assets/images/Main8.jpg') },
-  { type: 'image', src: require('../../assets/images/Main9.jpg') },
-  { type: 'image', src: require('../../assets/images/Main10.jpg') },
-  { type: 'image', src: require('../../assets/images/Main11.jpg') },
-];
+interface HomeData {
+  slider_items: { media_type: 'video' | 'image'; url: string; alt: string; order: number }[];
+  tabs: { group: 'about' | 'activities' | 'booking' | 'essentials'; label: string; href?: string; order: number }[];
+}
 
-const tabs: TabItem[] = [
-  {
-    title: 'Об Абхазии',
-    icon: <MaterialCommunityIcons name="party-popper" size={40} color="#fff" />,
-  },
-  {
-    title: 'Развлечения',
-    icon: <MaterialCommunityIcons name="star" size={40} color="#fff" />,
-  },
-  {
-    title: 'Запланируйте\nпоездку',
-    multiline: true,
-    icon: <MaterialIcons name="event-available" size={40} color="#fff" />,
-  },
-  {
-    title: 'Необходимо\nв поездке',
-    multiline: true,
-    icon: <Entypo name="suitcase" size={40} color="#fff" />,
-  },
-  {
-    title: 'Города',
-    icon: <FontAwesome5 name="city" size={40} color="#fff" />,
-  },
-];
+const toMedia = (url: string) => `${API_BASE}/media/${url}`;
+
+const getIconForTab = (label: string) => {
+  if (label === 'Об Абхазии' || label === 'Абхазия') return <MaterialCommunityIcons name="party-popper" size={40} color="#fff" />;
+  if (label === 'Развлечения' || label.includes('Развлечения') || label.includes('заняться')) return <MaterialCommunityIcons name="star" size={40} color="#fff" />;
+  if (label.includes('поездку') || label.includes('Запланируйте')) return <MaterialIcons name="event-available" size={40} color="#fff" />;
+  if (label.includes('Необходимо') || label.includes('поездке')) return <Entypo name="suitcase" size={40} color="#fff" />;
+  return <FontAwesome5 name="city" size={40} color="#fff" />;
+};
+
 
 const HomePage = () => {
+  const [data, setData] = useState<HomeData | null>(null);
+  const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [aboutVisible, setAboutVisible] = useState(false);
   const [entertainmentVisible, setEntertainmentVisible] = useState(false);
@@ -101,6 +81,43 @@ const HomePage = () => {
   const [importantTripVisible, setImportantTripVisible] = useState(false);
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const flatListRef = useRef<FlatList<SliderItem>>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/home/page/content/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load homepage');
+        const json = await res.json();
+        setData(json);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  const sliderItems: SliderItem[] = data?.slider_items
+    ?.sort((a, b) => a.order - b.order)
+    .map(item => ({
+      type: item.media_type,
+      src: item.url ? toMedia(item.url) : ''
+    })) || [];
+
+  const tabs: TabItem[] = data?.tabs
+    ?.sort((a, b) => a.order - b.order)
+    .map(tab => ({
+      title: tab.label,
+      icon: getIconForTab(tab.label),
+      multiline: tab.label.includes('\n') || tab.label.length > 15,
+      action: () => {
+        if (tab.label.includes('Абхазия') || tab.label === 'Об Абхазии') setAboutVisible(true);
+        if (tab.label.includes('Развлечения') || tab.label.includes('заняться')) setEntertainmentVisible(true);
+        if (tab.label.includes('поездку') || tab.label.includes('Запланируйте')) setPlanTripVisible(true);
+        if (tab.label.includes('Необходимо') || tab.label.includes('поездке')) setImportantTripVisible(true);
+      }
+    })) || [];
 
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const slideIndex = Math.round(event.nativeEvent.contentOffset.x / 433);
@@ -113,18 +130,29 @@ const HomePage = () => {
     <View style={styles.slide}>
       {item.type === 'video' ? (
         <Video
-          source={item.src}
+          source={{ uri: encodeURI(String(item.src)) }}
           style={styles.slideImage}
-          resizeMode="cover"
+          resizeMode={ResizeMode.COVER}
           shouldPlay
           isLooping
-          useNativeControls
+          isMuted
+          useNativeControls={false}
         />
       ) : (
-        <Image source={item.src} style={styles.slideImage} contentFit="cover" />
+        <Image source={{ uri: item.src }} style={styles.slideImage} contentFit="cover" />
       )}
     </View>
   );
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>Загрузка...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <View style={styles.homePage}>
@@ -191,13 +219,7 @@ const HomePage = () => {
             <TouchableOpacity
               key={index}
               style={styles.tabComponent}
-              onPress={() => {
-                if (tab.title === 'Об Абхазии') setAboutVisible(true);
-                if (tab.title === 'Развлечения') setEntertainmentVisible(true);
-                if (tab.title === 'Запланируйте\nпоездку') setPlanTripVisible(true);
-                if (tab.title === 'Необходимо\nв поездке') setImportantTripVisible(true);
-                // Здесь можно добавить обработку других табов
-              }}
+              onPress={tab.action}
             >
               <View style={styles.tabIcon}>
                  <View style={styles.iconCircle}>{tab.icon}</View>
@@ -221,12 +243,8 @@ const HomePage = () => {
         onClose={() => setSidebarVisible(false)}
         onNavigateHome={() => {
           setSidebarVisible(false);
-          // Если используешь react-navigation, раскомментируй:
-          // navigation.navigate('Home');
         }}
       />
-
-      {/* Убрали Home Indicator */}
     </View>
   );
 };
@@ -294,7 +312,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '700',
     fontSize: 24,
-    lineHeight: 24, // Adjusted for better alignment
+    lineHeight: 24,
     color: 'rgba(0, 0, 0, 0.85)',
   },
   mascotImage: {
@@ -398,7 +416,7 @@ const styles = StyleSheet.create({
     height: 48,
     backgroundColor: '#FFFFFF',
     borderRadius: 24,
-    opacity: 0.3, // Placeholder style
+    opacity: 0.3,
   },
   tabText: {
     width: '100%',
@@ -414,7 +432,17 @@ const styles = StyleSheet.create({
     height: 30,
   },
 
-  // Убрали Home Indicator
+  // Loading
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 100,
+  },
+  loadingText: {
+    fontSize: 18,
+    color: '#666',
+  },
 });
 
 export default function HomePageWrapper() {
@@ -423,4 +451,4 @@ export default function HomePageWrapper() {
       <HomePage />
     </SafeAreaView>
   );
-} 
+}
