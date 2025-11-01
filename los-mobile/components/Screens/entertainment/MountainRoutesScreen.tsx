@@ -65,7 +65,6 @@ export default function MountainRoutesScreen({ visible, onClose }: Props) {
   };
 
   const renderCard = (route: RouteItem) => {
-    console.log('Rendering card:', route.id, 'image:', route.image);
     return (
       <View key={route.id} style={styles.card}>
         {route.image && (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Image, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
 
@@ -20,6 +20,9 @@ type CustomsPageData = {
 };
 
 const API_BASE = config.API_BASE;
+
+// Hardcoded background image
+const backgroundImage = require('../../../assets/images/IMG_1932.jpg');
 
 export default function AbkhazianCustomsScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [data, setData] = useState<CustomsPageData | null>(null);
@@ -73,11 +76,17 @@ export default function AbkhazianCustomsScreen({ visible, onClose }: { visible: 
               {/* Баннер-интро */}
               {data?.intro_text && (
                 <View style={styles.bannerImgWrap}>
-                  <View style={styles.bannerOverlayAbs}>
-                    <Text style={styles.bannerText}>
-                      {data.intro_text}
-                    </Text>
-                  </View>
+                  <ImageBackground 
+                    source={backgroundImage} 
+                    style={styles.bannerImage}
+                    resizeMode="cover"
+                  >
+                    <View style={styles.bannerOverlayAbs}>
+                      <Text style={styles.bannerText}>
+                        {data.intro_text}
+                      </Text>
+                    </View>
+                  </ImageBackground>
                 </View>
               )}
               {data?.sections && data.sections.map((section) => (
@@ -180,7 +189,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-    backgroundColor: 'rgba(0,0,0,0.05)',
+  },
+  bannerImage: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   bannerOverlayAbs: {
     position: 'absolute',
