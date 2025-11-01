@@ -8,6 +8,7 @@ import TransportCommunicationsScreen from './about-abkhazia/TransportCommunicati
 import AbkhazianCuizineScreen from './about-abkhazia/AbkhazianCuizineScreen';
 import AbkhazianCustomsScreen from './about-abkhazia/AbkhazianCustomsScreen';
 import ElementaryDictionaryScreen from './about-abkhazia/ElementaryDictionaryScreen';
+import MusicScreen from './about-abkhazia/MusicScreen';
 import config from '@/config';
 
 const API_BASE = config.API_BASE;
@@ -28,6 +29,7 @@ const getIconForCategory = (slug: string) => {
     case 'abkhazian-cuisine': return <MaterialCommunityIcons name="silverware-fork-knife" size={40} color="#fff" />;
     case 'abkhazian-customs': return <MaterialCommunityIcons name="handshake" size={40} color="#fff" />;
     case 'elementary-dictionary': return <MaterialCommunityIcons name="book-open-variant" size={40} color="#fff" />;
+    case 'music': return <MaterialCommunityIcons name="music" size={40} color="#fff" />;
     default: return <MaterialCommunityIcons name="information" size={40} color="#fff" />;
   }
 };
@@ -98,6 +100,8 @@ export default function AboutAbkhaziaModal({ visible, onClose, categories }: { v
               return <AbkhazianCustomsScreen key={category.id} visible={isVisible} onClose={closeScreen} />;
             case 'elementary-dictionary':
               return <ElementaryDictionaryScreen key={category.id} visible={isVisible} onClose={closeScreen} />;
+            case 'music':
+              return <MusicScreen key={category.id} visible={isVisible} onClose={closeScreen} />;
             default:
               return null;
           }

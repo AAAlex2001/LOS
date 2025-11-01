@@ -56,3 +56,4 @@ from .transport_communications.admin import TransportCommunicationsPageAdmin
 from .parties.admin import PartiesPageAdmin
 from .privacy_policy.admin import PrivacyPolicyPageAdmin, AccessibilityAndTermsPageAdmin
 from .footer.admin import FooterAdmin
+from .music.admin import MusicPageAdmin

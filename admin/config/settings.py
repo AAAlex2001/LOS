@@ -120,6 +120,8 @@ CSRF_TRUSTED_ORIGINS = [o for o in _csrf_env.split(",") if o]
 
 # Increase form field limits for large admin forms (dictionary page)
 DATA_UPLOAD_MAX_NUMBER_FIELDS = int(os.environ.get("DJANGO_DATA_UPLOAD_MAX_NUMBER_FIELDS", "100000"))
+DATA_UPLOAD_MAX_MEMORY_SIZE = int(os.environ.get("DJANGO_DATA_UPLOAD_MAX_MEMORY_SIZE", "52428800"))  # 50MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = int(os.environ.get("DJANGO_FILE_UPLOAD_MAX_MEMORY_SIZE", "52428800"))  # 50MB
 
 
 # Behind reverse proxy (nginx) with HTTPS termination

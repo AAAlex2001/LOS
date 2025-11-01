@@ -63,6 +63,7 @@ class CmsConfig(AppConfig):
             'mountain_routes',
             'transport_communications',
             'parties',
+            'music',
         ):
             try:
                 __import__(f"{self.name}.{module_name}.models")  # noqa: F401
