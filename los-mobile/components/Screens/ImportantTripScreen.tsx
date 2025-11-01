@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 import config from '@/config';
 import ImportantScreen from './important-trip/ImportantScreen';
+import YourDoctorScreen from './important-trip/YourDoctorScreen';
 
 const API_BASE = config.API_BASE;
 
@@ -80,6 +81,14 @@ export default function ImportantTripScreen({ visible, onClose, categories }: { 
             case 'important-info':
               return (
                 <ImportantScreen
+                  key={category.id}
+                  visible={!!screenStates[category.slug]}
+                  onClose={() => setScreenVisible(category.slug, false)}
+                />
+              );
+            case 'your-doctor':
+              return (
+                <YourDoctorScreen
                   key={category.id}
                   visible={!!screenStates[category.slug]}
                   onClose={() => setScreenVisible(category.slug, false)}
