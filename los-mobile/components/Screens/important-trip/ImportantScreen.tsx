@@ -161,9 +161,9 @@ export default function ImportantScreen({ visible, onClose }: { visible: boolean
             </ImageBackground>
           </View>
         )}
-        {passengerRules.map((r) => (
+        {passengerRules.map((r, idx) => (
           <View key={r.id} style={styles.ruleBlock}>
-            <Text style={styles.ruleTitle}>{r.title}</Text>
+            <Text style={styles.ruleTitle}>{idx + 1}. {r.title}</Text>
             <Text style={styles.ruleText}>{r.description}</Text>
           </View>
         ))}
@@ -178,18 +178,20 @@ export default function ImportantScreen({ visible, onClose }: { visible: boolean
               style={styles.banner}
               imageStyle={styles.bannerImage}
             >
-              {!!s.driver_intro_text && (
-                <Text style={styles.bannerText}>{s.driver_intro_text}</Text>
-              )}
+              <View>
+                {!!s.driver_intro_text && (
+                  <Text style={styles.bannerText}>{s.driver_intro_text}</Text>
+                )}
+                {!!s.driver_description_text && (
+                  <Text style={styles.bannerSubtext}>{s.driver_description_text}</Text>
+                )}
+              </View>
             </ImageBackground>
           </View>
         )}
-        {!!s.driver_description_text && (
-          <View style={styles.paragraphWrap}><Text style={styles.paragraph}>{s.driver_description_text}</Text></View>
-        )}
-        {driverRules.map((r) => (
+        {driverRules.map((r, idx) => (
           <View key={r.id} style={styles.ruleBlock}>
-            <Text style={styles.ruleTitle}>{r.title}</Text>
+            <Text style={styles.ruleTitle}>{idx + 1}. {r.title}</Text>
             <Text style={styles.ruleText}>{r.description}</Text>
           </View>
         ))}
@@ -318,7 +320,8 @@ const styles = StyleSheet.create({
   banner: { width: '100%', minHeight: 83, justifyContent: 'center', alignItems: 'center' },
   bannerImage: { borderRadius: 15 },
   bannerText: { fontFamily: 'Inter', fontWeight: '600', fontSize: 14, lineHeight: 17, textAlign: 'center', color: 'rgba(0, 0, 0, 0.85)', padding: 15 },
-  ruleBlock: { width: '100%', gap: 8, marginBottom: 10, paddingLeft: 21 },
+  bannerSubtext: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: 'rgba(0, 0, 0, 0.85)', padding: 15 },
+  ruleBlock: { width: '100%', gap: 8, marginBottom: 10 },
   ruleTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 14, lineHeight: 17, color: '#1129BD', textAlign: 'left' },
   ruleText: { fontFamily: 'Inter', fontWeight: '300', fontSize: 14, lineHeight: 17, color: '#000', textAlign: 'left' },
 });
