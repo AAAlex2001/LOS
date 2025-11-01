@@ -1,43 +1,89 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, Linking, Dimensions } from 'react-native';
 import { Ionicons, FontAwesome, MaterialCommunityIcons, AntDesign, Feather } from '@expo/vector-icons';
+import config from '@/config';
 
-const contacts = [
-  {
-    label: 'Telegram',
-    icon: <Feather name="send" size={24} color="#1129BD" />,
-    url: 'https://t.me/',
-  },
-  {
-    label: 'Instagram',
-    icon: <AntDesign name="instagram" size={24} color="#1129BD" />,
-    url: 'https://instagram.com/',
-  },
-  {
-    label: 'X (Twitter)',
-    icon: <MaterialCommunityIcons name="alpha-x-circle-outline" size={24} color="#1129BD" />,
-    url: 'https://twitter.com/',
-  },
-  {
-    label: 'Facebook',
-    icon: <FontAwesome name="facebook" size={24} color="#1129BD" />,
-    url: 'https://facebook.com/',
-  },
-  {
-    label: 'YouTube',
-    icon: <FontAwesome name="youtube-play" size={24} color="#1129BD" />,
-    url: 'https://youtube.com/',
-  },
-  {
-    label: 'Rutube',
-    icon: <MaterialCommunityIcons name="alpha-r-box" size={24} color="#1129BD" />,
-    url: 'https://rutube.ru/',
-  },
-];
+type SocialLink = {
+  id: number;
+  network: string;
+  url: string;
+  order: number;
+};
+
+type Footer = {
+  id: number;
+  description: string;
+  contact_info: string;
+  email: string;
+  copyright_text: string;
+  social_links: SocialLink[];
+};
 
 const { width: screenWidth } = Dimensions.get('window');
+const API_BASE = config.API_BASE;
+
+const getIconForNetwork = (network: string) => {
+  switch (network) {
+    case 'telegram':
+      return <Feather name="send" size={24} color="#1129BD" />;
+    case 'instagram':
+      return <AntDesign name="instagram" size={24} color="#1129BD" />;
+    case 'twitter':
+      return <MaterialCommunityIcons name="alpha-x-circle-outline" size={24} color="#1129BD" />;
+    case 'facebook':
+      return <FontAwesome name="facebook" size={24} color="#1129BD" />;
+    case 'youtube':
+      return <FontAwesome name="youtube-play" size={24} color="#1129BD" />;
+    case 'rutube':
+      return <MaterialCommunityIcons name="alpha-r-box" size={24} color="#1129BD" />;
+    default:
+      return <Ionicons name="link-outline" size={24} color="#1129BD" />;
+  }
+};
+
+const getLabelForNetwork = (network: string) => {
+  switch (network) {
+    case 'telegram':
+      return 'Telegram';
+    case 'instagram':
+      return 'Instagram';
+    case 'twitter':
+      return 'X (Twitter)';
+    case 'facebook':
+      return 'Facebook';
+    case 'youtube':
+      return 'YouTube';
+    case 'rutube':
+      return 'Rutube';
+    default:
+      return network;
+  }
+};
 
 export default function ContactsScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const [footerData, setFooterData] = useState<Footer | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!visible) return;
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/footer/footer/footer_data/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load footer');
+        const json = (await res.json()) as Footer;
+        setFooterData(json);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, [visible]);
+
+  const socialLinks = (footerData?.social_links || []).slice().sort((a, b) => a.order - b.order);
+
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
       <View style={styles.container}>
@@ -46,19 +92,25 @@ export default function ContactsScreen({ visible, onClose }: { visible: boolean,
           <Ionicons name="arrow-back" size={28} color="#1129BD" />
         </TouchableOpacity>
         <View style={styles.line} />
-        <View style={styles.list}>
-          {contacts.map((item, idx) => (
-            <TouchableOpacity
-              key={idx}
-              style={styles.item}
-              onPress={() => Linking.openURL(item.url)}
-              activeOpacity={0.7}
-            >
-              <View style={styles.icon}>{item.icon}</View>
-              <Text style={styles.label}>{item.label}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <Text style={styles.loadingText}>Загрузка...</Text>
+          </View>
+        ) : (
+          <View style={styles.list}>
+            {socialLinks.map((item) => (
+              <TouchableOpacity
+                key={item.id}
+                style={styles.item}
+                onPress={() => Linking.openURL(item.url)}
+                activeOpacity={0.7}
+              >
+                <View style={styles.icon}>{getIconForNetwork(item.network)}</View>
+                <Text style={styles.label}>{getLabelForNetwork(item.network)}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
       </View>
     </Modal>
   );
@@ -120,5 +172,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#1129BD',
     fontWeight: '500',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 100,
+  },
+  loadingText: {
+    fontSize: 18,
+    color: '#666',
   },
 }); 
