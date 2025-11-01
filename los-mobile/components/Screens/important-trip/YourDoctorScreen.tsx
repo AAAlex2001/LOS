@@ -61,11 +61,11 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
 
   const sections = useMemo(() => {
     const arr: { key: string; label: string; has: boolean }[] = [
-      { key: 'hospitals', label: 'БОЛЬНИЦЫ', has: (data?.hospitals?.length || 0) > 0 },
-      { key: 'private_clinics', label: 'ЧАСТНЫЕ КЛИНИКИ', has: (data?.private_clinics?.length || 0) > 0 },
-      { key: 'dentistries', label: 'СТОМАТОЛОГИИ', has: (data?.dentistries?.length || 0) > 0 },
-      { key: 'vet_clinics', label: 'ВЕТКЛИНИКИ', has: (data?.vet_clinics?.length || 0) > 0 },
-      { key: 'doctors', label: 'ВРАЧИ', has: (data?.doctors_groups?.length || 0) > 0 },
+      { key: 'hospitals', label: 'Больницы', has: (data?.hospitals?.length || 0) > 0 },
+      { key: 'private_clinics', label: 'Частные клиники', has: (data?.private_clinics?.length || 0) > 0 },
+      { key: 'dentistries', label: 'Стоматологии', has: (data?.dentistries?.length || 0) > 0 },
+      { key: 'vet_clinics', label: 'Ветклиники', has: (data?.vet_clinics?.length || 0) > 0 },
+      { key: 'doctors', label: 'Врачи', has: (data?.doctors_groups?.length || 0) > 0 },
     ];
     return arr.filter(s => s.has);
   }, [data]);
@@ -286,6 +286,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 11,
     elevation: 2,
+      marginBottom: 30,
   },
   tabsStickyWrap: { marginHorizontal: -20 },
   tabsContent: { paddingLeft: 20, paddingRight: 20, alignItems: 'center', gap: 10 },
