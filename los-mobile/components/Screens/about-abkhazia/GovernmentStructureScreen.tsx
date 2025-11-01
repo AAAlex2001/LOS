@@ -3,8 +3,6 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dim
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
 
-const { width: screenWidth } = Dimensions.get('window');
-
 type GovernmentBlock = {
   id: number;
   title: string;
@@ -127,13 +125,11 @@ const styles = StyleSheet.create({
   scrollContent: {
     padding: 20,
     paddingBottom: 40,
-      paddingTop: 0,
     alignItems: 'center',
   },
   mapImage: {
     width: '100%',
     minHeight: 278,
-    borderRadius: 12,
     marginBottom: 20,
   },
   textBlock: {
@@ -158,18 +154,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 17,
     color: '#000',
-  },
-  gerbImage: {
-    width: 120,
-    height: 149,
-    alignSelf: 'center',
-    marginVertical: 24,
-  },
-  flagImage: {
-    width: 280,
-    height: 187,
-    alignSelf: 'center',
-    marginVertical: 24,
   },
   loadingContainer: {
     flex: 1,
