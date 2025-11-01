@@ -146,7 +146,9 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
             {!!headerIcon && (
-              <Image source={{ uri: headerIcon }} style={styles.headerLogo} contentFit="cover" />
+              <View style={styles.headerLogoWrapper}>
+                <Image source={{ uri: headerIcon }} style={styles.headerLogo} contentFit="cover" />
+              </View>
             )}
             <Text style={styles.headerTitle}>{(data?.main_title || 'ВАШ ДОКТОР').toUpperCase()}</Text>
           </View>
@@ -175,7 +177,7 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
                 >
                   {sections.map((t) => (
                     <TouchableOpacity key={t.key} style={styles.tab} onPress={() => scrollTo(t.key)}>
-                      <Text style={styles.tabText} numberOfLines={2}>{t.label}</Text>
+                      <Text style={styles.tabText}>{t.label}</Text>
                     </TouchableOpacity>
                   ))}
                 </ScrollView>
@@ -266,8 +268,9 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   headerBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#fff', minHeight: 96, paddingTop: 44, paddingBottom: 10, paddingHorizontal: 12 },
   backButton: { width: 36, height: 36, alignItems: 'center', justifyContent: 'center', marginTop: 24 },
-  headerTitleWrap: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 10, marginLeft: 10, marginTop: 24 },
+  headerTitleWrap: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 20, marginLeft: 10, marginTop: 24 },
   headerTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 16, color: '#000', textTransform: 'uppercase' },
+  headerLogoWrapper: { shadowColor: 'rgba(0, 0, 0, 0.25)', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 1, shadowRadius: 4, elevation: 4 },
   headerLogo: { width: 59, height: 59, borderRadius: 8 },
 
   scroll: { flex: 1 },
@@ -275,10 +278,18 @@ const styles = StyleSheet.create({
   loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 100 },
   loadingText: { fontSize: 18, color: '#666' },
 
-  tabsBar: { height: 46, backgroundColor: '#FFFFFF', shadowColor: 'rgba(0, 0, 0, 0.05)', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 1, shadowRadius: 11, elevation: 2 },
-  tabsStickyWrap: { marginBottom: 20, marginHorizontal: -20 },
+  tabsBar: {
+    height: 46,
+    backgroundColor: '#FFFFFF',
+    shadowColor: 'rgba(0, 0, 0, 0.05)',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 1,
+    shadowRadius: 11,
+    elevation: 2,
+  },
+  tabsStickyWrap: { marginHorizontal: -20 },
   tabsContent: { paddingLeft: 20, paddingRight: 20, alignItems: 'center', gap: 10 },
-  tab: { justifyContent: 'center', alignItems: 'center', width: 150, height: 30 },
+  tab: { justifyContent: 'center', alignItems: 'center', height: 30 },
   tabText: { fontFamily: 'Inter', fontWeight: '700', fontSize: 12, lineHeight: 15, color: '#000', textAlign: 'center' },
 
   // Card (like administrative buildings)
