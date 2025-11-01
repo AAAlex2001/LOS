@@ -90,6 +90,21 @@ import BeachesNewAfonScreen from './new-afon/BeachesNewAfonScreen';
 import ClothingRepairNewAfonScreen from './new-afon/ClothingRepairNewAfonScreen';
 import RestaurantsNewAfonScreen from './new-afon/RestaurantsNewAfonScreen';
 
+import AdministrativeBuildingsPitsundaScreen from './pitsunda/AdministrativeBuildingsPitsundaScreen';
+import ChurchesPitsundaScreen from './pitsunda/ChurchesPitsundaScreen';
+import BeautySalonsPitsundaScreen from './pitsunda/BeautySalonsPitsundaScreen';
+import PharmacyPitsundaScreen from './pitsunda/PharmacyPitsundaScreen';
+import WineriesPitsundaScreen from './pitsunda/WineriesPitsundaScreen';
+import GasStationsPitsundaScreen from './pitsunda/GasStationsPitsundaScreen';
+import CulturalAttractionsPitsundaScreen from './pitsunda/CulturalAttractionsPitsundaScreen';
+import ShopsAndMarketsPitsundaScreen from './pitsunda/ShopsAndMarketsPitsundaScreen';
+import CarWashesPitsundaScreen from './pitsunda/CarWashesPitsundaScreen';
+import HotelsPitsundaScreen from './pitsunda/HotelsPitsundaScreen';
+import ParkingLotsPitsundaScreen from './pitsunda/ParkingLotsPitsundaScreen';
+import BeachesPitsundaScreen from './pitsunda/BeachesPitsundaScreen';
+import ClothingRepairPitsundaScreen from './pitsunda/ClothingRepairPitsundaScreen';
+import RestaurantsPitsundaScreen from './pitsunda/RestaurantsPitsundaScreen';
+
 type ScreenComp = React.ComponentType<{ visible: boolean; onClose: () => void }>;
 
 export const screensRegistry: Record<string, Record<string, ScreenComp>> = {
@@ -189,6 +204,22 @@ export const screensRegistry: Record<string, Record<string, ScreenComp>> = {
     'beaches': BeachesNewAfonScreen,
     'clothing-repair': ClothingRepairNewAfonScreen,
     'restaurants': RestaurantsNewAfonScreen,
+  },
+  'пицунда': {
+    'administrative-buildings': AdministrativeBuildingsPitsundaScreen,
+    'churches': ChurchesPitsundaScreen,
+    'beauty-salons': BeautySalonsPitsundaScreen,
+    'pharmacy': PharmacyPitsundaScreen,
+    'wineries': WineriesPitsundaScreen,
+    'gas-stations': GasStationsPitsundaScreen,
+    'cultural-attractions': CulturalAttractionsPitsundaScreen,
+    'shops-and-markets': ShopsAndMarketsPitsundaScreen,
+    'car-washes': CarWashesPitsundaScreen,
+    'hotels': HotelsPitsundaScreen,
+    'parking-lots': ParkingLotsPitsundaScreen,
+    'beaches': BeachesPitsundaScreen,
+    'clothing-repair': ClothingRepairPitsundaScreen,
+    'restaurants': RestaurantsPitsundaScreen,
   },
 };
 
