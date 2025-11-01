@@ -12,7 +12,7 @@ import {
   NativeScrollEvent,
 } from 'react-native';
 import { Image } from 'expo-image';
-import { Video, ResizeMode } from 'expo-av';
+import { VideoView, useVideoPlayer } from 'expo-video';
 import AboutAbkhaziaModal from '../../components/Screens/AboutAbkhaziaModal';
 import EntertainmentScreen from '../../components/Screens/EntertainmentScreen';
 import PlanTripScreen from '../../components/Screens/PlanTripScreen';
@@ -74,6 +74,21 @@ const getIconForTab = (label: string) => {
   return <FontAwesome5 name="city" size={40} color="#fff" />;
 };
 
+const SliderVideo = ({ src }: { src: string }) => {
+  const player = useVideoPlayer(encodeURI(String(src)), (p) => {
+    p.loop = true;
+    p.muted = true;
+    p.play();
+  });
+  return (
+    <VideoView
+      player={player}
+      style={styles.slideImage}
+      contentFit="cover"
+      fullscreenOptions={{ enabled: false }}
+    />
+  );
+};
 
 const mascotImages = [
   require('../../assets/images/Guy11.png'),
@@ -144,15 +159,7 @@ const HomePage = () => {
   const renderSliderItem = ({ item }: { item: SliderItem }) => (
     <View style={styles.slide}>
       {item.type === 'video' ? (
-        <Video
-          source={{ uri: encodeURI(String(item.src)) }}
-          style={styles.slideImage}
-          resizeMode={ResizeMode.COVER}
-          shouldPlay
-          isLooping
-          isMuted
-          useNativeControls={false}
-        />
+        <SliderVideo src={String(item.src)} />
       ) : (
         <Image source={{ uri: item.src }} style={styles.slideImage} contentFit="cover" />
       )}

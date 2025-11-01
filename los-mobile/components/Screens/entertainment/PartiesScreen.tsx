@@ -16,11 +16,28 @@ import {
   FlatList,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Video, ResizeMode } from 'expo-av';
+import { VideoView, useVideoPlayer } from 'expo-video';
 import ArrowIcon from '../../../assets/images/VectorParties1.svg';
 import CalendarIcon from '../../../assets/images/VectorParties2.svg';
 import LocationIcon from '../../../assets/images/VectorParties3.svg';
 import config from '@/config';
+
+// inline video component for ad slider
+const InlineAdVideo = ({ uri, style }: { uri: string; style: any }) => {
+  const player = useVideoPlayer(uri, (p) => {
+    p.loop = true;
+    p.muted = true;
+    p.play();
+  });
+  return (
+    <VideoView
+      player={player}
+      style={style}
+      contentFit="cover"
+      fullscreenOptions={{ enabled: false }}
+    />
+  );
+};
 
 type PartySliderItem = {
   id: number;
@@ -297,15 +314,7 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                           renderItem={({ item }) => (
                             <View style={[styles.adSlide, { width: adWidth || (width - 40) }]}>
                               {item.media_type === 'video' ? (
-                                <Video
-                                  source={{ uri: toImageUrl(item.media_file) }}
-                                  style={styles.adImage}
-                                  resizeMode={ResizeMode.COVER}
-                                  shouldPlay
-                                  isLooping
-                                  isMuted
-                                  useNativeControls={false}
-                                />
+                                <InlineAdVideo uri={toImageUrl(item.media_file)} style={styles.adImage} />
                               ) : (
                                 <Image source={{ uri: toImageUrl(item.media_file) }} style={styles.adImage} resizeMode="cover" />
                               )}

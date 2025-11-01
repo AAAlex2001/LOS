@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator, Dimensions, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Audio } from 'expo-av';
+import * as Audio from 'expo-audio';
 import { Image } from 'expo-image';
 import config from '@/config';
 
