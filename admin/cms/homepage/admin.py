@@ -9,6 +9,11 @@ from .models import (
     HomeActionButton,
     HomePopupItem,
     HomeTab,
+    MobileHomeTab,
+    AboutAbkhaziaCategory,
+    EntertainmentCategory,
+    PlanTripCategory,
+    ImportantTripCategory,
 )
 
 
@@ -66,10 +71,40 @@ class TabInline(admin.TabularInline):
     fields = ("group", "label", "href", "order")
 
 
+class MobileTabInline(admin.TabularInline):
+    model = MobileHomeTab
+    extra = 1
+    fields = ("group", "label", "order")
+
+
+class AboutAbkhaziaCategoryInline(admin.TabularInline):
+    model = AboutAbkhaziaCategory
+    extra = 1
+    fields = ("title", "slug", "is_active", "order")
+
+
+class EntertainmentCategoryInline(admin.TabularInline):
+    model = EntertainmentCategory
+    extra = 1
+    fields = ("title", "slug", "is_active", "order")
+
+
+class PlanTripCategoryInline(admin.TabularInline):
+    model = PlanTripCategory
+    extra = 1
+    fields = ("title", "slug", "is_active", "order")
+
+
+class ImportantTripCategoryInline(admin.TabularInline):
+    model = ImportantTripCategory
+    extra = 1
+    fields = ("title", "slug", "is_active", "order")
+
+
 @admin.register(HomePage)
 class HomePageAdmin(admin.ModelAdmin):
     list_display = ("id", "updated_at")
-    inlines = [TabInline, SliderInline, CityInline, ActivityInline, ActionButtonInline, PopupItemInline]
+    inlines = [TabInline, MobileTabInline, AboutAbkhaziaCategoryInline, EntertainmentCategoryInline, PlanTripCategoryInline, ImportantTripCategoryInline, SliderInline, CityInline, ActivityInline, ActionButtonInline, PopupItemInline]
     readonly_fields = ("seo_preview",)
 
     def has_add_permission(self, request):

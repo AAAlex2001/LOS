@@ -8,6 +8,11 @@ from .models import (
     HomeActionButton,
     HomePopupItem,
     HomeTab,
+    MobileHomeTab,
+    AboutAbkhaziaCategory,
+    EntertainmentCategory,
+    PlanTripCategory,
+    ImportantTripCategory,
 )
 
 
@@ -71,6 +76,36 @@ class HomeTabSerializer(serializers.ModelSerializer):
         fields = ["id", "group", "label", "href", "order"]
 
 
+class MobileHomeTabSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MobileHomeTab
+        fields = ["id", "group", "label", "order"]
+
+
+class AboutAbkhaziaCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AboutAbkhaziaCategory
+        fields = ["id", "title", "slug", "is_active", "order"]
+
+
+class EntertainmentCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EntertainmentCategory
+        fields = ["id", "title", "slug", "is_active", "order"]
+
+
+class PlanTripCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlanTripCategory
+        fields = ["id", "title", "slug", "is_active", "order"]
+
+
+class ImportantTripCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ImportantTripCategory
+        fields = ["id", "title", "slug", "is_active", "order"]
+
+
 class HomePageSerializer(serializers.ModelSerializer):
     slider_items = HomeSliderItemSerializer(many=True, read_only=True)
     cities = HomeCitySerializer(many=True, read_only=True)
@@ -78,6 +113,11 @@ class HomePageSerializer(serializers.ModelSerializer):
     action_buttons = HomeActionButtonSerializer(many=True, read_only=True)
     popup_items = HomePopupItemSerializer(many=True, read_only=True)
     tabs = HomeTabSerializer(many=True, read_only=True)
+    mobile_tabs = MobileHomeTabSerializer(many=True, read_only=True)
+    about_categories = AboutAbkhaziaCategorySerializer(many=True, read_only=True)
+    entertainment_categories = EntertainmentCategorySerializer(many=True, read_only=True)
+    plan_trip_categories = PlanTripCategorySerializer(many=True, read_only=True)
+    important_trip_categories = ImportantTripCategorySerializer(many=True, read_only=True)
 
     cta_card_image_url = serializers.SerializerMethodField()
     hero_bg_image_url = serializers.SerializerMethodField()
@@ -125,6 +165,11 @@ class HomePageSerializer(serializers.ModelSerializer):
             "action_buttons",
             "popup_items",
             "tabs",
+            "mobile_tabs",
+            "about_categories",
+            "entertainment_categories",
+            "plan_trip_categories",
+            "important_trip_categories",
             "updated_at",
         ]
 

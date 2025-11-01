@@ -1,24 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo, FontAwesome } from '@expo/vector-icons';
 import BanksScreen from './plan-to-trip/BanksScreen';
 import TaxiScreen from './plan-to-trip/TaxiScreen';
 import CitiesScreen from './plan-to-trip/CitiesScreen';
 import MobileCommunicationScreen from './plan-to-trip/MobileCommunicationScreen';
+import config from '@/config';
 
-const buttons = [
-  { title: 'Города Абхазии', icon: <MaterialCommunityIcons name="city-variant-outline" size={40} color="#fff" /> },
-  { title: 'Аренда жилья', icon: <MaterialCommunityIcons name="home-outline" size={40} color="#fff" /> },
-  { title: 'Мобильная связь\nи интернет', icon: <MaterialIcons name="wifi" size={40} color="#fff" /> },
-  { title: 'Службы такси', icon: <FontAwesome5 name="taxi" size={40} color="#fff" /> },
-  { title: 'Банки', icon: <FontAwesome5 name="piggy-bank" size={40} color="#fff" /> },
-];
+const API_BASE = config.API_BASE;
 
-export default function PlanTripScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
-  const [citiesVisible, setCitiesVisible] = useState(false);
-  const [banksVisible, setBanksVisible] = useState(false);
-  const [taxiVisible, setTaxiVisible] = useState(false);
-  const [mobileCommunicationVisible, setMobileCommunicationVisible] = useState(false);
+interface Category {
+  id: number;
+  title: string;
+  slug: string;
+  is_active: boolean;
+  order: number;
+}
+
+const getIconForCategory = (slug: string) => {
+  switch (slug) {
+    case 'cities': return <MaterialCommunityIcons name="city-variant-outline" size={40} color="#fff" />;
+    case 'hotel-booking': return <MaterialCommunityIcons name="home-outline" size={40} color="#fff" />;
+    case 'mobile-communication': return <MaterialIcons name="wifi" size={40} color="#fff" />;
+    case 'taxi': return <FontAwesome5 name="taxi" size={40} color="#fff" />;
+    case 'banks': return <FontAwesome5 name="piggy-bank" size={40} color="#fff" />;
+    default: return <MaterialCommunityIcons name="city" size={40} color="#fff" />;
+  }
+};
+
+export default function PlanTripScreen({ visible, onClose, categories }: { visible: boolean, onClose: () => void, categories: Category[] }) {
+  const [screenStates, setScreenStates] = useState<Record<string, boolean>>({});
+  const [headerTitle, setHeaderTitle] = useState<string | null>(null);
+
+  const setScreenVisible = (slug: string, visible: boolean) => {
+    setScreenStates(prev => ({ ...prev, [slug]: visible }));
+  };
+
+  useEffect(() => {
+    if (!visible) return;
+    
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/home/page/content/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load homepage');
+        const json = await res.json();
+        const bookingTab = json?.mobile_tabs?.find((tab: any) => tab.group === 'booking');
+        if (bookingTab?.label) {
+          setHeaderTitle(bookingTab.label.toUpperCase());
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    load();
+  }, [visible]);
 
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
@@ -26,65 +61,41 @@ export default function PlanTripScreen({ visible, onClose }: { visible: boolean,
         <View style={styles.headerBar}>
           <TouchableOpacity onPress={onClose} style={styles.backButton}>
             <Ionicons name="arrow-back" size={24} color="#000" />
-            <Text style={styles.header}>ЗАПЛАНИРУЙТЕ ПОЕЗДКУ</Text>
+            {headerTitle && <Text style={styles.header}>{headerTitle}</Text>}
           </TouchableOpacity>
         </View>
         <View style={styles.grid}>
-          {/* Первый ряд — 3 элемента */}
-          <View style={styles.row}>
-            {buttons.slice(0, 3).map((btn, idx) => (
-              <TouchableOpacity 
-                key={idx} 
-                style={styles.item}
-                onPress={() => {
-                  if (btn.title === 'Города Абхазии') {
-                    setCitiesVisible(true);
-                  } else if (btn.title === 'Мобильная связь\nи интернет') {
-                    setMobileCommunicationVisible(true);
-                  } else if (btn.title === 'Службы такси') {
-                    setTaxiVisible(true);
-                  } else if (btn.title === 'Банки') {
-                    setBanksVisible(true);
-                  }
-                }}
-              >
-                <View style={styles.iconCircle}>
-                  {btn.icon}
-                </View>
-                <Text style={styles.label}>{btn.title}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-          {/* Второй ряд — 2 элемента, прижаты к левому краю */}
-          <View style={styles.row}>
-            {buttons.slice(3, 5).map((btn, idx) => (
-              <TouchableOpacity 
-                key={idx} 
-                style={styles.item}
-                onPress={() => {
-                  if (btn.title === 'Города Абхазии') {
-                    setCitiesVisible(true);
-                  } else if (btn.title === 'Мобильная связь\nи интернет') {
-                    setMobileCommunicationVisible(true);
-                  } else if (btn.title === 'Службы такси') {
-                    setTaxiVisible(true);
-                  } else if (btn.title === 'Банки') {
-                    setBanksVisible(true);
-                  }
-                }}
-              >
-                <View style={styles.iconCircle}>
-                  {btn.icon}
-                </View>
-                <Text style={styles.label}>{btn.title}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+          {categories.filter(cat => cat.is_active).sort((a, b) => a.order - b.order).map((category) => (
+            <TouchableOpacity
+              key={category.id}
+              onPress={() => setScreenVisible(category.slug, true)}
+              activeOpacity={0.8}
+              style={styles.item}
+            >
+              <View style={styles.iconCircle}>{getIconForCategory(category.slug)}</View>
+              <Text style={styles.label}>{category.title}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
-        <CitiesScreen visible={citiesVisible} onClose={() => setCitiesVisible(false)} />
-        <BanksScreen visible={banksVisible} onClose={() => setBanksVisible(false)} />
-        <TaxiScreen visible={taxiVisible} onClose={() => setTaxiVisible(false)} />
-        <MobileCommunicationScreen visible={mobileCommunicationVisible} onClose={() => setMobileCommunicationVisible(false)} />
+        {categories.map(category => {
+          const isVisible = screenStates[category.slug] || false;
+          const closeScreen = () => setScreenVisible(category.slug, false);
+
+          switch (category.slug) {
+            case 'cities':
+              return <CitiesScreen key={category.id} visible={isVisible} onClose={closeScreen} />;
+            case 'hotel-booking':
+              return null; // TODO: Add hotel booking screen
+            case 'mobile-communication':
+              return <MobileCommunicationScreen key={category.id} visible={isVisible} onClose={closeScreen} />;
+            case 'taxi':
+              return <TaxiScreen key={category.id} visible={isVisible} onClose={closeScreen} />;
+            case 'banks':
+              return <BanksScreen key={category.id} visible={isVisible} onClose={closeScreen} />;
+            default:
+              return null;
+          }
+        })}
       </View>
     </Modal>
   );
@@ -115,12 +126,10 @@ const styles = StyleSheet.create({
   },
   grid: {
     marginTop: 32,
-    flexDirection: 'column',
-    paddingLeft: 20,
-  },
-  row: {
     flexDirection: 'row',
-    marginBottom: 0,
+    flexWrap: 'wrap',
+    paddingLeft: 20,
+    justifyContent: 'flex-start',
   },
   item: {
     width: 110,

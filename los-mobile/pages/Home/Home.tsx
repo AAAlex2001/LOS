@@ -57,7 +57,11 @@ interface TabItem {
 
 interface HomeData {
   slider_items: { media_type: 'video' | 'image'; url: string; mobile_video_url?: string; alt: string; order: number }[];
-  tabs: { group: 'about' | 'activities' | 'booking' | 'essentials'; label: string; href?: string; order: number }[];
+  mobile_tabs: { group: 'about' | 'activities' | 'booking' | 'essentials'; label: string; order: number }[];
+  about_categories: { id: number; title: string; slug: string; is_active: boolean; order: number }[];
+  entertainment_categories: { id: number; title: string; slug: string; is_active: boolean; order: number }[];
+  plan_trip_categories: { id: number; title: string; slug: string; is_active: boolean; order: number }[];
+  important_trip_categories: { id: number; title: string; slug: string; is_active: boolean; order: number }[];
 }
 
 const toMedia = (url: string) => `${API_BASE}/media/${url}`;
@@ -116,7 +120,7 @@ const HomePage = () => {
         : item.url ? toMedia(item.url) : ''
     })) || [];
 
-  const tabs: TabItem[] = data?.tabs
+  const tabs: TabItem[] = data?.mobile_tabs
     ?.sort((a, b) => a.order - b.order)
     .map(tab => ({
       title: tab.label,
@@ -245,10 +249,10 @@ const HomePage = () => {
           ))}
         </ScrollView>
       </View>
-      <AboutAbkhaziaModal visible={aboutVisible} onClose={() => setAboutVisible(false)} />
-      <EntertainmentScreen visible={entertainmentVisible} onClose={() => setEntertainmentVisible(false)} />
-      <PlanTripScreen visible={planTripVisible} onClose={() => setPlanTripVisible(false)} />
-      <ImportantTripScreen visible={importantTripVisible} onClose={() => setImportantTripVisible(false)} />
+      <AboutAbkhaziaModal visible={aboutVisible} onClose={() => setAboutVisible(false)} categories={data?.about_categories || []} />
+      <EntertainmentScreen visible={entertainmentVisible} onClose={() => setEntertainmentVisible(false)} categories={data?.entertainment_categories || []} />
+      <PlanTripScreen visible={planTripVisible} onClose={() => setPlanTripVisible(false)} categories={data?.plan_trip_categories || []} />
+      <ImportantTripScreen visible={importantTripVisible} onClose={() => setImportantTripVisible(false)} categories={data?.important_trip_categories || []} />
       <SidebarScreen
         visible={sidebarVisible}
         onClose={() => setSidebarVisible(false)}

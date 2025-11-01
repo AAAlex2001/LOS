@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
@@ -6,82 +6,98 @@ import PartiesScreen from './entertainment/PartiesScreen';
 import MountainRoutesScreen from './entertainment/MountainRoutesScreen';
 import ExcursionsScreen from './entertainment/ExcursionsScreen';
 import HotSpringsScreen from './entertainment/HotSpringsScreen';
+import SportsGymsScreen from './entertainment/SportsGymsScreen';
+import config from '@/config';
 
-const buttons = [
-  { title: 'Вечеринки и яркие впечатления', icon: <MaterialCommunityIcons name="party-popper" size={40} color="#fff" /> },
-  { title: 'Горные маршруты', icon: <MaterialCommunityIcons name="terrain" size={40} color="#fff" /> },
-  { title: 'Экскурсии', icon: <MaterialCommunityIcons name="car-outline" size={40} color="#fff" /> },
-  { title: 'Горячие источники', icon: <MaterialCommunityIcons name="hot-tub" size={40} color="#fff" /> },
-  { title: 'Спортивные залы', icon: <FontAwesome5 name="dumbbell" size={40} color="#fff" /> },
-];
+const API_BASE = config.API_BASE;
 
-export default function EntertainmentScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
-  const [partiesVisible, setPartiesVisible] = React.useState(false);
-  const [mountainVisible, setMountainVisible] = React.useState(false);
-  const [excursionsVisible, setExcursionsVisible] = React.useState(false);
-  const [hotSpringsVisible, setHotSpringsVisible] = React.useState(false);
+interface Category {
+  id: number;
+  title: string;
+  slug: string;
+  is_active: boolean;
+  order: number;
+}
+
+const getIconForCategory = (slug: string) => {
+  switch (slug) {
+    case 'parties': return <MaterialCommunityIcons name="party-popper" size={40} color="#fff" />;
+    case 'mountain-routes': return <MaterialCommunityIcons name="terrain" size={40} color="#fff" />;
+    case 'excursions': return <MaterialCommunityIcons name="car-outline" size={40} color="#fff" />;
+    case 'hot-springs': return <MaterialCommunityIcons name="hot-tub" size={40} color="#fff" />;
+    case 'sports-gyms': return <FontAwesome5 name="dumbbell" size={40} color="#fff" />;
+    default: return <MaterialCommunityIcons name="star" size={40} color="#fff" />;
+  }
+};
+
+export default function EntertainmentScreen({ visible, onClose, categories }: { visible: boolean, onClose: () => void, categories: Category[] }) {
+  const [screenStates, setScreenStates] = useState<Record<string, boolean>>({});
+  const [headerTitle, setHeaderTitle] = useState<string | null>(null);
+
+  const setScreenVisible = (slug: string, visible: boolean) => {
+    setScreenStates(prev => ({ ...prev, [slug]: visible }));
+  };
+
+  useEffect(() => {
+    if (!visible) return;
+    
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/home/page/content/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load homepage');
+        const json = await res.json();
+        const activitiesTab = json?.mobile_tabs?.find((tab: any) => tab.group === 'activities');
+        if (activitiesTab?.label) {
+          setHeaderTitle(activitiesTab.label.toUpperCase());
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    load();
+  }, [visible]);
+
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
       <View style={styles.fullscreen}>
         <View style={styles.headerBar}>
           <TouchableOpacity onPress={onClose} style={styles.backButton}>
             <Ionicons name="arrow-back" size={24} color="#000" />
-            <Text style={styles.header}>РАЗВЛЕЧЕНИЯ</Text>
+            {headerTitle && <Text style={styles.header}>{headerTitle}</Text>}
           </TouchableOpacity>
         </View>
         <View style={styles.grid}>
-          {/* Первый ряд — 3 элемента */}
-          <View style={[styles.row]}>
-            {buttons.slice(0, 3).map((btn, idx) => (
-              <TouchableOpacity
-                key={idx}
-                style={styles.item}
-                activeOpacity={0.8}
-                onPress={() => {
-                  if (btn.title === 'Вечеринки и яркие впечатления') {
-                    setPartiesVisible(true);
-                  } else if (btn.title === 'Горные маршруты') {
-                    setMountainVisible(true);
-                  } else if (btn.title === 'Экскурсии') {
-                    setExcursionsVisible(true);
-                  } else if (btn.title === 'Горячие источники') {
-                    setHotSpringsVisible(true);
-                  }
-                }}
-              >
-                <View style={styles.iconCircle}>
-                  {btn.icon}
-                </View>
-                <Text style={styles.label}>{btn.title}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-          {/* Второй ряд — 2 элемента, прижаты к левому краю */}
-          <View style={[styles.row]}>
-            {buttons.slice(3, 5).map((btn, idx) => (
-              <TouchableOpacity
-                key={idx}
-                style={styles.item}
-                activeOpacity={0.8}
-                onPress={() => {
-                  if (btn.title === 'Горячие источники') {
-                    setHotSpringsVisible(true);
-                  }
-                  // 'Спортивные залы' — позже добавим модалку
-                }}
-              >
-                <View style={styles.iconCircle}>
-                  {btn.icon}
-                </View>
-                <Text style={styles.label}>{btn.title}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+          {categories.filter(cat => cat.is_active).sort((a, b) => a.order - b.order).map((category) => (
+            <TouchableOpacity
+              key={category.id}
+              onPress={() => setScreenVisible(category.slug, true)}
+              activeOpacity={0.8}
+              style={styles.item}
+            >
+              <View style={styles.iconCircle}>{getIconForCategory(category.slug)}</View>
+              <Text style={styles.label}>{category.title}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
-        <PartiesScreen visible={partiesVisible} onClose={() => setPartiesVisible(false)} />
-        <MountainRoutesScreen visible={mountainVisible} onClose={() => setMountainVisible(false)} />
-        <ExcursionsScreen visible={excursionsVisible} onClose={() => setExcursionsVisible(false)} />
-        <HotSpringsScreen visible={hotSpringsVisible} onClose={() => setHotSpringsVisible(false)} />
+        {categories.map(category => {
+          const isVisible = screenStates[category.slug] || false;
+          const closeScreen = () => setScreenVisible(category.slug, false);
+
+          switch (category.slug) {
+            case 'parties':
+              return <PartiesScreen key={category.id} visible={isVisible} onClose={closeScreen} />;
+            case 'mountain-routes':
+              return <MountainRoutesScreen key={category.id} visible={isVisible} onClose={closeScreen} />;
+            case 'excursions':
+              return <ExcursionsScreen key={category.id} visible={isVisible} onClose={closeScreen} />;
+            case 'hot-springs':
+              return <HotSpringsScreen key={category.id} visible={isVisible} onClose={closeScreen} />;
+            case 'sports-gyms':
+              return <SportsGymsScreen key={category.id} visible={isVisible} onClose={closeScreen} />;
+            default:
+              return null;
+          }
+        })}
       </View>
     </Modal>
   );
@@ -112,12 +128,10 @@ const styles = StyleSheet.create({
   },
   grid: {
     marginTop: 32,
-    flexDirection: 'column',
-    paddingLeft: 20,
-  },
-  row: {
     flexDirection: 'row',
-    marginBottom: 0,
+    flexWrap: 'wrap',
+    paddingLeft: 20,
+    justifyContent: 'flex-start',
   },
   item: {
     width: 110,

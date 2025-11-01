@@ -1,33 +1,64 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
+import config from '@/config';
 
-const buttons = [
-  { title: 'Ваш доктор', icon: <FontAwesome5 name="clinic-medical" size={40} color="#fff" /> },
-  { title: 'Важно знать', icon: <MaterialCommunityIcons name="alert-circle-outline" size={40} color="#fff" /> },
-];
+const API_BASE = config.API_BASE;
 
-export default function ImportantTripScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+interface Category {
+  id: number;
+  title: string;
+  slug: string;
+  is_active: boolean;
+  order: number;
+}
+
+const getIconForCategory = (slug: string) => {
+  switch (slug) {
+    case 'your-doctor': return <FontAwesome5 name="clinic-medical" size={40} color="#fff" />;
+    case 'important-info': return <MaterialCommunityIcons name="alert-circle-outline" size={40} color="#fff" />;
+    default: return <MaterialCommunityIcons name="information" size={40} color="#fff" />;
+  }
+};
+
+export default function ImportantTripScreen({ visible, onClose, categories }: { visible: boolean, onClose: () => void, categories: Category[] }) {
+  const [headerTitle, setHeaderTitle] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!visible) return;
+    
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/home/page/content/`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load homepage');
+        const json = await res.json();
+        const essentialsTab = json?.mobile_tabs?.find((tab: any) => tab.group === 'essentials');
+        if (essentialsTab?.label) {
+          setHeaderTitle(essentialsTab.label.toUpperCase());
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    load();
+  }, [visible]);
+
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
       <View style={styles.fullscreen}>
         <View style={styles.headerBar}>
           <TouchableOpacity onPress={onClose} style={styles.backButton}>
             <Ionicons name="arrow-back" size={24} color="#000" />
-            <Text style={styles.header}>НЕОБХОДИМО В ПОЕЗДКЕ</Text>
+            {headerTitle && <Text style={styles.header}>{headerTitle}</Text>}
           </TouchableOpacity>
         </View>
         <View style={styles.grid}>
-          <View style={styles.row}>
-            {buttons.map((btn, idx) => (
-              <View key={idx} style={styles.item}>
-                <View style={styles.iconCircle}>
-                  {btn.icon}
-                </View>
-                <Text style={styles.label}>{btn.title}</Text>
-              </View>
-            ))}
-          </View>
+          {categories.filter(cat => cat.is_active).sort((a, b) => a.order - b.order).map((category) => (
+            <View key={category.id} style={styles.item}>
+              <View style={styles.iconCircle}>{getIconForCategory(category.slug)}</View>
+              <Text style={styles.label}>{category.title}</Text>
+            </View>
+          ))}
         </View>
       </View>
     </Modal>
@@ -59,12 +90,10 @@ const styles = StyleSheet.create({
   },
   grid: {
     marginTop: 32,
-    flexDirection: 'column',
-    paddingLeft: 20,
-  },
-  row: {
     flexDirection: 'row',
-    marginBottom: 0,
+    flexWrap: 'wrap',
+    paddingLeft: 20,
+    justifyContent: 'flex-start',
   },
   item: {
     width: 110,

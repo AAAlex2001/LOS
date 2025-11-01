@@ -152,9 +152,88 @@ class HomeTab(TimestampedModel):
 
     class Meta:
         ordering = ["order", "id"]
-        verbose_name = "Таб (верхнее меню)"
-        verbose_name_plural = "Табы (верхнее меню)"
+        verbose_name = "Таб (верхнее меню сайта)"
+        verbose_name_plural = "Табы (верхнее меню сайта)"
 
     def __str__(self) -> str:  # pragma: no cover - trivial
         return self.label
+
+
+class MobileHomeTab(TimestampedModel):
+    homepage = models.ForeignKey(HomePage, on_delete=models.CASCADE, related_name="mobile_tabs")
+    group = models.CharField(max_length=20, choices=HomePopupItem.Group.choices)
+    label = models.CharField(max_length=100)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "id"]
+        verbose_name = "Таб (мобильное приложение)"
+        verbose_name_plural = "Табы (мобильное приложение)"
+
+    def __str__(self) -> str:  # pragma: no cover - trivial
+        return self.label
+
+
+class AboutAbkhaziaCategory(TimestampedModel):
+    homepage = models.ForeignKey(HomePage, on_delete=models.CASCADE, related_name="about_categories")
+    title = models.CharField("Название категории", max_length=100)
+    slug = models.SlugField("Слаг", max_length=100, help_text="Уникальный идентификатор для API")
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField("Активна", default=True)
+
+    class Meta:
+        ordering = ["order", "id"]
+        verbose_name = "Категория (Об Абхазии)"
+        verbose_name_plural = "Категории (Об Абхазии)"
+
+    def __str__(self) -> str:  # pragma: no cover - trivial
+        return self.title
+
+
+class EntertainmentCategory(TimestampedModel):
+    homepage = models.ForeignKey(HomePage, on_delete=models.CASCADE, related_name="entertainment_categories")
+    title = models.CharField("Название категории", max_length=100)
+    slug = models.SlugField("Слаг", max_length=100, help_text="Уникальный идентификатор для API")
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField("Активна", default=True)
+
+    class Meta:
+        ordering = ["order", "id"]
+        verbose_name = "Категория (Развлечения)"
+        verbose_name_plural = "Категории (Развлечения)"
+
+    def __str__(self) -> str:  # pragma: no cover - trivial
+        return self.title
+
+
+class PlanTripCategory(TimestampedModel):
+    homepage = models.ForeignKey(HomePage, on_delete=models.CASCADE, related_name="plan_trip_categories")
+    title = models.CharField("Название категории", max_length=100)
+    slug = models.SlugField("Слаг", max_length=100, help_text="Уникальный идентификатор для API")
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField("Активна", default=True)
+
+    class Meta:
+        ordering = ["order", "id"]
+        verbose_name = "Категория (Запланируйте поездку)"
+        verbose_name_plural = "Категории (Запланируйте поездку)"
+
+    def __str__(self) -> str:  # pragma: no cover - trivial
+        return self.title
+
+
+class ImportantTripCategory(TimestampedModel):
+    homepage = models.ForeignKey(HomePage, on_delete=models.CASCADE, related_name="important_trip_categories")
+    title = models.CharField("Название категории", max_length=100)
+    slug = models.SlugField("Слаг", max_length=100, help_text="Уникальный идентификатор для API")
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField("Активна", default=True)
+
+    class Meta:
+        ordering = ["order", "id"]
+        verbose_name = "Категория (Необходимо в поездке)"
+        verbose_name_plural = "Категории (Необходимо в поездке)"
+
+    def __str__(self) -> str:  # pragma: no cover - trivial
+        return self.title
 
