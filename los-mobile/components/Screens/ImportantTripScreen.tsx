@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 import config from '@/config';
+import ImportantScreen from './important-trip/ImportantScreen';
 
 const API_BASE = config.API_BASE;
 
@@ -23,6 +24,10 @@ const getIconForCategory = (slug: string) => {
 
 export default function ImportantTripScreen({ visible, onClose, categories }: { visible: boolean, onClose: () => void, categories: Category[] }) {
   const [headerTitle, setHeaderTitle] = useState<string | null>(null);
+  const [screenStates, setScreenStates] = useState<Record<string, boolean>>({});
+
+  const setScreenVisible = (slug: string, v: boolean) =>
+    setScreenStates((s) => ({ ...s, [slug]: v }));
 
   useEffect(() => {
     if (!visible) return;
@@ -53,13 +58,37 @@ export default function ImportantTripScreen({ visible, onClose, categories }: { 
           </TouchableOpacity>
         </View>
         <View style={styles.grid}>
-          {categories.filter(cat => cat.is_active).sort((a, b) => a.order - b.order).map((category) => (
-            <View key={category.id} style={styles.item}>
-              <View style={styles.iconCircle}>{getIconForCategory(category.slug)}</View>
-              <Text style={styles.label}>{category.title}</Text>
-            </View>
-          ))}
+          {categories
+            .filter(cat => cat.is_active)
+            .sort((a, b) => a.order - b.order)
+            .map((category) => (
+              <TouchableOpacity
+                key={category.id}
+                style={styles.item}
+                activeOpacity={0.8}
+                onPress={() => setScreenVisible(category.slug, true)}
+              >
+                <View style={styles.iconCircle}>{getIconForCategory(category.slug)}</View>
+                <Text style={styles.label}>{category.title}</Text>
+              </TouchableOpacity>
+            ))}
         </View>
+
+        {/* Modals by slug */}
+        {categories.map((category) => {
+          switch (category.slug) {
+            case 'important-info':
+              return (
+                <ImportantScreen
+                  key={category.id}
+                  visible={!!screenStates[category.slug]}
+                  onClose={() => setScreenVisible(category.slug, false)}
+                />
+              );
+            default:
+              return null;
+          }
+        })}
       </View>
     </Modal>
   );

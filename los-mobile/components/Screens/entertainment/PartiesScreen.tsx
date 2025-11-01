@@ -458,15 +458,12 @@ const styles = StyleSheet.create({
     marginHorizontal: -20,
   },
   tabsContent: {
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingVertical: 0,
+    paddingLeft: 20,
+    paddingRight: 20,
     alignItems: 'center',
-    gap: 10,
+      gap: 5,
   },
   tab: {
-    paddingVertical: 8,
-    paddingHorizontal: 4,
     height: 30,
     justifyContent: 'center',
     alignItems: 'center',
