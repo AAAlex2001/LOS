@@ -49,6 +49,7 @@ class CmsConfig(AppConfig):
             'pharmacy',
             'restaurants',
             'shops_and_markets',
+            'sports_gyms',
             'taxi',
             'wineries',
             'your_doctor',

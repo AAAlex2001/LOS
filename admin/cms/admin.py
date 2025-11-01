@@ -43,6 +43,7 @@ from .pharmacy.admin import PharmacyPageAdmin
 from .restaurants.admin import RestaurantsPageAdmin
 from .shops_and_markets.admin import ShopsAndMarketsPageAdmin
 from .wineries.admin import WineriesPageAdmin
+from .sports_gyms.admin import SportsGymsPageAdmin
 from .elementary_dictionary.admin import ElementaryDictionaryPageAdmin
 from .excursions.admin import ExcursionsPageAdmin
 from .government_structure.admin import GovernmentStructurePageAdmin
