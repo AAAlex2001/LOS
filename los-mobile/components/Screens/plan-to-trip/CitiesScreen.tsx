@@ -60,6 +60,7 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
         const res = await fetch(`${API_BASE}/api/cities/page/content/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load cities page');
         const json = await res.json() as CitiesPageData;
+        console.log('Loaded cities:', json.cities.map(c => ({ name: c.name, slug: slugify(c.name) })));
         setData(json);
       } catch (e) {
         console.error(e);
@@ -94,6 +95,8 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
     const categorySlug = slugify(category.url.split('/')[0] || '');
     const citySlug = slugify(cityName);
     
+    console.log('Category click:', { categorySlug, citySlug, cityName });
+    
     setActiveCategory(categorySlug);
     setActiveCity(citySlug);
   };
@@ -106,7 +109,9 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
   // Get the active screen component from registry
   const ActiveScreen = useMemo(() => {
     if (!activeCity || !activeCategory) return null;
-    return screensRegistry[activeCity]?.[activeCategory] ?? null;
+    const screen = screensRegistry[activeCity]?.[activeCategory] ?? null;
+    console.log('Looking for screen:', { activeCity, activeCategory, found: !!screen, registryKeys: Object.keys(screensRegistry) });
+    return screen;
   }, [activeCity, activeCategory]);
 
   return (

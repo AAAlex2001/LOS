@@ -107,14 +107,14 @@ REST_FRAMEWORK = {
 # CORS / CSRF
 _cors_env = os.environ.get(
     "DJANGO_CORS_ALLOWED_ORIGINS",
-    "http://localhost,http://localhost:3000,http://127.0.0.1,http://127.0.0.1:3000,http://109.196.103.12,http://109.196.103.12:3000,http://landofsoul-apsny.ru,https://landofsoul-apsny.ru,http://www.landofsoul-apsny.ru,https://www.landofsoul-apsny.ru",
+    "http://localhost,http://localhost:3000,http://localhost:8081,http://127.0.0.1,http://127.0.0.1:3000,http://127.0.0.1:8081,http://109.196.103.12,http://109.196.103.12:3000,http://landofsoul-apsny.ru,https://landofsoul-apsny.ru,http://www.landofsoul-apsny.ru,https://www.landofsoul-apsny.ru",
 )
 CORS_ALLOWED_ORIGINS = [o for o in _cors_env.split(",") if o]
 CORS_ALLOW_CREDENTIALS = True
 
 _csrf_env = os.environ.get(
     "DJANGO_CSRF_TRUSTED_ORIGINS",
-    "http://localhost,http://localhost:3000,http://127.0.0.1,http://127.0.0.1:3000,http://109.196.103.12,http://109.196.103.12:3000,http://landofsoul-apsny.ru,https://landofsoul-apsny.ru,http://www.landofsoul-apsny.ru,https://www.landofsoul-apsny.ru",
+    "http://localhost,http://localhost:3000,http://localhost:8081,http://127.0.0.1,http://127.0.0.1:3000,http://127.0.0.1:8081,http://109.196.103.12,http://109.196.103.12:3000,http://landofsoul-apsny.ru,https://landofsoul-apsny.ru,http://www.landofsoul-apsny.ru,https://www.landofsoul-apsny.ru",
 )
 CSRF_TRUSTED_ORIGINS = [o for o in _csrf_env.split(",") if o]
 

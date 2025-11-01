@@ -75,6 +75,21 @@ import BeachesGulripshScreen from './gulripsh/BeachesGulripshScreen';
 import ClothingRepairGulripshScreen from './gulripsh/ClothingRepairGulripshScreen';
 import RestaurantsGulripshScreen from './gulripsh/RestaurantsGulripshScreen';
 
+import AdministrativeBuildingsNewAfonScreen from './new-afon/AdministrativeBuildingsNewAfonScreen';
+import ChurchesNewAfonScreen from './new-afon/ChurchesNewAfonScreen';
+import BeautySalonsNewAfonScreen from './new-afon/BeautySalonsNewAfonScreen';
+import PharmacyNewAfonScreen from './new-afon/PharmacyNewAfonScreen';
+import WineriesNewAfonScreen from './new-afon/WineriesNewAfonScreen';
+import GasStationsNewAfonScreen from './new-afon/GasStationsNewAfonScreen';
+import CulturalAttractionsNewAfonScreen from './new-afon/CulturalAttractionsNewAfonScreen';
+import ShopsAndMarketsNewAfonScreen from './new-afon/ShopsAndMarketsNewAfonScreen';
+import CarWashesNewAfonScreen from './new-afon/CarWashesNewAfonScreen';
+import HotelsNewAfonScreen from './new-afon/HotelsNewAfonScreen';
+import ParkingLotsNewAfonScreen from './new-afon/ParkingLotsNewAfonScreen';
+import BeachesNewAfonScreen from './new-afon/BeachesNewAfonScreen';
+import ClothingRepairNewAfonScreen from './new-afon/ClothingRepairNewAfonScreen';
+import RestaurantsNewAfonScreen from './new-afon/RestaurantsNewAfonScreen';
+
 type ScreenComp = React.ComponentType<{ visible: boolean; onClose: () => void }>;
 
 export const screensRegistry: Record<string, Record<string, ScreenComp>> = {
@@ -143,7 +158,7 @@ export const screensRegistry: Record<string, Record<string, ScreenComp>> = {
     'clothing-repair': ClothingRepairGudautaScreen,
     'restaurants': RestaurantsGudautaScreen,
   },
-  'гулрыпш': {
+  'гулрыпшский-район': {
     'administrative-buildings': AdministrativeBuildingsGulripshScreen,
     'churches': ChurchesGulripshScreen,
     'beauty-salons': BeautySalonsGulripshScreen,
@@ -158,6 +173,22 @@ export const screensRegistry: Record<string, Record<string, ScreenComp>> = {
     'beaches': BeachesGulripshScreen,
     'clothing-repair': ClothingRepairGulripshScreen,
     'restaurants': RestaurantsGulripshScreen,
+  },
+  'новый-афон': {
+    'administrative-buildings': AdministrativeBuildingsNewAfonScreen,
+    'churches': ChurchesNewAfonScreen,
+    'beauty-salons': BeautySalonsNewAfonScreen,
+    'pharmacy': PharmacyNewAfonScreen,
+    'wineries': WineriesNewAfonScreen,
+    'gas-stations': GasStationsNewAfonScreen,
+    'cultural-attractions': CulturalAttractionsNewAfonScreen,
+    'shops-and-markets': ShopsAndMarketsNewAfonScreen,
+    'car-washes': CarWashesNewAfonScreen,
+    'hotels': HotelsNewAfonScreen,
+    'parking-lots': ParkingLotsNewAfonScreen,
+    'beaches': BeachesNewAfonScreen,
+    'clothing-repair': ClothingRepairNewAfonScreen,
+    'restaurants': RestaurantsNewAfonScreen,
   },
 };
 
