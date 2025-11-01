@@ -161,11 +161,19 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
         return;
       }
 
-      // Switching to a different track: stop previous
+      // Switching to a different track: stop previous and reset state immediately
       if (sound) {
         await sound.unloadAsync();
-        setSound(null);
       }
+      
+      // Reset all state immediately for UI responsiveness
+      setSound(null);
+      setPlayingTrackId(null);
+      setIsPaused(false);
+      setPosition(0);
+      setDuration(0);
+      setIsDragging(false);
+      setDragPositionMs(0);
 
       setIsLoadingTrack(true);
       const audioUrl = toAudioUrl(track.audio_url);
