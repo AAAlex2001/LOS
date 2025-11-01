@@ -252,7 +252,7 @@ export default function ImportantScreen({ visible, onClose }: { visible: boolean
                 >
                   {tabs.map((tab) => (
                     <TouchableOpacity key={tab.key} style={styles.tab} onPress={() => scrollToSection(tab.key)}>
-                      <Text style={styles.tabText}>{tab.label}</Text>
+                      <Text style={styles.tabText} numberOfLines={2}>{tab.label}</Text>
                     </TouchableOpacity>
                   ))}
                 </ScrollView>
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
   },
   tabsStickyWrap: { marginHorizontal: -20 },
   tabsContent: { paddingLeft: 20, paddingRight: 20, alignItems: 'center', gap: 10 },
-  tab: { paddingVertical: 0, paddingHorizontal: 0, justifyContent: 'center', alignItems: 'center' },
+  tab: { justifyContent: 'center', alignItems: 'center', width: 150, height: 30 },
   tabText: { fontFamily: 'Inter', fontWeight: '700', fontSize: 12, lineHeight: 15, color: '#000', textAlign: 'center' },
 
   sectionWrap: { width: '100%', alignSelf: 'flex-start', marginBottom: 40, justifyContent: 'flex-start' },
