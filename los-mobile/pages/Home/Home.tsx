@@ -18,7 +18,7 @@ import EntertainmentScreen from '../../components/Screens/EntertainmentScreen';
 import PlanTripScreen from '../../components/Screens/PlanTripScreen';
 import ImportantTripScreen from '../../components/Screens/ImportantTripScreen';
 import SidebarScreen from '../../components/Screens/SidebarScreen';
-import { Ionicons, MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo, FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo } from '@expo/vector-icons';
 import config from '@/config';
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -56,7 +56,7 @@ interface TabItem {
 }
 
 interface HomeData {
-  slider_items: { media_type: 'video' | 'image'; url: string; alt: string; order: number }[];
+  slider_items: { media_type: 'video' | 'image'; url: string; mobile_video_url?: string; alt: string; order: number }[];
   tabs: { group: 'about' | 'activities' | 'booking' | 'essentials'; label: string; href?: string; order: number }[];
 }
 
@@ -65,11 +65,20 @@ const toMedia = (url: string) => `${API_BASE}/media/${url}`;
 const getIconForTab = (label: string) => {
   if (label === 'Об Абхазии' || label === 'Абхазия') return <MaterialCommunityIcons name="party-popper" size={40} color="#fff" />;
   if (label === 'Развлечения' || label.includes('Развлечения') || label.includes('заняться')) return <MaterialCommunityIcons name="star" size={40} color="#fff" />;
-  if (label.includes('поездку') || label.includes('Запланируйте')) return <MaterialIcons name="event-available" size={40} color="#fff" />;
+  if (label.includes('Запланируйте') || label.includes('поездку')) return <MaterialIcons name="event-available" size={40} color="#fff" />;
   if (label.includes('Необходимо') || label.includes('поездке')) return <Entypo name="suitcase" size={40} color="#fff" />;
   return <FontAwesome5 name="city" size={40} color="#fff" />;
 };
 
+
+const mascotImages = [
+  require('../../assets/images/Guy11.png'),
+  require('../../assets/images/Wink.png'),
+  require('../../assets/images/Thinking.png'),
+  require('../../assets/images/Oh.png'),
+  require('../../assets/images/Aha.png'),
+  require('../../assets/images/Wink2.png'),
+];
 
 const HomePage = () => {
   const [data, setData] = useState<HomeData | null>(null);
@@ -102,7 +111,9 @@ const HomePage = () => {
     ?.sort((a, b) => a.order - b.order)
     .map(item => ({
       type: item.media_type,
-      src: item.url ? toMedia(item.url) : ''
+      src: item.mobile_video_url && item.media_type === 'video' 
+        ? toMedia(item.mobile_video_url) 
+        : item.url ? toMedia(item.url) : ''
     })) || [];
 
   const tabs: TabItem[] = data?.tabs
@@ -171,7 +182,7 @@ const HomePage = () => {
         <View style={styles.logoMascotContainer}>
           <Text style={styles.logoText}>Land of Soul</Text>
           <Image 
-            source={require('../../assets/images/Guy11.png')} 
+            source={mascotImages[currentSlide % mascotImages.length]} 
             style={styles.mascotImage}
             contentFit="contain"
           />
@@ -284,12 +295,11 @@ const styles = StyleSheet.create({
   menuBar: {
     position: 'absolute',
     left: '13.33%',
-    top: '14.29%',
-    paddingVertical: 10,
+    top: '2%',
   },
   menuFrame: {
     width: 24,
-    height: 12,
+    height: 15,
     justifyContent: 'space-between',
   },
   menuLine: {
@@ -300,8 +310,7 @@ const styles = StyleSheet.create({
   },
   logoMascotContainer: {
     position: 'absolute',
-    left: '34.79%',
-    right: '35%',
+    left: '50%',
     top: 0,
     bottom: 0,
     alignItems: 'center',
@@ -313,13 +322,13 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 24,
     lineHeight: 24,
-    color: 'rgba(0, 0, 0, 0.85)',
+    color: '#000000D9',
   },
   mascotImage: {
     position: 'absolute',
     height: 78,
     width: 78,
-    top: 13,
+    top: 12,
   },
 
   // Slider

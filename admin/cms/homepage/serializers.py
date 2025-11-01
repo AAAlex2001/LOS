@@ -13,16 +13,22 @@ from .models import (
 
 class HomeSliderItemSerializer(serializers.ModelSerializer):
     url = serializers.SerializerMethodField()
+    mobile_video_url = serializers.SerializerMethodField()
 
     class Meta:
         model = HomeSliderItem
-        fields = ["id", "media_type", "url", "alt", "order"]
+        fields = ["id", "media_type", "url", "mobile_video_url", "alt", "order"]
 
     def get_url(self, obj: HomeSliderItem) -> str:
         file_field = obj.image if obj.media_type == HomeSliderItem.MediaType.IMAGE else obj.video
         if not file_field:
             return ""
         return file_field.url.replace('/media/', '')
+    
+    def get_mobile_video_url(self, obj: HomeSliderItem) -> str:
+        if not obj.mobile_video:
+            return ""
+        return obj.mobile_video.url.replace('/media/', '')
 
 
 class HomeCitySerializer(serializers.ModelSerializer):

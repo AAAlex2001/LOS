@@ -12,7 +12,7 @@ const menuItems = [
   { label: 'Выберите язык', icon: <Ionicons name="language-outline" size={24} color="#1129BD" /> },
 ];
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 
 export default function SidebarScreen({ visible, onClose, onNavigateHome }: { visible: boolean, onClose: () => void, onNavigateHome?: () => void }) {
   const [contactsVisible, setContactsVisible] = useState(false);
@@ -42,17 +42,17 @@ export default function SidebarScreen({ visible, onClose, onNavigateHome }: { vi
         <Pressable style={styles.bgClose} onPress={onClose} />
         <Animated.View style={[styles.sidebar, { transform: [{ translateX: slideAnim }] }]}> 
           {/* Логотип */}
-          <SideBarLogo width={160} height={160} style={styles.logo} />
+          <SideBarLogo width={104} height={104} style={styles.logo} />
           {/* Заголовок */}
           <Text style={styles.title}>LAND OF SOUL ABKHAZIA</Text>
           {/* Линия */}
           <View style={styles.line} />
           {/* Кнопки */}
           <TouchableOpacity style={styles.boardBtn}>
-            <Text style={styles.boardBtnText}>Доска объявлений “LOS”</Text>
+            <Text style={styles.boardBtnText}>Доска объявлений «LOS»</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.mandarinBtn}>
-            <Text style={styles.mandarinBtnText}>Аренда жилья “Мандарин”</Text>
+            <Text style={styles.mandarinBtnText}>Аренда жилья «Мандарин»</Text>
           </TouchableOpacity>
           {/* Меню */}
           <View style={styles.menuList}>
@@ -118,14 +118,14 @@ const styles = StyleSheet.create({
     color: '#0F0F0F',
     textAlign: 'left',
     alignSelf: 'flex-start',
-    marginBottom: 10,
+    marginBottom: 20,
     marginTop: 8,
   },
   line: {
     height: 1,
     backgroundColor: '#E2E4E6',
     width: '100%',
-    marginBottom: 30,
+    marginBottom: 24,
   },
   boardBtn: {
     width: 246,
@@ -154,7 +154,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 30,
   },
   mandarinBtnText: {
     color: '#1129BD',
@@ -168,14 +167,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 56,
-    borderRadius: 12,
-    marginBottom: 8,
-    paddingLeft: 10,
   },
   menuIcon: {
     width: 32,
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: 10,
   },
   menuLabel: {
     fontSize: 16,

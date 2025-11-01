@@ -27,6 +27,48 @@ import ParkingLotsSukhumScreen from './sukhum/ParkingLotsSukhumScreen';
 import BeachesSukhumScreen from './sukhum/BeachesSukhumScreen';
 import ClothingRepairSukhumScreen from './sukhum/ClothingRepairSukhumScreen';
 import RestaurantsSukhumScreen from './sukhum/RestaurantsSukhumScreen';
+import AdministrativeBuildingsGagraScreen from './gagra/AdministrativeBuildingsGagraScreen';
+import ChurchesGagraScreen from './gagra/ChurchesGagraScreen';
+import BeautySalonsGagraScreen from './gagra/BeautySalonsGagraScreen';
+import PharmacyGagraScreen from './gagra/PharmacyGagraScreen';
+import WineriesGagraScreen from './gagra/WineriesGagraScreen';
+import GasStationsGagraScreen from './gagra/GasStationsGagraScreen';
+import CulturalAttractionsGagraScreen from './gagra/CulturalAttractionsGagraScreen';
+import ShopsAndMarketsGagraScreen from './gagra/ShopsAndMarketsGagraScreen';
+import CarWashesGagraScreen from './gagra/CarWashesGagraScreen';
+import HotelsGagraScreen from './gagra/HotelsGagraScreen';
+import ParkingLotsGagraScreen from './gagra/ParkingLotsGagraScreen';
+import BeachesGagraScreen from './gagra/BeachesGagraScreen';
+import ClothingRepairGagraScreen from './gagra/ClothingRepairGagraScreen';
+import RestaurantsGagraScreen from './gagra/RestaurantsGagraScreen';
+import AdministrativeBuildingsGalScreen from './gal/AdministrativeBuildingsGalScreen';
+import ChurchesGalScreen from './gal/ChurchesGalScreen';
+import BeautySalonsGalScreen from './gal/BeautySalonsGalScreen';
+import PharmacyGalScreen from './gal/PharmacyGalScreen';
+import WineriesGalScreen from './gal/WineriesGalScreen';
+import GasStationsGalScreen from './gal/GasStationsGalScreen';
+import CulturalAttractionsGalScreen from './gal/CulturalAttractionsGalScreen';
+import ShopsAndMarketsGalScreen from './gal/ShopsAndMarketsGalScreen';
+import CarWashesGalScreen from './gal/CarWashesGalScreen';
+import HotelsGalScreen from './gal/HotelsGalScreen';
+import ParkingLotsGalScreen from './gal/ParkingLotsGalScreen';
+import BeachesGalScreen from './gal/BeachesGalScreen';
+import ClothingRepairGalScreen from './gal/ClothingRepairGalScreen';
+import RestaurantsGalScreen from './gal/RestaurantsGalScreen';
+import AdministrativeBuildingsGudautaScreen from './gudauta/AdministrativeBuildingsGudautaScreen';
+import ChurchesGudautaScreen from './gudauta/ChurchesGudautaScreen';
+import BeautySalonsGudautaScreen from './gudauta/BeautySalonsGudautaScreen';
+import PharmacyGudautaScreen from './gudauta/PharmacyGudautaScreen';
+import WineriesGudautaScreen from './gudauta/WineriesGudautaScreen';
+import GasStationsGudautaScreen from './gudauta/GasStationsGudautaScreen';
+import CulturalAttractionsGudautaScreen from './gudauta/CulturalAttractionsGudautaScreen';
+import ShopsAndMarketsGudautaScreen from './gudauta/ShopsAndMarketsGudautaScreen';
+import CarWashesGudautaScreen from './gudauta/CarWashesGudautaScreen';
+import HotelsGudautaScreen from './gudauta/HotelsGudautaScreen';
+import ParkingLotsGudautaScreen from './gudauta/ParkingLotsGudautaScreen';
+import BeachesGudautaScreen from './gudauta/BeachesGudautaScreen';
+import ClothingRepairGudautaScreen from './gudauta/ClothingRepairGudautaScreen';
+import RestaurantsGudautaScreen from './gudauta/RestaurantsGudautaScreen';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -61,20 +103,8 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
   const [data, setData] = useState<CitiesPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [expandedCity, setExpandedCity] = useState<number[]>([]);
-  const [adminBuildingsVisible, setAdminBuildingsVisible] = useState(false);
-  const [churchesVisible, setChurchesVisible] = useState(false);
-  const [beautySalonsVisible, setBeautySalonsVisible] = useState(false);
-  const [pharmacyVisible, setPharmacyVisible] = useState(false);
-  const [wineriesVisible, setWineriesVisible] = useState(false);
-  const [gasStationsVisible, setGasStationsVisible] = useState(false);
-  const [culturalAttractionsVisible, setCulturalAttractionsVisible] = useState(false);
-  const [shopsAndMarketsVisible, setShopsAndMarketsVisible] = useState(false);
-  const [carWashesVisible, setCarWashesVisible] = useState(false);
-  const [hotelsVisible, setHotelsVisible] = useState(false);
-  const [parkingLotsVisible, setParkingLotsVisible] = useState(false);
-  const [beachesVisible, setBeachesVisible] = useState(false);
-  const [clothingRepairVisible, setClothingRepairVisible] = useState(false);
-  const [restaurantsVisible, setRestaurantsVisible] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeCity, setActiveCity] = useState<string | null>(null);
 
   useEffect(() => {
     if (!visible) return;
@@ -113,94 +143,36 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
   const handleCategoryClick = (category: CityCategory, cityName: string) => {
     if (!category.is_active || !category.url) return;
     
-    // Парсим URL для определения типа категории
     const url = category.url.toLowerCase();
     const city = cityName.toLowerCase();
     
-    // Для административных зданий Сухума
-    if (url.includes('administrative-buildings') && city.includes('сухум')) {
-      setAdminBuildingsVisible(true);
-      return;
-    }
-    
-    // Для церквей Сухума
-    if (url.includes('churches') && city.includes('сухум')) {
-      setChurchesVisible(true);
-      return;
-    }
-    
-    // Для салонов красоты Сухума
-    if (url.includes('beauty-salo') && city.includes('сухум')) {
-      setBeautySalonsVisible(true);
-      return;
-    }
-    
-    // Для аптек Сухума
-    if (url.includes('pharmacy') && city.includes('сухум')) {
-      setPharmacyVisible(true);
-      return;
-    }
-    
-    // Для виноделен Сухума
-    if (url.includes('winer') && city.includes('сухум')) {
-      setWineriesVisible(true);
-      return;
-    }
-    
-    // Для заправок Сухума
-    if (url.includes('gas-station') && city.includes('сухум')) {
-      setGasStationsVisible(true);
-      return;
-    }
-    
-    // Для культурных достопримечательностей Сухума
-    if (url.includes('cultural-attraction') && city.includes('сухум')) {
-      setCulturalAttractionsVisible(true);
-      return;
-    }
-    
-    // Для магазинов и рынков Сухума
-    if (url.includes('shop') && city.includes('сухум')) {
-      setShopsAndMarketsVisible(true);
-      return;
-    }
-    
-    // Для моек Сухума
-    if (url.includes('car-wash') && city.includes('сухум')) {
-      setCarWashesVisible(true);
-      return;
-    }
-    
-    // Для отелей Сухума
-    if (url.includes('hotel') && city.includes('сухум')) {
-      setHotelsVisible(true);
-      return;
-    }
-    
-    // Для парковок Сухума
-    if (url.includes('parking') && city.includes('сухум')) {
-      setParkingLotsVisible(true);
-      return;
-    }
-    
-    // Для пляжей Сухума
-    if (url.includes('beach') && city.includes('сухум')) {
-      setBeachesVisible(true);
-      return;
-    }
-    
-    // Для ремонта одежды Сухума
-    if (url.includes('repair') && city.includes('сухум')) {
-      setClothingRepairVisible(true);
-      return;
-    }
-    
-    // Для ресторанов Сухума
-    if (url.includes('restaurant') && city.includes('сухум')) {
-      setRestaurantsVisible(true);
-      return;
-    }
+    setActiveCategory(url);
+    setActiveCity(city);
   };
+
+  const closeModal = () => {
+    setActiveCategory(null);
+    setActiveCity(null);
+  };
+
+  const isSukhum = activeCity?.includes('сухум');
+  const isGagra = activeCity?.includes('гагра');
+  const isGal = activeCity?.includes('гал');
+  const isGudauta = activeCity?.includes('гудаут');
+  const isAdminBuildings = activeCategory?.includes('administrative-buildings');
+  const isChurches = activeCategory?.includes('churches');
+  const isBeautySalons = activeCategory?.includes('beauty-salo');
+  const isPharmacy = activeCategory?.includes('pharmacy');
+  const isWineries = activeCategory?.includes('winer');
+  const isGasStations = activeCategory?.includes('gas-station');
+  const isCulturalAttractions = activeCategory?.includes('cultural-attraction');
+  const isShopsAndMarkets = activeCategory?.includes('shop');
+  const isCarWashes = activeCategory?.includes('car-wash');
+  const isHotels = activeCategory?.includes('hotel');
+  const isParkingLots = activeCategory?.includes('parking');
+  const isBeaches = activeCategory?.includes('beach');
+  const isClothingRepair = activeCategory?.includes('repair');
+  const isRestaurants = activeCategory?.includes('restaurant');
 
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
@@ -220,7 +192,7 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
             <Text style={styles.loadingText}>Загрузка...</Text>
           </View>
         ) : (
-          <ScrollView style={styles.scrollContent}>
+          <ScrollView contentContainerStyle={styles.scrollContent}>
             {cities.map((city) => (
               <View key={city.id} style={styles.cityCard}>
                 <TouchableOpacity
@@ -265,89 +237,257 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
           </ScrollView>
         )}
         
-        {/* Administrative Buildings Modal */}
-        <AdministrativeBuildingsSukhumScreen
-          visible={adminBuildingsVisible}
-          onClose={() => setAdminBuildingsVisible(false)}
-        />
+        {/* Administrative Buildings */}
+        {isAdminBuildings && isSukhum && (
+          <AdministrativeBuildingsSukhumScreen visible={true} onClose={closeModal} />
+        )}
+        {isAdminBuildings && isGagra && (
+          <AdministrativeBuildingsGagraScreen visible={true} onClose={closeModal} />
+        )}
         
-        {/* Churches Modal */}
-        <ChurchesSukhumScreen
-          visible={churchesVisible}
-          onClose={() => setChurchesVisible(false)}
-        />
+        {/* Churches */}
+        {isChurches && isSukhum && (
+          <ChurchesSukhumScreen visible={true} onClose={closeModal} />
+        )}
+        {isChurches && isGagra && (
+          <ChurchesGagraScreen visible={true} onClose={closeModal} />
+        )}
         
-        {/* Beauty Salons Modal */}
-        <BeautySalonsSukhumScreen
-          visible={beautySalonsVisible}
-          onClose={() => setBeautySalonsVisible(false)}
-        />
+        {/* Beauty Salons */}
+        {isBeautySalons && isSukhum && (
+          <BeautySalonsSukhumScreen visible={true} onClose={closeModal} />
+        )}
+        {isBeautySalons && isGagra && (
+          <BeautySalonsGagraScreen visible={true} onClose={closeModal} />
+        )}
         
-        {/* Pharmacy Modal */}
-        <PharmacySukhumScreen
-          visible={pharmacyVisible}
-          onClose={() => setPharmacyVisible(false)}
-        />
+        {/* Pharmacy */}
+        {isPharmacy && isSukhum && (
+          <PharmacySukhumScreen visible={true} onClose={closeModal} />
+        )}
+        {isPharmacy && isGagra && (
+          <PharmacyGagraScreen visible={true} onClose={closeModal} />
+        )}
         
-        {/* Wineries Modal */}
-        <WineriesSukhumScreen
-          visible={wineriesVisible}
-          onClose={() => setWineriesVisible(false)}
-        />
+        {/* Wineries */}
+        {isWineries && isSukhum && (
+          <WineriesSukhumScreen visible={true} onClose={closeModal} />
+        )}
+        {isWineries && isGagra && (
+          <WineriesGagraScreen visible={true} onClose={closeModal} />
+        )}
         
-        {/* Gas Stations Modal */}
-        <GasStationsSukhumScreen
-          visible={gasStationsVisible}
-          onClose={() => setGasStationsVisible(false)}
-        />
+        {/* Gas Stations */}
+        {isGasStations && isSukhum && (
+          <GasStationsSukhumScreen visible={true} onClose={closeModal} />
+        )}
+        {isGasStations && isGagra && (
+          <GasStationsGagraScreen visible={true} onClose={closeModal} />
+        )}
         
-        {/* Cultural Attractions Modal */}
-        <CulturalAttractionsSukhumScreen
-          visible={culturalAttractionsVisible}
-          onClose={() => setCulturalAttractionsVisible(false)}
-        />
+        {/* Cultural Attractions */}
+        {isCulturalAttractions && isSukhum && (
+          <CulturalAttractionsSukhumScreen visible={true} onClose={closeModal} />
+        )}
+        {isCulturalAttractions && isGagra && (
+          <CulturalAttractionsGagraScreen visible={true} onClose={closeModal} />
+        )}
         
-        {/* Shops and Markets Modal */}
-        <ShopsAndMarketsSukhumScreen
-          visible={shopsAndMarketsVisible}
-          onClose={() => setShopsAndMarketsVisible(false)}
-        />
+        {/* Shops and Markets */}
+        {isShopsAndMarkets && isSukhum && (
+          <ShopsAndMarketsSukhumScreen visible={true} onClose={closeModal} />
+        )}
+        {isShopsAndMarkets && isGagra && (
+          <ShopsAndMarketsGagraScreen visible={true} onClose={closeModal} />
+        )}
         
-        {/* Car Washes Modal */}
-        <CarWashesSukhumScreen
-          visible={carWashesVisible}
-          onClose={() => setCarWashesVisible(false)}
-        />
+        {/* Car Washes */}
+        {isCarWashes && isSukhum && (
+          <CarWashesSukhumScreen visible={true} onClose={closeModal} />
+        )}
+        {isCarWashes && isGagra && (
+          <CarWashesGagraScreen visible={true} onClose={closeModal} />
+        )}
         
-        {/* Hotels Modal */}
-        <HotelsSukhumScreen
-          visible={hotelsVisible}
-          onClose={() => setHotelsVisible(false)}
-        />
+        {/* Hotels */}
+        {isHotels && isSukhum && (
+          <HotelsSukhumScreen visible={true} onClose={closeModal} />
+        )}
+        {isHotels && isGagra && (
+          <HotelsGagraScreen visible={true} onClose={closeModal} />
+        )}
         
-        {/* Parking Lots Modal */}
-        <ParkingLotsSukhumScreen
-          visible={parkingLotsVisible}
-          onClose={() => setParkingLotsVisible(false)}
-        />
+        {/* Parking Lots */}
+        {isParkingLots && isSukhum && (
+          <ParkingLotsSukhumScreen visible={true} onClose={closeModal} />
+        )}
+        {isParkingLots && isGagra && (
+          <ParkingLotsGagraScreen visible={true} onClose={closeModal} />
+        )}
         
-        {/* Beaches Modal */}
-        <BeachesSukhumScreen
-          visible={beachesVisible}
-          onClose={() => setBeachesVisible(false)}
-        />
+        {/* Beaches */}
+        {isBeaches && isSukhum && (
+          <BeachesSukhumScreen visible={true} onClose={closeModal} />
+        )}
+        {isBeaches && isGagra && (
+          <BeachesGagraScreen visible={true} onClose={closeModal} />
+        )}
         
-        {/* Clothing Repair Modal */}
-        <ClothingRepairSukhumScreen
-          visible={clothingRepairVisible}
-          onClose={() => setClothingRepairVisible(false)}
-        />
+        {/* Clothing Repair */}
+        {isClothingRepair && isSukhum && (
+          <ClothingRepairSukhumScreen visible={true} onClose={closeModal} />
+        )}
+        {isClothingRepair && isGagra && (
+          <ClothingRepairGagraScreen visible={true} onClose={closeModal} />
+        )}
         
-        {/* Restaurants Modal */}
-        <RestaurantsSukhumScreen
-          visible={restaurantsVisible}
-          onClose={() => setRestaurantsVisible(false)}
-        />
+        {/* Restaurants */}
+        {isRestaurants && isSukhum && (
+          <RestaurantsSukhumScreen visible={true} onClose={closeModal} />
+        )}
+        {isRestaurants && isGagra && (
+          <RestaurantsGagraScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gal Administrative Buildings */}
+        {isAdminBuildings && isGal && (
+          <AdministrativeBuildingsGalScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gal Churches */}
+        {isChurches && isGal && (
+          <ChurchesGalScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gal Beauty Salons */}
+        {isBeautySalons && isGal && (
+          <BeautySalonsGalScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gal Pharmacy */}
+        {isPharmacy && isGal && (
+          <PharmacyGalScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gal Wineries */}
+        {isWineries && isGal && (
+          <WineriesGalScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gal Gas Stations */}
+        {isGasStations && isGal && (
+          <GasStationsGalScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gal Cultural Attractions */}
+        {isCulturalAttractions && isGal && (
+          <CulturalAttractionsGalScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gal Shops and Markets */}
+        {isShopsAndMarkets && isGal && (
+          <ShopsAndMarketsGalScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gal Car Washes */}
+        {isCarWashes && isGal && (
+          <CarWashesGalScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gal Hotels */}
+        {isHotels && isGal && (
+          <HotelsGalScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gal Parking Lots */}
+        {isParkingLots && isGal && (
+          <ParkingLotsGalScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gal Beaches */}
+        {isBeaches && isGal && (
+          <BeachesGalScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gal Clothing Repair */}
+        {isClothingRepair && isGal && (
+          <ClothingRepairGalScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gal Restaurants */}
+        {isRestaurants && isGal && (
+          <RestaurantsGalScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gudauta Administrative Buildings */}
+        {isAdminBuildings && isGudauta && (
+          <AdministrativeBuildingsGudautaScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gudauta Churches */}
+        {isChurches && isGudauta && (
+          <ChurchesGudautaScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gudauta Beauty Salons */}
+        {isBeautySalons && isGudauta && (
+          <BeautySalonsGudautaScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gudauta Pharmacy */}
+        {isPharmacy && isGudauta && (
+          <PharmacyGudautaScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gudauta Wineries */}
+        {isWineries && isGudauta && (
+          <WineriesGudautaScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gudauta Gas Stations */}
+        {isGasStations && isGudauta && (
+          <GasStationsGudautaScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gudauta Cultural Attractions */}
+        {isCulturalAttractions && isGudauta && (
+          <CulturalAttractionsGudautaScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gudauta Shops and Markets */}
+        {isShopsAndMarkets && isGudauta && (
+          <ShopsAndMarketsGudautaScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gudauta Car Washes */}
+        {isCarWashes && isGudauta && (
+          <CarWashesGudautaScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gudauta Hotels */}
+        {isHotels && isGudauta && (
+          <HotelsGudautaScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gudauta Parking Lots */}
+        {isParkingLots && isGudauta && (
+          <ParkingLotsGudautaScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gudauta Beaches */}
+        {isBeaches && isGudauta && (
+          <BeachesGudautaScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gudauta Clothing Repair */}
+        {isClothingRepair && isGudauta && (
+          <ClothingRepairGudautaScreen visible={true} onClose={closeModal} />
+        )}
+        
+        {/* Gudauta Restaurants */}
+        {isRestaurants && isGudauta && (
+          <RestaurantsGudautaScreen visible={true} onClose={closeModal} />
+        )}
       </View>
     </Modal>
   );
@@ -401,7 +541,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     padding: 20,
-    paddingBottom: 40,
+    paddingBottom: 60,
   },
   cityCard: {
     width: '100%',
@@ -475,4 +615,3 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
 });
-

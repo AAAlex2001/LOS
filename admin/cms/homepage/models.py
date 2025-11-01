@@ -60,7 +60,8 @@ class HomeSliderItem(TimestampedModel):
     homepage = models.ForeignKey(HomePage, on_delete=models.CASCADE, related_name="slider_items")
     media_type = models.CharField(max_length=10, choices=MediaType.choices, default=MediaType.IMAGE)
     image = models.ImageField(upload_to="homepage/slider/images/%Y/%m/%d", blank=True, null=True)
-    video = models.FileField(upload_to="homepage/slider/videos/%Y/%m/%d", blank=True, null=True)
+    video = models.FileField(upload_to="homepage/slider/videos/%Y/%m/%d", blank=True, null=True, help_text="Видео для сайта")
+    mobile_video = models.FileField(upload_to="homepage/slider/mobile_videos/%Y/%m/%d", blank=True, null=True, help_text="Видео для мобильного приложения")
     alt = models.CharField(max_length=255, blank=True)
     order = models.PositiveIntegerField(default=0)
 

@@ -17,3 +17,4 @@ class AccessibilityAndTermsPageAdmin(admin.ModelAdmin):
 
 
 
+

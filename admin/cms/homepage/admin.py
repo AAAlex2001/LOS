@@ -15,7 +15,7 @@ from .models import (
 class SliderInline(admin.TabularInline):
     model = HomeSliderItem
     extra = 1
-    fields = ("media_type", "image", "video", "alt", "order", "preview")
+    fields = ("media_type", "image", "video", "mobile_video", "alt", "order", "preview")
     readonly_fields = ("preview",)
 
     def preview(self, obj):
