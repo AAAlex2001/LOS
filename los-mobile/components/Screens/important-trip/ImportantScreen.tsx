@@ -129,17 +129,23 @@ export default function ImportantScreen({ visible, onClose }: { visible: boolean
     );
   };
 
-  const renderBehavior = (s: ImportantSection) => (
-    <View style={styles.sectionWrap}>
-      <View style={styles.h2Wrap}><Text style={styles.h2}>{s.title}</Text></View>
-      {s.image_url ? (
-        <Image source={{ uri: toImageUrl(s.image_url) }} style={styles.heroImage} contentFit="cover" />
-      ) : null}
-      {!!s.content && (
-        <View style={styles.paragraphWrap}><Text style={styles.paragraph}>{s.content}</Text></View>
-      )}
-    </View>
-  );
+  const renderBehavior = (s: ImportantSection) => {
+    const allRules = (s.rules || []).sort((a, b) => a.order - b.order);
+    return (
+      <View style={styles.sectionWrap}>
+        <View style={styles.h2Wrap}><Text style={styles.h2}>{s.title}</Text></View>
+        {s.image_url ? (
+          <Image source={{ uri: toImageUrl(s.image_url) }} style={styles.heroImage} contentFit="cover" />
+        ) : null}
+        {allRules.map((r) => (
+          <View key={r.id} style={styles.ruleBlock}>
+            <Text style={styles.ruleTitle}>{r.title}</Text>
+            <Text style={styles.ruleText}>{r.description}</Text>
+          </View>
+        ))}
+      </View>
+    );
+  };
 
   const renderTaxiEtiquette = (s: ImportantSection) => {
     const passengerRules = (s.rules || []).filter((r) => r.rule_type === 'passenger').sort((a, b) => a.order - b.order);
@@ -163,7 +169,7 @@ export default function ImportantScreen({ visible, onClose }: { visible: boolean
         )}
         {passengerRules.map((r, idx) => (
           <View key={r.id} style={styles.ruleBlock}>
-            <Text style={styles.ruleTitle}>{idx + 1}. {r.title}</Text>
+            <Text style={styles.ruleTitleNoUppercase}>{idx + 1}. {r.title}</Text>
             <Text style={styles.ruleText}>{r.description}</Text>
           </View>
         ))}
@@ -191,7 +197,7 @@ export default function ImportantScreen({ visible, onClose }: { visible: boolean
         )}
         {driverRules.map((r, idx) => (
           <View key={r.id} style={styles.ruleBlock}>
-            <Text style={styles.ruleTitle}>{idx + 1}. {r.title}</Text>
+            <Text style={styles.ruleTitleNoUppercase}>{idx + 1}. {r.title}</Text>
             <Text style={styles.ruleText}>{r.description}</Text>
           </View>
         ))}
@@ -284,7 +290,7 @@ const styles = StyleSheet.create({
   headerTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 16, color: '#000', textTransform: 'uppercase', letterSpacing: 0.2, marginTop: 24 },
 
   scroll: { flex: 1 },
-  scrollContent: { paddingHorizontal: 20, paddingBottom: 40 },
+  scrollContent: { paddingHorizontal: 20, paddingBottom: 30 },
   loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 100 },
   loadingText: { fontSize: 18, color: '#666' },
 
@@ -297,10 +303,10 @@ const styles = StyleSheet.create({
     shadowRadius: 11,
     elevation: 2,
   },
-  tabsStickyWrap: {  marginHorizontal: -20 },
+  tabsStickyWrap: { marginHorizontal: -20 },
   tabsContent: { paddingLeft: 20, paddingRight: 20, alignItems: 'center', gap: 10 },
-  tab: { height: 30, justifyContent: 'center', alignItems: 'center', width: '100%', maxWidth: 90 },
-  tabText: { fontFamily: 'Roboto', fontWeight: '700', fontSize: 12, lineHeight: 14, color: '#000', textAlign: 'center' },
+  tab: { paddingVertical: 0, paddingHorizontal: 0, justifyContent: 'center', alignItems: 'center' },
+  tabText: { fontFamily: 'Inter', fontWeight: '700', fontSize: 12, lineHeight: 15, color: '#000', textAlign: 'center' },
 
   sectionWrap: { width: '100%', alignSelf: 'flex-start', marginBottom: 40, justifyContent: 'flex-start' },
 
@@ -310,18 +316,21 @@ const styles = StyleSheet.create({
   pharmacyText: { width: '100%', fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'left', color: '#000' },
   centerNoteWrap: { width: '100%', marginBottom: 20 },
   centerNote: { fontFamily: 'Inter', fontWeight: '500', fontSize: 14, lineHeight: 17, color: '#000', textAlign: 'center' },
+  centerTextSmallWrap: { padding: 10, alignItems: 'center' },
+  centerTextSmall: { width: '100%', fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: '#1129BD' },
   listWrap: {  paddingVertical: 10 },
   listItem: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, color: '#000' },
   paragraphWrap: { marginTop: 8, marginBottom: 8 },
   paragraph: { fontFamily: 'Inter', fontWeight: '300', fontSize: 14, lineHeight: 17, color: '#000' },
-  heroImage: { width: '100%', height: 233, borderRadius: 15, marginTop: 8, marginBottom: 8 },
+  heroImage: { width: '100%', height: 233, borderRadius: 15, marginTop: 8, marginBottom: 20 },
 
-  bannerContainer: { width: '100%', minHeight: 83, borderRadius: 15, overflow: 'hidden', marginTop: 8, marginBottom: 12 },
+  bannerContainer: { width: '100%', minHeight: 83, borderRadius: 15, overflow: 'hidden', marginTop: 8, marginBottom: 20 },
   banner: { width: '100%', minHeight: 83, justifyContent: 'center', alignItems: 'center' },
   bannerImage: { borderRadius: 15 },
   bannerText: { fontFamily: 'Inter', fontWeight: '600', fontSize: 14, lineHeight: 17, textAlign: 'center', color: 'rgba(0, 0, 0, 0.85)', padding: 15 },
   bannerSubtext: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: 'rgba(0, 0, 0, 0.85)', padding: 15 },
   ruleBlock: { width: '100%', gap: 8, marginBottom: 10 },
-  ruleTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 14, lineHeight: 17, color: '#1129BD', textAlign: 'left' },
+  ruleTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 14, lineHeight: 17, color: '#1129BD', textAlign: 'left', textTransform: 'uppercase' },
+  ruleTitleNoUppercase: { fontFamily: 'Inter', fontWeight: '700', fontSize: 14, lineHeight: 17, color: '#1129BD', textAlign: 'left' },
   ruleText: { fontFamily: 'Inter', fontWeight: '300', fontSize: 14, lineHeight: 17, color: '#000', textAlign: 'left' },
 });
