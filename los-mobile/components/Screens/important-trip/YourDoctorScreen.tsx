@@ -195,6 +195,7 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
                   onLayout={e => { positionsRef.current['hospitals'] = e.nativeEvent.layout.y; }}
                   style={{ width: '100%' }}
                 >
+                  <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>БОЛЬНИЦЫ</Text></View>
                   {(data?.hospitals || []).slice().sort((a,b)=>a.order-b.order).map(renderCard)}
                 </View>
               )}
@@ -206,6 +207,7 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
                   onLayout={e => { positionsRef.current['private_clinics'] = e.nativeEvent.layout.y; }}
                   style={{ width: '100%' }}
                 >
+                  <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>ЧАСТНЫЕ КЛИНИКИ</Text></View>
                   {(data?.private_clinics || []).slice().sort((a,b)=>a.order-b.order).map(renderCard)}
                 </View>
               )}
@@ -217,6 +219,7 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
                   onLayout={e => { positionsRef.current['dentistries'] = e.nativeEvent.layout.y; }}
                   style={{ width: '100%' }}
                 >
+                  <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>СТОМАТОЛОГИИ</Text></View>
                   {(data?.dentistries || []).slice().sort((a,b)=>a.order-b.order).map(renderCard)}
                 </View>
               )}
@@ -228,6 +231,7 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
                   onLayout={e => { positionsRef.current['vet_clinics'] = e.nativeEvent.layout.y; }}
                   style={{ width: '100%' }}
                 >
+                  <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>ВЕТКЛИНИКИ</Text></View>
                   {(data?.vet_clinics || []).slice().sort((a,b)=>a.order-b.order).map(renderCard)}
                 </View>
               )}
@@ -237,16 +241,17 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
                 <View
                   ref={anchors['doctors']}
                   onLayout={e => { positionsRef.current['doctors'] = e.nativeEvent.layout.y; }}
-                  style={styles.doctorsWrap}
+                  style={{ width: '100%', marginTop: 20 }}
                 >
-                  {(data?.doctors_groups || []).slice().sort((a,b)=>a.order-b.order).map(group => (
-                    <View key={group.id} style={styles.hospitalBlock}>
-                      <View style={styles.hospitalHeader}><Text style={styles.hospitalTitle}>{group.hospital_name}</Text></View>
-                      <Text style={styles.hospitalDoctors}>
-                        {group.doctors.join(' ')}
-                      </Text>
-                    </View>
-                  ))}
+                  <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>ВРАЧИ</Text></View>
+                  <View style={styles.doctorsWrap}>
+                    {(data?.doctors_groups || []).slice().sort((a,b)=>a.order-b.order).map((group, idx) => (
+                      <View key={group.id} style={styles.hospitalBlock}>
+                        <View style={styles.hospitalHeader}><Text style={styles.hospitalTitle}> {group.hospital_name}</Text></View>
+                        <Text style={styles.hospitalDoctors}>{group.doctors.map((d,i)=>`${i+1}. ${d}`).join('\n')}</Text>
+                      </View>
+                    ))}
+                  </View>
                 </View>
               )}
             </>
@@ -287,11 +292,15 @@ const styles = StyleSheet.create({
   infoValue: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, color: '#1129BD' },
   underline: { textDecorationLine: 'underline' },
 
+  // Section headers
+  sectionHeader: { width: '100%', marginBottom: 20, marginTop: 10, alignItems: 'center' },
+  sectionTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 14, lineHeight: 17, color: '#1129BD', textAlign: 'center' },
+
   // Doctors block
-  doctorsWrap: { width: '100%', alignItems: 'flex-start', gap: 40, marginTop: 10 },
-  hospitalBlock: { width: '100%', gap: 8 },
-  hospitalHeader: { width: '100%', padding: 10, alignItems: 'center', justifyContent: 'center' },
-  hospitalTitle: { width: 330, fontFamily: 'Inter', fontWeight: '700', fontSize: 14, lineHeight: 17, color: '#1129BD' },
+  doctorsWrap: { width: '100%', alignItems: 'flex-start', gap: 40 },
+  hospitalBlock: { width: '100%', gap: 8, flexDirection: 'column' },
+  hospitalHeader: { width: '100%', alignItems: 'flex-start', justifyContent: 'flex-start', marginBottom: 8},
+  hospitalTitle: { width: '100%', fontFamily: 'Inter', fontWeight: '700', fontSize: 14, lineHeight: 17, color: '#1129BD' },
   hospitalDoctors: { width: '100%', fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, color: '#000' },
 
   heroImage: { width: '100%', height: 226, borderRadius: 15 },
