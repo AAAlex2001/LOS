@@ -105,6 +105,36 @@ import BeachesPitsundaScreen from './pitsunda/BeachesPitsundaScreen';
 import ClothingRepairPitsundaScreen from './pitsunda/ClothingRepairPitsundaScreen';
 import RestaurantsPitsundaScreen from './pitsunda/RestaurantsPitsundaScreen';
 
+import AdministrativeBuildingsTkuarchalScreen from './tkuarchal/AdministrativeBuildingsTkuarchalScreen';
+import ChurchesTkuarchalScreen from './tkuarchal/ChurchesTkuarchalScreen';
+import BeautySalonsTkuarchalScreen from './tkuarchal/BeautySalonsTkuarchalScreen';
+import PharmacyTkuarchalScreen from './tkuarchal/PharmacyTkuarchalScreen';
+import WineriesTkuarchalScreen from './tkuarchal/WineriesTkuarchalScreen';
+import GasStationsTkuarchalScreen from './tkuarchal/GasStationsTkuarchalScreen';
+import CulturalAttractionsTkuarchalScreen from './tkuarchal/CulturalAttractionsTkuarchalScreen';
+import ShopsAndMarketsTkuarchalScreen from './tkuarchal/ShopsAndMarketsTkuarchalScreen';
+import CarWashesTkuarchalScreen from './tkuarchal/CarWashesTkuarchalScreen';
+import HotelsTkuarchalScreen from './tkuarchal/HotelsTkuarchalScreen';
+import ParkingLotsTkuarchalScreen from './tkuarchal/ParkingLotsTkuarchalScreen';
+import BeachesTkuarchalScreen from './tkuarchal/BeachesTkuarchalScreen';
+import ClothingRepairTkuarchalScreen from './tkuarchal/ClothingRepairTkuarchalScreen';
+import RestaurantsTkuarchalScreen from './tkuarchal/RestaurantsTkuarchalScreen';
+
+import AdministrativeBuildingsOchamchiraScreen from './ochamchira/AdministrativeBuildingsOchamchiraScreen';
+import ChurchesOchamchiraScreen from './ochamchira/ChurchesOchamchiraScreen';
+import BeautySalonsOchamchiraScreen from './ochamchira/BeautySalonsOchamchiraScreen';
+import PharmacyOchamchiraScreen from './ochamchira/PharmacyOchamchiraScreen';
+import WineriesOchamchiraScreen from './ochamchira/WineriesOchamchiraScreen';
+import GasStationsOchamchiraScreen from './ochamchira/GasStationsOchamchiraScreen';
+import CulturalAttractionsOchamchiraScreen from './ochamchira/CulturalAttractionsOchamchiraScreen';
+import ShopsAndMarketsOchamchiraScreen from './ochamchira/ShopsAndMarketsOchamchiraScreen';
+import CarWashesOchamchiraScreen from './ochamchira/CarWashesOchamchiraScreen';
+import HotelsOchamchiraScreen from './ochamchira/HotelsOchamchiraScreen';
+import ParkingLotsOchamchiraScreen from './ochamchira/ParkingLotsOchamchiraScreen';
+import BeachesOchamchiraScreen from './ochamchira/BeachesOchamchiraScreen';
+import ClothingRepairOchamchiraScreen from './ochamchira/ClothingRepairOchamchiraScreen';
+import RestaurantsOchamchiraScreen from './ochamchira/RestaurantsOchamchiraScreen';
+
 type ScreenComp = React.ComponentType<{ visible: boolean; onClose: () => void }>;
 
 export const screensRegistry: Record<string, Record<string, ScreenComp>> = {
@@ -220,6 +250,38 @@ export const screensRegistry: Record<string, Record<string, ScreenComp>> = {
     'beaches': BeachesPitsundaScreen,
     'clothing-repair': ClothingRepairPitsundaScreen,
     'restaurants': RestaurantsPitsundaScreen,
+  },
+  'ткуарчал': {
+    'administrative-buildings': AdministrativeBuildingsTkuarchalScreen,
+    'churches': ChurchesTkuarchalScreen,
+    'beauty-salons': BeautySalonsTkuarchalScreen,
+    'pharmacy': PharmacyTkuarchalScreen,
+    'wineries': WineriesTkuarchalScreen,
+    'gas-stations': GasStationsTkuarchalScreen,
+    'cultural-attractions': CulturalAttractionsTkuarchalScreen,
+    'shops-and-markets': ShopsAndMarketsTkuarchalScreen,
+    'car-washes': CarWashesTkuarchalScreen,
+    'hotels': HotelsTkuarchalScreen,
+    'parking-lots': ParkingLotsTkuarchalScreen,
+    'beaches': BeachesTkuarchalScreen,
+    'clothing-repair': ClothingRepairTkuarchalScreen,
+    'restaurants': RestaurantsTkuarchalScreen,
+  },
+  'очамчыра': {
+    'administrative-buildings': AdministrativeBuildingsOchamchiraScreen,
+    'churches': ChurchesOchamchiraScreen,
+    'beauty-salons': BeautySalonsOchamchiraScreen,
+    'pharmacy': PharmacyOchamchiraScreen,
+    'wineries': WineriesOchamchiraScreen,
+    'gas-stations': GasStationsOchamchiraScreen,
+    'cultural-attractions': CulturalAttractionsOchamchiraScreen,
+    'shops-and-markets': ShopsAndMarketsOchamchiraScreen,
+    'car-washes': CarWashesOchamchiraScreen,
+    'hotels': HotelsOchamchiraScreen,
+    'parking-lots': ParkingLotsOchamchiraScreen,
+    'beaches': BeachesOchamchiraScreen,
+    'clothing-repair': ClothingRepairOchamchiraScreen,
+    'restaurants': RestaurantsOchamchiraScreen,
   },
 };
 
