@@ -6,6 +6,11 @@ class MusicPage(TimestampedModel):
     """
     Страница музыки
     """
+    # Основной контент
+    intro_text = models.TextField("Текст для музыки", blank=True, help_text="Текст под описанием музыки")
+    intro_bg_image = models.ImageField("Фоновая картинка для текста", upload_to="music/intro/", blank=True, help_text="Фоновая картинка для текста")
+    main_image = models.ImageField("Основная картинка", upload_to="music/main/", blank=True, help_text="Основная картинка после текста")
+
     # SEO
     seo_title = models.CharField(max_length=60, blank=True)
     seo_description = models.CharField(max_length=160, blank=True)

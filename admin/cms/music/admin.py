@@ -17,7 +17,7 @@ class MusicTrackInline(admin.TabularInline):
 class MusicPageAdmin(admin.ModelAdmin):
     list_display = ("id", "updated_at")
     inlines = [MusicTrackInline]
-    readonly_fields = ("seo_preview", "og_image_preview", "twitter_image_preview")
+    readonly_fields = ("seo_preview", "intro_bg_image_preview", "main_image_preview", "og_image_preview", "twitter_image_preview")
 
     def has_add_permission(self, request):
         if MusicPage.objects.exists():
@@ -25,6 +25,13 @@ class MusicPageAdmin(admin.ModelAdmin):
         return super().has_add_permission(request)
     
     fieldsets = (
+        ("Основной контент", {
+            "fields": (
+                "intro_text",
+                "intro_bg_image", "intro_bg_image_preview",
+                "main_image", "main_image_preview"
+            )
+        }),
         ("SEO", {
             "fields": (
                 "seo_title", "seo_description", "seo_keywords", "canonical_url",
@@ -58,4 +65,16 @@ class MusicPageAdmin(admin.ModelAdmin):
             return format_html('<img src="{}" style="height:60px;" />', obj.twitter_image.url)
         return "—"
     twitter_image_preview.short_description = "Превью Twitter"
+
+    def intro_bg_image_preview(self, obj):
+        if obj.intro_bg_image:
+            return format_html('<img src="{}" style="height:60px;" />', obj.intro_bg_image.url)
+        return "—"
+    intro_bg_image_preview.short_description = "Превью фона"
+
+    def main_image_preview(self, obj):
+        if obj.main_image:
+            return format_html('<img src="{}" style="height:60px;" />', obj.main_image.url)
+        return "—"
+    main_image_preview.short_description = "Превью главной картинки"
 

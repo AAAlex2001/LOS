@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator, Dimensions } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator, Dimensions, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
+import { Image } from 'expo-image';
 import config from '@/config';
 
 const { width } = Dimensions.get('window');
@@ -18,6 +19,9 @@ interface Track {
 }
 
 interface MusicPageData {
+  intro_text_field: string;
+  intro_bg_image_url: string;
+  main_image_url: string;
   tracks: Track[];
 }
 
@@ -42,6 +46,12 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
 
   const toAudioUrl = (url: string) => {
     if (!url) return '';
+    if (url.startsWith('http://') || url.startsWith('https://')) return url;
+    return `${API_BASE}/media/${url}`;
+  };
+
+  const toImageUrl = (url: string) => {
+    if (!url) return undefined;
     if (url.startsWith('http://') || url.startsWith('https://')) return url;
     return `${API_BASE}/media/${url}`;
   };
@@ -208,12 +218,29 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
               <Text style={styles.loadingText}>Музыка пока не добавлена</Text>
             </View>
           ) : (
-            tracks.map((track) => {
-              const isPlaying = playingTrackId === track.id;
-              return (
-                <View key={track.id} style={[styles.trackCard, isPlaying && styles.trackCardExpanded]}>
-                  {isPlaying ? (
-                    <>
+            <>
+              {pageData?.intro_text_field && (
+                <View style={styles.introContainer}>
+                  <ImageBackground 
+                    source={{ uri: toImageUrl(pageData?.intro_bg_image_url) }}
+                    style={styles.introBgImage}
+                    resizeMode="cover"
+                  >
+                    <Text style={styles.introText}>{pageData.intro_text_field}</Text>
+                  </ImageBackground>
+                </View>
+              )}
+              {pageData?.main_image_url && (
+                <View style={styles.mainImageContainer}>
+                  <Image source={{ uri: toImageUrl(pageData.main_image_url) }} style={styles.mainImage} contentFit="cover" />
+                </View>
+              )}
+              {tracks.map((track) => {
+                const isPlaying = playingTrackId === track.id;
+                return (
+                  <View key={track.id} style={[styles.trackCard, isPlaying && styles.trackCardExpanded]}>
+                    {isPlaying ? (
+                      <>
                       <View style={styles.soundTimeline}>
                         <View style={styles.timeRow}>
                           <Text style={styles.timeText}>{formatTime(isDragging ? dragPositionMs : position)}</Text>
@@ -346,9 +373,10 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
                       </TouchableOpacity>
                     </>
                   )}
-                </View>
-              );
-            })
+                  </View>
+                );
+              })}
+            </>
           )}
         </ScrollView>
       </View>
@@ -384,5 +412,10 @@ const styles = StyleSheet.create({
   sliderProgress: { position: 'absolute', left: 0, top: 0, height: '100%', backgroundColor: '#1129BD', borderRadius: 8 },
   sliderThumb: { position: 'absolute', width: 16, height: 16, borderRadius: 8, backgroundColor: '#FFFFFF', top: -5 },
   infoRow: { width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  introContainer: { width: '100%', marginBottom: 20 },
+  introBgImage: { width: '100%', minHeight: 83, borderRadius: 15, overflow: 'hidden', justifyContent: 'center', alignItems: 'center' },
+  introText: { fontFamily: 'Inter', fontWeight: '600', fontSize: 14, lineHeight: 14, color: '#000000', textAlign: 'center', padding: 16 },
+  mainImageContainer: { width: '100%', marginBottom: 20 },
+  mainImage: { width: '100%', height: 226, borderRadius: 15 },
 });
 

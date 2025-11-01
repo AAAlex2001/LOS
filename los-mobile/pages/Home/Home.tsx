@@ -67,8 +67,8 @@ interface HomeData {
 const toMedia = (url: string) => `${API_BASE}/media/${url}`;
 
 const getIconForTab = (label: string) => {
-  if (label === 'Об Абхазии' || label === 'Абхазия') return <MaterialCommunityIcons name="party-popper" size={40} color="#fff" />;
-  if (label === 'Развлечения' || label.includes('Развлечения') || label.includes('заняться')) return <MaterialCommunityIcons name="star" size={40} color="#fff" />;
+  if (label === 'Об Абхазии' || label === 'Абхазия') return <MaterialCommunityIcons name="map" size={40} color="#fff" />;
+  if (label === 'Развлечения' || label.includes('Развлечения') || label.includes('заняться')) return <MaterialCommunityIcons name="party-popper" size={40} color="#fff" />;
   if (label.includes('Запланируйте') || label.includes('поездку')) return <MaterialIcons name="event-available" size={40} color="#fff" />;
   if (label.includes('Необходимо') || label.includes('поездке')) return <Entypo name="suitcase" size={40} color="#fff" />;
   return <FontAwesome5 name="city" size={40} color="#fff" />;

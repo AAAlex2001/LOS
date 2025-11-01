@@ -17,13 +17,27 @@ class MusicTrackSerializer(serializers.ModelSerializer):
 
 class MusicPageSerializer(serializers.ModelSerializer):
     tracks = MusicTrackSerializer(many=True, read_only=True)
+    intro_text_field = serializers.CharField(source="intro_text", read_only=True)
+    intro_bg_image_url = serializers.SerializerMethodField()
+    main_image_url = serializers.SerializerMethodField()
 
     class Meta:
         model = MusicPage
         fields = [
-            "id", "seo_title", "seo_description", "seo_keywords", "canonical_url",
+            "id", "intro_text_field", "intro_bg_image_url", "main_image_url",
+            "seo_title", "seo_description", "seo_keywords", "canonical_url",
             "og_title", "og_description", "og_image", "twitter_title",
             "twitter_description", "twitter_image", "robots_index", "robots_follow",
             "tracks"
         ]
+
+    def get_intro_bg_image_url(self, obj: MusicPage) -> str:
+        if not obj.intro_bg_image:
+            return ""
+        return obj.intro_bg_image.url.replace('/media/', '')
+
+    def get_main_image_url(self, obj: MusicPage) -> str:
+        if not obj.main_image:
+            return ""
+        return obj.main_image.url.replace('/media/', '')
 

@@ -138,7 +138,8 @@ const styles = StyleSheet.create({
     marginTop: 32,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    paddingLeft: 20,
   },
   item: {
     width: 110,
