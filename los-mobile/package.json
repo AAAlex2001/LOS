@@ -48,6 +48,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@babel/plugin-transform-optional-chaining": "^7.25.9",
+    "@babel/plugin-proposal-optional-chaining": "npm:@babel/plugin-transform-optional-chaining@^7.25.9",
     "@expo/metro-config": "~54.0.2",
     "@types/react": "~19.1.10",
     "eslint": "^9.25.0",
