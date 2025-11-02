@@ -129,7 +129,8 @@ const HomePage = () => {
     })) || [];
 
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const slideIndex = Math.round(event.nativeEvent.contentOffset.x / screenWidth);
+    const pageWidth = screenWidth + 10; // slide width + gap
+    const slideIndex = Math.round(event.nativeEvent.contentOffset.x / pageWidth);
     if (slideIndex !== currentSlide) {
       setCurrentSlide(slideIndex);
     }
@@ -185,7 +186,7 @@ const HomePage = () => {
 
           {/* Slider */}
           <View style={styles.sliderContainer}>
-            <FlatList
+          <FlatList
               ref={flatListRef}
               data={sliderItems}
               renderItem={renderSliderItem}
@@ -194,7 +195,8 @@ const HomePage = () => {
               showsHorizontalScrollIndicator={false}
               onScroll={onScroll}
               scrollEventThrottle={16}
-              snapToInterval={screenWidth}
+            ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+            snapToInterval={screenWidth + 10}
               decelerationRate="fast"
             />
           </View>
@@ -316,7 +318,10 @@ const styles = StyleSheet.create({
   },
   slide: {
     width: screenWidth,
-    height: 539,
+    height: 540,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    overflow: 'hidden',
   },
   slideImage: {
     width: '100%',
@@ -339,7 +344,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1129BD',
   },
   tabsContainer: {
-    marginTop: 30,
+    marginTop: 15,
     paddingHorizontal: 20,
   },
   tabsContent: {
