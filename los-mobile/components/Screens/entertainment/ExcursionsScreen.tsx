@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   headerTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 16, color: '#000', textTransform: 'uppercase', letterSpacing: 0.2, marginTop: 24, textAlign: 'center' },
   scrollContent: { padding: 20, paddingBottom: 40, gap: 20 },
   card: { flexDirection: 'column', alignItems: 'center', padding: 20, gap: 20, minHeight: 180, backgroundColor: 'rgba(17, 41, 189, 0.1)', borderWidth: 1, borderColor: '#D5DAEF', borderRadius: 15 },
-  cardImg: { width: '100%', maxWidth: 240, aspectRatio: 240/145 },
+  cardImg: { width: '100%', height: 178, borderRadius: 15 },
   cardBody: { width: '100%', flexDirection: 'column', alignItems: 'center', gap: 10 },
   cardContacts: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: '#1129BD' },
   link: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: '#1129BD', textDecorationLine: 'underline' },
