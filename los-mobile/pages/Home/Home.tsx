@@ -55,12 +55,28 @@ const getIconForTab = (label: string) => {
   return <FontAwesome5 name="city" size={40} color="#fff" />;
 };
 
-const SliderVideo = ({ src }: { src: string }) => {
+const SliderVideo = ({ src, active, resumeToken }: { src: string; active: boolean; resumeToken: number }) => {
   const player = useVideoPlayer(encodeURI(String(src)), (p) => {
     p.loop = true;
     p.muted = true;
-    p.play();
   });
+  useEffect(() => {
+    try {
+      if (active) {
+        player.play();
+      } else {
+        player.pause();
+      }
+    } catch {}
+  }, [active, player]);
+  useEffect(() => {
+    // attempt to resume when overlay closes
+    try {
+      if (active) {
+        player.play();
+      }
+    } catch {}
+  }, [resumeToken]);
   return (
     <View style={styles.slideImage} pointerEvents="none">
       <VideoView
@@ -116,6 +132,16 @@ const HomePage = () => {
   const [importantTripVisible, setImportantTripVisible] = useState(false);
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const flatListRef = useRef<FlatList<SliderItem>>(null);
+  const isOverlayOpen = aboutVisible || entertainmentVisible || planTripVisible || importantTripVisible || sidebarVisible;
+  const [resumeToken, setResumeToken] = useState(0);
+
+  useEffect(() => {
+    // When overlays close, trigger lightweight resume for visible video
+    if (!isOverlayOpen) {
+      setResumeToken((t) => t + 1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [aboutVisible, entertainmentVisible, planTripVisible, importantTripVisible, sidebarVisible]);
 
   useEffect(() => {
     const load = async () => {
@@ -155,18 +181,17 @@ const HomePage = () => {
       }
     })) || [];
 
-  const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const pageWidth = screenWidth; // exact slide width, no gap
+  const onMomentumEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (isOverlayOpen) return; // freeze index while modal opened
+    const pageWidth = screenWidth;
     const slideIndex = Math.round(event.nativeEvent.contentOffset.x / pageWidth);
-    if (slideIndex !== currentSlide) {
-      setCurrentSlide(slideIndex);
-    }
+    if (slideIndex !== currentSlide) setCurrentSlide(slideIndex);
   };
 
-  const renderSliderItem = ({ item }: { item: SliderItem }) => (
+  const renderSliderItem = ({ item, index }: { item: SliderItem; index: number }) => (
     <View style={styles.slide}>
       {item.type === 'video' ? (
-        <SliderVideo src={String(item.src)} />
+        <SliderVideo src={String(item.src)} active={!isOverlayOpen && (currentSlide % (sliderItems.length || 1) === index)} resumeToken={resumeToken} />
       ) : (
         <View style={styles.slideImage} pointerEvents="none">
           <Image source={{ uri: item.src }} style={StyleSheet.absoluteFillObject} contentFit="cover" />
@@ -222,10 +247,16 @@ const HomePage = () => {
               horizontal
               pagingEnabled
               showsHorizontalScrollIndicator={false}
-              onScroll={onScroll}
-              scrollEventThrottle={16}
+              onMomentumScrollEnd={onMomentumEnd}
               snapToInterval={screenWidth}
               decelerationRate="fast"
+              initialNumToRender={1}
+              windowSize={2}
+              maxToRenderPerBatch={1}
+              removeClippedSubviews
+              getItemLayout={(_, index) => ({ length: screenWidth, offset: screenWidth * index, index })}
+              scrollEnabled={!isOverlayOpen}
+              extraData={resumeToken}
             />
             <TopCurve />
             <BottomCurve />
