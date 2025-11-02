@@ -4,11 +4,11 @@ import {
   Text,
   ScrollView,
   FlatList,
-  Dimensions,
   StyleSheet,
   TouchableOpacity,
   NativeSyntheticEvent,
   NativeScrollEvent,
+  useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
@@ -21,8 +21,6 @@ import ImportantTripScreen from '../../components/Screens/ImportantTripScreen';
 import SidebarScreen from '../../components/Screens/SidebarScreen';
 import { MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo } from '@expo/vector-icons';
 import config from '@/config';
-
-const { width: screenWidth } = Dimensions.get('window');
 const API_BASE = config.API_BASE;
 
 interface SliderItem {
@@ -81,27 +79,27 @@ const SliderVideo = ({ src, active }: { src: string; active: boolean }) => {
   );
 };
 
-const TopCurve: React.FC = () => (
+const TopCurve: React.FC<{ width: number }> = ({ width }) => (
   <Svg
     pointerEvents="none"
-    width={screenWidth}
+    width={width}
     height={80}
-    viewBox={`0 0 ${screenWidth} 80`}
+    viewBox={`0 0 ${width} 80`}
     style={styles.topCurve}
   >
-    <Path d={`M0,0 H${screenWidth} V40 Q ${screenWidth / 2},80 0,40 Z`} fill="#FFFFFF" />
+    <Path d={`M0,0 H${width} V40 Q ${width / 2},80 0,40 Z`} fill="#FFFFFF" />
   </Svg>
 );
 
-const BottomCurve: React.FC = () => (
+const BottomCurve: React.FC<{ width: number }> = ({ width }) => (
   <Svg
     pointerEvents="none"
-    width={screenWidth}
+    width={width}
     height={110}
-    viewBox={`0 0 ${screenWidth} 50`}
+    viewBox={`0 0 ${width} 110`}
     style={styles.bottomCurve}
   >
-    <Path d={`M0,110 H${screenWidth} V60 Q ${screenWidth / 2},0 0,60 Z`} fill="#FFFFFF" />
+    <Path d={`M0,110 H${width} V60 Q ${width / 2},0 0,60 Z`} fill="#FFFFFF" />
   </Svg>
 );
 
@@ -125,6 +123,9 @@ const HomePage = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const flatListRef = useRef<FlatList<SliderItem>>(null);
   const isOverlayOpen = aboutVisible || entertainmentVisible || planTripVisible || importantTripVisible || sidebarVisible;
+  const { width: windowWidth } = useWindowDimensions();
+  const [sliderWidth, setSliderWidth] = useState<number>(0);
+  const effectiveWidth = sliderWidth || windowWidth;
 
   useEffect(() => {
     const load = async () => {
@@ -166,13 +167,13 @@ const HomePage = () => {
 
   const onMomentumEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (isOverlayOpen) return; // freeze index while modal opened
-    const pageWidth = screenWidth;
+    const pageWidth = effectiveWidth;
     const slideIndex = Math.round(event.nativeEvent.contentOffset.x / pageWidth);
     if (slideIndex !== currentSlide) setCurrentSlide(slideIndex);
   };
 
   const renderSliderItem = ({ item, index }: { item: SliderItem; index: number }) => (
-    <View style={styles.slide}>
+    <View style={[styles.slide, { width: effectiveWidth }]}>
       {item.type === 'video' ? (
         <SliderVideo src={String(item.src)} active={!isOverlayOpen && (currentSlide % (sliderItems.length || 1) === index)} />
       ) : (
@@ -222,7 +223,7 @@ const HomePage = () => {
           </View>
 
           {/* Slider */}
-          <View style={styles.sliderContainer}>
+          <View style={styles.sliderContainer} onLayout={(e) => setSliderWidth(Math.round(e.nativeEvent.layout.width))}>
             <FlatList
               ref={flatListRef}
               data={sliderItems}
@@ -231,17 +232,17 @@ const HomePage = () => {
               pagingEnabled
               showsHorizontalScrollIndicator={false}
               onMomentumScrollEnd={onMomentumEnd}
-              snapToInterval={screenWidth}
+              snapToInterval={effectiveWidth}
               decelerationRate="fast"
               initialNumToRender={1}
               windowSize={2}
               maxToRenderPerBatch={1}
               removeClippedSubviews
-              getItemLayout={(_, index) => ({ length: screenWidth, offset: screenWidth * index, index })}
+              getItemLayout={(_, index) => ({ length: effectiveWidth, offset: effectiveWidth * index, index })}
               scrollEnabled={!isOverlayOpen}
             />
-            <TopCurve />
-            <BottomCurve />
+            <TopCurve width={effectiveWidth} />
+            <BottomCurve width={effectiveWidth} />
             {/* Dots overlayed on slider (rendered last to be on top) */}
             {sliderItems.length > 0 && (
               <View style={styles.dotsOnSlider} pointerEvents="none">
@@ -368,7 +369,6 @@ const styles = StyleSheet.create({
     marginTop: -45,
   },
   slide: {
-    width: screenWidth,
     height: 540,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 64,
+    bottom: 84,
     alignItems: 'center',
     zIndex: 60,
   },
@@ -417,12 +417,14 @@ const styles = StyleSheet.create({
   },
   tabsContainer: {
     marginTop: -12,
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
   },
   tabsContent: {
     flexDirection: 'row',
     gap: 5,
     alignItems: 'flex-start',
+    justifyContent: 'center',
+    flexGrow: 1,
   },
   tabComponent: {
     alignItems: 'center',
