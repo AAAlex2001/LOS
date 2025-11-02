@@ -129,7 +129,7 @@ const HomePage = () => {
     })) || [];
 
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const slideIndex = Math.round(event.nativeEvent.contentOffset.x / (screenWidth - 40));
+    const slideIndex = Math.round(event.nativeEvent.contentOffset.x / screenWidth);
     if (slideIndex !== currentSlide) {
       setCurrentSlide(slideIndex);
     }
@@ -194,7 +194,7 @@ const HomePage = () => {
               showsHorizontalScrollIndicator={false}
               onScroll={onScroll}
               scrollEventThrottle={16}
-              snapToInterval={screenWidth - 40}
+              snapToInterval={screenWidth}
               decelerationRate="fast"
             />
           </View>
@@ -303,12 +303,11 @@ const styles = StyleSheet.create({
     width: 78,
   },
   sliderContainer: {
-    width: screenWidth,
+    width: '100%',
     height: 539,
-    paddingHorizontal: 20,
   },
   slide: {
-    width: screenWidth - 40,
+    width: screenWidth,
     height: 539,
   },
   slideImage: {
