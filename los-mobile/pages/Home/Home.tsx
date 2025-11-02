@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { Image } from 'expo-image';
 import { VideoView, useVideoPlayer } from 'expo-video';
+import Svg, { Path } from 'react-native-svg';
 import AboutAbkhaziaModal from '../../components/Screens/AboutAbkhaziaModal';
 import EntertainmentScreen from '../../components/Screens/EntertainmentScreen';
 import PlanTripScreen from '../../components/Screens/PlanTripScreen';
@@ -69,6 +70,30 @@ const SliderVideo = ({ src }: { src: string }) => {
     />
   );
 };
+
+const TopCurve: React.FC = () => (
+  <Svg
+    pointerEvents="none"
+    width={screenWidth}
+    height={80}
+    viewBox={`0 0 ${screenWidth} 80`}
+    style={styles.topCurve}
+  >
+    <Path d={`M0,0 H${screenWidth} V40 Q ${screenWidth / 2},80 0,40 Z`} fill="#FFFFFF" />
+  </Svg>
+);
+
+const BottomCurve: React.FC = () => (
+  <Svg
+    pointerEvents="none"
+    width={screenWidth}
+    height={110}
+    viewBox={`0 0 ${screenWidth} 50`}
+    style={styles.bottomCurve}
+  >
+    <Path d={`M0,110 H${screenWidth} V60 Q ${screenWidth / 2},0 0,60 Z`} fill="#FFFFFF" />
+  </Svg>
+);
 
 const mascotImages = [
   require('../../assets/images/Guy11.png'),
@@ -129,7 +154,7 @@ const HomePage = () => {
     })) || [];
 
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const pageWidth = screenWidth + 10; // slide width + gap
+    const pageWidth = screenWidth; // exact slide width, no gap
     const slideIndex = Math.round(event.nativeEvent.contentOffset.x / pageWidth);
     if (slideIndex !== currentSlide) {
       setCurrentSlide(slideIndex);
@@ -186,7 +211,7 @@ const HomePage = () => {
 
           {/* Slider */}
           <View style={styles.sliderContainer}>
-          <FlatList
+            <FlatList
               ref={flatListRef}
               data={sliderItems}
               renderItem={renderSliderItem}
@@ -195,26 +220,30 @@ const HomePage = () => {
               showsHorizontalScrollIndicator={false}
               onScroll={onScroll}
               scrollEventThrottle={16}
-            ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-            snapToInterval={screenWidth + 10}
+              snapToInterval={screenWidth}
               decelerationRate="fast"
             />
+            <TopCurve />
+            <BottomCurve />
+            {/* Dots overlayed on slider (rendered last to be on top) */}
+            {sliderItems.length > 0 && (
+              <View style={styles.dotsOnSlider} pointerEvents="none">
+                <View style={styles.dots}>
+                  {sliderItems.map((_, idx) => (
+                    <View
+                      key={idx}
+                      style={[
+                        styles.dot,
+                        currentSlide % sliderItems.length === idx ? styles.activeDot : {}
+                      ]}
+                    />
+                  ))}
+                </View>
+              </View>
+            )}
           </View>
 
-          {/* Dots */}
-          {sliderItems.length > 0 && (
-            <View style={styles.dots}>
-              {sliderItems.map((_, idx) => (
-                <View
-                  key={idx}
-                  style={[
-                    styles.dot,
-                    currentSlide % sliderItems.length === idx ? styles.activeDot : {}
-                  ]}
-                />
-              ))}
-            </View>
-          )}
+          {/* Dots moved onto slider */}
         </View>
 
         {/* Tabs */}
@@ -282,7 +311,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    paddingTop: 30,
+    paddingTop: 40,
     paddingBottom: 20,
   },
   logoSliderContainer: {
@@ -290,6 +319,9 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
+    marginBottom: -14,
+    position: 'relative',
+    zIndex: 50,
   },
   headerRow: {
     width: '100%',
@@ -315,6 +347,8 @@ const styles = StyleSheet.create({
   sliderContainer: {
     width: '100%',
     height: 539,
+    position: 'relative',
+    marginTop: -45,
   },
   slide: {
     width: screenWidth,
@@ -327,12 +361,33 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  topCurve: {
+    position: 'absolute',
+    top: -1,
+    left: 0,
+    right: 0,
+  },
+  bottomCurve: {
+    position: 'absolute',
+    bottom: -1,
+    left: 0,
+    right: 0,
+  },
   dots: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     gap: 8,
-    marginTop: 10,
+    position: 'relative',
+    zIndex: 20,
+  },
+  dotsOnSlider: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 64,
+    alignItems: 'center',
+    zIndex: 60,
   },
   dot: {
     width: 6,
@@ -344,7 +399,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1129BD',
   },
   tabsContainer: {
-    marginTop: 15,
+    marginTop: -12,
     paddingHorizontal: 20,
   },
   tabsContent: {
