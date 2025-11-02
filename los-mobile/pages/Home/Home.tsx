@@ -7,10 +7,10 @@ import {
   Dimensions,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView,
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { VideoView, useVideoPlayer } from 'expo-video';
 import Svg, { Path } from 'react-native-svg';
@@ -62,12 +62,14 @@ const SliderVideo = ({ src }: { src: string }) => {
     p.play();
   });
   return (
-    <VideoView
-      player={player}
-      style={styles.slideImage}
-      contentFit="cover"
-      fullscreenOptions={{ enabled: false }}
-    />
+    <View style={styles.slideImage} pointerEvents="none">
+      <VideoView
+        player={player}
+        style={StyleSheet.absoluteFillObject}
+        contentFit="cover"
+        fullscreenOptions={{ enabled: false }}
+      />
+    </View>
   );
 };
 
@@ -166,14 +168,16 @@ const HomePage = () => {
       {item.type === 'video' ? (
         <SliderVideo src={String(item.src)} />
       ) : (
-        <Image source={{ uri: item.src }} style={styles.slideImage} contentFit="cover" />
+        <View style={styles.slideImage} pointerEvents="none">
+          <Image source={{ uri: item.src }} style={StyleSheet.absoluteFillObject} contentFit="cover" />
+        </View>
       )}
     </View>
   );
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.safeArea}>
+      <SafeAreaView style={styles.safeArea} edges={['bottom']}>
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>Загрузка...</Text>
         </View>
@@ -182,7 +186,7 @@ const HomePage = () => {
   }
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={styles.safeArea} edges={['bottom']}>
       <ScrollView 
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
@@ -311,7 +315,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    paddingTop: 40,
+    paddingTop: 20,
     paddingBottom: 20,
   },
   logoSliderContainer: {
