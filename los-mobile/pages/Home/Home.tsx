@@ -157,15 +157,6 @@ const HomePage = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      {/* Burger Menu */}
-      <TouchableOpacity style={styles.menuBar} onPress={() => setSidebarVisible(true)}>
-        <View style={styles.menuFrame}>
-          <View style={styles.menuLine} />
-          <View style={styles.menuLine} />
-          <View style={styles.menuLine} />
-        </View>
-      </TouchableOpacity>
-
       <ScrollView 
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
@@ -175,7 +166,16 @@ const HomePage = () => {
         <View style={styles.logoSliderContainer}>
           {/* Logo + Mascot */}
           <View style={styles.logoContainer}>
-            <Text style={styles.logoText}>Land of Soul</Text>
+            <View style={styles.headerRow}>
+              <Text style={styles.logoText}>Land of Soul</Text>
+              <TouchableOpacity style={styles.menuBar} onPress={() => setSidebarVisible(true)}>
+                <View style={styles.menuFrame}>
+                  <View style={styles.menuLine} />
+                  <View style={styles.menuLine} />
+                  <View style={styles.menuLine} />
+                </View>
+              </TouchableOpacity>
+            </View>
             <Image 
               source={mascotImages[currentSlide % mascotImages.length]} 
               style={styles.mascotImage}
@@ -259,10 +259,11 @@ const styles = StyleSheet.create({
   },
   menuBar: {
     position: 'absolute',
-    top: 20,
     left: 20,
-    zIndex: 100,
+    top: 0,
+    bottom: 0,
     padding: 8,
+    justifyContent: 'center'
   },
   menuFrame: {
     width: 24,
@@ -274,22 +275,28 @@ const styles = StyleSheet.create({
     height: 2,
     backgroundColor: '#000000',
     borderRadius: 1,
-    marginBottom: 4,
   },
   container: {
     flex: 1,
   },
   contentContainer: {
+    paddingTop: 30,
     paddingBottom: 20,
   },
   logoSliderContainer: {
     flexDirection: 'column',
-    gap: 0,
-    marginTop: 20,
   },
   logoContainer: {
     alignItems: 'center',
-    gap: 10,
+  },
+  headerRow: {
+    width: '100%',
+    minHeight: 44,
+    position: 'relative',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 0,
   },
   logoText: {
     fontFamily: 'Inter',
@@ -301,6 +308,7 @@ const styles = StyleSheet.create({
   mascotImage: {
     height: 78,
     width: 78,
+    marginTop: 0,
   },
   sliderContainer: {
     width: '100%',
