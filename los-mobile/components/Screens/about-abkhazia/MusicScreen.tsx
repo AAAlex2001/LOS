@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator, Dimensions, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import * as Audio from 'expo-audio';
+import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
 import { Image } from 'expo-image';
 import config from '@/config';
 
@@ -28,7 +28,9 @@ interface MusicPageData {
 export default function MusicScreen({ visible, onClose }: { visible: boolean; onClose: () => void }) {
   const [pageData, setPageData] = useState<MusicPageData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [sound, setSound] = useState<Audio.Sound | null>(null);
+  // Expo Audio player (managed lifecycle)
+  const player = useAudioPlayer(null, { updateInterval: 500 });
+  const status = useAudioPlayerStatus(player);
   const [playingTrackId, setPlayingTrackId] = useState<number | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [isLoadingTrack, setIsLoadingTrack] = useState(false);
@@ -36,6 +38,7 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
   const [duration, setDuration] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [isScrollEnabled, setIsScrollEnabled] = useState(true);
   const [dragPositionMs, setDragPositionMs] = useState(0);
   const [sliderWidth, setSliderWidth] = useState(0);
   const rafRef = useRef<number | null>(null);
@@ -61,11 +64,11 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
     
     const load = async () => {
       try {
-        // Set audio mode for playback
-        await Audio.setAudioModeAsync({
-          playsInSilentModeIOS: true,
-          staysActiveInBackground: false,
-          shouldDuckAndroid: true,
+        // Configure audio session
+        await setAudioModeAsync({
+          playsInSilentMode: true,
+          shouldPlayInBackground: false,
+          interruptionModeAndroid: 'duckOthers',
         });
 
         const res = await fetch(`${API_BASE}/api/music/page/content/`, { cache: 'no-store' });
@@ -81,59 +84,53 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
     load();
   }, [visible]);
 
-  // Cleanup sound on unmount or when modal closes
+  // Pause and release when modal closes
   useEffect(() => {
-    return () => {
+    if (!visible) {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
-      if (sound) {
-        sound.unloadAsync();
-      }
-    };
-  }, [sound]);
-
-  useEffect(() => {
-    if (!visible && sound) {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-      sound.unloadAsync();
-      setSound(null);
+      try {
+        player.pause();
+        player.replace(null);
+      } catch {}
       setPlayingTrackId(null);
       setIsDragging(false);
       setPosition(0);
       setDuration(0);
+      setIsPaused(false);
     }
-  }, [visible, sound]);
+  }, [visible, player]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      try {
+        player.pause();
+        player.replace(null);
+      } catch {}
+    };
+  }, [player]);
 
   // Update position while playing (pause updates during dragging)
   useEffect(() => {
-    if (playingTrackId && sound && !isDragging) {
-      intervalRef.current = setInterval(async () => {
-        try {
-          const status = await sound.getStatusAsync();
-          if (status.isLoaded) {
-            setPosition(status.positionMillis);
-            setDuration(status.durationMillis || 0);
-          }
-        } catch (error) {
-          console.error('Error getting status:', error);
-        }
-      }, 1000);
-    } else {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
+    // Derive position/duration from expo-audio status when not dragging
+    if (!isDragging) {
+      const posMs = Math.max(0, Math.round((status?.currentTime || 0) * 1000));
+      const durMs = Math.max(0, Math.round((status?.duration || 0) * 1000));
+      setPosition(posMs);
+      setDuration(durMs);
     }
+  }, [status, isDragging]);
 
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [playingTrackId, sound, isDragging]);
+  // Reset UI when track finishes
+  useEffect(() => {
+    if (status?.didJustFinish) {
+      setPlayingTrackId(null);
+      setIsPaused(false);
+      setPosition(0);
+    }
+  }, [status?.didJustFinish]);
 
   const formatTime = (millis: number) => {
     const totalSeconds = Math.floor(millis / 1000);
@@ -147,27 +144,20 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
 
     try {
       // Toggle pause/resume on the same track
-      if (sound && playingTrackId === track.id) {
-        const status = await sound.getStatusAsync();
-        if (status.isLoaded) {
-          if (status.isPlaying) {
-            await sound.pauseAsync();
-            setIsPaused(true);
-          } else {
-            await sound.playAsync();
-            setIsPaused(false);
-          }
+      if (playingTrackId === track.id && status?.isLoaded) {
+        if (status.playing) {
+          player.pause();
+          setIsPaused(true);
+        } else {
+          player.play();
+          setIsPaused(false);
         }
         return;
       }
 
       // Switching to a different track: stop previous and reset state immediately
-      if (sound) {
-        await sound.unloadAsync();
-      }
       
       // Reset all state immediately for UI responsiveness
-      setSound(null);
       setPlayingTrackId(null);
       setIsPaused(false);
       setPosition(0);
@@ -178,20 +168,11 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
       setIsLoadingTrack(true);
       const audioUrl = toAudioUrl(track.audio_url);
 
-      // Load and play new track
-      const { sound: newSound } = await Audio.Sound.createAsync(
-        { uri: audioUrl },
-        { shouldPlay: true }
-      );
-      setSound(newSound);
+      // Load and play new track with expo-audio
+      player.replace({ uri: audioUrl });
+      player.play();
       setPlayingTrackId(track.id);
       setIsPaused(false);
-      
-      // Get initial duration
-      const status = await newSound.getStatusAsync();
-      if (status.isLoaded) {
-        setDuration(status.durationMillis || 0);
-      }
     } catch (error) {
       console.error('Error playing track:', error);
     } finally {
@@ -215,7 +196,7 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
           <View style={{ width: 36 }} />
         </View>
 
-        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false} scrollEnabled={isScrollEnabled}>
           {loading ? (
             <View style={styles.loadingContainer}>
               <ActivityIndicator size="large" color="#1129BD" />
@@ -262,8 +243,11 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
                           style={styles.sliderContainer}
                           onStartShouldSetResponder={() => true}
                           onMoveShouldSetResponder={() => true}
+                          onStartShouldSetResponderCapture={() => true}
+                          onMoveShouldSetResponderCapture={() => true}
                           onResponderGrant={(e) => {
                             if (sliderWidth <= 0) return;
+                            setIsScrollEnabled(false);
                             const x = Math.max(0, Math.min(sliderWidth, e.nativeEvent.pageX - sliderPageXRef.current));
                             const newMs = duration ? (x / sliderWidth) * duration : 0;
                             if (intervalRef.current) {
@@ -274,17 +258,10 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
                             setDragPositionMs(newMs);
                             lastXRef.current = x;
                             // Pause during drag to avoid race with playing stream
-                            (async () => {
-                              if (sound) {
-                                try {
-                                  const status = await sound.getStatusAsync();
-                                  wasPlayingRef.current = !!(status.isLoaded && (status as any).isPlaying);
-                                  if (wasPlayingRef.current) {
-                                    await sound.pauseAsync();
-                                  }
-                                } catch {}
-                              }
-                            })();
+                            wasPlayingRef.current = !!status?.playing;
+                            if (wasPlayingRef.current) {
+                              player.pause();
+                            }
                           }}
                           onResponderMove={(e) => {
                             if (sliderWidth <= 0) return;
@@ -307,17 +284,25 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
                             const x = Math.max(0, Math.min(sliderWidth, e.nativeEvent.pageX - sliderPageXRef.current));
                             const newMs = duration ? (x / sliderWidth) * duration : 0;
                             setPosition(newMs);
-                            if (sound) {
-                              try {
-                                if (wasPlayingRef.current) {
-                                  await sound.playFromPositionAsync(newMs);
-                                } else {
-                                  await sound.setPositionAsync(newMs);
-                                }
-                              } catch {}
-                            }
+                            try {
+                              await player.seekTo(newMs / 1000);
+                              if (wasPlayingRef.current) {
+                                player.play();
+                              }
+                            } catch {}
                             setIsDragging(false);
                             wasPlayingRef.current = false;
+                            setIsScrollEnabled(true);
+                          }}
+                          onResponderTerminationRequest={() => false}
+                          onResponderTerminate={() => {
+                            // If gesture was interrupted (e.g., page scrolled), resume playback state
+                            setIsDragging(false);
+                            if (wasPlayingRef.current) {
+                              try { player.play(); } catch {}
+                            }
+                            wasPlayingRef.current = false;
+                            setIsScrollEnabled(true);
                           }}
                           onLayout={(ev) => {
                             // Use measureInWindow for absolute X and width for precise pageX math
