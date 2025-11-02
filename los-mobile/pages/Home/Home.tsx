@@ -408,13 +408,15 @@ const styles = StyleSheet.create({
   },
   tabsContent: {
     flexDirection: 'row',
-    gap: 20,
+    gap: 5,
     alignItems: 'flex-start',
   },
   tabComponent: {
     alignItems: 'center',
     gap: 10,
     justifyContent: 'flex-start',
+    width: 110,
+    flexShrink: 0,
   },
   iconCircle: {
     width: 73,

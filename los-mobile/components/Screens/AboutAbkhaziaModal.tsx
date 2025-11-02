@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 import GovernmentStructureScreen from './about-abkhazia/GovernmentStructureScreen';
@@ -12,6 +12,11 @@ import MusicScreen from './about-abkhazia/MusicScreen';
 import config from '@/config';
 
 const API_BASE = config.API_BASE;
+const { width: screenWidth } = Dimensions.get('window');
+const GRID_PADDING = 20;
+const GRID_GAP = 5;
+const COLUMNS = 3;
+const ITEM_WIDTH = Math.floor((screenWidth - GRID_PADDING * 2 - GRID_GAP * (COLUMNS - 1)) / COLUMNS);
 
 interface Category {
   id: number;
@@ -139,13 +144,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
-    paddingLeft: 20,
+    paddingHorizontal: GRID_PADDING,
+    gap: GRID_GAP,
   },
   item: {
-    width: 110,
+    width: ITEM_WIDTH,
     alignItems: 'center',
-    marginHorizontal: 10,
-    marginBottom: 30,
+    marginBottom: 5,
   },
   iconCircle: {
     width: 73,
@@ -162,6 +167,6 @@ const styles = StyleSheet.create({
     lineHeight: 12,
     textAlign: 'center',
     color: '#000',
-    width: 110,
+    width: '100%',
   },
 });
