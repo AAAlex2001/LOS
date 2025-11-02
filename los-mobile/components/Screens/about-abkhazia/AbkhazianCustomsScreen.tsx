@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   },
   bannerImgWrap: {
     width: '100%',
-    height: 144,
+    minHeight: 150,
     alignSelf: 'center',
     marginBottom: 20,
     borderRadius: 15,
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   },
   bannerImage: {
     width: '100%',
-    height: '100%',
+      minHeight: 150,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -214,6 +214,8 @@ const styles = StyleSheet.create({
     lineHeight: 17,
     color: 'rgba(0,0,0,0.85)',
     textAlign: 'center',
+      width: '100%',
+      height: '100%'
   },
   loadingContainer: {
     flex: 1,

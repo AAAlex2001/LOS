@@ -22,13 +22,23 @@ import CalendarIcon from '../../../assets/images/VectorParties2.svg';
 import LocationIcon from '../../../assets/images/VectorParties3.svg';
 import config from '@/config';
 
-// inline video component for ad slider
-const InlineAdVideo = ({ uri, style }: { uri: string; style: any }) => {
+// inline video: always create player (hooks order stable), control play/pause by visibility
+const InlineAdVideo = ({ uri, style, active }: { uri: string; style: any; active: boolean }) => {
   const player = useVideoPlayer(uri, (p) => {
     p.loop = true;
     p.muted = true;
-    p.play();
   });
+  useEffect(() => {
+    if (!player) return;
+    try {
+      if (active) {
+        player.play();
+      } else {
+        player.pause();
+      }
+    } catch {}
+  }, [active, player]);
+
   return (
     <VideoView
       player={player}
@@ -105,9 +115,10 @@ const parseBoldText = (text: string) => {
 
 export default function PartiesScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
   const { width } = useWindowDimensions();
+  const bannerHeight = React.useMemo(() => Math.round(Math.min(280, Math.max(220, width * 0.52))), [width]);
   const [data, setData] = useState<PartiesPageData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [adWidth, setAdWidth] = useState(0);
+  const [visibleAdIndexByCity, setVisibleAdIndexByCity] = useState<Record<number, number>>({});
 
   useEffect(() => {
     if (!visible) return;
@@ -202,7 +213,7 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
               <View style={styles.bannerWrapper}>
                 <ImageBackground
                   source={{ uri: data?.background_image ? toImageUrl(data.background_image) : undefined }}
-                  style={styles.banner}
+                  style={[styles.banner, { height: bannerHeight }]} 
                   imageStyle={styles.bannerImage}
                   defaultSource={require('../../../assets/images/IMG_1932.jpg')}
                 >
@@ -224,19 +235,19 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
 
                 {/* Decorative images */}
                 {data?.decor_image_1 && (
-                  <Image source={{ uri: toImageUrl(data.decor_image_1) }} style={[styles.decorImage, styles.decor1]} />
+                  <Image source={{ uri: toImageUrl(data.decor_image_1) }} style={[styles.decorImage, { left: 10, top: -Math.round(Math.min(20, width * 0.03)), transform: [{ rotate: '-10deg' }] }]} />
                 )}
                 {data?.decor_image_2 && (
-                  <Image source={{ uri: toImageUrl(data.decor_image_2) }} style={[styles.decorImage, styles.decor2]} />
+                  <Image source={{ uri: toImageUrl(data.decor_image_2) }} style={[styles.decorImage, { left: 10, top: Math.round(bannerHeight * 0.70) + 30, transform: [{ rotate: '-8deg' }] }]} />
                 )}
                 {data?.decor_image_3 && (
-                  <Image source={{ uri: toImageUrl(data.decor_image_3) }} style={[styles.decorImage, styles.decor3]} />
+                  <Image source={{ uri: toImageUrl(data.decor_image_3) }} style={[styles.decorImage, { left: Math.round(width * 0.45) - 15, top: Math.round(bannerHeight * 0.75) + 30, transform: [{ rotate: '8deg' }] }]} />
                 )}
                 {data?.decor_image_4 && (
-                  <Image source={{ uri: toImageUrl(data.decor_image_4) }} style={[styles.decorImage, styles.decor4]} />
+                  <Image source={{ uri: toImageUrl(data.decor_image_4) }} style={[styles.decorImage, { right: 10, top: Math.round(bannerHeight * 0.70) + 30, transform: [{ rotate: '-8deg' }] }]} />
                 )}
                 {data?.decor_image_5 && (
-                  <Image source={{ uri: toImageUrl(data.decor_image_5) }} style={[styles.decorImage, styles.decor5]} />
+                  <Image source={{ uri: toImageUrl(data.decor_image_5) }} style={[styles.decorImage, { right: 10, top: -Math.round(Math.min(20, width * 0.03)), transform: [{ rotate: '15deg' }] }]} />
                 )}
               </View>
 
@@ -307,24 +318,46 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
 
                     {/* Ad Slider - after events */}
                     {city.slider_items && city.slider_items.length > 0 && (
-                      <View style={styles.adBlock} onLayout={(e) => setAdWidth(e.nativeEvent.layout.width)}>
+                      <View style={styles.adBlock}>
                         <FlatList
-                          data={city.slider_items.sort((a, b) => a.order - b.order)}
+                          data={city.slider_items.slice().sort((a, b) => a.order - b.order)}
                           keyExtractor={(item) => `${city.id}-${item.id}`}
-                          renderItem={({ item }) => (
-                            <View style={[styles.adSlide, { width: adWidth || (width - 40) }]}>
-                              {item.media_type === 'video' ? (
-                                <InlineAdVideo uri={toImageUrl(item.media_file)} style={styles.adImage} />
-                              ) : (
-                                <Image source={{ uri: toImageUrl(item.media_file) }} style={styles.adImage} resizeMode="cover" />
-                              )}
-                            </View>
-                          )}
+                          renderItem={({ item, index }) => {
+                            const slideWidth = Math.round(width - 40);
+                            const isActive = (visibleAdIndexByCity[city.id] ?? 0) === index;
+                            return (
+                              <View style={[styles.adSlide, { width: slideWidth }]}>
+                                {item.media_type === 'video' ? (
+                                  <InlineAdVideo active={isActive} uri={toImageUrl(item.media_file)} style={styles.adImage} />
+                                ) : (
+                                  <Image source={{ uri: toImageUrl(item.media_file) }} style={styles.adImage} resizeMode="cover" />
+                                )}
+                              </View>
+                            );
+                          }}
                           horizontal
                           showsHorizontalScrollIndicator={false}
-                          snapToInterval={adWidth || (width - 40)}
+                          snapToInterval={Math.round(width - 40)}
                           snapToAlignment="start"
                           decelerationRate="fast"
+                          initialNumToRender={1}
+                          windowSize={2}
+                          maxToRenderPerBatch={1}
+                          updateCellsBatchingPeriod={50}
+                          removeClippedSubviews
+                          getItemLayout={(_d, index) => {
+                            const w = Math.round(width - 40);
+                            return { length: w, offset: w * index, index };
+                          }}
+                          onViewableItemsChanged={({ viewableItems }) => {
+                            if (viewableItems && viewableItems.length > 0) {
+                              const first = viewableItems[0];
+                              if (typeof first.index === 'number') {
+                                setVisibleAdIndexByCity((prev) => ({ ...prev, [city.id]: first.index as number }));
+                              }
+                            }
+                          }}
+                          viewabilityConfig={{ itemVisiblePercentThreshold: 60 }}
                         />
                       </View>
                     )}
@@ -415,36 +448,12 @@ const styles = StyleSheet.create({
     height: 44,
     borderRadius: 8,
     shadowColor: '#D5DAEF',
-    shadowOpacity: 1,
-    shadowRadius: 15.4,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 8,
+    shadowOpacity: 0.6,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 1 },
+    elevation: 4,
   },
-  decor1: {
-    left: 10,
-    top: -10,
-    transform: [{ rotate: '-10deg' }],
-  },
-  decor2: {
-    left: 10,
-    top: 190,
-    transform: [{ rotate: '-8deg' }],
-  },
-  decor3: {
-    left: 170,
-    top: 200,
-    transform: [{ rotate: '8deg' }],
-  },
-  decor4: {
-    right: 10,
-    top: 190,
-    transform: [{ rotate: '-8deg' }],
-  },
-  decor5: {
-    right: 10,
-    top: -10,
-    transform: [{ rotate: '15deg' }],
-  },
+  // individual positions now computed inline for responsiveness
   centerIcon: {
     position: 'absolute',
     top: -30,
