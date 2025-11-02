@@ -8,5 +8,3 @@ config.resolver.assetExts = config.resolver.assetExts.filter((ext) => ext !== 's
 config.resolver.sourceExts.push('svg');
 
 module.exports = config;
-
-

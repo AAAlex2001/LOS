@@ -21,7 +21,8 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.losmobile"
+      "package": "com.anonymous.losmobile",
+      "newArchEnabled": false
     },
     "web": {
       "bundler": "metro",
