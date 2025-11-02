@@ -102,6 +102,8 @@ const mascotImages = [
 
 const HomePage = () => {
   const insets = useSafeAreaInsets();
+  const sliderHeight = 539; // base height of the slider
+  const bottomCurveTopDynamic = 133 + sliderHeight - 12; // place the white curve just under the slider
   const [data, setData] = useState<HomeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -159,7 +161,7 @@ const HomePage = () => {
   };
 
   const renderSliderItem = ({ item }: { item: SliderItem }) => (
-    <View style={styles.slide}>
+    <View style={[styles.slide, { height: sliderHeight }]}>
       {item.type === 'video' ? (
         <SliderVideo src={String(item.src)} />
       ) : (
@@ -202,8 +204,8 @@ const HomePage = () => {
         </View>
           </View>
 
-          {/* Slider */}
-      <View style={styles.slider}>
+      {/* Slider */}
+      <View style={[styles.slider, { height: sliderHeight }]}>
             <FlatList
               ref={flatListRef}
               data={sliderItems}
@@ -229,10 +231,10 @@ const HomePage = () => {
         ))}
       </View>
 
-      {/* Bottom Curve behind tabs */}
+      {/* Bottom Curve in front of slider, behind tabs */}
       <View style={[
         styles.bottomCurve,
-        { bottom: -bottomEllipseHeight / 2 + (insets.bottom || 0) }
+        { top: bottomCurveTopDynamic }
       ]} />
 
       {/* Tabs */}
@@ -399,12 +401,11 @@ const styles = StyleSheet.create({
     width: bottomEllipseWidth,
     height: bottomEllipseHeight,
     left: bottomEllipseLeft,
-    // Anchor to bottom so the curve sits behind the bottom tabs on all screens
-    bottom: -bottomEllipseHeight / 2,
+    top: 0,
     backgroundColor: '#FFFFFF',
     borderTopLeftRadius: bottomEllipseWidth / 2,
     borderTopRightRadius: bottomEllipseWidth / 2,
-    zIndex: 0,
+    zIndex: 6,
     // Let touches pass through
     pointerEvents: 'none',
   },
