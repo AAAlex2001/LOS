@@ -55,7 +55,7 @@ const getIconForTab = (label: string) => {
   return <FontAwesome5 name="city" size={40} color="#fff" />;
 };
 
-const SliderVideo = ({ src, active, resumeToken }: { src: string; active: boolean; resumeToken: number }) => {
+const SliderVideo = ({ src, active }: { src: string; active: boolean }) => {
   const player = useVideoPlayer(encodeURI(String(src)), (p) => {
     p.loop = true;
     p.muted = true;
@@ -69,14 +69,6 @@ const SliderVideo = ({ src, active, resumeToken }: { src: string; active: boolea
       }
     } catch {}
   }, [active, player]);
-  useEffect(() => {
-    // attempt to resume when overlay closes
-    try {
-      if (active) {
-        player.play();
-      }
-    } catch {}
-  }, [resumeToken]);
   return (
     <View style={styles.slideImage} pointerEvents="none">
       <VideoView
@@ -133,15 +125,6 @@ const HomePage = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const flatListRef = useRef<FlatList<SliderItem>>(null);
   const isOverlayOpen = aboutVisible || entertainmentVisible || planTripVisible || importantTripVisible || sidebarVisible;
-  const [resumeToken, setResumeToken] = useState(0);
-
-  useEffect(() => {
-    // When overlays close, trigger lightweight resume for visible video
-    if (!isOverlayOpen) {
-      setResumeToken((t) => t + 1);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [aboutVisible, entertainmentVisible, planTripVisible, importantTripVisible, sidebarVisible]);
 
   useEffect(() => {
     const load = async () => {
@@ -191,7 +174,7 @@ const HomePage = () => {
   const renderSliderItem = ({ item, index }: { item: SliderItem; index: number }) => (
     <View style={styles.slide}>
       {item.type === 'video' ? (
-        <SliderVideo src={String(item.src)} active={!isOverlayOpen && (currentSlide % (sliderItems.length || 1) === index)} resumeToken={resumeToken} />
+        <SliderVideo src={String(item.src)} active={!isOverlayOpen && (currentSlide % (sliderItems.length || 1) === index)} />
       ) : (
         <View style={styles.slideImage} pointerEvents="none">
           <Image source={{ uri: item.src }} style={StyleSheet.absoluteFillObject} contentFit="cover" />
@@ -256,7 +239,6 @@ const HomePage = () => {
               removeClippedSubviews
               getItemLayout={(_, index) => ({ length: screenWidth, offset: screenWidth * index, index })}
               scrollEnabled={!isOverlayOpen}
-              extraData={resumeToken}
             />
             <TopCurve />
             <BottomCurve />
