@@ -11,6 +11,7 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { VideoView, useVideoPlayer } from 'expo-video';
 import AboutAbkhaziaModal from '../../components/Screens/AboutAbkhaziaModal';
@@ -100,6 +101,7 @@ const mascotImages = [
 ];
 
 const HomePage = () => {
+  const insets = useSafeAreaInsets();
   const [data, setData] = useState<HomeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -228,10 +230,16 @@ const HomePage = () => {
       </View>
 
       {/* Bottom Curve behind tabs */}
-      <View style={styles.bottomCurve} />
+      <View style={[
+        styles.bottomCurve,
+        { bottom: -bottomEllipseHeight / 2 + (insets.bottom || 0) }
+      ]} />
 
       {/* Tabs */}
-      <View style={styles.tabsContainer}>
+      <View style={[
+        styles.tabsContainer,
+        { bottom: Math.max((insets.bottom || 0) + 12, 12) }
+      ]}>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -349,6 +357,7 @@ const styles = StyleSheet.create({
     height: 539,
     left: (screenWidth - 433) / 2,
     top: 133,
+    zIndex: 5,
   },
   slides: {
     // This is for the content inside FlatList
@@ -390,10 +399,14 @@ const styles = StyleSheet.create({
     width: bottomEllipseWidth,
     height: bottomEllipseHeight,
     left: bottomEllipseLeft,
-    top: bottomEllipseTop,
+    // Anchor to bottom so the curve sits behind the bottom tabs on all screens
+    bottom: -bottomEllipseHeight / 2,
     backgroundColor: '#FFFFFF',
     borderTopLeftRadius: bottomEllipseWidth / 2,
     borderTopRightRadius: bottomEllipseWidth / 2,
+    zIndex: 0,
+    // Let touches pass through
+    pointerEvents: 'none',
   },
 
   // Tabs
@@ -401,7 +414,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     height: 113,
-    top: 687,
+    // Anchor the tabs to the safe-area bottom to avoid being cut off on short screens
+    bottom: 0,
     paddingHorizontal: 20,
     zIndex: 10,
   },
