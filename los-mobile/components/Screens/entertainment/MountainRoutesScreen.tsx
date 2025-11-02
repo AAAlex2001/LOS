@@ -38,7 +38,6 @@ export default function MountainRoutesScreen({ visible, onClose }: Props) {
         const res = await fetch(`${API_BASE}/api/mountain-routes/page/content/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load mountain routes');
         const json = await res.json() as MountainRoutesPageData;
-        console.log('Mountain routes data:', json);
         setData(json);
       } catch (e) {
         console.error(e);
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
   headerTitleWrap: { flex: 1, flexDirection: 'row', alignItems: 'center', marginLeft: 20 },
   headerTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 16, color: '#000', textTransform: 'uppercase', letterSpacing: 0.2, marginTop: 24, textAlign: 'center' },
   scrollContent: { padding: 20, paddingBottom: 40, gap: 20 },
-  card: { flexDirection: 'column', alignItems: 'center', padding: 20, gap: 20, backgroundColor: 'rgba(17, 41, 189, 0.1)', borderWidth: 1, borderColor: '#D5DAEF', borderRadius: 15 },
+  card: { flexDirection: 'column', alignItems: 'center', padding: 20, gap: 20, minHeight: 180, backgroundColor: 'rgba(17, 41, 189, 0.1)', borderWidth: 1, borderColor: '#D5DAEF', borderRadius: 15 },
   cardImg: { width: '100%', height: 178, borderRadius: 15 },
   cardBody: { flexDirection: 'column', alignItems: 'center', gap: 10 },
   cardTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 14, lineHeight: 17, textTransform: 'uppercase', textAlign: 'center', color: '#1129BD' },
