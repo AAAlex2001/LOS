@@ -88,12 +88,39 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
 
   const handleCategoryClick = (category: CityCategory, cityName: string) => {
     if (!category.is_active || !category.url) return;
-    
-    // Extract category slug from URL like "administrative-buildings/Gagra"
-    // URL format: "category-name/CityName"
-    const categorySlug = slugify(category.url.split('/')[0] || '');
+
     const citySlug = slugify(cityName);
-    
+    // Primary: take slug from URL (expected english kebab-case)
+    let categorySlug = slugify(category.url.split('/')[0] || '');
+
+    // Fallback: if registry doesn't have this key (e.g., URL in Russian), try from name and alias map
+    if (!screensRegistry[citySlug]?.[categorySlug]) {
+      const nameSlug = slugify(category.name);
+      const alias: Record<string, string> = {
+        'административные-здания': 'administrative-buildings',
+        'церкви': 'churches',
+        'салоны-красоты': 'beauty-salons',
+        'аптеки': 'pharmacy',
+        'винодельни': 'wineries',
+        'азс': 'gas-stations',
+        'достопримечательности': 'cultural-attractions',
+        'магазины-и-рынки': 'shops-and-markets',
+        'рынки-и-магазины': 'shops-and-markets',
+        'автомойки': 'car-washes',
+        'отели': 'hotels',
+        'парковки': 'parking-lots',
+        'пляжи': 'beaches',
+        'ремонт-одежды': 'clothing-repair',
+        'рестораны': 'restaurants',
+      };
+      categorySlug = alias[nameSlug] || nameSlug;
+    }
+
+    if (!screensRegistry[citySlug]?.[categorySlug]) {
+      // No matching screen; do nothing
+      return;
+    }
+
     setActiveCategory(categorySlug);
     setActiveCity(citySlug);
   };
