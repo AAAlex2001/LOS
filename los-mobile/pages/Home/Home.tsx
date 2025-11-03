@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
   },
   sliderContainer: {
     width: '100%',
-    height: 549,
+    height: 540,
     position: 'relative',
     marginTop: -59,
   },
