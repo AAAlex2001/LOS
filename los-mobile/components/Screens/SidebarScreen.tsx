@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet, Dimensions, Animated, Pressable } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, StyleSheet, Dimensions, Animated, Pressable, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import SideBarLogo from '../../assets/images/SideBarLogo.svg';
 import ContactsScreen from './ContactsScreen';
@@ -8,7 +8,7 @@ import LanguageScreen from './LanguageScreen';
 const menuItems = [
   { label: 'Главное меню', icon: <Ionicons name="home-outline" size={24} color="#1129BD" /> },
   { label: 'Свяжитесь с нами', icon: <Ionicons name="chatbubble-ellipses-outline" size={24} color="#1129BD" /> },
-  { label: 'Политика обработки данных', icon: <Ionicons name="document-outline" size={24} color="#1129BD" /> },
+  { label: 'Политика обработки данных', icon: <Ionicons name="document-outline" size={24} color="#1129BD" />},
   { label: 'Выберите язык', icon: <Ionicons name="language-outline" size={24} color="#1129BD" /> },
 ];
 
@@ -51,9 +51,6 @@ export default function SidebarScreen({ visible, onClose, onNavigateHome }: { vi
           <TouchableOpacity style={styles.boardBtn}>
             <Text style={styles.boardBtnText}>Доска объявлений «LOS»</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.mandarinBtn}>
-            <Text style={styles.mandarinBtnText}>Аренда жилья «Мандарин»</Text>
-          </TouchableOpacity>
           {/* Меню */}
           <View style={styles.menuList}>
             {menuItems.map((item, idx) => (
@@ -65,6 +62,8 @@ export default function SidebarScreen({ visible, onClose, onNavigateHome }: { vi
                     ? onNavigateHome
                     : idx === 1
                     ? () => setContactsVisible(true)
+                    : idx === 2
+                    ? () => Linking.openURL('https://landofsoul-apsny.ru/privacy-policy')
                     : idx === 3
                     ? () => setLanguageVisible(true)
                     : undefined
@@ -140,22 +139,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   boardBtnText: {
-    color: '#1129BD',
-    fontWeight: '500',
-    fontSize: 16,
-  },
-  mandarinBtn: {
-    width: 246,
-    height: 40,
-    alignSelf: 'flex-start',
-    borderRadius: 100,
-    borderWidth: 2,
-    borderColor: 'rgba(255, 107, 0, 0.25)',
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  mandarinBtnText: {
     color: '#1129BD',
     fontWeight: '500',
     fontSize: 16,

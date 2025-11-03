@@ -75,7 +75,7 @@ const SliderVideo = ({ src, active }: { src: string; active: boolean }) => {
         contentFit="cover"
         nativeControls={false}
         pointerEvents="none"
-        fullscreenOptions={{ enabled: false }}
+        fullscreenOptions={{ enable: false }}
       />
     </View>
   );
@@ -197,7 +197,7 @@ const HomePage = () => {
   }
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['bottom']}>
+    <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
       <ScrollView 
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
@@ -237,9 +237,9 @@ const HomePage = () => {
               snapToInterval={effectiveWidth}
               decelerationRate="fast"
               initialNumToRender={1}
-              windowSize={2}
+              windowSize={3}
               maxToRenderPerBatch={1}
-              removeClippedSubviews
+              removeClippedSubviews={false}
               getItemLayout={(_, index) => ({ length: effectiveWidth, offset: effectiveWidth * index, index })}
               scrollEnabled={!isOverlayOpen}
             />
@@ -331,7 +331,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    paddingTop: 20,
     paddingBottom: 20,
   },
   logoSliderContainer: {
@@ -339,7 +338,6 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
-    marginBottom: -14,
     position: 'relative',
     zIndex: 50,
   },
@@ -362,13 +360,12 @@ const styles = StyleSheet.create({
   mascotImage: {
     height: 78,
     width: 78,
-    marginTop: 0,
   },
   sliderContainer: {
     width: '100%',
-    height: 539,
+    height: 549,
     position: 'relative',
-    marginTop: -45,
+    marginTop: -59,
   },
   slide: {
     height: 540,
@@ -404,7 +401,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 84,
+    bottom: 85,
     alignItems: 'center',
     zIndex: 60,
   },
@@ -418,7 +415,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1129BD',
   },
   tabsContainer: {
-    marginTop: -12,
+    marginTop: -10,
     paddingHorizontal: 0,
   },
   tabsContent: {
