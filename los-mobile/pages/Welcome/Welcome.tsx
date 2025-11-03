@@ -1,67 +1,45 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { Image } from 'expo-image';
+import config from '../../config';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+const API_BASE = config.API_BASE;
 
-const icons = [
-  {
-    image: require('../../assets/images/Mand3.png'),
-    width: 100,
-    height: 100,
-    left: -200,
-    top: -350,
-    rotation: 6,
-    delay: 0,
-  },
-  {
-    image: require('../../assets/images/2.png'),
-    width: 100,
-    height: 100,
-    left: 100,
-    top: -350,
-    rotation: -15,
-    delay: 150,
-  },
-  {
-    image: require('../../assets/images/2.png'),
-    width: 100,
-    height: 100,
-    left: -200,
-    top: 200,
-    rotation: 10,
-    delay: 300,
-  },
-  {
-    image: require('../../assets/images/3.png'),
-    width: 90,
-    height: 90,
-    left: -60,
-    top: 100,
-    rotation: -5,
-    delay: 450,
-  },
-  {
-    image: require('../../assets/images/4.png'),
-    width: 80,
-    height: 80,
-    left: 100,
-    top: 20,
-    rotation: 7,
-    delay: 600,
-  },
+const toImageUrl = (url?: string) => {
+  if (!url) return '';
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  return `${API_BASE}/media/${url}`;
+};
+
+type WelcomeContent = {
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  icons?: { image: string; order?: number }[];
+};
+
+// Фиксированные позиции для 5 иконок (2 верхние, 3 нижние)
+const iconPositions = [
+  { width: 100, height: 100, left: -200, top: -350, rotation: 6, delay: 0 },      // 0: верхняя левая
+  { width: 100, height: 100, left: 100, top: -350, rotation: -15, delay: 150 },   // 1: верхняя правая
+  { width: 100, height: 100, left: -200, top: 200, rotation: 10, delay: 300 },    // 2: нижняя 1
+  { width: 90, height: 90, left: -60, top: 100, rotation: -5, delay: 450 },       // 3: нижняя 2
+  { width: 80, height: 80, left: 100, top: 20, rotation: 7, delay: 600 },         // 4: нижняя 3
 ];
 
 export default function WelcomeScreen() {
   const router = useRouter();
+  const [content, setContent] = useState<WelcomeContent | null>(null);
+  
   // X для верхних (0,1), Y для нижних (2,3,4)
-  const translateXAnims = useRef(icons.map(() => new Animated.Value(0))).current;
-  const translateYAnims = useRef(icons.map(() => new Animated.Value(0))).current;
-  const fadeAnims = useRef(icons.map(() => new Animated.Value(0))).current;
+  const translateXAnims = useRef(iconPositions.map(() => new Animated.Value(0))).current;
+  const translateYAnims = useRef(iconPositions.map(() => new Animated.Value(0))).current;
+  const fadeAnims = useRef(iconPositions.map(() => new Animated.Value(0))).current;
 
   useEffect(() => {
     const vibrate = async () => {
@@ -73,9 +51,24 @@ export default function WelcomeScreen() {
     vibrate();
   }, []);
 
+  // Загрузить контент экрана Welcome из админки
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/welcome/page/content/`, { cache: 'no-store' });
+        if (!res.ok) return;
+        const json = (await res.json()) as WelcomeContent;
+        setContent(json);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    load();
+  }, []);
+
   useEffect(() => {
     // Стартовые позиции
-    icons.forEach((icon, index) => {
+    iconPositions.forEach((icon, index) => {
       fadeAnims[index].setValue(0);
       if (index === 0) {
         // Слева
@@ -92,7 +85,7 @@ export default function WelcomeScreen() {
       }
     });
 
-    const animations = icons.map((icon, index) =>
+    const animations = iconPositions.map((icon, index) =>
       Animated.parallel([
         index <= 1
           ? Animated.spring(translateXAnims[index], {
@@ -128,11 +121,9 @@ export default function WelcomeScreen() {
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       <View style={styles.content}>
-        <Text style={styles.title}>Добро пожаловать!</Text>
-        <Text style={styles.heading}>Встречайте первый тур-гид по Абхазии!</Text>
-        <Text style={styles.description}>
-          Всё для идеального путешествия в одном приложении: яркая культура, лазурное море и живописные горы, рестораны, такси, операторы и другие. Начните путешествие с вдохновением!
-        </Text>
+        <Text style={styles.title}>{content?.title}</Text>
+        <Text style={styles.heading}>{content?.subtitle}</Text>
+        <Text style={styles.description}>{content?.description}</Text>
         <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
           <Text style={styles.buttonText}>Начать исследовать</Text>
           <Ionicons name="arrow-forward" size={31} color="#FFFFFF" />
@@ -141,7 +132,10 @@ export default function WelcomeScreen() {
 
       {/* Floating Icons */}
       <View style={styles.iconsContainer}>
-        {icons.map((icon, index) => {
+        {content?.icons?.slice(0, 5).map((iconData, index) => {
+          const pos = iconPositions[index];
+          if (!pos) return null;
+          
           const opacity = fadeAnims[index];
           return (
             <Animated.View
@@ -149,12 +143,12 @@ export default function WelcomeScreen() {
               style={[
                 styles.icon,
                 {
-                  width: icon.width,
-                  height: icon.height,
-                  left: SCREEN_WIDTH / 2 + icon.left,
-                  top: SCREEN_HEIGHT / 2 + icon.top,
+                  width: pos.width,
+                  height: pos.height,
+                  left: SCREEN_WIDTH / 2 + pos.left,
+                  top: SCREEN_HEIGHT / 2 + pos.top,
                   transform: [
-                    { rotate: `${icon.rotation}deg` },
+                    { rotate: `${pos.rotation}deg` },
                     { translateX: translateXAnims[index] },
                     { translateY: translateYAnims[index] },
                   ],
@@ -163,7 +157,7 @@ export default function WelcomeScreen() {
               ]}
             >
               <Image
-                source={icon.image}
+                source={{ uri: toImageUrl(iconData.image) }}
                 style={styles.iconImage}
                 contentFit="contain"
               />

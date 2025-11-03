@@ -36,6 +36,7 @@ urlpatterns = [
     path("music/", include("cms.music.urls")),
     path("privacy-policy/", include("cms.privacy_policy.urls")),
     path("footer/", include("cms.footer.urls")),
+    path("welcome/", include("cms.welcome.urls")),
 ]
 
 

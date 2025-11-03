@@ -34,6 +34,10 @@ class CmsConfig(AppConfig):
             pass
 
         # Остальные подмодули приложения CMS
+        try:
+            from . import welcome  # noqa
+        except ImportError:
+            pass
         for module_name in (
             # Страницы и сущности по категориям
             'administrative_buildings',

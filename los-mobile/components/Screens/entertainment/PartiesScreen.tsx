@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  Dimensions,
   NativeScrollEvent,
   NativeSyntheticEvent,
   Image,
@@ -44,7 +43,7 @@ const InlineAdVideo = ({ uri, style, active }: { uri: string; style: any; active
       player={player}
       style={style}
       contentFit="cover"
-      fullscreenOptions={{ enabled: false }}
+      fullscreenOptions={{ enable: false }}
     />
   );
 };
@@ -263,11 +262,10 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                   style={styles.card}
                 >
                   <ImageBackground
-                    source={{ uri: city.city_image ? toImageUrl(city.city_image) : undefined }}
-                    style={styles.cityImage}
-                    imageStyle={styles.cityImageInner}
-                    defaultSource={require('../../../assets/images/city_sukhum.jpg')}
-                  />
+                                        source={{ uri: city.city_image ? toImageUrl(city.city_image) : undefined }}
+                      style={styles.cityImage}
+                      imageStyle={styles.cityImageInner}
+                    />
                   <Text style={styles.cityTitle}>{city.name}</Text>
 
                   <View style={styles.eventsContainer}>
