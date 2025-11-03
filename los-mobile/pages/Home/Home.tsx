@@ -73,6 +73,8 @@ const SliderVideo = ({ src, active }: { src: string; active: boolean }) => {
         player={player}
         style={StyleSheet.absoluteFillObject}
         contentFit="cover"
+        nativeControls={false}
+        pointerEvents="none"
         fullscreenOptions={{ enabled: false }}
       />
     </View>
