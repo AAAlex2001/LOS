@@ -19,7 +19,7 @@ const icons = [
     delay: 0,
   },
   {
-    image: require('../../assets/images/adaptive-icon.png'),
+    image: require('../../assets/images/2.png'),
     width: 100,
     height: 100,
     left: 100,
@@ -28,16 +28,16 @@ const icons = [
     delay: 150,
   },
   {
-    image: require('../../assets/images/adaptive-icon.png'),
+    image: require('../../assets/images/2.png'),
     width: 100,
     height: 100,
     left: -200,
-    top: 260,
+    top: 200,
     rotation: 10,
     delay: 300,
   },
   {
-    image: require('../../assets/images/YourDoctor_logo.png'),
+    image: require('../../assets/images/3.png'),
     width: 90,
     height: 90,
     left: -60,
@@ -46,7 +46,7 @@ const icons = [
     delay: 450,
   },
   {
-    image: require('../../assets/images/adaptive-icon.png'),
+    image: require('../../assets/images/4.png'),
     width: 80,
     height: 80,
     left: 100,
@@ -58,7 +58,9 @@ const icons = [
 
 export default function WelcomeScreen() {
   const router = useRouter();
-  const slideAnims = useRef(icons.map(() => new Animated.Value(-500))).current;
+  // X для верхних (0,1), Y для нижних (2,3,4)
+  const translateXAnims = useRef(icons.map(() => new Animated.Value(0))).current;
+  const translateYAnims = useRef(icons.map(() => new Animated.Value(0))).current;
   const fadeAnims = useRef(icons.map(() => new Animated.Value(0))).current;
 
   useEffect(() => {
@@ -72,23 +74,49 @@ export default function WelcomeScreen() {
   }, []);
 
   useEffect(() => {
-    const animations = icons.map((icon, index) => {
-      return Animated.parallel([
-        Animated.spring(slideAnims[index], {
-          toValue: 0,
-          delay: icon.delay,
-          useNativeDriver: true,
-          tension: 50,
-          friction: 7,
-        }),
+    // Стартовые позиции
+    icons.forEach((icon, index) => {
+      fadeAnims[index].setValue(0);
+      if (index === 0) {
+        // Слева
+        translateXAnims[index].setValue(-SCREEN_WIDTH);
+        translateYAnims[index].setValue(0);
+      } else if (index === 1) {
+        // Справа
+        translateXAnims[index].setValue(SCREEN_WIDTH);
+        translateYAnims[index].setValue(0);
+      } else {
+        // Снизу
+        translateXAnims[index].setValue(0);
+        translateYAnims[index].setValue(SCREEN_HEIGHT);
+      }
+    });
+
+    const animations = icons.map((icon, index) =>
+      Animated.parallel([
+        index <= 1
+          ? Animated.spring(translateXAnims[index], {
+              toValue: 0,
+              delay: icon.delay,
+              useNativeDriver: true,
+              tension: 50,
+              friction: 7,
+            })
+          : Animated.spring(translateYAnims[index], {
+              toValue: 0,
+              delay: icon.delay,
+              useNativeDriver: true,
+              tension: 50,
+              friction: 7,
+            }),
         Animated.timing(fadeAnims[index], {
           toValue: 1,
           duration: 600,
           delay: icon.delay,
           useNativeDriver: true,
         }),
-      ]);
-    });
+      ])
+    );
 
     Animated.stagger(50, animations).start();
   }, []);
@@ -114,12 +142,7 @@ export default function WelcomeScreen() {
       {/* Floating Icons */}
       <View style={styles.iconsContainer}>
         {icons.map((icon, index) => {
-          const translateX = slideAnims[index].interpolate({
-            inputRange: [0, 1],
-            outputRange: [0, 1],
-          });
           const opacity = fadeAnims[index];
-
           return (
             <Animated.View
               key={index}
@@ -132,7 +155,8 @@ export default function WelcomeScreen() {
                   top: SCREEN_HEIGHT / 2 + icon.top,
                   transform: [
                     { rotate: `${icon.rotation}deg` },
-                    { translateY: slideAnims[index] },
+                    { translateX: translateXAnims[index] },
+                    { translateY: translateYAnims[index] },
                   ],
                   opacity,
                 },
