@@ -55,13 +55,7 @@ export default function ImportantTripScreen({ visible, onClose, categories }: { 
   }, [visible]);
 
   return (
-    <Modal
-      visible={visible}
-      animationType="slide"
-      transparent={true}
-      statusBarTranslucent
-      presentationStyle="fullScreen"
-    >
+    <Modal visible={visible} animationType="slide" transparent={false}>
       <View style={styles.fullscreen}>
         <View style={styles.headerBar}>
           <TouchableOpacity onPress={onClose} style={styles.backButton}>
