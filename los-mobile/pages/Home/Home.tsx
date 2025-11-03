@@ -68,11 +68,13 @@ const SliderVideo = ({ src, active }: { src: string; active: boolean }) => {
     } catch {}
   }, [active, player]);
   return (
-    <View style={styles.slideImage} pointerEvents="none">
+    <View style={styles.slideImage} pointerEvents="none" collapsable={false}>
       <VideoView
         player={player}
-        style={StyleSheet.absoluteFillObject}
+        style={[StyleSheet.absoluteFillObject, styles.videoView]}
         contentFit="cover"
+        nativeControls={false}
+        pointerEvents="none"
         fullscreenOptions={{ enabled: false }}
       />
     </View>
@@ -235,9 +237,9 @@ const HomePage = () => {
               snapToInterval={effectiveWidth}
               decelerationRate="fast"
               initialNumToRender={1}
-              windowSize={2}
+              windowSize={3}
               maxToRenderPerBatch={1}
-              removeClippedSubviews
+              removeClippedSubviews={false}
               getItemLayout={(_, index) => ({ length: effectiveWidth, offset: effectiveWidth * index, index })}
               scrollEnabled={!isOverlayOpen}
             />
@@ -405,6 +407,11 @@ const styles = StyleSheet.create({
     bottom: 84,
     alignItems: 'center',
     zIndex: 60,
+  },
+  videoView: {
+    // Helps reduce flicker on some Android devices
+    renderToHardwareTextureAndroid: true,
+    backgroundColor: '#000000',
   },
   dot: {
     width: 6,
