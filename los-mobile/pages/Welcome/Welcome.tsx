@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import * as Haptics from 'expo-haptics';
 
 export default function WelcomeScreen() {
   const router = useRouter();
+
+  useEffect(() => {
+    const vibrate = async () => {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      setTimeout(async () => {
+        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      }, 300);
+    };
+    vibrate();
+  }, []);
 
   const handleGetStarted = () => {
     router.replace('/home');
