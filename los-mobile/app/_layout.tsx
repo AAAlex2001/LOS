@@ -1,7 +1,9 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import * as SystemUI from 'expo-system-ui';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -12,6 +14,10 @@ export default function RootLayout() {
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
+  useEffect(() => {
+    SystemUI.setBackgroundColorAsync('#010E59');
+  }, []);
+
   if (!loaded) {
     // Async font loading only occurs in development.
     return null;
@@ -19,11 +25,17 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="index" />
+      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#010E59' } }}>
+        <Stack.Screen
+          name="index"
+          options={{
+            contentStyle: { backgroundColor: '#010E59' },
+            statusBarStyle: 'light',
+          }}
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
     </ThemeProvider>
   );
 }

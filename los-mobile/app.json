@@ -8,6 +8,11 @@
     "scheme": "losmobile",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/logo_splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#010E59"
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "ru.landofsoulapsny.losmobile",
@@ -16,6 +21,11 @@
       }
     },
     "android": {
+      "splash": {
+        "image": "./assets/images/logo_splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#010E59"
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -23,6 +33,11 @@
       "edgeToEdgeEnabled": true,
       "package": "com.anonymous.losmobile",
       "newArchEnabled": true
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#010E59",
+      "barStyle": "light-content",
+      "translucent": false
     },
     "web": {
       "bundler": "metro",
@@ -34,10 +49,10 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/logo_splash.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#010E59"
         }
       ],
       "expo-font"
