@@ -415,7 +415,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1129BD',
   },
   tabsContainer: {
-    marginTop: -10,
+    marginTop: -30,
     paddingHorizontal: 0,
   },
   tabsContent: {

@@ -8,6 +8,8 @@ import { Image } from 'expo-image';
 import config from '../../config';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+const BASE_WIDTH = 390; // design reference
+const BASE_HEIGHT = 844; // design reference
 const API_BASE = config.API_BASE;
 
 const toImageUrl = (url?: string) => {
@@ -23,13 +25,13 @@ type WelcomeContent = {
   icons?: { image: string; order?: number }[];
 };
 
-// Фиксированные позиции для 5 иконок (2 верхние, 3 нижние)
+// Позиции в координатах макета 390x844; масштабируем под экран
 const iconPositions = [
-  { width: 100, height: 100, left: -200, top: -350, rotation: 6, delay: 0 },      // 0: верхняя левая
-  { width: 100, height: 100, left: 100, top: -350, rotation: -15, delay: 150 },   // 1: верхняя правая
-  { width: 100, height: 100, left: -200, top: 200, rotation: 10, delay: 300 },    // 2: нижняя 1
-  { width: 90, height: 90, left: -60, top: 100, rotation: -5, delay: 450 },       // 3: нижняя 2
-  { width: 80, height: 80, left: 100, top: 20, rotation: 7, delay: 600 },         // 4: нижняя 3
+  { width: 100, height: 100, left: -200, top: -350, rotation: 6, delay: 0 },
+  { width: 100, height: 100, left: 100, top: -350, rotation: -15, delay: 150 },
+  { width: 100, height: 100, left: -200, top: 200, rotation: 10, delay: 300 },
+  { width: 90, height: 90, left: -60, top: 100, rotation: -5, delay: 450 },
+  { width: 80, height: 80, left: 100, top: 20, rotation: 7, delay: 600 },
 ];
 
 export default function WelcomeScreen() {
@@ -118,6 +120,11 @@ export default function WelcomeScreen() {
     router.replace('/home');
   };
 
+  // scale helpers so иконки остаются на одних местах и лишь масштабируются
+  const scaleX = SCREEN_WIDTH / BASE_WIDTH;
+  const scaleY = SCREEN_HEIGHT / BASE_HEIGHT;
+  const scaleUniform = Math.min(scaleX, scaleY);
+
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       <View style={styles.content}>
@@ -143,10 +150,10 @@ export default function WelcomeScreen() {
               style={[
                 styles.icon,
                 {
-                  width: pos.width,
-                  height: pos.height,
-                  left: SCREEN_WIDTH / 2 + pos.left,
-                  top: SCREEN_HEIGHT / 2 + pos.top,
+                  width: Math.round(pos.width * scaleUniform),
+                  height: Math.round(pos.height * scaleUniform),
+                  left: SCREEN_WIDTH / 2 + pos.left * scaleX,
+                  top: SCREEN_HEIGHT / 2 + pos.top * scaleY,
                   transform: [
                     { rotate: `${pos.rotation}deg` },
                     { translateX: translateXAnims[index] },

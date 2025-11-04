@@ -82,9 +82,7 @@ export default function AbkhazianCustomsScreen({ visible, onClose }: { visible: 
                     resizeMode="cover"
                   >
                     <View style={styles.bannerOverlayAbs}>
-                      <Text style={styles.bannerText}>
-                        {data.intro_text}
-                      </Text>
+                      <Text style={styles.bannerText}>{data.intro_text}</Text>
                     </View>
                   </ImageBackground>
                 </View>
@@ -180,7 +178,7 @@ const styles = StyleSheet.create({
   },
   bannerImgWrap: {
     width: '100%',
-    minHeight: 150,
+    minHeight: 219,
     alignSelf: 'center',
     marginBottom: 20,
     borderRadius: 15,
@@ -192,7 +190,7 @@ const styles = StyleSheet.create({
   },
   bannerImage: {
     width: '100%',
-      minHeight: 150,
+      minHeight: 219,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -214,8 +212,7 @@ const styles = StyleSheet.create({
     lineHeight: 17,
     color: 'rgba(0,0,0,0.85)',
     textAlign: 'center',
-      width: '100%',
-      height: '100%'
+      width: '100%'
   },
   loadingContainer: {
     flex: 1,

@@ -117,7 +117,7 @@ const parseBoldText = (text: string) => {
 
 export default function PartiesScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
   const { width } = useWindowDimensions();
-  const bannerHeight = React.useMemo(() => Math.round(Math.min(280, Math.max(220, width * 0.52))), [width]);
+  const bannerHeight = React.useMemo(() => Math.round(Math.min(360, Math.max(260, width * 0.62))), [width]);
   const [data, setData] = useState<PartiesPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [visibleAdIndexByCity, setVisibleAdIndexByCity] = useState<Record<number, number>>({});
