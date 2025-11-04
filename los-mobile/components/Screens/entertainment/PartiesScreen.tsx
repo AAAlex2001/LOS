@@ -39,12 +39,15 @@ const InlineAdVideo = ({ uri, style, active }: { uri: string; style: any; active
   }, [active, player]);
 
   return (
-    <VideoView
-      player={player}
-      style={style}
-      contentFit="cover"
-      fullscreenOptions={{ enable: false }}
-    />
+    <View style={style} pointerEvents="none">
+      <VideoView
+        player={player}
+        style={{ width: '100%', height: '100%' }}
+        contentFit="cover"
+        nativeControls={false}
+        fullscreenOptions={{ enable: false }}
+      />
+    </View>
   );
 };
 
@@ -118,6 +121,8 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
   const [data, setData] = useState<PartiesPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [visibleAdIndexByCity, setVisibleAdIndexByCity] = useState<Record<number, number>>({});
+  const flatListRefs = useRef<Record<number, FlatList<any> | null>>({});
+  const autoPlayTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     if (!visible) return;
@@ -150,7 +155,7 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
   const scrollToCity = (citySlug: string) => {
     const y = cityPositionsRef.current[citySlug];
     if (!scrollRef.current || typeof y !== 'number') return;
-    scrollRef.current.scrollTo({ y: Math.max(0, y - 12), animated: true });
+    scrollRef.current.scrollTo({ y: Math.max(0, y + 400), animated: true });
   };
 
   const onScroll = (_e: NativeSyntheticEvent<NativeScrollEvent>) => {};
@@ -159,6 +164,26 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
   const toImageUrl = (p?: string) => (p ? (p.startsWith('http') ? p : `${API_BASE}${p}`) : '');
 
   const openLink = (url: string) => Linking.openURL(url).catch(() => {});
+
+  // Autoplay horizontal ad sliders every 3 seconds
+  useEffect(() => {
+    if (!visible || !data) return;
+    if (autoPlayTimerRef.current) clearInterval(autoPlayTimerRef.current);
+    autoPlayTimerRef.current = setInterval(() => {
+      (data.cities || []).forEach((city) => {
+        const items = city.slider_items?.length || 0;
+        if (!items) return;
+        const current = visibleAdIndexByCity[city.id] ?? 0;
+        const next = (current + 1) % items;
+        try {
+          flatListRefs.current[city.id]?.scrollToIndex({ index: next, animated: true });
+        } catch {}
+      });
+    }, 3000);
+    return () => {
+      if (autoPlayTimerRef.current) clearInterval(autoPlayTimerRef.current);
+    };
+  }, [visible, data, visibleAdIndexByCity]);
 
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
@@ -185,10 +210,10 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
             <View style={styles.loadingContainer}>
               <Text style={styles.loadingText}>Загрузка...</Text>
             </View>
-          ) : (
-            <>
-              {/* Tabs */}
-              <View style={styles.tabsStickyWrap}> 
+          ) : ([
+            // Tabs (sticky header)
+            (
+              <View key="tabs" style={styles.tabsStickyWrap}>
                 <ScrollView
                   horizontal
                   showsHorizontalScrollIndicator={false}
@@ -207,14 +232,15 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                   ))}
                 </ScrollView>
               </View>
+            ),
 
-              {/* Banner */}
-              <View style={styles.bannerWrapper}>
+            // Banner
+            (
+              <View key="banner" style={styles.bannerWrapper}>
                 <ImageBackground
-                  source={{ uri: data?.background_image ? toImageUrl(data.background_image) : undefined }}
+                  source={data?.background_image ? { uri: toImageUrl(data.background_image) } : require('../../../assets/images/IMG_1932.jpg')}
                   style={[styles.banner, { height: bannerHeight }]} 
                   imageStyle={styles.bannerImage}
-                  defaultSource={require('../../../assets/images/IMG_1932.jpg')}
                 >
                   {data?.center_icon && (
                     <View style={styles.centerIcon}>
@@ -249,122 +275,127 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                   <Image source={{ uri: toImageUrl(data.decor_image_5) }} style={[styles.decorImage, { right: 10, top: -Math.round(Math.min(20, width * 0.03)), transform: [{ rotate: '15deg' }] }]} />
                 )}
               </View>
+            ),
 
-              {/* City cards */}
-              <View style={{ marginTop: 90 }}>
-              {cities.map((city) => (
-                <View
-                  key={city.id}
-                  ref={sectionRefs[city.slug]}
-                  onLayout={(e) => {
-                    cityPositionsRef.current[city.slug] = e.nativeEvent.layout.y;
-                  }}
-                  style={styles.card}
-                >
-                  <ImageBackground
-                                        source={{ uri: city.city_image ? toImageUrl(city.city_image) : undefined }}
+            // City cards
+            (
+              <View key="cards" style={{ marginTop: 90 }}>
+                {cities.map((city) => (
+                  <View
+                    key={city.id}
+                    ref={sectionRefs[city.slug]}
+                    onLayout={(e) => {
+                      cityPositionsRef.current[city.slug] = e.nativeEvent.layout.y;
+                    }}
+                    style={styles.card}
+                  >
+                    <ImageBackground
+                      source={city.city_image ? { uri: toImageUrl(city.city_image) } : require('../../../assets/images/IMG_1932.jpg')}
                       style={styles.cityImage}
                       imageStyle={styles.cityImageInner}
                     />
-                  <Text style={styles.cityTitle}>{city.name}</Text>
+                    <Text style={styles.cityTitle}>{city.name}</Text>
 
-                  <View style={styles.eventsContainer}>
-                    {city.events && city.events.length > 0 ? (
-                      city.events.map((event) => (
-                        <View key={event.id} style={styles.eventItem}>
-                          <View style={styles.eventHeader}>
-                            <View style={styles.eventIconWrap}>
-                              <ArrowIcon width={35} height={35} />
-                            </View>
-                            <Text style={styles.eventTitle} numberOfLines={1}>
-                              {event.title}
-                            </Text>
-                          </View>
-                          {event.date_info && (
-                            <View style={styles.eventRow}>
+                    <View style={styles.eventsContainer}>
+                      {city.events && city.events.length > 0 ? (
+                        city.events.map((event) => (
+                          <View key={event.id} style={styles.eventItem}>
+                            <View style={styles.eventHeader}>
                               <View style={styles.eventIconWrap}>
-                                <CalendarIcon width={35} height={35} />
+                                <ArrowIcon width={35} height={35} />
                               </View>
-                              <Text style={styles.eventRowText}>{event.date_info}</Text>
+                              <Text style={styles.eventTitle} numberOfLines={1}>
+                                {event.title}
+                              </Text>
                             </View>
-                          )}
-                          {event.location && (
-                            <View style={styles.eventRow}>
-                              <View style={styles.eventIconWrap}>
-                                <LocationIcon width={35} height={35} />
+                            {event.date_info && (
+                              <View style={styles.eventRow}>
+                                <View style={styles.eventIconWrap}>
+                                  <CalendarIcon width={35} height={35} />
+                                </View>
+                                <Text style={styles.eventRowText}>{event.date_info}</Text>
                               </View>
-                              <Text style={styles.eventRowText} numberOfLines={1}>{event.location}</Text>
-                            </View>
-                          )}
-                          {event.description && (
-                            <View style={styles.eventDescription}>
-                              <Text style={styles.descriptionTitle}>О событии</Text>
-                              <Text style={styles.descriptionText}>{parseBoldText(event.description)}</Text>
-                              {event.event_url && (
-                                <Text style={styles.linkText}>
-                                  <Text style={styles.linkLabel}>Ссылка на мероприятие: </Text>
-                                  <Text style={styles.linkUrl} onPress={() => openLink(event.event_url!)}>{event.event_url}</Text>
-                                </Text>
-                              )}
-                            </View>
-                          )}
-                        </View>
-                      ))
-                    ) : (
-                      <Text style={styles.emptyText}>Нет событий в этом городе</Text>
-                    )}
-
-                    {/* Ad Slider - after events */}
-                    {city.slider_items && city.slider_items.length > 0 && (
-                      <View style={styles.adBlock}>
-                        <FlatList
-                          data={city.slider_items.slice().sort((a, b) => a.order - b.order)}
-                          keyExtractor={(item) => `${city.id}-${item.id}`}
-                          renderItem={({ item, index }) => {
-                            const slideWidth = Math.round(width - 40);
-                            const isActive = (visibleAdIndexByCity[city.id] ?? 0) === index;
-                            return (
-                              <View style={[styles.adSlide, { width: slideWidth }]}>
-                                {item.media_type === 'video' ? (
-                                  <InlineAdVideo active={isActive} uri={toImageUrl(item.media_file)} style={styles.adImage} />
-                                ) : (
-                                  <Image source={{ uri: toImageUrl(item.media_file) }} style={styles.adImage} resizeMode="cover" />
+                            )}
+                            {event.location && (
+                              <View style={styles.eventRow}>
+                                <View style={styles.eventIconWrap}>
+                                  <LocationIcon width={35} height={35} />
+                                </View>
+                                <Text style={styles.eventRowText} numberOfLines={1}>{event.location}</Text>
+                              </View>
+                            )}
+                            {event.description && (
+                              <View style={styles.eventDescription}>
+                                <Text style={styles.descriptionTitle}>О событии</Text>
+                                <Text style={styles.descriptionText}>{parseBoldText(event.description)}</Text>
+                                {event.event_url && (
+                                  <Text style={styles.linkText}>
+                                    <Text style={styles.linkLabel}>Ссылка на мероприятие: </Text>
+                                    <Text style={styles.linkUrl} onPress={() => openLink(event.event_url!)}>{event.event_url}</Text>
+                                  </Text>
                                 )}
                               </View>
-                            );
-                          }}
-                          horizontal
-                          showsHorizontalScrollIndicator={false}
-                          snapToInterval={Math.round(width - 40)}
-                          snapToAlignment="start"
-                          decelerationRate="fast"
-                          initialNumToRender={1}
-                          windowSize={2}
-                          maxToRenderPerBatch={1}
-                          updateCellsBatchingPeriod={50}
-                          removeClippedSubviews
-                          getItemLayout={(_d, index) => {
-                            const w = Math.round(width - 40);
-                            return { length: w, offset: w * index, index };
-                          }}
-                          onViewableItemsChanged={({ viewableItems }) => {
-                            if (viewableItems && viewableItems.length > 0) {
-                              const first = viewableItems[0];
-                              if (typeof first.index === 'number') {
-                                setVisibleAdIndexByCity((prev) => ({ ...prev, [city.id]: first.index as number }));
+                            )}
+                          </View>
+                        ))
+                      ) : (
+                        <Text style={styles.emptyText}>Нет событий в этом городе</Text>
+                      )}
+
+                      {/* Ad Slider - after events */}
+                      {city.slider_items && city.slider_items.length > 0 && (
+                        <View style={styles.adBlock}>
+                          <FlatList
+                            ref={(r) => { flatListRefs.current[city.id] = r; }}
+                            data={city.slider_items.slice().sort((a, b) => a.order - b.order)}
+                            keyExtractor={(item) => `${city.id}-${item.id}`}
+                            renderItem={({ item, index }) => {
+                              const slideWidth = Math.round(width - 40);
+                              const isActive = (visibleAdIndexByCity[city.id] ?? 0) === index;
+                              return (
+                                <View style={[styles.adSlide, { width: slideWidth }]}>
+                                  {item.media_type === 'video' ? (
+                                    <InlineAdVideo active={isActive} uri={toImageUrl(item.media_file)} style={styles.adImage} />
+                                  ) : (
+                                    <View style={styles.adImage} pointerEvents="none">
+                                      <Image source={{ uri: toImageUrl(item.media_file) }} style={{ width: '100%', height: '100%' }} resizeMode="cover" />
+                                    </View>
+                                  )}
+                                </View>
+                              );
+                            }}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            snapToInterval={Math.round(width - 40)}
+                            snapToAlignment="start"
+                            decelerationRate="fast"
+                            initialNumToRender={1}
+                            windowSize={2}
+                            maxToRenderPerBatch={1}
+                            updateCellsBatchingPeriod={50}
+                            removeClippedSubviews
+                            getItemLayout={(_d, index) => {
+                              const w = Math.round(width - 40);
+                              return { length: w, offset: w * index, index };
+                            }}
+                            onViewableItemsChanged={({ viewableItems }) => {
+                              if (viewableItems && viewableItems.length > 0) {
+                                const first = viewableItems[0];
+                                if (typeof first.index === 'number') {
+                                  setVisibleAdIndexByCity((prev) => ({ ...prev, [city.id]: first.index as number }));
+                                }
                               }
-                            }
-                          }}
-                          viewabilityConfig={{ itemVisiblePercentThreshold: 60 }}
-                        />
-                      </View>
-                    )}
+                            }}
+                            viewabilityConfig={{ itemVisiblePercentThreshold: 60 }}
+                          />
+                        </View>
+                      )}
+                    </View>
                   </View>
-                </View>
-              ))}
+                ))}
               </View>
-            </>
-          )}
+            )
+          ])}
         </ScrollView>
       </View>
     </Modal>
@@ -472,6 +503,7 @@ const styles = StyleSheet.create({
   tabsStickyWrap: {
     marginBottom: 30,
     marginHorizontal: -20,
+    backgroundColor: '#FFFFFF',
   },
   tabsContent: {
     paddingLeft: 20,
