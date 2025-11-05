@@ -73,7 +73,7 @@ export default function BeautySalonsTkuarchalScreen({ visible, onClose }: { visi
   const beautySalons = (pageData?.beauty_salons || []).slice().sort((a, b) => a.order - b.order);
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={false}>
+    <Modal visible={visible} animationType="slide" transparent={false} presentationStyle="fullScreen" statusBarTranslucent>
       <View style={styles.container}>
         <View style={styles.headerBar}>
           <TouchableOpacity onPress={onClose} style={styles.backButton}>

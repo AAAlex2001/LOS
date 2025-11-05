@@ -1,20 +1,37 @@
-import React, { useEffect } from 'react';
-import * as SplashScreen from 'expo-splash-screen';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import * as SystemUI from 'expo-system-ui';
 import WelcomeScreen from '../pages/Welcome/Welcome';
 
-// Keep the native splash screen visible while we fetch resources
-SplashScreen.preventAutoHideAsync();
-
 export default function IndexScreen() {
+  const [showSplash, setShowSplash] = useState(true);
+
   useEffect(() => {
-    // Hide native splash screen after a short delay
-    const timer = setTimeout(async () => {
-      await SplashScreen.hideAsync();
+    // Set system UI background color to match splash
+    SystemUI.setBackgroundColorAsync('#010E59');
+    
+    const timer = setTimeout(() => {
+      setShowSplash(false);
     }, 1500);
 
     return () => clearTimeout(timer);
   }, []);
+
+  if (showSplash) {
+    return (
+      <SafeAreaView style={styles.splash} edges={[]}>
+        <StatusBar style="light" />
+        <Image
+          source={require('../assets/images/logo_splash.png')}
+          style={{ width: 150, height: 150 }}
+          contentFit="contain"
+        />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <>
@@ -23,3 +40,12 @@ export default function IndexScreen() {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  splash: {
+    flex: 1,
+    backgroundColor: '#010E59',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

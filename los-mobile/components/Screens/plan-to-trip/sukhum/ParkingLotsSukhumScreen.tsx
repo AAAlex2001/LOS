@@ -71,7 +71,7 @@ export default function ParkingLotsSukhumScreen({ visible, onClose }: { visible:
   const parkingLots = (pageData?.parking_lots || []).slice().sort((a, b) => a.order - b.order);
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={false}>
+    <Modal visible={visible} animationType="slide" transparent={false} presentationStyle="fullScreen" statusBarTranslucent>
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.headerBar}>

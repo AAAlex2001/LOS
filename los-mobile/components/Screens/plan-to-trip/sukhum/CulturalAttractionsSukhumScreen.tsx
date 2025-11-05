@@ -72,7 +72,7 @@ export default function CulturalAttractionsSukhumScreen({ visible, onClose }: { 
   const attractions = (pageData?.attractions || []).slice().sort((a, b) => a.order - b.order);
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={false}>
+    <Modal visible={visible} animationType="slide" transparent={false} presentationStyle="fullScreen" statusBarTranslucent>
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.headerBar}>

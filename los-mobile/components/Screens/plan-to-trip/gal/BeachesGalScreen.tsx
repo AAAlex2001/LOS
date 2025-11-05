@@ -72,7 +72,7 @@ export default function BeachesGalScreen({ visible, onClose }: { visible: boolea
   const beaches = (pageData?.beaches || []).slice().sort((a, b) => a.order - b.order);
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={false}>
+    <Modal visible={visible} animationType="slide" transparent={false} presentationStyle="fullScreen" statusBarTranslucent>
       <View style={styles.container}>
         <View style={styles.headerBar}>
           <TouchableOpacity onPress={onClose} style={styles.backButton}>
