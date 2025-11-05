@@ -10,11 +10,13 @@ export default function IndexScreen() {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    // Set system UI background color to match splash
+    // Set system UI background color to match splash during splash
     SystemUI.setBackgroundColorAsync('#010E59');
     
-    const timer = setTimeout(() => {
+    const timer = setTimeout(async () => {
       setShowSplash(false);
+      // Return system bars to white after splash
+      await SystemUI.setBackgroundColorAsync('#FFFFFF');
     }, 1500);
 
     return () => clearTimeout(timer);
@@ -35,7 +37,7 @@ export default function IndexScreen() {
 
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
       <WelcomeScreen />
     </>
   );

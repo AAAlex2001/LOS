@@ -15,7 +15,8 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    SystemUI.setBackgroundColorAsync('#010E59');
+    // Keep system bars white by default
+    SystemUI.setBackgroundColorAsync('#FFFFFF');
   }, []);
 
   if (!loaded) {
@@ -25,17 +26,16 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#010E59' } }}>
+      <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen
           name="index"
           options={{
-            contentStyle: { backgroundColor: '#010E59' },
-            statusBarStyle: 'light',
+            statusBarStyle: 'dark',
           }}
         />
         <Stack.Screen name="+not-found" />
       </Stack>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
     </ThemeProvider>
   );
 }
