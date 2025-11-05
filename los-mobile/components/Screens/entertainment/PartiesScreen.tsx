@@ -366,6 +366,7 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                             }}
                             horizontal
                             showsHorizontalScrollIndicator={false}
+                            scrollEnabled={false}
                             snapToInterval={Math.round(width - 40)}
                             snapToAlignment="start"
                             decelerationRate="fast"
@@ -426,8 +427,8 @@ const styles = StyleSheet.create({
   },
   headerTitleWrap: {
     flex: 1,
-    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-start',
     marginLeft: 20,
   },
   headerTitle: {
@@ -437,9 +438,10 @@ const styles = StyleSheet.create({
     color: '#000',
     textTransform: 'uppercase',
     letterSpacing: 0.2,
+    textAlign: 'left',
+    alignSelf: 'flex-start',
     marginTop: 24,
     marginLeft: 0,
-    textAlign: 'left',
   },
   banner: {
     width: "100%",
@@ -509,7 +511,8 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     alignItems: 'center',
-      gap: 5,
+    justifyContent: 'center',
+    gap: 5,
   },
   tab: {
     height: 30,

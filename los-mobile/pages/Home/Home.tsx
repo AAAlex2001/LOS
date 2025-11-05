@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
   useWindowDimensions,
+  AppState,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
@@ -53,20 +54,48 @@ const getIconForTab = (label: string) => {
   return <FontAwesome5 name="city" size={40} color="#fff" />;
 };
 
-const SliderVideo = ({ src, active }: { src: string; active: boolean }) => {
+const SliderVideo = ({ src, overlayOpen }: { src: string; overlayOpen?: boolean }) => {
   const player = useVideoPlayer(encodeURI(String(src)), (p) => {
     p.loop = true;
     p.muted = true;
   });
+
   useEffect(() => {
-    try {
-      if (active) {
-        player.play();
-      } else {
-        player.pause();
+    const play = async () => {
+      try {
+        await player.play();
+      } catch {}
+    };
+
+    // Старт воспроизведения
+    play();
+
+    // Возобновление после возврата приложения на передний план
+    const sub = AppState.addEventListener('change', (state) => {
+      if (state === 'active') {
+        setTimeout(() => {
+          play();
+        }, 150);
       }
-    } catch {}
-  }, [active, player]);
+    });
+
+    return () => {
+      sub.remove();
+    };
+  }, [player]);
+
+  // При открытии/закрытии модалок пробуем возобновить воспроизведение
+  useEffect(() => {
+    const replay = async () => {
+      try {
+        await player.play();
+      } catch {}
+    };
+    // небольшая задержка чтобы слой модалки стабилизировался
+    const t = setTimeout(replay, 150);
+    return () => clearTimeout(t);
+  }, [overlayOpen, player]);
+
   return (
     <View style={styles.slideImage} pointerEvents="none">
       <VideoView
@@ -123,7 +152,6 @@ const HomePage = () => {
   const [planTripVisible, setPlanTripVisible] = useState(false);
   const [importantTripVisible, setImportantTripVisible] = useState(false);
   const [sidebarVisible, setSidebarVisible] = useState(false);
-  const flatListRef = useRef<FlatList<SliderItem>>(null);
   const isOverlayOpen = aboutVisible || entertainmentVisible || planTripVisible || importantTripVisible || sidebarVisible;
   const { width: windowWidth } = useWindowDimensions();
   const [sliderWidth, setSliderWidth] = useState<number>(0);
@@ -177,7 +205,7 @@ const HomePage = () => {
   const renderSliderItem = ({ item, index }: { item: SliderItem; index: number }) => (
     <View style={[styles.slide, { width: effectiveWidth }]}>
       {item.type === 'video' ? (
-        <SliderVideo src={String(item.src)} active={!isOverlayOpen && (currentSlide % (sliderItems.length || 1) === index)} />
+        <SliderVideo src={String(item.src)} overlayOpen={isOverlayOpen} />
       ) : (
         <View style={styles.slideImage} pointerEvents="none">
           <Image source={{ uri: item.src }} style={StyleSheet.absoluteFillObject} contentFit="cover" />
@@ -227,7 +255,6 @@ const HomePage = () => {
           {/* Slider */}
           <View style={styles.sliderContainer} onLayout={(e) => setSliderWidth(Math.round(e.nativeEvent.layout.width))}>
             <FlatList
-              ref={flatListRef}
               data={sliderItems}
               renderItem={renderSliderItem}
               horizontal
