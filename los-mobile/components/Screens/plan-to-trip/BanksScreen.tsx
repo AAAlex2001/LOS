@@ -63,7 +63,7 @@ export default function BanksScreen({ visible, onClose }: { visible: boolean, on
   };
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={false}>
+    <Modal visible={visible} animationType="slide" transparent={false} presentationStyle="fullScreen" statusBarTranslucent>
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.headerBar}>

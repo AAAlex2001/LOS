@@ -72,7 +72,7 @@ export default function HistoryAndCultureScreen({ visible, onClose }: { visible:
   };
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={false}>
+    <Modal visible={visible} animationType="slide" transparent={false} presentationStyle="fullScreen" statusBarTranslucent>
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.headerBar}>

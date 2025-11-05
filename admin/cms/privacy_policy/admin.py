@@ -18,3 +18,4 @@ class AccessibilityAndTermsPageAdmin(admin.ModelAdmin):
 
 
 
+

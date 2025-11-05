@@ -183,7 +183,7 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
   const tracks = (pageData?.tracks || []).slice().sort((a, b) => a.order - b.order);
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={false}>
+    <Modal visible={visible} animationType="slide" transparent={false} presentationStyle="fullScreen" statusBarTranslucent>
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.headerBar}>
@@ -411,4 +411,5 @@ const styles = StyleSheet.create({
   mainImageContainer: { width: '100%', marginBottom: 20 },
   mainImage: { width: '100%', height: 226, borderRadius: 15 },
 });
+
 

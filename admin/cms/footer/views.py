@@ -22,3 +22,4 @@ class FooterViewSet(viewsets.ModelViewSet):
 
 
 
+

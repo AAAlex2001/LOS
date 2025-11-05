@@ -50,7 +50,6 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
         const json = (await res.json()) as YourDoctorPage;
         setData(json);
       } catch (e) {
-        // eslint-disable-next-line no-console
         console.error(e);
       } finally {
         setLoading(false);
@@ -137,7 +136,7 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
   const headerIcon = toMedia(data?.logo_image_url);
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={false}>
+    <Modal visible={visible} animationType="slide" transparent={false} presentationStyle="fullScreen" statusBarTranslucent>
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.headerBar}>

@@ -50,7 +50,7 @@ export default function AbkhazianCustomsScreen({ visible, onClose }: { visible: 
   const heroImageSrc = data?.hero_image_url ? `${API_BASE}/media/${data.hero_image_url}` : '';
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={false}>
+    <Modal visible={visible} animationType="slide" transparent={false} presentationStyle="fullScreen" statusBarTranslucent>
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.headerBar}>

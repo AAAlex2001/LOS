@@ -62,7 +62,7 @@ export default function SportsGymsScreen({ visible, onClose }: { visible: boolea
   const gyms = (pageData?.gyms || []).slice().sort((a, b) => a.order - b.order);
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={false}>
+    <Modal visible={visible} animationType="slide" transparent={false} presentationStyle="fullScreen" statusBarTranslucent>
       <View style={styles.container}>
         <View style={styles.headerBar}>
           <TouchableOpacity onPress={onClose} style={styles.backButton}>
@@ -253,4 +253,5 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
 });
+
 

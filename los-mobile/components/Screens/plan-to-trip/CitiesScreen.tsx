@@ -137,7 +137,7 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
   }, [activeCity, activeCategory]);
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={false}>
+    <Modal visible={visible} animationType="slide" transparent={false} presentationStyle="fullScreen" statusBarTranslucent>
       <View style={styles.container}>
         <View style={styles.headerBar}>
           <TouchableOpacity onPress={onClose} style={styles.backButton}>

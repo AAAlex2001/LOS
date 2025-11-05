@@ -219,7 +219,7 @@ export default function ImportantScreen({ visible, onClose }: { visible: boolean
   const tabs = sections.map((s) => ({ key: s.section_type, label: s.title }));
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={false}>
+    <Modal visible={visible} animationType="slide" transparent={false} presentationStyle="fullScreen" statusBarTranslucent>
       <View style={styles.container}>
         <View style={styles.headerBar}>
           <TouchableOpacity onPress={onClose} style={styles.backButton}>

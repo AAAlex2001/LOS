@@ -186,7 +186,7 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
   }, [visible, data, visibleAdIndexByCity]);
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={false}>
+    <Modal visible={visible} animationType="slide" transparent={false} presentationStyle="fullScreen" statusBarTranslucent>
       <View style={styles.container}>
         <View style={styles.headerBar}>
           <TouchableOpacity onPress={onClose} style={styles.backButton}>
@@ -439,7 +439,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2,
     marginTop: 24,
     marginLeft: 0,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   banner: {
     width: "100%",
