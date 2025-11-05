@@ -27,8 +27,8 @@ type WelcomeContent = {
 
 // Позиции в координатах макета 390x844; масштабируем под экран
 const iconPositions = [
-  { width: 100, height: 100, left: -200, top: -350, rotation: 6, delay: 0 },
-  { width: 100, height: 100, left: 100, top: -350, rotation: -15, delay: 150 },
+  { width: 100, height: 100, left: -200, top: -380, rotation: 6, delay: 0 },
+  { width: 100, height: 100, left: 100, top: -380, rotation: -15, delay: 150 },
   { width: 100, height: 100, left: -200, top: 200, rotation: 10, delay: 300 },
   { width: 90, height: 90, left: -60, top: 100, rotation: -5, delay: 450 },
   { width: 80, height: 80, left: 100, top: 20, rotation: 7, delay: 600 },
@@ -69,21 +69,21 @@ export default function WelcomeScreen() {
   }, []);
 
   useEffect(() => {
-    // Стартовые позиции
+    // Стартовые позиции в координатах макета (BASE_WIDTH/BASE_HEIGHT)
     iconPositions.forEach((icon, index) => {
       fadeAnims[index].setValue(0);
       if (index === 0) {
         // Слева
-        translateXAnims[index].setValue(-SCREEN_WIDTH);
+        translateXAnims[index].setValue(-BASE_WIDTH);
         translateYAnims[index].setValue(0);
       } else if (index === 1) {
         // Справа
-        translateXAnims[index].setValue(SCREEN_WIDTH);
+        translateXAnims[index].setValue(BASE_WIDTH);
         translateYAnims[index].setValue(0);
       } else {
         // Снизу
         translateXAnims[index].setValue(0);
-        translateYAnims[index].setValue(SCREEN_HEIGHT);
+        translateYAnims[index].setValue(BASE_HEIGHT);
       }
     });
 
@@ -120,57 +120,61 @@ export default function WelcomeScreen() {
     router.replace('/home');
   };
 
-  // scale helpers so иконки остаются на одних местах и лишь масштабируются
-  const scaleX = SCREEN_WIDTH / BASE_WIDTH;
-  const scaleY = SCREEN_HEIGHT / BASE_HEIGHT;
-  const scaleUniform = Math.min(scaleX, scaleY);
+  // Единый масштаб по ширине: фиксированное полотно 390x844, масштабируем только по ширине
+  const scale = SCREEN_WIDTH / BASE_WIDTH;
+  const canvasHeight = Math.round(BASE_HEIGHT * scale);
+  const centerX = BASE_WIDTH / 2;
+  const centerY = BASE_HEIGHT / 2;
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-      <View style={styles.content}>
-        <Text style={styles.title}>{content?.title}</Text>
-        <Text style={styles.heading}>{content?.subtitle}</Text>
-        <Text style={styles.description}>{content?.description}</Text>
-        <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
-          <Text style={styles.buttonText}>Начать исследовать</Text>
-          <Ionicons name="arrow-forward" size={31} color="#FFFFFF" />
-        </TouchableOpacity>
-      </View>
+      <View style={[styles.designRoot, { width: SCREEN_WIDTH, height: canvasHeight }]}>
+        <View style={[styles.designCanvas, { transform: [{ scale }] }]}> 
+          <View style={styles.content}>
+            <Text style={styles.title}>{content?.title}</Text>
+            <Text style={styles.heading}>{content?.subtitle}</Text>
+            <Text style={styles.description}>{content?.description}</Text>
+            <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
+              <Text style={styles.buttonText}>Начать исследовать</Text>
+              <Ionicons name="arrow-forward" size={31} color="#FFFFFF" />
+            </TouchableOpacity>
+          </View>
 
-      {/* Floating Icons */}
-      <View style={styles.iconsContainer}>
-        {content?.icons?.slice(0, 5).map((iconData, index) => {
-          const pos = iconPositions[index];
-          if (!pos) return null;
-          
-          const opacity = fadeAnims[index];
-          return (
-            <Animated.View
-              key={index}
-              style={[
-                styles.icon,
-                {
-                  width: Math.round(pos.width * scaleUniform),
-                  height: Math.round(pos.height * scaleUniform),
-                  left: SCREEN_WIDTH / 2 + pos.left * scaleX,
-                  top: SCREEN_HEIGHT / 2 + pos.top * scaleY,
-                  transform: [
-                    { rotate: `${pos.rotation}deg` },
-                    { translateX: translateXAnims[index] },
-                    { translateY: translateYAnims[index] },
-                  ],
-                  opacity,
-                },
-              ]}
-            >
-              <Image
-                source={{ uri: toImageUrl(iconData.image) }}
-                style={styles.iconImage}
-                contentFit="contain"
-              />
-            </Animated.View>
-          );
-        })}
+          {/* Floating Icons */}
+          <View style={styles.iconsContainerFixed}>
+            {content?.icons?.slice(0, 5).map((iconData, index) => {
+              const pos = iconPositions[index];
+              if (!pos) return null;
+              const opacity = fadeAnims[index];
+              return (
+                <Animated.View
+                  key={index}
+                  style={[
+                    styles.icon,
+                    {
+                      width: pos.width,
+                      height: pos.height,
+                      left: centerX + pos.left,
+                      top: centerY + pos.top,
+                      transform: [
+                        { rotate: `${pos.rotation}deg` },
+                        { translateX: translateXAnims[index] },
+                        { translateY: translateYAnims[index] },
+                      ],
+                      opacity,
+                    },
+                  ]}
+                >
+                  <Image
+                    source={{ uri: toImageUrl(iconData.image) }}
+                    style={styles.iconImage}
+                    contentFit="contain"
+                  />
+                </Animated.View>
+              );
+            })}
+          </View>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -182,11 +186,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     overflow: 'hidden',
   },
-  content: {
-    flex: 1,
+  designRoot: {
+    alignSelf: 'center',
     justifyContent: 'flex-start',
     alignItems: 'center',
+  },
+  designCanvas: {
+    width: BASE_WIDTH,
+    height: BASE_HEIGHT,
+    position: 'relative',
+  },
+  content: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
     paddingHorizontal: 20,
+    alignItems: 'center',
     zIndex: 2,
   },
   title: {
@@ -230,10 +246,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: '100%',
   },
-  iconsContainer: {
+  iconsContainerFixed: {
     position: 'absolute',
-    width: '100%',
-    height: '100%',
+    top: 0,
+    left: 0,
+    width: BASE_WIDTH,
+    height: BASE_HEIGHT,
     pointerEvents: 'none',
     zIndex: 1,
   },
