@@ -163,11 +163,20 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
                   style={styles.preview}
                 >
                   <Text style={styles.cityName}>{city.name}</Text>
-                  <ImageBackground
-                    source={{ uri: toImageUrl(city.image_url) }}
-                    style={styles.cityImage}
-                    imageStyle={styles.cityImageInner}
-                  />
+                  <View style={styles.imageContainer}>
+                    <ImageBackground
+                      source={{ uri: toImageUrl(city.image_url) }}
+                      style={styles.cityImage}
+                      imageStyle={styles.cityImageInner}
+                    >
+                      {!expandedCity.includes(city.id) && <View style={styles.darkOverlay} />}
+                      {!expandedCity.includes(city.id) && (
+                        <View style={styles.bottomTextContainer}>
+                          <Text style={styles.bottomText}>Нажмите, чтобы увидеть больше</Text>
+                        </View>
+                      )}
+                    </ImageBackground>
+                  </View>
                 </TouchableOpacity>
                 
                 {expandedCity.includes(city.id) && (
@@ -278,12 +287,42 @@ const styles = StyleSheet.create({
   },
   cityImage: {
     width: '100%',
-    height: 215,
+    height: 250,
     marginTop: 0,
     borderRadius: 15,
   },
   cityImageInner: {
     borderRadius: 15,
+  },
+  imageContainer: {
+    width: '100%',
+    height: 250,
+    borderRadius: 15,
+    overflow: 'hidden',
+  },
+  darkOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.25)',
+  },
+  bottomTextContainer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 16,
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  bottomText: {
+    fontFamily: 'Inter',
+    fontWeight: '500',
+    fontSize: 14,
+    lineHeight: 17,
+    color: '#FFFFFF',
+    textAlign: 'center',
   },
   expandedContent: {
     width: '100%',
