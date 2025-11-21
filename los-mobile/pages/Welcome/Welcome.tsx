@@ -8,8 +8,6 @@ import { Image } from 'expo-image';
 import config from '../../config';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-const BASE_WIDTH = 390; // design reference
-const BASE_HEIGHT = 844; // design reference
 const API_BASE = config.API_BASE;
 
 const toImageUrl = (url?: string) => {
@@ -25,18 +23,19 @@ type WelcomeContent = {
   icons?: { image: string; order?: number }[];
 };
 
-// Позиции в координатах макета 390x844; масштабируем под экран
+// Позиции иконок относительно центра экрана
 const iconPositions = [
-  { width: 100, height: 100, left: -200, top: -380, rotation: 6, delay: 0 },
-  { width: 100, height: 100, left: 100, top: -380, rotation: -15, delay: 150 },
-  { width: 100, height: 100, left: -200, top: 200, rotation: 10, delay: 300 },
-  { width: 90, height: 90, left: -60, top: 100, rotation: -5, delay: 450 },
-  { width: 80, height: 80, left: 100, top: 20, rotation: 7, delay: 600 },
+  { width: 100, height: 100, left: -200, top: -340, rotation: 6, delay: 0 },
+  { width: 100, height: 100, left: 100, top: -340, rotation: -15, delay: 150 },
+  { width: 100, height: 100, left: -200, top: 225, rotation: 10, delay: 300 },
+  { width: 90, height: 90, left: -60, top: 125, rotation: -5, delay: 450 },
+  { width: 80, height: 80, left: 100, top: 45, rotation: 7, delay: 600 },
 ];
 
 export default function WelcomeScreen() {
   const router = useRouter();
   const [content, setContent] = useState<WelcomeContent | null>(null);
+  const [titleY, setTitleY] = useState(0);
   
   // X для верхних (0,1), Y для нижних (2,3,4)
   const translateXAnims = useRef(iconPositions.map(() => new Animated.Value(0))).current;
@@ -69,21 +68,21 @@ export default function WelcomeScreen() {
   }, []);
 
   useEffect(() => {
-    // Стартовые позиции в координатах макета (BASE_WIDTH/BASE_HEIGHT)
+    // Стартовые позиции для анимации
     iconPositions.forEach((icon, index) => {
       fadeAnims[index].setValue(0);
       if (index === 0) {
         // Слева
-        translateXAnims[index].setValue(-BASE_WIDTH);
+        translateXAnims[index].setValue(-SCREEN_WIDTH);
         translateYAnims[index].setValue(0);
       } else if (index === 1) {
         // Справа
-        translateXAnims[index].setValue(BASE_WIDTH);
+        translateXAnims[index].setValue(SCREEN_WIDTH);
         translateYAnims[index].setValue(0);
       } else {
         // Снизу
         translateXAnims[index].setValue(0);
-        translateYAnims[index].setValue(BASE_HEIGHT);
+        translateYAnims[index].setValue(SCREEN_HEIGHT);
       }
     });
 
@@ -120,32 +119,43 @@ export default function WelcomeScreen() {
     router.replace('/home');
   };
 
-  // Единый масштаб по ширине: фиксированное полотно 390x844, масштабируем только по ширине
-  const scale = SCREEN_WIDTH / BASE_WIDTH;
-  const canvasHeight = Math.round(BASE_HEIGHT * scale);
-  const centerX = BASE_WIDTH / 2;
-  const centerY = BASE_HEIGHT / 2;
-
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-      <View style={[styles.designRoot, { width: SCREEN_WIDTH, height: canvasHeight }]}>
-        <View style={[styles.designCanvas, { transform: [{ scale }] }]}> 
-          <View style={styles.content}>
-            <Text style={styles.title}>{content?.title}</Text>
-            <Text style={styles.heading}>{content?.subtitle}</Text>
-            <Text style={styles.description}>{content?.description}</Text>
-            <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
-              <Text style={styles.buttonText}>Начать исследовать</Text>
-              <Ionicons name="arrow-forward" size={31} color="#FFFFFF" />
-            </TouchableOpacity>
-          </View>
+      <View style={styles.contentWrapper}>
+        <View style={styles.content}>
+          <Text 
+            style={styles.title}
+            onLayout={(e) => {
+              const { y, height } = e.nativeEvent.layout;
+              setTitleY(y + height);
+            }}
+          >
+            {content?.title}
+          </Text>
+          <Text style={styles.heading}>{content?.subtitle}</Text>
+          <Text style={styles.description}>{content?.description}</Text>
+          <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
+            <Text style={styles.buttonText}>Начать исследовать</Text>
+            <Ionicons name="arrow-forward" size={31} color="#FFFFFF" />
+          </TouchableOpacity>
 
           {/* Floating Icons */}
-          <View style={styles.iconsContainerFixed}>
+          <View style={styles.iconsContainer}>
             {content?.icons?.slice(0, 5).map((iconData, index) => {
               const pos = iconPositions[index];
               if (!pos) return null;
               const opacity = fadeAnims[index];
+              
+              // Для первых двух иконок позиционируем относительно заголовка
+              let topPosition;
+              if (index <= 1) {
+                // Позиция под заголовком + небольшой отступ
+                topPosition = titleY > 0 ? titleY + 20 : SCREEN_HEIGHT / 2 + pos.top;
+              } else {
+                // Для остальных иконок используем центр экрана
+                topPosition = SCREEN_HEIGHT / 2 + pos.top;
+              }
+              
               return (
                 <Animated.View
                   key={index}
@@ -154,8 +164,8 @@ export default function WelcomeScreen() {
                     {
                       width: pos.width,
                       height: pos.height,
-                      left: centerX + pos.left,
-                      top: centerY + pos.top,
+                      left: SCREEN_WIDTH / 2 + pos.left,
+                      top: topPosition,
                       transform: [
                         { rotate: `${pos.rotation}deg` },
                         { translateX: translateXAnims[index] },
@@ -184,25 +194,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    overflow: 'hidden',
   },
-  designRoot: {
-    alignSelf: 'center',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  designCanvas: {
-    width: BASE_WIDTH,
-    height: BASE_HEIGHT,
+  contentWrapper: {
+    flex: 1,
     position: 'relative',
   },
   content: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
+    flex: 1,
+    justifyContent: 'flex-start',
     paddingHorizontal: 20,
+    paddingTop: 30,
+    paddingBottom: 40,
     alignItems: 'center',
+    position: 'relative',
     zIndex: 2,
   },
   title: {
@@ -210,23 +214,30 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#1129BD',
     textAlign: 'center',
-    marginBottom: 125,
+    marginBottom: 130,
+    lineHeight: 34,
+    maxWidth: 380,
+    width: '100%',
   },
   heading: {
     fontSize: 18,
     fontWeight: '700',
     color: '#1129BD',
     textAlign: 'center',
-    marginBottom: 24,
-    lineHeight: 20,
+    marginBottom: 16,
+    lineHeight: 24,
+    maxWidth: 380,
+    width: '100%',
   },
   description: {
     fontSize: 18,
     fontWeight: '400',
     color: '#000000',
     textAlign: 'center',
-    lineHeight: 20,
-    marginBottom: 40,
+    lineHeight: 26,
+    marginBottom: 48,
+    maxWidth: 380,
+    width: '100%',
   },
   button: {
     backgroundColor: '#1129BD',
@@ -236,7 +247,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 8,
     minHeight: 50,
+    maxWidth: 380,
+    width: '100%',
   },
   buttonText: {
     fontSize: 16,
@@ -244,16 +258,16 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#FFFFFF',
     textAlign: 'center',
-    width: '100%',
   },
-  iconsContainerFixed: {
+  iconsContainer: {
     position: 'absolute',
     top: 0,
     left: 0,
-    width: BASE_WIDTH,
-    height: BASE_HEIGHT,
+    right: 0,
+    bottom: 0,
     pointerEvents: 'none',
     zIndex: 1,
+    overflow: 'visible',
   },
   icon: {
     position: 'absolute',
