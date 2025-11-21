@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
+import { extractPhoneNumber } from '../phoneUtils';
 
 interface BeautySalon {
   id: number;
@@ -124,9 +125,18 @@ export default function BeautySalonsGulripshScreen({ visible, onClose }: { visib
                   {salon.phone && (
                     <View style={styles.infoBlock}>
                       <Text style={styles.infoLabel}>Телефон:</Text>
-                      <TouchableOpacity onPress={() => Linking.openURL(`tel:${salon.phone}`)}>
-                        <Text style={[styles.infoValue, styles.underline]}>{salon.phone}</Text>
-                      </TouchableOpacity>
+                      {extractPhoneNumber(salon.phone) ? (
+                        <TouchableOpacity onPress={() => {
+                          const phone = extractPhoneNumber(salon.phone);
+                          if (phone) {
+                            Linking.openURL(`tel:${phone}`);
+                          }
+                        }}>
+                          <Text style={[styles.infoValue, styles.underline]}>{salon.phone}</Text>
+                        </TouchableOpacity>
+                      ) : (
+                        <Text style={styles.infoValue}>{salon.phone}</Text>
+                      )}
                     </View>
                   )}
                   
