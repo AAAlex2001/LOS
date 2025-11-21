@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
+import { extractPhoneNumber } from '../phoneUtils';
 
 interface Pharmacy {
   id: number;
@@ -130,7 +131,18 @@ export default function PharmacyGalScreen({ visible, onClose }: { visible: boole
                   {pharmacy.contacts && (
                     <View style={styles.infoBlock}>
                       <Text style={styles.infoLabel}>Контакты:</Text>
-                      <Text style={styles.infoValue}>{pharmacy.contacts}</Text>
+                      {extractPhoneNumber(pharmacy.contacts) ? (
+                        <TouchableOpacity onPress={() => {
+                          const phone = extractPhoneNumber(pharmacy.contacts);
+                          if (phone) {
+                            Linking.openURL(`tel:${phone}`);
+                          }
+                        }}>
+                          <Text style={[styles.infoValue, styles.underline]}>{pharmacy.contacts}</Text>
+                        </TouchableOpacity>
+                      ) : (
+                        <Text style={styles.infoValue}>{pharmacy.contacts}</Text>
+                      )}
                     </View>
                   )}
                 </View>
