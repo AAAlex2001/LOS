@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
+import { extractPhoneNumber } from '../phoneUtils';
 
 interface Beach {
   id: number;
@@ -123,7 +124,18 @@ export default function BeachesPitsundaScreen({ visible, onClose }: { visible: b
                   {beach.phone && (
                     <View style={styles.infoBlock}>
                       <Text style={styles.infoLabel}>Телефон:</Text>
-                      <Text style={styles.infoValue}>{beach.phone}</Text>
+                      {extractPhoneNumber(beach.phone) ? (
+                        <TouchableOpacity onPress={() => {
+                          const phone = extractPhoneNumber(beach.phone);
+                          if (phone) {
+                            Linking.openURL(`tel:${phone}`);
+                          }
+                        }}>
+                          <Text style={[styles.infoValue, styles.underline]}>{beach.phone}</Text>
+                        </TouchableOpacity>
+                      ) : (
+                        <Text style={styles.infoValue}>{beach.phone}</Text>
+                      )}
                     </View>
                   )}
                   

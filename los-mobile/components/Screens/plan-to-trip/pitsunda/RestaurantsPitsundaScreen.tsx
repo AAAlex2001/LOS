@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
+import { extractPhoneNumber } from '../phoneUtils';
 
 interface Restaurant {
   id: number;
@@ -131,7 +132,18 @@ export default function RestaurantsPitsundaScreen({ visible, onClose }: { visibl
                   {restaurant.phone && (
                     <View style={styles.infoBlock}>
                       <Text style={styles.infoLabel}>Телефон:</Text>
-                      <Text style={styles.infoValue}>{restaurant.phone}</Text>
+                      {extractPhoneNumber(restaurant.phone) ? (
+                        <TouchableOpacity onPress={() => {
+                          const phone = extractPhoneNumber(restaurant.phone);
+                          if (phone) {
+                            Linking.openURL(`tel:${phone}`);
+                          }
+                        }}>
+                          <Text style={[styles.infoValue, styles.underline]}>{restaurant.phone}</Text>
+                        </TouchableOpacity>
+                      ) : (
+                        <Text style={styles.infoValue}>{restaurant.phone}</Text>
+                      )}
                     </View>
                   )}
                   
