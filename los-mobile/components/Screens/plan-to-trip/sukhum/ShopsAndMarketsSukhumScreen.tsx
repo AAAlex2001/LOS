@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
+import { extractPhoneNumber } from '../phoneUtils';
 
 interface ShopOrMarket {
   id: number;
@@ -132,7 +133,18 @@ export default function ShopsAndMarketsSukhumScreen({ visible, onClose }: { visi
                   {shop.contacts && (
                     <View style={styles.infoBlock}>
                       <Text style={styles.infoLabel}>Контакты:</Text>
-                      <Text style={styles.infoValue}>{shop.contacts}</Text>
+                      {extractPhoneNumber(shop.contacts) ? (
+                        <TouchableOpacity onPress={() => {
+                          const phone = extractPhoneNumber(shop.contacts);
+                          if (phone) {
+                            Linking.openURL(`tel:${phone}`);
+                          }
+                        }}>
+                          <Text style={[styles.infoValue, styles.underline]}>{shop.contacts}</Text>
+                        </TouchableOpacity>
+                      ) : (
+                        <Text style={styles.infoValue}>{shop.contacts}</Text>
+                      )}
                     </View>
                   )}
                 </View>

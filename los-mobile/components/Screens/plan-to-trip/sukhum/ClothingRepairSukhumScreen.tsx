@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
+import { extractPhoneNumber } from '../phoneUtils';
 
 interface Repair {
   id: number;
@@ -141,7 +142,18 @@ export default function ClothingRepairSukhumScreen({ visible, onClose }: { visib
                   {repair.contacts && (
                     <View style={styles.infoBlock}>
                       <Text style={styles.infoLabel}>Контакты:</Text>
-                      <Text style={styles.infoValue}>{repair.contacts}</Text>
+                      {extractPhoneNumber(repair.contacts) ? (
+                        <TouchableOpacity onPress={() => {
+                          const phone = extractPhoneNumber(repair.contacts);
+                          if (phone) {
+                            Linking.openURL(`tel:${phone}`);
+                          }
+                        }}>
+                          <Text style={[styles.infoValue, styles.underline]}>{repair.contacts}</Text>
+                        </TouchableOpacity>
+                      ) : (
+                        <Text style={styles.infoValue}>{repair.contacts}</Text>
+                      )}
                     </View>
                   )}
                   
