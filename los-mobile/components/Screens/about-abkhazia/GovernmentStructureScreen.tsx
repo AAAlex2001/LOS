@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dimensions } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Image as ExpoImage } from 'expo-image';
 import config from '@/config';
 
 type GovernmentBlock = {
@@ -20,6 +21,7 @@ const API_BASE = config.API_BASE;
 export default function GovernmentStructureScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<GovernmentPageData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     if (!visible) return;
@@ -62,11 +64,17 @@ export default function GovernmentStructureScreen({ visible, onClose }: { visibl
             blocks.map((b) => (
               <View key={b.id} style={styles.textBlock}>
                 {b.image_url ? (
-                  <Image
-                    source={{ uri: `${API_BASE}/media/${b.image_url}` }}
-                    style={styles.mapImage}
-                    resizeMode="contain"
-                  />
+                  <TouchableOpacity
+                    activeOpacity={0.9}
+                    onPress={() => setSelectedImage(`${API_BASE}/media/${b.image_url}`)}
+                    style={styles.imageContainer}
+                  >
+                    <ExpoImage
+                      source={{ uri: `${API_BASE}/media/${b.image_url}` }}
+                      style={styles.mapImage}
+                      contentFit="contain"
+                    />
+                  </TouchableOpacity>
                 ) : null}
                 <Text style={styles.sectionTitle}>{b.title}</Text>
                 {b.content ? (
@@ -78,6 +86,37 @@ export default function GovernmentStructureScreen({ visible, onClose }: { visibl
             ))
           )}
         </ScrollView>
+        
+        {/* Full Screen Image Modal */}
+        <Modal
+          visible={selectedImage !== null}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={() => setSelectedImage(null)}
+        >
+          <View style={styles.fullScreenImageContainer}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setSelectedImage(null)}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="close" size={32} color="#fff" />
+            </TouchableOpacity>
+            {selectedImage && (
+              <TouchableOpacity
+                style={styles.fullScreenImageWrapper}
+                activeOpacity={1}
+                onPress={() => setSelectedImage(null)}
+              >
+                <ExpoImage
+                  source={{ uri: selectedImage }}
+                  style={styles.fullScreenImage}
+                  contentFit="contain"
+                />
+              </TouchableOpacity>
+            )}
+          </View>
+        </Modal>
       </View>
     </Modal>
   );
@@ -127,10 +166,42 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     alignItems: 'center',
   },
+  imageContainer: {
+    width: '100%',
+    marginBottom: 20,
+  },
   mapImage: {
     width: '100%',
     minHeight: 278,
-    marginBottom: 20,
+  },
+  fullScreenImageContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.95)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 50,
+    right: 20,
+    zIndex: 10,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  fullScreenImageWrapper: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  fullScreenImage: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
   textBlock: {
     width: '100%',
