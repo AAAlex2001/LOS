@@ -390,12 +390,12 @@ const styles = StyleSheet.create({
   },
   sliderContainer: {
     width: '100%',
-    height: 540,
+    height: 600,
     position: 'relative',
     marginTop: -59,
   },
   slide: {
-    height: 540,
+    height: 600,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     overflow: 'hidden',
