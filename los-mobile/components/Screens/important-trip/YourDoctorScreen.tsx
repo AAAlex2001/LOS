@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, ImageBackg
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
+import { extractPhoneNumber } from '../plan-to-trip/phoneUtils';
 
 type CardItem = {
   id: number;
@@ -126,7 +127,18 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
         {!!item.contacts && (
           <View style={styles.infoBlock}>
             <Text style={styles.infoLabel}>Контакты:</Text>
-            <Text style={styles.infoValue}>{item.contacts}</Text>
+            {extractPhoneNumber(item.contacts) ? (
+              <TouchableOpacity onPress={() => {
+                const phone = extractPhoneNumber(item.contacts);
+                if (phone) {
+                  Linking.openURL(`tel:${phone}`);
+                }
+              }}>
+                <Text style={[styles.infoValue, styles.underline]}>{item.contacts}</Text>
+              </TouchableOpacity>
+            ) : (
+              <Text style={styles.infoValue}>{item.contacts}</Text>
+            )}
           </View>
         )}
       </View>

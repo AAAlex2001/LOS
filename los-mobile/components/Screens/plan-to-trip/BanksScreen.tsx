@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
+import { extractPhoneNumber } from './phoneUtils';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -108,7 +109,18 @@ export default function BanksScreen({ visible, onClose }: { visible: boolean, on
                   
                   <View style={styles.infoBlock}>
                     <Text style={styles.infoLabel}>Контакты:</Text>
-                    <Text style={styles.infoValue}>{bank.contacts}</Text>
+                    {extractPhoneNumber(bank.contacts) ? (
+                      <TouchableOpacity onPress={() => {
+                        const phone = extractPhoneNumber(bank.contacts);
+                        if (phone) {
+                          Linking.openURL(`tel:${phone}`);
+                        }
+                      }}>
+                        <Text style={[styles.infoValue, styles.underline]}>{bank.contacts}</Text>
+                      </TouchableOpacity>
+                    ) : (
+                      <Text style={styles.infoValue}>{bank.contacts}</Text>
+                    )}
                   </View>
                   
                   <View style={styles.infoBlock}>

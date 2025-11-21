@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dimensions, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
+import { extractPhoneNumber } from '../plan-to-trip/phoneUtils';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -51,7 +52,20 @@ export default function ExcursionsScreen({ visible, onClose }: Props) {
     <View key={item.id} style={styles.card}>
       {item.img && <Image source={{ uri: item.img }} style={styles.cardImg} resizeMode="contain" />}
       <View style={styles.cardBody}>
-        <Text style={styles.cardContacts}>{item.contacts}</Text>
+        {item.contacts && (
+          extractPhoneNumber(item.contacts) ? (
+            <TouchableOpacity onPress={() => {
+              const phone = extractPhoneNumber(item.contacts);
+              if (phone) {
+                Linking.openURL(`tel:${phone}`);
+              }
+            }}>
+              <Text style={[styles.cardContacts, styles.underline]}>{item.contacts}</Text>
+            </TouchableOpacity>
+          ) : (
+            <Text style={styles.cardContacts}>{item.contacts}</Text>
+          )
+        )}
         <Text style={styles.link} onPress={() => openLink(item.site)}>САЙТ: {item.site}</Text>
       </View>
     </View>
@@ -99,6 +113,7 @@ const styles = StyleSheet.create({
   cardBody: { width: '100%', flexDirection: 'column', alignItems: 'center', gap: 10 },
   cardContacts: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: '#1129BD' },
   link: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: '#1129BD', textDecorationLine: 'underline' },
+  underline: { textDecorationLine: 'underline' },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',

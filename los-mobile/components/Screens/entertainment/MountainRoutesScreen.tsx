@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dimensions, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
+import { extractPhoneNumber } from '../plan-to-trip/phoneUtils';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -72,7 +73,20 @@ export default function MountainRoutesScreen({ visible, onClose }: Props) {
         <View style={styles.cardBody}>
           {route.title && <Text style={styles.cardTitle}>{route.title}</Text>}
           {route.name && <Text style={styles.cardName}>{route.name}</Text>}
-          {route.phone && <Text style={styles.cardPhone}>{route.phone}</Text>}
+          {route.phone && (
+            extractPhoneNumber(route.phone) ? (
+              <TouchableOpacity onPress={() => {
+                const phone = extractPhoneNumber(route.phone);
+                if (phone) {
+                  Linking.openURL(`tel:${phone}`);
+                }
+              }}>
+                <Text style={[styles.cardPhone, styles.underline]}>{route.phone}</Text>
+              </TouchableOpacity>
+            ) : (
+              <Text style={styles.cardPhone}>{route.phone}</Text>
+            )
+          )}
           {route.site_url && (
             <Text onPress={() => openLink(route.site_url)} style={styles.link}>САЙТ: {route.site_url}</Text>
           )}
@@ -125,6 +139,7 @@ const styles = StyleSheet.create({
   cardName: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: '#1129BD' },
   cardPhone: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: '#1129BD' },
   link: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: '#1129BD', textDecorationLine: 'underline' },
+  underline: { textDecorationLine: 'underline' },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',

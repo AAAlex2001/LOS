@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking, I
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
+import { extractPhoneNumber } from './phoneUtils';
 
 interface TaxiService {
   id: number;
@@ -60,8 +61,10 @@ export default function TaxiScreen({ visible, onClose }: { visible: boolean, onC
   };
 
   const callPhone = async (phone: string) => {
-    const cleanPhone = phone.replace(/[^\d+]/g, '');
-    await openLink(`tel:${cleanPhone}`);
+    const cleanPhone = extractPhoneNumber(phone);
+    if (cleanPhone) {
+      await openLink(`tel:${cleanPhone}`);
+    }
   };
 
   return (
@@ -128,7 +131,7 @@ export default function TaxiScreen({ visible, onClose }: { visible: boolean, onC
                     
                     {service.phones && service.phones.map((phone, idx) => (
                       <TouchableOpacity key={idx} onPress={() => callPhone(phone)}>
-                        <Text style={styles.phone}>{phone}</Text>
+                        <Text style={[styles.phone, styles.underline]}>{phone}</Text>
                       </TouchableOpacity>
                     ))}
                   </View>
@@ -272,5 +275,8 @@ const styles = StyleSheet.create({
     lineHeight: 17,
     textAlign: 'center',
     color: '#1129BD',
+  },
+  underline: {
+    textDecorationLine: 'underline',
   },
 });
