@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
+import { extractPhoneNumber } from '../phoneUtils';
 
 interface GasStation {
   id: number;
@@ -122,7 +123,18 @@ export default function GasStationsGudautaScreen({ visible, onClose }: { visible
                   {station.contacts && (
                     <View style={styles.infoBlock}>
                       <Text style={styles.infoLabel}>Контакты:</Text>
-                      <Text style={styles.infoValue}>{station.contacts}</Text>
+                      {extractPhoneNumber(station.contacts) ? (
+                        <TouchableOpacity onPress={() => {
+                          const phone = extractPhoneNumber(station.contacts);
+                          if (phone) {
+                            Linking.openURL(`tel:${phone}`);
+                          }
+                        }}>
+                          <Text style={[styles.infoValue, styles.underline]}>{station.contacts}</Text>
+                        </TouchableOpacity>
+                      ) : (
+                        <Text style={styles.infoValue}>{station.contacts}</Text>
+                      )}
                     </View>
                   )}
                 </View>

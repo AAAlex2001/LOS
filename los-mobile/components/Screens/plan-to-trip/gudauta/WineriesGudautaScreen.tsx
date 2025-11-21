@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
+import { extractPhoneNumber } from '../phoneUtils';
 
 interface Winery {
   id: number;
@@ -123,7 +124,18 @@ export default function WineriesGudautaScreen({ visible, onClose }: { visible: b
                   {winery.contacts && (
                     <View style={styles.infoBlock}>
                       <Text style={styles.infoLabel}>Контакты:</Text>
-                      <Text style={styles.infoValue}>{winery.contacts}</Text>
+                      {extractPhoneNumber(winery.contacts) ? (
+                        <TouchableOpacity onPress={() => {
+                          const phone = extractPhoneNumber(winery.contacts);
+                          if (phone) {
+                            Linking.openURL(`tel:${phone}`);
+                          }
+                        }}>
+                          <Text style={[styles.infoValue, styles.underline]}>{winery.contacts}</Text>
+                        </TouchableOpacity>
+                      ) : (
+                        <Text style={styles.infoValue}>{winery.contacts}</Text>
+                      )}
                     </View>
                   )}
                 </View>
