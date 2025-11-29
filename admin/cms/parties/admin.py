@@ -23,7 +23,7 @@ class PartyCityInline(admin.TabularInline):
 class PartyEventInline(admin.StackedInline):
     model = PartyEvent
     extra = 2
-    fields = ("city", "title", "date_info", "location", "description", "event_url", "order")
+    fields = ("city", "title", "date_info", "location", "location_link", "description", "event_url", "order")
     ordering = ("city__order", "order", "id")
     classes = ("collapse",)
 

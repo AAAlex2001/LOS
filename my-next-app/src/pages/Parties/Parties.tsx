@@ -23,6 +23,7 @@ interface PartyEvent {
   title: string;
   date_info?: string;
   location?: string;
+  location_link?: string;
   description?: string;
   event_url?: string;
   order: number;

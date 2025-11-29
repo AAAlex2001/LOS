@@ -7,6 +7,7 @@ interface PartyEvent {
   title: string;
   date_info?: string;
   location?: string;
+  location_link?: string;
   description?: string;
   event_url?: string;
   order: number;
@@ -87,7 +88,13 @@ const PartyCardPitsunda: React.FC<PartyCardPitsundaProps> = ({ city, events, sli
                   {event.location && (
                     <div className={cardStyles.eventLocation}>
                       <div className={cardStyles.locationIcon}></div>
-                      <span className={cardStyles.locationText}>{event.location}</span>
+                      {event.location_link ? (
+                        <a href={event.location_link} target="_blank" rel="noopener noreferrer" className={`${cardStyles.locationText} ${cardStyles.locationLink}`}>
+                          {event.location}
+                        </a>
+                      ) : (
+                        <span className={cardStyles.locationText}>{event.location}</span>
+                      )}
                     </div>
                   )}
                   {event.description && (

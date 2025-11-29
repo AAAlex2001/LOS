@@ -66,6 +66,7 @@ type PartyEvent = {
   title: string;
   date_info?: string;
   location?: string;
+  location_link?: string;
   description?: string;
   event_url?: string;
   order: number;
@@ -321,7 +322,13 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                                 <View style={styles.eventIconWrap}>
                                   <LocationIcon width={35} height={35} />
                                 </View>
-                                <Text style={styles.eventRowText} numberOfLines={1}>{event.location}</Text>
+                                {event.location_link ? (
+                                  <TouchableOpacity onPress={() => openLink(event.location_link!)}>
+                                    <Text style={[styles.eventRowText, styles.underline]} numberOfLines={1}>{event.location}</Text>
+                                  </TouchableOpacity>
+                                ) : (
+                                  <Text style={styles.eventRowText} numberOfLines={1}>{event.location}</Text>
+                                )}
                               </View>
                             )}
                             {event.description && (
@@ -641,6 +648,9 @@ const styles = StyleSheet.create({
   linkUrl: {
     textDecorationLine: 'underline',
     color: '#1129BD',
+  },
+  underline: {
+    textDecorationLine: 'underline',
   },
   emptyText: {
     fontFamily: 'Inter',

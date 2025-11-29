@@ -9,7 +9,7 @@ class PartyEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = PartyEvent
         fields = [
-            'id', 'title', 'date_info', 'location', 'description', 'event_url', 'order',
+            'id', 'title', 'date_info', 'location', 'location_link', 'description', 'event_url', 'order',
             'city', 'city_name', 'city_slug'
         ]
 

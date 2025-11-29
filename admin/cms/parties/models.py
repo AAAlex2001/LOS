@@ -78,6 +78,7 @@ class PartyEvent(TimestampedModel):
     title = models.CharField("Название события", max_length=255)
     date_info = models.CharField("Информация о дате", max_length=500, blank=True)
     location = models.CharField("Местоположение", max_length=500, blank=True)
+    location_link = models.URLField("Ссылка на геолокацию", blank=True, help_text="Ссылка на карту для местоположения")
     description = models.TextField("Описание события", blank=True, help_text="Поддерживаются переносы строк")
     event_url = models.URLField("Ссылка на событие", blank=True)
     order = models.PositiveIntegerField(default=0)
