@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dimensions, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
-import { extractPhoneNumber } from '../plan-to-trip/phoneUtils';
+import { parseContactString } from '../plan-to-trip/phoneUtils';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -53,18 +53,22 @@ export default function ExcursionsScreen({ visible, onClose }: Props) {
       {item.img && <Image source={{ uri: item.img }} style={styles.cardImg} resizeMode="contain" />}
       <View style={styles.cardBody}>
         {item.contacts && (
-          extractPhoneNumber(item.contacts) ? (
-            <TouchableOpacity onPress={() => {
-              const phone = extractPhoneNumber(item.contacts);
-              if (phone) {
-                Linking.openURL(`tel:${phone}`);
+          <Text style={styles.cardContacts}>
+            {parseContactString(item.contacts).map((segment, index) => {
+              if (segment.type === 'phone' || segment.type === 'email') {
+                return (
+                  <Text
+                    key={index}
+                    style={[styles.cardContacts, styles.underline]}
+                    onPress={() => segment.url && Linking.openURL(segment.url)}
+                  >
+                    {segment.value}
+                  </Text>
+                );
               }
-            }}>
-              <Text style={[styles.cardContacts, styles.underline]}>{item.contacts}</Text>
-            </TouchableOpacity>
-          ) : (
-            <Text style={styles.cardContacts}>{item.contacts}</Text>
-          )
+              return <Text key={index}>{segment.value}</Text>;
+            })}
+          </Text>
         )}
         <Text style={styles.link} onPress={() => openLink(item.site)}>САЙТ: {item.site}</Text>
       </View>

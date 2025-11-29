@@ -3,7 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
-import { extractPhoneNumber, parseContactString } from '../plan-to-trip/phoneUtils';
+import { parseContactString } from '../plan-to-trip/phoneUtils';
 
 interface Gym {
   id: number;

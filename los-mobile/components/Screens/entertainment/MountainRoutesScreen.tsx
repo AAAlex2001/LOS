@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dimensions, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
-import { extractPhoneNumber } from '../plan-to-trip/phoneUtils';
+import { parseContactString } from '../plan-to-trip/phoneUtils';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -74,18 +74,22 @@ export default function MountainRoutesScreen({ visible, onClose }: Props) {
           {route.title && <Text style={styles.cardTitle}>{route.title}</Text>}
           {route.name && <Text style={styles.cardName}>{route.name}</Text>}
           {route.phone && (
-            extractPhoneNumber(route.phone) ? (
-              <TouchableOpacity onPress={() => {
-                const phone = extractPhoneNumber(route.phone);
-                if (phone) {
-                  Linking.openURL(`tel:${phone}`);
+            <Text style={styles.cardPhone}>
+              {parseContactString(route.phone).map((segment, index) => {
+                if (segment.type === 'phone' || segment.type === 'email') {
+                  return (
+                    <Text
+                      key={index}
+                      style={[styles.cardPhone, styles.underline]}
+                      onPress={() => segment.url && Linking.openURL(segment.url)}
+                    >
+                      {segment.value}
+                    </Text>
+                  );
                 }
-              }}>
-                <Text style={[styles.cardPhone, styles.underline]}>{route.phone}</Text>
-              </TouchableOpacity>
-            ) : (
-              <Text style={styles.cardPhone}>{route.phone}</Text>
-            )
+                return <Text key={index}>{segment.value}</Text>;
+              })}
+            </Text>
           )}
           {route.site_url && (
             <Text onPress={() => openLink(route.site_url)} style={styles.link}>САЙТ: {route.site_url}</Text>
