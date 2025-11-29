@@ -7,7 +7,7 @@ from .models import TransportCommunicationsPage, TransportBlock
 class TransportBlockInline(admin.TabularInline):
     model = TransportBlock
     extra = 0
-    fields = ("title", "image_1", "image_1_preview", "image_2", "image_2_preview", "order")
+    fields = ("title", "location_link", "image_1", "image_1_preview", "image_2", "image_2_preview", "order")
     readonly_fields = ("image_1_preview", "image_2_preview")
     ordering = ("order", "id")
 

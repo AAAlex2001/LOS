@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Image, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
 
@@ -8,6 +8,7 @@ const { width: screenWidth } = Dimensions.get('window');
 interface TransportBlock {
   id: number;
   title: string;
+  location_link?: string;
   image_1?: string;
   image_2?: string;
   order: number;
@@ -68,7 +69,13 @@ export default function TransportCommunicationsScreen({ visible, onClose }: { vi
             <>
               {transportBlocks.map((block) => (
                 <View key={block.id} style={styles.transportBlock}>
-                  <Text style={styles.blockTitle}>{block.title}</Text>
+                  {block.location_link ? (
+                    <TouchableOpacity onPress={() => Linking.openURL(block.location_link!)}>
+                      <Text style={styles.blockTitle}>{block.title}</Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <Text style={styles.blockTitle}>{block.title}</Text>
+                  )}
                   <View style={styles.imagesContainer}>
                     {block.image_1 && (
                       <Image

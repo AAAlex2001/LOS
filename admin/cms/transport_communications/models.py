@@ -39,6 +39,7 @@ class TransportCommunicationsPage(TimestampedModel):
 class TransportBlock(TimestampedModel):
     page = models.ForeignKey(TransportCommunicationsPage, on_delete=models.CASCADE, related_name="transport_blocks")
     title = models.CharField("Заголовок блока", max_length=255)
+    location_link = models.URLField("Ссылка на геолокацию", blank=True, help_text="Ссылка на карту для заголовка")
     image_1 = models.ImageField("Первое изображение", upload_to="transport_communications/blocks/", blank=True)
     image_2 = models.ImageField("Второе изображение", upload_to="transport_communications/blocks/", blank=True)
     order = models.PositiveIntegerField(default=0)

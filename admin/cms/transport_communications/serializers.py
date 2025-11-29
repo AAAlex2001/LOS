@@ -6,7 +6,7 @@ class TransportBlockSerializer(serializers.ModelSerializer):
     class Meta:
         model = TransportBlock
         fields = [
-            'id', 'title', 'image_1', 'image_2', 'order'
+            'id', 'title', 'location_link', 'image_1', 'image_2', 'order'
         ]
 
 

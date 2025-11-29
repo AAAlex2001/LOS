@@ -9,6 +9,7 @@ import config from '@/config';
 interface TransportBlock {
   id: number;
   title: string;
+  location_link?: string;
   image_1?: string;
   image_2?: string;
   order: number;
@@ -82,7 +83,15 @@ const TransportCommunications = () => {
 
         {transportBlocks.map((block) => (
           <section key={block.id} className={styles.transportBlock}>
-            <h2 className={styles.blockTitle}>{block.title}</h2>
+            {block.location_link ? (
+              <h2 className={styles.blockTitle}>
+                <a href={block.location_link} target="_blank" rel="noopener noreferrer" className={styles.titleLink}>
+                  {block.title}
+                </a>
+              </h2>
+            ) : (
+              <h2 className={styles.blockTitle}>{block.title}</h2>
+            )}
             <div className={styles.imagesContainer}>
               {block.image_1 && (
                 <div className={styles.imageWrapper}>
