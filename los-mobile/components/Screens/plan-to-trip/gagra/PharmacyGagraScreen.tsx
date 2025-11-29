@@ -3,7 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
-import { extractPhoneNumber } from '../phoneUtils';
+import { parseContactString } from '../phoneUtils';
 
 interface Pharmacy {
   id: number;
@@ -131,18 +131,22 @@ export default function PharmacyGagraScreen({ visible, onClose }: { visible: boo
                   {pharmacy.contacts && (
                     <View style={styles.infoBlock}>
                       <Text style={styles.infoLabel}>Контакты:</Text>
-                      {extractPhoneNumber(pharmacy.contacts) ? (
-                        <TouchableOpacity onPress={() => {
-                          const phone = extractPhoneNumber(pharmacy.contacts);
-                          if (phone) {
-                            Linking.openURL(`tel:${phone}`);
+                      <Text style={styles.infoValue}>
+                        {parseContactString(pharmacy.contacts).map((segment, index) => {
+                          if (segment.type === 'phone' || segment.type === 'email') {
+                            return (
+                              <Text
+                                key={index}
+                                style={[styles.infoValue, styles.underline]}
+                                onPress={() => segment.url && Linking.openURL(segment.url)}
+                              >
+                                {segment.value}
+                              </Text>
+                            );
                           }
-                        }}>
-                          <Text style={[styles.infoValue, styles.underline]}>{pharmacy.contacts}</Text>
-                        </TouchableOpacity>
-                      ) : (
-                        <Text style={styles.infoValue}>{pharmacy.contacts}</Text>
-                      )}
+                          return <Text key={index}>{segment.value}</Text>;
+                        })}
+                      </Text>
                     </View>
                   )}
                 </View>
