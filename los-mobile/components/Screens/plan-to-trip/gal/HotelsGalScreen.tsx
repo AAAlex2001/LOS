@@ -3,7 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
-import { extractPhoneNumber } from '../phoneUtils';
+import { parseContactString } from '../phoneUtils';
 
 interface Hotel {
   id: number;
@@ -117,18 +117,22 @@ export default function HotelsGalScreen({ visible, onClose }: { visible: boolean
                   {hotel.contacts && (
                     <View style={styles.infoBlock}>
                       <Text style={styles.infoLabel}>Контакты:</Text>
-                      {extractPhoneNumber(hotel.contacts) ? (
-                        <TouchableOpacity onPress={() => {
-                          const phone = extractPhoneNumber(hotel.contacts);
-                          if (phone) {
-                            Linking.openURL(`tel:${phone}`);
+                      <Text style={styles.infoValue}>
+                        {parseContactString(hotel.contacts).map((segment, index) => {
+                          if (segment.type === 'phone' || segment.type === 'email') {
+                            return (
+                              <Text
+                                key={index}
+                                style={[styles.infoValue, styles.underline]}
+                                onPress={() => segment.url && Linking.openURL(segment.url)}
+                              >
+                                {segment.value}
+                              </Text>
+                            );
                           }
-                        }}>
-                          <Text style={[styles.infoValue, styles.underline]}>{hotel.contacts}</Text>
-                        </TouchableOpacity>
-                      ) : (
-                        <Text style={styles.infoValue}>{hotel.contacts}</Text>
-                      )}
+                          return <Text key={index}>{segment.value}</Text>;
+                        })}
+                      </Text>
                     </View>
                   )}
                   
