@@ -126,7 +126,11 @@ const Banks: React.FC = () => {
 
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>Адрес:</span>
-                      <span className={styles.infoValue}>{bank.address}</span>
+                      {bank.address_link ? (
+                        <a href={bank.address_link} target="_blank" rel="noopener noreferrer" className={`${styles.infoValue} ${styles.link}`}>{bank.address}</a>
+                      ) : (
+                        <span className={styles.infoValue}>{bank.address}</span>
+                      )}
                     </div>
 
                     {bank.name_link && (

@@ -7,7 +7,7 @@ from .models import BanksPage, Bank
 class BankInline(admin.TabularInline):
     model = Bank
     extra = 1
-    fields = ("name", "name_link", "working_hours", "address", "contacts", "email", "image", "order", "preview")
+    fields = ("name", "name_link", "working_hours", "address", "address_link", "contacts", "email", "image", "order", "preview")
     readonly_fields = ("preview",)
 
     def preview(self, obj):

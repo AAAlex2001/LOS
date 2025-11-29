@@ -55,7 +55,7 @@ export default function BanksScreen({ visible, onClose }: { visible: boolean, on
   }, [visible]);
 
   const openLink = async (url: string) => {
-    if (url && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('mailto:'))) {
+    if (url && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('mailto:') || url.startsWith('tel:'))) {
       const supported = await Linking.canOpenURL(url);
       if (supported) {
         await Linking.openURL(url);
@@ -136,7 +136,13 @@ export default function BanksScreen({ visible, onClose }: { visible: boolean, on
                   
                   <View style={styles.infoBlock}>
                     <Text style={styles.infoLabel}>Адрес:</Text>
-                    <Text style={styles.infoValue}>{bank.address}</Text>
+                    {bank.address_link ? (
+                      <TouchableOpacity onPress={() => openLink(bank.address_link)}>
+                        <Text style={[styles.infoValue, styles.underline]}>{bank.address}</Text>
+                      </TouchableOpacity>
+                    ) : (
+                      <Text style={styles.infoValue}>{bank.address}</Text>
+                    )}
                   </View>
                   
                   {bank.name_link && (
