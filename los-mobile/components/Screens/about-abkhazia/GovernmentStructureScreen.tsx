@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Image as ExpoImage } from 'expo-image';
 import config from '@/config';
@@ -103,17 +103,23 @@ export default function GovernmentStructureScreen({ visible, onClose }: { visibl
               <Ionicons name="close" size={32} color="#fff" />
             </TouchableOpacity>
             {selectedImage && (
-              <TouchableOpacity
-                style={styles.fullScreenImageWrapper}
-                activeOpacity={1}
-                onPress={() => setSelectedImage(null)}
+              <ScrollView
+                style={{ flex: 1, width: '100%', height: '100%' }}
+                contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}
+                maximumZoomScale={3}
+                minimumZoomScale={1}
+                centerContent={true}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
               >
-                <ExpoImage
-                  source={{ uri: selectedImage }}
-                  style={styles.fullScreenImage}
-                  contentFit="contain"
-                />
-              </TouchableOpacity>
+                <TouchableWithoutFeedback onPress={() => setSelectedImage(null)}>
+                  <ExpoImage
+                    source={{ uri: selectedImage }}
+                    style={styles.fullScreenImage}
+                    contentFit="contain"
+                  />
+                </TouchableWithoutFeedback>
+              </ScrollView>
             )}
           </View>
         </Modal>
@@ -191,13 +197,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  fullScreenImageWrapper: {
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
   },
   fullScreenImage: {
     width: Dimensions.get('window').width,
