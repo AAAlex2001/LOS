@@ -109,6 +109,16 @@ export default function ContactsScreen({ visible, onClose }: { visible: boolean,
                 <Text style={styles.label}>{getLabelForNetwork(item.network)}</Text>
               </TouchableOpacity>
             ))}
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => Linking.openURL('mailto:landofsoulweb@yandex.com')}
+              activeOpacity={0.7}
+            >
+              <View style={styles.icon}>
+                <Ionicons name="mail-outline" size={24} color="#1129BD" />
+              </View>
+              <Text style={[styles.label, styles.underline]}>landofsoulweb@yandex.com</Text>
+            </TouchableOpacity>
           </View>
         )}
       </View>
@@ -182,5 +192,8 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 18,
     color: '#666',
+  },
+  underline: {
+    textDecorationLine: 'underline',
   },
 }); 
