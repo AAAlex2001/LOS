@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking, I
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
+import { parseContactString } from './phoneUtils';
 
 interface Provider {
   id: number;
@@ -54,7 +55,7 @@ export default function MobileCommunicationScreen({ visible, onClose }: { visibl
   }, [visible]);
 
   const openLink = async (url: string) => {
-    if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+    if (url && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('tel:') || url.startsWith('mailto:'))) {
       const supported = await Linking.canOpenURL(url);
       if (supported) {
         await Linking.openURL(url);
@@ -115,7 +116,22 @@ export default function MobileCommunicationScreen({ visible, onClose }: { visibl
                       {/* Info */}
                       <View style={styles.cardBody}>
                         {provider.description && (
-                          <Text style={styles.description}>{provider.description}</Text>
+                          <Text style={styles.description}>
+                            {parseContactString(provider.description).map((segment, index) => {
+                              if (segment.type === 'phone' || segment.type === 'email') {
+                                return (
+                                  <Text
+                                    key={index}
+                                    style={[styles.description, styles.underline]}
+                                    onPress={() => segment.url && openLink(segment.url)}
+                                  >
+                                    {segment.value}
+                                  </Text>
+                                );
+                              }
+                              return <Text key={index}>{segment.value}</Text>;
+                            })}
+                          </Text>
                         )}
                         
                         {provider.website_url && (
@@ -148,7 +164,22 @@ export default function MobileCommunicationScreen({ visible, onClose }: { visibl
                       {/* Info */}
                       <View style={styles.cardBody}>
                         {provider.description && (
-                          <Text style={styles.description}>{provider.description}</Text>
+                          <Text style={styles.description}>
+                            {parseContactString(provider.description).map((segment, index) => {
+                              if (segment.type === 'phone' || segment.type === 'email') {
+                                return (
+                                  <Text
+                                    key={index}
+                                    style={[styles.description, styles.underline]}
+                                    onPress={() => segment.url && openLink(segment.url)}
+                                  >
+                                    {segment.value}
+                                  </Text>
+                                );
+                              }
+                              return <Text key={index}>{segment.value}</Text>;
+                            })}
+                          </Text>
                         )}
                         
                         {provider.website_url && (
@@ -293,6 +324,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textDecorationLine: 'underline',
     color: '#1129BD',
+  },
+  underline: {
+    textDecorationLine: 'underline',
   },
 });
 

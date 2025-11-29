@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, ImageBackground, Linking } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
-import { extractPhoneNumber, parseContactString } from '../plan-to-trip/phoneUtils';
+import { parseContactString } from '../plan-to-trip/phoneUtils';
 
 type CardItem = {
   id: number;

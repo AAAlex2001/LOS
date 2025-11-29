@@ -3,7 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking, I
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
-import { extractPhoneNumber } from './phoneUtils';
+import { parseContactString } from './phoneUtils';
 
 interface TaxiService {
   id: number;
@@ -52,18 +52,11 @@ export default function TaxiScreen({ visible, onClose }: { visible: boolean, onC
   }, [visible]);
 
   const openLink = async (url: string) => {
-    if (url && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('tel:'))) {
+    if (url && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('tel:') || url.startsWith('mailto:'))) {
       const supported = await Linking.canOpenURL(url);
       if (supported) {
         await Linking.openURL(url);
       }
-    }
-  };
-
-  const callPhone = async (phone: string) => {
-    const cleanPhone = extractPhoneNumber(phone);
-    if (cleanPhone) {
-      await openLink(`tel:${cleanPhone}`);
     }
   };
 
@@ -130,9 +123,22 @@ export default function TaxiScreen({ visible, onClose }: { visible: boolean, onC
                     <Text style={styles.orderLabel}>Заказать такси:</Text>
                     
                     {service.phones && service.phones.map((phone, idx) => (
-                      <TouchableOpacity key={idx} onPress={() => callPhone(phone)}>
-                        <Text style={[styles.phone, styles.underline]}>{phone}</Text>
-                      </TouchableOpacity>
+                      <Text key={idx} style={styles.phone}>
+                        {parseContactString(phone).map((segment, segIdx) => {
+                          if (segment.type === 'phone' || segment.type === 'email') {
+                            return (
+                              <Text
+                                key={segIdx}
+                                style={[styles.phone, styles.underline]}
+                                onPress={() => segment.url && openLink(segment.url)}
+                              >
+                                {segment.value}
+                              </Text>
+                            );
+                          }
+                          return <Text key={segIdx}>{segment.value}</Text>;
+                        })}
+                      </Text>
                     ))}
                   </View>
                 </View>
