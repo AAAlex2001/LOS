@@ -18,6 +18,7 @@ type Spring = {
   title: string;
   description: string;
   image_url: string;
+  location_link?: string;
   order: number;
 };
 
@@ -107,7 +108,7 @@ const HotSprings: React.FC = () => {
           {springs.map((s) => (
             <div key={s.id}>
               {(() => {
-                const props = { title: s.title, description: s.description, imageUrl: s.image_url ? `${API_BASE}/media/${s.image_url}` : undefined };
+                const props = { title: s.title, description: s.description, imageUrl: s.image_url ? `${API_BASE}/media/${s.image_url}` : undefined, locationLink: s.location_link };
                 const t = (s.title || '').toLowerCase();
                 if (t.includes('кныд') || t.includes('kындыг')) return <KyndykCard {...props} />;
                 if (t.includes('цкуар') || t.includes('tsk')) return <TskuaraCard {...props} />;

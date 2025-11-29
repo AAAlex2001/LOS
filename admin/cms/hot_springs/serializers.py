@@ -7,7 +7,7 @@ class HotSpringSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HotSpring
-        fields = ["id", "title", "description", "order", "image_url"]
+        fields = ["id", "title", "description", "order", "image_url", "location_link"]
 
     def get_image_url(self, obj):
         return obj.image.name if obj.image else ""

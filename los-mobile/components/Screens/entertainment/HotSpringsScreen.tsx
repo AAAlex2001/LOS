@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dimensions, ImageBackground } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dimensions, ImageBackground, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
 
@@ -12,6 +12,7 @@ type Spring = {
   title: string;
   description: string;
   image_url: string;
+  location_link?: string;
   order: number;
 };
 
@@ -111,7 +112,13 @@ export default function HotSpringsScreen({ visible, onClose }: Props) {
                       style={styles.cardImg}
                       resizeMode="cover"
                     />
-                    <Text style={styles.cardTitle}>{s.title}</Text>
+                    {s.location_link ? (
+                      <TouchableOpacity onPress={() => Linking.openURL(s.location_link!)}>
+                        <Text style={styles.cardTitle}>{s.title}</Text>
+                      </TouchableOpacity>
+                    ) : (
+                      <Text style={styles.cardTitle}>{s.title}</Text>
+                    )}
                     {s.description && (
                       <Text style={styles.cardDescription}>{parseBoldText(s.description)}</Text>
                     )}

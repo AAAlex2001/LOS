@@ -6,7 +6,7 @@ from .models import HotSpringsPage, HotSpring
 class HotSpringInline(admin.TabularInline):
     model = HotSpring
     extra = 1
-    fields = ("title", "description", "image", "image_preview", "order")
+    fields = ("title", "location_link", "description", "image", "image_preview", "order")
     readonly_fields = ("image_preview",)
 
     def image_preview(self, obj):

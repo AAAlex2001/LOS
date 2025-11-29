@@ -36,6 +36,7 @@ class HotSpring(TimestampedModel):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to="hot_springs/images/", blank=True)
+    location_link = models.URLField("Ссылка на геолокацию", blank=True, help_text="Ссылка на карту для заголовка")
     order = models.PositiveIntegerField(default=0)
 
     class Meta:

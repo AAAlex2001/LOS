@@ -5,6 +5,7 @@ type Props = {
   title?: string;
   description?: string; // supports **bold** and \n\n paragraph breaks
   imageUrl?: string;
+  locationLink?: string;
 };
 
 const toParagraphsHtml = (text: string) => {
@@ -29,7 +30,7 @@ const toParagraphsHtml = (text: string) => {
   return [withBold]; // Возвращаем как один абзац с <br> тегами
 };
 
-const KyndykCard: React.FC<Props> = ({ title, description, imageUrl }) => {
+const KyndykCard: React.FC<Props> = ({ title, description, imageUrl, locationLink }) => {
   const paragraphs = toParagraphsHtml(description || '');
   return (
     <section className={cardStyles.kyndykCard}>
@@ -40,10 +41,19 @@ const KyndykCard: React.FC<Props> = ({ title, description, imageUrl }) => {
       </div>
 
       <div className={cardStyles.titleSection}>
-        <h2 className={cardStyles.titleText}>
-          <span className={cardStyles.titleDesktop}>{title || ''}</span>
-          <span className={cardStyles.titleMobile}>{title || ''}</span>
-        </h2>
+        {locationLink ? (
+          <h2 className={cardStyles.titleText}>
+            <a href={locationLink} target="_blank" rel="noopener noreferrer" className={cardStyles.titleLink}>
+              <span className={cardStyles.titleDesktop}>{title || ''}</span>
+              <span className={cardStyles.titleMobile}>{title || ''}</span>
+            </a>
+          </h2>
+        ) : (
+          <h2 className={cardStyles.titleText}>
+            <span className={cardStyles.titleDesktop}>{title || ''}</span>
+            <span className={cardStyles.titleMobile}>{title || ''}</span>
+          </h2>
+        )}
       </div>
 
       <div className={cardStyles.contentSection}>
