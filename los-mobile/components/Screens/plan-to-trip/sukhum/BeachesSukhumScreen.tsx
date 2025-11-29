@@ -3,7 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
-import { extractPhoneNumber } from '../phoneUtils';
+import { parseContactString } from '../phoneUtils';
 
 interface Beach {
   id: number;
@@ -133,18 +133,22 @@ export default function BeachesSukhumScreen({ visible, onClose }: { visible: boo
                   {beach.phone && (
                     <View style={styles.infoBlock}>
                       <Text style={styles.infoLabel}>Телефон:</Text>
-                      {extractPhoneNumber(beach.phone) ? (
-                        <TouchableOpacity onPress={() => {
-                          const phone = extractPhoneNumber(beach.phone);
-                          if (phone) {
-                            Linking.openURL(`tel:${phone}`);
+                      <Text style={styles.infoValue}>
+                        {parseContactString(beach.phone).map((segment, index) => {
+                          if (segment.type === 'phone' || segment.type === 'email') {
+                            return (
+                              <Text
+                                key={index}
+                                style={[styles.infoValue, styles.underline]}
+                                onPress={() => segment.url && Linking.openURL(segment.url)}
+                              >
+                                {segment.value}
+                              </Text>
+                            );
                           }
-                        }}>
-                          <Text style={[styles.infoValue, styles.underline]}>{beach.phone}</Text>
-                        </TouchableOpacity>
-                      ) : (
-                        <Text style={styles.infoValue}>{beach.phone}</Text>
-                      )}
+                          return <Text key={index}>{segment.value}</Text>;
+                        })}
+                      </Text>
                     </View>
                   )}
                   

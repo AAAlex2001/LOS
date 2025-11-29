@@ -3,7 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
-import { extractPhoneNumber } from '../phoneUtils';
+import { parseContactString } from '../phoneUtils';
 
 interface CarWash {
   id: number;
@@ -141,18 +141,22 @@ export default function CarWashesSukhumScreen({ visible, onClose }: { visible: b
                   {carWash.contacts && (
                     <View style={styles.infoBlock}>
                       <Text style={styles.infoLabel}>Контакты:</Text>
-                      {extractPhoneNumber(carWash.contacts) ? (
-                        <TouchableOpacity onPress={() => {
-                          const phone = extractPhoneNumber(carWash.contacts);
-                          if (phone) {
-                            Linking.openURL(`tel:${phone}`);
+                      <Text style={styles.infoValue}>
+                        {parseContactString(carWash.contacts).map((segment, index) => {
+                          if (segment.type === 'phone' || segment.type === 'email') {
+                            return (
+                              <Text
+                                key={index}
+                                style={[styles.infoValue, styles.underline]}
+                                onPress={() => segment.url && Linking.openURL(segment.url)}
+                              >
+                                {segment.value}
+                              </Text>
+                            );
                           }
-                        }}>
-                          <Text style={[styles.infoValue, styles.underline]}>{carWash.contacts}</Text>
-                        </TouchableOpacity>
-                      ) : (
-                        <Text style={styles.infoValue}>{carWash.contacts}</Text>
-                      )}
+                          return <Text key={index}>{segment.value}</Text>;
+                        })}
+                      </Text>
                     </View>
                   )}
                   

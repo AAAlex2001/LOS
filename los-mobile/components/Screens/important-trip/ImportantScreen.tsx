@@ -12,6 +12,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
+import { parseContactString } from '../plan-to-trip/phoneUtils';
 
 type ImportantRule = {
   id: number;
@@ -122,7 +123,22 @@ export default function ImportantScreen({ visible, onClose }: { visible: boolean
         )}
         <View style={styles.listWrap}>
           {lines.map((line, i) => (
-            <Text key={i} style={styles.listItem}>{line}</Text>
+            <Text key={i} style={styles.listItem}>
+              {parseContactString(line).map((segment, index) => {
+                if (segment.type === 'phone' || segment.type === 'email') {
+                  return (
+                    <Text
+                      key={index}
+                      style={{ color: '#1129BD', textDecorationLine: 'underline' }}
+                      onPress={() => segment.url && Linking.openURL(segment.url)}
+                    >
+                      {segment.value}
+                    </Text>
+                  );
+                }
+                return <Text key={index}>{segment.value}</Text>;
+              })}
+            </Text>
           ))}
         </View>
       </View>

@@ -3,7 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
-import { extractPhoneNumber } from '../plan-to-trip/phoneUtils';
+import { extractPhoneNumber, parseContactString } from '../plan-to-trip/phoneUtils';
 
 interface Gym {
   id: number;
@@ -127,18 +127,22 @@ export default function SportsGymsScreen({ visible, onClose }: { visible: boolea
                   {gym.contacts && (
                     <View style={styles.infoBlock}>
                       <Text style={styles.infoLabel}>Контакты:</Text>
-                      {extractPhoneNumber(gym.contacts) ? (
-                        <TouchableOpacity onPress={() => {
-                          const phone = extractPhoneNumber(gym.contacts);
-                          if (phone) {
-                            Linking.openURL(`tel:${phone}`);
+                      <Text style={styles.infoValue}>
+                        {parseContactString(gym.contacts).map((segment, index) => {
+                          if (segment.type === 'phone' || segment.type === 'email') {
+                            return (
+                              <Text
+                                key={index}
+                                style={[styles.infoValue, styles.underline]}
+                                onPress={() => segment.url && Linking.openURL(segment.url)}
+                              >
+                                {segment.value}
+                              </Text>
+                            );
                           }
-                        }}>
-                          <Text style={[styles.infoValue, styles.underline]}>{gym.contacts}</Text>
-                        </TouchableOpacity>
-                      ) : (
-                        <Text style={styles.infoValue}>{gym.contacts}</Text>
-                      )}
+                          return <Text key={index}>{segment.value}</Text>;
+                        })}
+                      </Text>
                     </View>
                   )}
                 </View>
