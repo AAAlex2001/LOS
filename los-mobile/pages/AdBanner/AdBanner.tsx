@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import config from '@/config';
 
 interface AdBannerProps {
@@ -111,8 +112,10 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose }) => {
       transparent={false}
       animationType="fade"
       onRequestClose={onClose}
+      statusBarTranslucent
     >
-      <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
+      <StatusBar style="light" />
+      <View style={styles.container}>
         {/* Картинка на весь фон */}
         <View style={styles.imageContainer}>
           <Image
@@ -154,7 +157,7 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose }) => {
             <Text style={styles.moreButtonText}>Подробнее</Text>
           </TouchableOpacity>
         </View>
-      </SafeAreaView>
+      </View>
     </Modal>
   );
 };
@@ -163,13 +166,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: 'relative',
+    backgroundColor: 'transparent',
   },
   imageContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    ...StyleSheet.absoluteFillObject,
     width: '100%',
     height: '100%',
   },
