@@ -58,3 +58,4 @@ from .privacy_policy.admin import PrivacyPolicyPageAdmin, AccessibilityAndTermsP
 from .footer.admin import FooterAdmin
 from .music.admin import MusicPageAdmin
 from .welcome.admin import WelcomePageAdmin
+from .ad_banner.admin import AdBannerAdmin

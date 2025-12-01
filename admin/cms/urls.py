@@ -37,6 +37,7 @@ urlpatterns = [
     path("privacy-policy/", include("cms.privacy_policy.urls")),
     path("footer/", include("cms.footer.urls")),
     path("welcome/", include("cms.welcome.urls")),
+    path("ad-banner/", include("cms.ad_banner.urls")),
 ]
 
 

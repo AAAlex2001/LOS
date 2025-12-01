@@ -1,13 +1,15 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { View, StyleSheet, Animated } from 'react-native';
+import * as Haptics from 'expo-haptics';
 import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
 import * as SystemUI from 'expo-system-ui';
-import * as Haptics from 'expo-haptics';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, StyleSheet, View } from 'react-native';
+import AdBanner from '../pages/AdBanner/AdBanner';
 import WelcomeScreen from '../pages/Welcome/Welcome';
 
 export default function IndexScreen() {
   const [showSplash, setShowSplash] = useState(true);
+  const [showAd, setShowAd] = useState(false);
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
@@ -24,6 +26,8 @@ export default function IndexScreen() {
         setShowSplash(false);
         // Меняем фон системных баров на белый
         await SystemUI.setBackgroundColorAsync('#FFFFFF');
+        // Показываем рекламу
+        setShowAd(true);
         // Сердцебиение: два импакта с небольшой задержкой
         try {
           await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -56,6 +60,7 @@ export default function IndexScreen() {
     <>
       <StatusBar style="dark" />
       <WelcomeScreen />
+      <AdBanner visible={showAd} onClose={() => setShowAd(false)} />
     </>
   );
 }
