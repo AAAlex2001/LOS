@@ -14,14 +14,17 @@ import CitiesOchamchira from './CitiesOchamchira';
 import CitiesTkuarchal from './CitiesTkuarchal';
 import CitiesGal from './CitiesGal';
 import styles from './Cities.module.scss';
+import { useTranslations } from '@/i18n/LocaleContext';
 
 const Cities: React.FC = () => {
+  const t = useTranslations('cities');
+
   return (
     <div className={styles.pageWrapper}>
       <Header />
 
       <main className={styles.mainContent}>
-        <h1 className={styles.mainTitle}>Города Абхазии</h1>
+        <h1 className={styles.mainTitle}>{t('title')}</h1>
 
         {/* Контент города Сухум */}
         <CitiesSukhum />

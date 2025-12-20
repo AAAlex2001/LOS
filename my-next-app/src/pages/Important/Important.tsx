@@ -9,6 +9,7 @@ import ImportantTaxiEtiquette from './ImportantTaxiEtiquette';
 import styles from './Important.module.scss';
 import tabStyles from './MainTabs.module.scss';
 import config from '@/config';
+import { useTranslations } from '@/i18n/LocaleContext';
 
 type ImportantRule = {
   id: number;
@@ -87,6 +88,8 @@ const Important: React.FC = () => {
   const [data, setData] = useState<ImportantPage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations('important');
+  const tCommon = useTranslations('common');
 
   useEffect(() => {
     const load = async () => {
@@ -97,7 +100,7 @@ const Important: React.FC = () => {
         setData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(tCommon('error'));
       } finally {
         setLoading(false);
       }
@@ -118,7 +121,7 @@ const Important: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{tCommon('loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -174,7 +177,7 @@ const Important: React.FC = () => {
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
           <div className={styles.titleTextContainer}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Важно знать'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('title')}</h1>
           </div>
         </section>
 

@@ -6,6 +6,7 @@ import Footer from '@/components/Footer/Footer';
 import styles from './Parties.module.scss';
 import tabStyles from './MainTabs.module.scss';
 import config from '@/config';
+import { useTranslations } from '@/i18n/LocaleContext';
 
 // Import city card components
 import PartyCardSuhum from './PartyCardSuhum';
@@ -73,6 +74,8 @@ const Parties: React.FC = () => {
   const [data, setData] = useState<PartiesPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations('parties');
+  const tCommon = useTranslations('common');
 
   useEffect(() => {
     const load = async () => {
@@ -83,7 +86,7 @@ const Parties: React.FC = () => {
         setData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(tCommon('error'));
       } finally {
         setLoading(false);
       }
@@ -115,7 +118,7 @@ const Parties: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{tCommon('loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -127,7 +130,7 @@ const Parties: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error || tCommon('error')}</h1>
         </main>
         <Footer />
       </div>

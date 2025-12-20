@@ -1,0 +1,156 @@
+{
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Ошибка загрузки данных",
+    "pageNotFound": "Страница не найдена",
+    "noData": "Нет данных",
+    "site": "САЙТ",
+    "phone": "Тел.",
+    "contacts": "Контакты",
+    "workingHours": "Режим работы",
+    "address": "Адрес",
+    "email": "Почта",
+    "website": "Сайт"
+  },
+  "header": {
+    "classifieds": "Доска объявлений",
+    "soon": "скоро",
+    "selectLanguage": "Выберите язык"
+  },
+  "footer": {
+    "aboutService": "О сервисе",
+    "defaultDescription": "Ваш гид по Абхазии с проверенными рекомендациями и эксклюзивными маршрутами.",
+    "quickLinks": "Быстрые ссылки",
+    "cities": "Города",
+    "communication": "Связь",
+    "taxi": "Такси",
+    "yourDoctor": "Ваш доктор",
+    "importantToKnow": "Важно знать",
+    "historyAndCulture": "История и культура Абхазии",
+    "entertainment": "Развлечения",
+    "banks": "Банки",
+    "contactUs": "Связаться с нами",
+    "workingHours": "Часы работы:",
+    "mondayToSaturday": "Понедельник – суббота",
+    "workingTime": "9:00 – 18:00",
+    "sundayOff": "Воскресенье – выходной",
+    "corporateEmail": "Корпоративная почта:",
+    "downloadApp": "Скачайте мобильное приложение",
+    "accessibilityAndTerms": "Доступность и правила пользования сайтом",
+    "privacyPolicy": "Политика конфиденциальности сайта",
+    "copyright": "© 2025 Land of soul Abkhazia. Все права защищены."
+  },
+  "home": {
+    "errorLoading": "Ошибка загрузки данных",
+    "noFees": "Без комиссий · Поддержка 24/7 · Гарантия заселения"
+  },
+  "cities": {
+    "title": "Города Абхазии",
+    "sukhum": "Сухум",
+    "gagra": "Гагра",
+    "pitsunda": "Пицунда",
+    "gudauta": "Гудаута",
+    "newAfon": "Новый Афон",
+    "gulripsh": "Гулрыпш",
+    "ochamchira": "Очамчыра",
+    "tkuarchal": "Ткуарчал",
+    "gal": "Гал",
+    "viewCity": "Вид на город"
+  },
+  "banks": {
+    "title": "Банки",
+    "noData": "Нет данных о банках",
+    "workingHours": "Режим работы:",
+    "contacts": "Контакты:",
+    "email": "Почта:",
+    "address": "Адрес:",
+    "website": "Сайт:"
+  },
+  "taxi": {
+    "title": "Такси",
+    "workingHours": "Время работы:",
+    "orderTaxi": "Заказать такси:",
+    "introNotConfigured": "Вводный текст не настроен"
+  },
+  "yourDoctor": {
+    "title": "Ваш доктор",
+    "hospitals": "Больницы",
+    "privateClinics": "Частные клиники",
+    "dentistry": "Стоматология",
+    "doctors": "Врачи",
+    "vetClinics": "Вет. клиники",
+    "logo": "Ваш доктор логотип",
+    "contentPlaceholder": "Контент для раздела \"{section}\" будет здесь."
+  },
+  "important": {
+    "title": "Важно знать"
+  },
+  "historyAndCulture": {
+    "title": "История и культура Абхазии",
+    "historyTab": "История Абхазии",
+    "cultureTab": "Культура Абхазии",
+    "historyTitle": "История Абхазии",
+    "cultureTitle": "Культура Абхазии",
+    "noHistoryData": "Нет данных о секциях истории",
+    "noCultureData": "Нет данных о секциях культуры"
+  },
+  "excursions": {
+    "title": "Экскурсии"
+  },
+  "parties": {
+    "title": "Развлечения"
+  },
+  "mobileCommunication": {
+    "title": "Связь"
+  },
+  "mountainRoutes": {
+    "title": "Горные маршруты",
+    "phone": "Тел.:",
+    "contacts": "Контакты:"
+  },
+  "hotSprings": {
+    "title": "Горячие источники"
+  },
+  "governmentStructure": {
+    "title": "Государственное устройство"
+  },
+  "abkhazianCuisine": {
+    "title": "Абхазская кухня"
+  },
+  "abkhazianCustoms": {
+    "title": "Абхазские обычаи"
+  },
+  "elementaryDictionary": {
+    "title": "Элементарный словарь"
+  },
+  "privacyPolicy": {
+    "title": "Политика конфиденциальности сайта"
+  },
+  "accessibilityAndTerms": {
+    "title": "Доступность и правила пользования сайтом"
+  },
+  "categoryPages": {
+    "beaches": "Пляжи",
+    "hotels": "Гостиницы",
+    "restaurants": "Рестораны",
+    "beautySalons": "Салоны красоты",
+    "carWashes": "Автомойки",
+    "gasStations": "АЗС",
+    "clothingRepair": "Ремонт одежды",
+    "shopsAndMarkets": "Магазины и рынки",
+    "churches": "Церкви",
+    "culturalAttractions": "Культурные достопримечательности",
+    "administrativeBuildings": "Административные здания",
+    "parkingLots": "Парковки",
+    "pharmacy": "Аптеки",
+    "wineries": "Винодельни"
+  },
+  "metadata": {
+    "title": "Отдых в Абхазии | LANDOFSOUL-APSNY.RU – Ваш гид по стране души",
+    "description": "Все об отдыхе в Абхазии: города, пляжи, отели, экскурсии, кухня и культура. Планируйте свое идеальное путешествие с нами!",
+    "keywords": "отдых в Абхазии, туризм Абхазия, Гагра, Сухум, Пицунда, Новый Афон, отели Абхазия, пляжи Абхазия, экскурсии Абхазия",
+    "abkhazia": "Абхазия",
+    "countryOfSoul": "Страна души - Абхазия. Отдых в Абхазии: города, пляжи, отели, экскурсии, кухня и культура.",
+    "landscapes": "Пейзажи Абхазии"
+  }
+}

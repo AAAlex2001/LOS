@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Footer.module.scss';
 import config from '@/config';
+import { useTranslations } from '@/i18n/LocaleContext';
 
 const API_BASE = config.API_BASE;
 
@@ -49,20 +50,21 @@ const defaultSocialIcons = [
   { src: '/assets/rutube.svg', alt: 'Rutube', w: 42, h: 42, href: '#' },
 ];
 
-const defaultQuickLinks = [
-  { label: 'Города', href: '/cities' },
-  { label: 'Связь', href: '/mobile-communication' },
-  { label: 'Такси', href: '/taxi' },
-  { label: 'Ваш доктор', href: '/your-doctor' },
-  { label: 'Важно знать', href: '/important' },
-  { label: 'История и культура Абхазии', href: '/history-and-culture' },
-  { label: 'Развлечения', href: '/parties' },
-  { label: 'Банки', href: '/banks' },
-];
-
 const Footer = () => {
   const [footerData, setFooterData] = useState<FooterData | null>(null);
   const [loading, setLoading] = useState(true);
+  const t = useTranslations('footer');
+
+  const defaultQuickLinks = [
+    { label: t('cities'), href: '/cities' },
+    { label: t('communication'), href: '/mobile-communication' },
+    { label: t('taxi'), href: '/taxi' },
+    { label: t('yourDoctor'), href: '/your-doctor' },
+    { label: t('importantToKnow'), href: '/important' },
+    { label: t('historyAndCulture'), href: '/history-and-culture' },
+    { label: t('entertainment'), href: '/parties' },
+    { label: t('banks'), href: '/banks' },
+  ];
 
   useEffect(() => {
     const loadFooterData = async () => {
@@ -78,11 +80,10 @@ const Footer = () => {
         setLoading(false);
       }
     };
-    
+
     loadFooterData();
   }, []);
 
-  // Получаем ссылки из бэкенда или используем дефолтные
   const quickLinks = footerData?.links.filter(link => link.category === 'quick_links') || defaultQuickLinks.map((link, idx) => ({
     id: idx,
     category: 'quick_links',
@@ -92,12 +93,11 @@ const Footer = () => {
   }));
 
   const legalLinks = footerData?.links.filter(link => link.category === 'legal') || [
-    { id: 1, category: 'legal', label: 'Доступность и правила пользования сайтом', url: '/accessibility-and-terms', order: 1 },
-    { id: 2, category: 'legal', label: 'Политика конфиденциальности сайта', url: '/privacy-policy', order: 2 }
+    { id: 1, category: 'legal', label: t('accessibilityAndTerms'), url: '/accessibility-and-terms', order: 1 },
+    { id: 2, category: 'legal', label: t('privacyPolicy'), url: '/privacy-policy', order: 2 }
   ];
 
-  // Получаем социальные ссылки из бэкенда или используем дефолтные
-  const socialIcons: Array<{ src: string; alt: string; w: number; h: number; href: string; id?: number }> = 
+  const socialIcons: Array<{ src: string; alt: string; w: number; h: number; href: string; id?: number }> =
     footerData?.social_links && footerData.social_links.length > 0
       ? footerData.social_links.map(link => ({
           ...socialIconsMap[link.network],
@@ -105,6 +105,7 @@ const Footer = () => {
           id: link.id
         }))
       : defaultSocialIcons;
+
   return (
     <footer className={styles.footer}>
       <div className={styles.footerContent}>
@@ -113,9 +114,9 @@ const Footer = () => {
         {/* Branding */}
         <div className={styles.brand}>
           <h2 className={styles.brandTitle}>Land of Soul Abkhazia</h2>
-          <h3 className={styles.brandSubtitle}>О сервисе</h3>
+          <h3 className={styles.brandSubtitle}>{t('aboutService')}</h3>
           <p className={styles.brandDescription}>
-            {footerData?.description || 'Ваш гид по Абхазии с проверенными рекомендациями и эксклюзивными маршрутами.'}
+            {footerData?.description || t('defaultDescription')}
           </p>
           <div className={styles.socials}>
             {socialIcons.map((icon, idx) => (
@@ -128,7 +129,7 @@ const Footer = () => {
 
         {/* Quick links block */}
         <div className={styles.quickLinksBlock}>
-          <h3 className={styles.quickLinksTitle}>Быстрые ссылки</h3>
+          <h3 className={styles.quickLinksTitle}>{t('quickLinks')}</h3>
           <nav className={styles.quickLinks}>
             {quickLinks.map((link) => (
               <Link href={link.url} key={link.id} className={styles.quickLinkItem}>
@@ -140,7 +141,7 @@ const Footer = () => {
 
         {/* Contact block */}
         <div className={styles.contactBlock}>
-          <h3 className={styles.contactTitle}>Связаться с нами</h3>
+          <h3 className={styles.contactTitle}>{t('contactUs')}</h3>
           <div className={styles.contactInfo}>
             {footerData?.contact_info ? (
               <div style={{ whiteSpace: 'pre-line' }}>
@@ -148,15 +149,15 @@ const Footer = () => {
               </div>
             ) : (
               <div>
-                <strong>Часы работы:</strong><br/>
-                Понедельник – суббота<br/>
-                9:00 – 18:00<br/>
-                Воскресенье – выходной
+                <strong>{t('workingHours')}</strong><br/>
+                {t('mondayToSaturday')}<br/>
+                {t('workingTime')}<br/>
+                {t('sundayOff')}
               </div>
             )}
             {footerData?.email && (
               <div style={{ marginTop: 8 }}>
-                <strong>Корпоративная почта:</strong><br/>
+                <strong>{t('corporateEmail')}</strong><br/>
                 <a href={`mailto:${footerData.email}`} className={styles.contactEmail}>
                   {footerData.email}
                 </a>
@@ -164,7 +165,7 @@ const Footer = () => {
             )}
             {!footerData?.email && (
               <div style={{ marginTop: 8 }}>
-                <strong>Корпоративная почта:</strong><br/>
+                <strong>{t('corporateEmail')}</strong><br/>
                 <a href="mailto:landofsoulweb@yandex.com" className={styles.contactEmail}>
                   landofsoulweb@yandex.com
                 </a>
@@ -175,7 +176,7 @@ const Footer = () => {
 
         {/* Download badges block */}
         <div className={styles.appBlock}>
-          <h3 className={styles.appBlockTitle}>Скачайте мобильное приложение</h3>
+          <h3 className={styles.appBlockTitle}>{t('downloadApp')}</h3>
           <div className={styles.appBadges}>
             <Image
               src="/assets/appstore.svg"
@@ -208,7 +209,7 @@ const Footer = () => {
           ))}
         </nav>
         <span className={styles.rights}>
-          {footerData?.copyright_text || '© 2025 Land of soul Abkhazia. Все права защищены.'}
+          {footerData?.copyright_text || t('copyright')}
         </span>
         </div>
       </div>
@@ -216,4 +217,4 @@ const Footer = () => {
   );
 };
 
-export default Footer; 
+export default Footer;

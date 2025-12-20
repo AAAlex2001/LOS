@@ -1,0 +1,156 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error loading data",
+    "pageNotFound": "Page not found",
+    "noData": "No data available",
+    "site": "WEBSITE",
+    "phone": "Tel.",
+    "contacts": "Contacts",
+    "workingHours": "Working hours",
+    "address": "Address",
+    "email": "Email",
+    "website": "Website"
+  },
+  "header": {
+    "classifieds": "Classifieds",
+    "soon": "soon",
+    "selectLanguage": "Select language"
+  },
+  "footer": {
+    "aboutService": "About Service",
+    "defaultDescription": "Your guide to Abkhazia with verified recommendations and exclusive routes.",
+    "quickLinks": "Quick Links",
+    "cities": "Cities",
+    "communication": "Communication",
+    "taxi": "Taxi",
+    "yourDoctor": "Your Doctor",
+    "importantToKnow": "Important to Know",
+    "historyAndCulture": "History and Culture of Abkhazia",
+    "entertainment": "Entertainment",
+    "banks": "Banks",
+    "contactUs": "Contact Us",
+    "workingHours": "Working hours:",
+    "mondayToSaturday": "Monday – Saturday",
+    "workingTime": "9:00 AM – 6:00 PM",
+    "sundayOff": "Sunday – closed",
+    "corporateEmail": "Corporate email:",
+    "downloadApp": "Download Mobile App",
+    "accessibilityAndTerms": "Accessibility and Terms of Use",
+    "privacyPolicy": "Privacy Policy",
+    "copyright": "© 2025 Land of soul Abkhazia. All rights reserved."
+  },
+  "home": {
+    "errorLoading": "Error loading data",
+    "noFees": "No fees · 24/7 support · Check-in guarantee"
+  },
+  "cities": {
+    "title": "Cities of Abkhazia",
+    "sukhum": "Sukhum",
+    "gagra": "Gagra",
+    "pitsunda": "Pitsunda",
+    "gudauta": "Gudauta",
+    "newAfon": "New Afon",
+    "gulripsh": "Gulripsh",
+    "ochamchira": "Ochamchira",
+    "tkuarchal": "Tkuarchal",
+    "gal": "Gal",
+    "viewCity": "View of the city"
+  },
+  "banks": {
+    "title": "Banks",
+    "noData": "No bank data available",
+    "workingHours": "Working hours:",
+    "contacts": "Contacts:",
+    "email": "Email:",
+    "address": "Address:",
+    "website": "Website:"
+  },
+  "taxi": {
+    "title": "Taxi",
+    "workingHours": "Working hours:",
+    "orderTaxi": "Order taxi:",
+    "introNotConfigured": "Intro text not configured"
+  },
+  "yourDoctor": {
+    "title": "Your Doctor",
+    "hospitals": "Hospitals",
+    "privateClinics": "Private Clinics",
+    "dentistry": "Dentistry",
+    "doctors": "Doctors",
+    "vetClinics": "Vet Clinics",
+    "logo": "Your Doctor logo",
+    "contentPlaceholder": "Content for section \"{section}\" will be here."
+  },
+  "important": {
+    "title": "Important to Know"
+  },
+  "historyAndCulture": {
+    "title": "History and Culture of Abkhazia",
+    "historyTab": "History of Abkhazia",
+    "cultureTab": "Culture of Abkhazia",
+    "historyTitle": "History of Abkhazia",
+    "cultureTitle": "Culture of Abkhazia",
+    "noHistoryData": "No history section data available",
+    "noCultureData": "No culture section data available"
+  },
+  "excursions": {
+    "title": "Excursions"
+  },
+  "parties": {
+    "title": "Entertainment"
+  },
+  "mobileCommunication": {
+    "title": "Communication"
+  },
+  "mountainRoutes": {
+    "title": "Mountain Routes",
+    "phone": "Tel.:",
+    "contacts": "Contacts:"
+  },
+  "hotSprings": {
+    "title": "Hot Springs"
+  },
+  "governmentStructure": {
+    "title": "Government Structure"
+  },
+  "abkhazianCuisine": {
+    "title": "Abkhazian Cuisine"
+  },
+  "abkhazianCustoms": {
+    "title": "Abkhazian Customs"
+  },
+  "elementaryDictionary": {
+    "title": "Elementary Dictionary"
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy"
+  },
+  "accessibilityAndTerms": {
+    "title": "Accessibility and Terms of Use"
+  },
+  "categoryPages": {
+    "beaches": "Beaches",
+    "hotels": "Hotels",
+    "restaurants": "Restaurants",
+    "beautySalons": "Beauty Salons",
+    "carWashes": "Car Washes",
+    "gasStations": "Gas Stations",
+    "clothingRepair": "Clothing Repair",
+    "shopsAndMarkets": "Shops and Markets",
+    "churches": "Churches",
+    "culturalAttractions": "Cultural Attractions",
+    "administrativeBuildings": "Administrative Buildings",
+    "parkingLots": "Parking Lots",
+    "pharmacy": "Pharmacies",
+    "wineries": "Wineries"
+  },
+  "metadata": {
+    "title": "Vacation in Abkhazia | LANDOFSOUL-APSNY.RU – Your Guide to the Land of Soul",
+    "description": "Everything about vacationing in Abkhazia: cities, beaches, hotels, excursions, cuisine and culture. Plan your perfect trip with us!",
+    "keywords": "vacation in Abkhazia, tourism Abkhazia, Gagra, Sukhum, Pitsunda, New Afon, hotels Abkhazia, beaches Abkhazia, excursions Abkhazia",
+    "abkhazia": "Abkhazia",
+    "countryOfSoul": "Land of Soul - Abkhazia. Vacation in Abkhazia: cities, beaches, hotels, excursions, cuisine and culture.",
+    "landscapes": "Landscapes of Abkhazia"
+  }
+}

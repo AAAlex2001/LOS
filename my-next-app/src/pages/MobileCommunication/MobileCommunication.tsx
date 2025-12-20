@@ -5,6 +5,7 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './MobileCommunication.module.scss';
 import config from '@/config';
+import { useTranslations } from '@/i18n/LocaleContext';
 
 interface ProviderCard {
   id: number;
@@ -32,6 +33,8 @@ const MobileCommunication: React.FC = () => {
   const [data, setData] = useState<MobileCommunicationPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations('mobileCommunication');
+  const tCommon = useTranslations('common');
 
   useEffect(() => {
     const load = async () => {
@@ -42,7 +45,7 @@ const MobileCommunication: React.FC = () => {
         setData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(tCommon('error'));
       } finally {
         setLoading(false);
       }
@@ -55,7 +58,7 @@ const MobileCommunication: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{tCommon('loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -67,7 +70,7 @@ const MobileCommunication: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error || tCommon('error')}</h1>
         </main>
         <Footer />
       </div>
@@ -121,7 +124,7 @@ const MobileCommunication: React.FC = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      САЙТ: {provider.website_url}
+                      {tCommon('site')}: {provider.website_url}
                     </a>
                   )}
                 </div>
@@ -151,7 +154,7 @@ const MobileCommunication: React.FC = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      САЙТ: {provider.website_url}
+                      {tCommon('site')}: {provider.website_url}
                     </a>
                   )}
                 </div>

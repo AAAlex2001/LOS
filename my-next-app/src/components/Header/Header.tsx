@@ -3,11 +3,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Header.module.scss';
 import { useState } from 'react';
+import { useTranslations } from '@/i18n/LocaleContext';
+import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
+  const t = useTranslations('header');
 
   return (
     <>
@@ -20,10 +23,9 @@ const Header = () => {
       {/* Mobile menu */}
       <div className={`${styles.mobileMenu} ${menuOpen ? styles.active : ''}`}>
         <nav className={styles.mobileNavList}>
-          {/* <Link href="#" className={styles.mobileNavButton} onClick={closeMenu}>Аренда жилья</Link> */}
           <Link href="#" className={`${styles.mobileNavButton} ${styles.blueOutline}`} onClick={closeMenu}>
-            Доска объявлений
-            <span className={styles.soonBadge}>скоро</span>
+            {t('classifieds')}
+            <span className={styles.soonBadge}>{t('soon')}</span>
           </Link>
         </nav>
 
@@ -37,25 +39,9 @@ const Header = () => {
           />
         </div>
 
-        {/* <div className={styles.mobileLanguageSelect} onClick={closeMenu}>
-          <span className={styles.languageText}>Выберите язык</span>
-          <svg
-            className={styles.arrowIcon}
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M5 7L10 12L15 7"
-              stroke="#1129BD"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div> */}
+        <div className={styles.mobileLanguageSelect}>
+          <LanguageSwitcher />
+        </div>
       </div>
 
       <header className={styles.header}>
@@ -74,10 +60,9 @@ const Header = () => {
 
         {/* Center navigation buttons */}
         <nav className={styles.nav}>
-          {/* <Link href="#" className={`${styles.navButton} ${styles.orangeOutline}`}>Аренда жилья</Link> */}
           <Link href="#" className={`${styles.navButton} ${styles.blueOutline}`}>
-            Доска объявлений
-            <span className={styles.soonBadge}>скоро</span>
+            {t('classifieds')}
+            <span className={styles.soonBadge}>{t('soon')}</span>
           </Link>
         </nav>
 
@@ -93,25 +78,9 @@ const Header = () => {
         </div>
 
         {/* Right block: language select */}
-        {/* <div className={styles.languageSelect}>
-          <span className={styles.languageText}>Выберите язык</span>
-          <svg
-            className={styles.arrowIcon}
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M5 7L10 12L15 7"
-              stroke="#1129BD"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div> */}
+        <div className={styles.languageSelect}>
+          <LanguageSwitcher />
+        </div>
 
         </div>
       </header>
@@ -126,4 +95,4 @@ const Header = () => {
   );
 };
 
-export default Header; 
+export default Header;

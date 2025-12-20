@@ -12,6 +12,7 @@ import YourDoctorDentistry from './YourDoctorDentistry';
 import YourDoctorVetClinics from './YourDoctorVetClinics';
 import YourDoctorDoctors from './YourDoctorDoctors';
 import config from '@/config';
+import { useTranslations } from '@/i18n/LocaleContext';
 
 type Hospital = {
   id: number;
@@ -49,16 +50,18 @@ type YourDoctorPageData = {
 const API_BASE = config.API_BASE;
 
 const YourDoctor: React.FC = () => {
+  const t = useTranslations('yourDoctor');
+  const tCommon = useTranslations('common');
+
   const tabs = [
-    { id: 'hospitals', name: 'Больницы' },
-    { id: 'private-clinics', name: 'Частные клиники' },
-    { id: 'dentistry', name: 'Стоматология' },
-    { id: 'doctors', name: 'Врачи' },
-    { id: 'vet-clinics', name: 'Вет. клиники' },
+    { id: 'hospitals', name: t('hospitals') },
+    { id: 'private-clinics', name: t('privateClinics') },
+    { id: 'dentistry', name: t('dentistry') },
+    { id: 'doctors', name: t('doctors') },
+    { id: 'vet-clinics', name: t('vetClinics') },
   ];
 
   const scrollToSection = (sectionId: string) => {
-    // Для больниц скроллим к блоку больниц, а не к картинке
     const targetId = sectionId === 'hospitals' ? 'hospitals-content' : sectionId;
     const section = document.getElementById(targetId);
     if (section) {
@@ -79,7 +82,7 @@ const YourDoctor: React.FC = () => {
         setPageData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(tCommon('error'));
       } finally {
         setLoading(false);
       }
@@ -92,7 +95,7 @@ const YourDoctor: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{tCommon('loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -104,7 +107,7 @@ const YourDoctor: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error || tCommon('error')}</h1>
         </main>
         <Footer />
       </div>
@@ -114,21 +117,21 @@ const YourDoctor: React.FC = () => {
   return (
     <div className={styles.pageWrapper}>
       <Header />
-      
+
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
           {pageData.logo_image_url && (
             <div className={styles.logo}>
               <img
                 src={`${API_BASE}/media/${pageData.logo_image_url}`}
-                alt="Ваш доктор логотип"
+                alt={t('logo')}
                 className={styles.logoImage}
                 style={{ width: 100, height: 100 }}
               />
             </div>
           )}
           <div className={styles.titleTextContainer}>
-            <h1 className={styles.mainTitle}>Ваш доктор</h1>
+            <h1 className={styles.mainTitle}>{t('title')}</h1>
           </div>
         </section>
 
@@ -158,7 +161,7 @@ const YourDoctor: React.FC = () => {
                   <div className={styles.imageCard}>
                     <img
                       src={`${API_BASE}/media/${pageData.hospitals_hero_image_url}`}
-                      alt="Больницы"
+                      alt={t('hospitals')}
                       className={styles.cardImage}
                       style={{ background: 'transparent', width: '100%', height: 'auto' }}
                     />
@@ -178,7 +181,7 @@ const YourDoctor: React.FC = () => {
               <YourDoctorVetClinics vet_clinics={pageData.vet_clinics} />
             ) : (
               <div style={{ minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <h2>Контент для раздела "{tab.name}" будет здесь.</h2>
+                <h2>{t('contentPlaceholder', { section: tab.name })}</h2>
               </div>
             )}
           </div>
@@ -191,4 +194,4 @@ const YourDoctor: React.FC = () => {
   );
 };
 
-export default YourDoctor; 
+export default YourDoctor;
