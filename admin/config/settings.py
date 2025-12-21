@@ -14,6 +14,9 @@ ALLOWED_HOSTS = [h for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,12
 
 
 INSTALLED_APPS = [
+    # modeltranslation must be before django.contrib.admin
+    "modeltranslation",
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -33,6 +36,8 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "cms.middleware.APILanguageMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -78,10 +83,21 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = "ru-ru"
+LANGUAGE_CODE = "ru"
 TIME_ZONE = "Europe/Moscow"
 USE_I18N = True
 USE_TZ = True
+
+# Supported languages for translation
+from django.utils.translation import gettext_lazy as _
+LANGUAGES = [
+    ("ru", _("Русский")),
+    ("en", _("English")),
+]
+
+# Default language for modeltranslation
+MODELTRANSLATION_DEFAULT_LANGUAGE = "ru"
+MODELTRANSLATION_FALLBACK_LANGUAGES = ("ru", "en")
 
 
 STATIC_URL = "/static/"
