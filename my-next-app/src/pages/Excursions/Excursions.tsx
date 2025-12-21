@@ -5,7 +5,8 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './Excursions.module.scss';
 import config from '@/config';
-import { useTranslations } from '@/i18n/LocaleContext';
+import { useTranslations, useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 interface ExcursionCard {
   id: number;
@@ -22,6 +23,7 @@ const splitRows = (items: ExcursionCard[]) => ({
 });
 
 const Excursions: React.FC = () => {
+  const { locale } = useLocale();
   const [services, setServices] = useState<ExcursionCard[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +33,8 @@ const Excursions: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/excursions/page/content/`, { cache: 'no-store' });
+        const url = getApiUrl('/api/excursions/page/content/', locale);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load excursions');
         const json = await res.json();
         const srv = (json?.services || []).map((s: any): ExcursionCard => ({
@@ -50,7 +53,7 @@ const Excursions: React.FC = () => {
       }
     };
     load();
-  }, []);
+  }, [locale, tCommon]);
 
   const { top, bottom } = splitRows(services);
 

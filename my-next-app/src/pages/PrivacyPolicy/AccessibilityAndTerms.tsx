@@ -5,6 +5,8 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './PrivacyPolicy.module.scss';
 import config from '@/config';
+import { useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 const API_BASE = config.API_BASE;
 
@@ -14,13 +16,15 @@ interface AccessibilityAndTermsData {
 }
 
 const AccessibilityAndTerms: React.FC = () => {
+  const { locale } = useLocale();
   const [data, setData] = useState<AccessibilityAndTermsData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/privacy-policy/accessibility-and-terms/page_content/`, { cache: 'no-store' });
+        const url = getApiUrl('/api/privacy-policy/accessibility-and-terms/page_content/', locale);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load');
         const json = await res.json();
         setData(json);
@@ -33,7 +37,7 @@ const AccessibilityAndTerms: React.FC = () => {
     };
     
     loadData();
-  }, []);
+  }, [locale]);
 
   if (loading) {
     return (

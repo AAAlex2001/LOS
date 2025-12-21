@@ -9,7 +9,8 @@ import ImportantTaxiEtiquette from './ImportantTaxiEtiquette';
 import styles from './Important.module.scss';
 import tabStyles from './MainTabs.module.scss';
 import config from '@/config';
-import { useTranslations } from '@/i18n/LocaleContext';
+import { useTranslations, useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 type ImportantRule = {
   id: number;
@@ -88,13 +89,15 @@ const Important: React.FC = () => {
   const [data, setData] = useState<ImportantPage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { locale } = useLocale();
   const t = useTranslations('important');
   const tCommon = useTranslations('common');
 
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/important/page/content/`, { cache: 'no-store' });
+        const url = getApiUrl('/api/important/page/content/', locale);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load important page');
         const json = (await res.json()) as ImportantPage;
         setData(json);
@@ -106,7 +109,7 @@ const Important: React.FC = () => {
       }
     };
     load();
-  }, []);
+  }, [locale, tCommon]);
 
   const scrollToSection = (sectionId: string) => {
     const targetId = sectionId === 'public-behavior' ? 'public-behavior-text' : sectionId;

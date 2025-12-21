@@ -5,6 +5,8 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './MountainRoutes.module.scss';
 import config from '@/config';
+import { useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 interface RouteItem {
   id: number;
@@ -26,6 +28,7 @@ interface MountainRoutesPageData {
 const API_BASE = config.API_BASE;
 
 const MountainRoutes: React.FC = () => {
+  const { locale } = useLocale();
   const [data, setData] = useState<MountainRoutesPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -33,7 +36,8 @@ const MountainRoutes: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/mountain-routes/page/content/`, { cache: 'no-store' });
+        const url = getApiUrl('/api/mountain-routes/page/content/', locale);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load mountain routes');
         const json = (await res.json()) as MountainRoutesPageData;
         setData(json);
@@ -45,7 +49,7 @@ const MountainRoutes: React.FC = () => {
       }
     };
     load();
-  }, []);
+  }, [locale]);
 
   if (loading) {
     return (

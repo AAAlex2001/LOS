@@ -20,7 +20,7 @@ from .models import (
 class SliderInline(admin.TabularInline):
     model = HomeSliderItem
     extra = 1
-    fields = ("media_type", "image", "video", "mobile_video", "alt", "order", "preview")
+    fields = ("media_type", "image", "video", "mobile_video", "alt", "alt_en", "order", "preview")
     readonly_fields = ("preview",)
 
     def preview(self, obj):
@@ -32,7 +32,7 @@ class SliderInline(admin.TabularInline):
 class CityInline(admin.TabularInline):
     model = HomeCity
     extra = 1
-    fields = ("image", "title", "description", "order", "preview")
+    fields = ("image", "title", "title_en", "description", "description_en", "order", "preview")
     readonly_fields = ("preview",)
 
     def preview(self, obj):
@@ -44,7 +44,7 @@ class CityInline(admin.TabularInline):
 class ActivityInline(admin.TabularInline):
     model = HomeActivity
     extra = 1
-    fields = ("image", "title", "href", "order", "preview")
+    fields = ("image", "title", "title_en", "href", "order", "preview")
     readonly_fields = ("preview",)
 
     def preview(self, obj):
@@ -56,49 +56,49 @@ class ActivityInline(admin.TabularInline):
 class ActionButtonInline(admin.TabularInline):
     model = HomeActionButton
     extra = 1
-    fields = ("label", "href", "order")
+    fields = ("label", "label_en", "href", "order")
 
 
 class PopupItemInline(admin.TabularInline):
     model = HomePopupItem
     extra = 1
-    fields = ("group", "label", "href", "order")
+    fields = ("group", "label", "label_en", "href", "order")
 
 
 class TabInline(admin.TabularInline):
     model = HomeTab
     extra = 1
-    fields = ("group", "label", "href", "order")
+    fields = ("group", "label", "label_en", "href", "order")
 
 
 class MobileTabInline(admin.TabularInline):
     model = MobileHomeTab
     extra = 1
-    fields = ("group", "label", "order")
+    fields = ("group", "label", "label_en", "order")
 
 
 class AboutAbkhaziaCategoryInline(admin.TabularInline):
     model = AboutAbkhaziaCategory
     extra = 1
-    fields = ("title", "slug", "is_active", "order")
+    fields = ("title", "title_en", "slug", "is_active", "order")
 
 
 class EntertainmentCategoryInline(admin.TabularInline):
     model = EntertainmentCategory
     extra = 1
-    fields = ("title", "slug", "is_active", "order")
+    fields = ("title", "title_en", "slug", "is_active", "order")
 
 
 class PlanTripCategoryInline(admin.TabularInline):
     model = PlanTripCategory
     extra = 1
-    fields = ("title", "slug", "is_active", "order")
+    fields = ("title", "title_en", "slug", "is_active", "order")
 
 
 class ImportantTripCategoryInline(admin.TabularInline):
     model = ImportantTripCategory
     extra = 1
-    fields = ("title", "slug", "is_active", "order")
+    fields = ("title", "title_en", "slug", "is_active", "order")
 
 
 @admin.register(HomePage)

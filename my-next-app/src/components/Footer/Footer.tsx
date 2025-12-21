@@ -4,7 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Footer.module.scss';
 import config from '@/config';
-import { useTranslations } from '@/i18n/LocaleContext';
+import { useTranslations, useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 const API_BASE = config.API_BASE;
 
@@ -51,6 +52,7 @@ const defaultSocialIcons = [
 ];
 
 const Footer = () => {
+  const { locale } = useLocale();
   const [footerData, setFooterData] = useState<FooterData | null>(null);
   const [loading, setLoading] = useState(true);
   const t = useTranslations('footer');
@@ -69,7 +71,8 @@ const Footer = () => {
   useEffect(() => {
     const loadFooterData = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/footer/footer/footer_data/`, { cache: 'no-store' });
+        const url = getApiUrl('/api/footer/footer/footer_data/', locale);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load footer data');
         const json = await res.json();
         setFooterData(json);
@@ -82,7 +85,7 @@ const Footer = () => {
     };
 
     loadFooterData();
-  }, []);
+  }, [locale]);
 
   const quickLinks = footerData?.links.filter(link => link.category === 'quick_links') || defaultQuickLinks.map((link, idx) => ({
     id: idx,

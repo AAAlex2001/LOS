@@ -6,6 +6,8 @@ import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './AbkhazianCuizine.module.scss';
 import config from '@/config';
+import { useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 type CuisineSection = {
   id: number;
@@ -31,13 +33,15 @@ type CuisinePageData = {
 const API_BASE = config.API_BASE;
 
 const AbkhazianCuizine = () => {
+  const { locale } = useLocale();
   const [data, setData] = useState<CuisinePageData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/abkhazian-cuisine/page/content/`, { cache: 'no-store' });
+        const url = getApiUrl('/api/abkhazian-cuisine/page/content/', locale);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load');
         const json = await res.json();
         setData(json);
@@ -50,7 +54,7 @@ const AbkhazianCuizine = () => {
     };
     
     loadData();
-  }, []);
+  }, [locale]);
 
   if (loading) {
     return (

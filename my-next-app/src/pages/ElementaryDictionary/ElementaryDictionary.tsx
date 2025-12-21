@@ -6,6 +6,8 @@ import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './ElementaryDictionary.module.scss';
 import config from '@/config';
+import { useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 interface WordPair {
   id: number;
@@ -43,6 +45,7 @@ const getColumns = (list: WordPair[], forceSplit = false): WordPair[][] => {
 };
 
 const ElementaryDictionary: React.FC = () => {
+  const { locale } = useLocale();
   const [pageData, setPageData] = useState<ElementaryDictionaryPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -50,7 +53,8 @@ const ElementaryDictionary: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/elementary-dictionary/page/content/`, { cache: 'no-store' });
+        const url = getApiUrl('/api/elementary-dictionary/page/content/', locale);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load dictionary');
         const json = (await res.json()) as ElementaryDictionaryPageData;
         setPageData(json);
@@ -62,7 +66,7 @@ const ElementaryDictionary: React.FC = () => {
       }
     };
     load();
-  }, []);
+  }, [locale]);
 
   const renderTable = (items: WordPair[]) => (
     <div className={styles.dictionaryTable}>

@@ -12,7 +12,8 @@ import YourDoctorDentistry from './YourDoctorDentistry';
 import YourDoctorVetClinics from './YourDoctorVetClinics';
 import YourDoctorDoctors from './YourDoctorDoctors';
 import config from '@/config';
-import { useTranslations } from '@/i18n/LocaleContext';
+import { useTranslations, useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 type Hospital = {
   id: number;
@@ -50,6 +51,7 @@ type YourDoctorPageData = {
 const API_BASE = config.API_BASE;
 
 const YourDoctor: React.FC = () => {
+  const { locale } = useLocale();
   const t = useTranslations('yourDoctor');
   const tCommon = useTranslations('common');
 
@@ -76,7 +78,8 @@ const YourDoctor: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/your-doctor/page/content/`, { cache: 'no-store' });
+        const url = getApiUrl('/api/your-doctor/page/content/', locale);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load YourDoctor');
         const json = (await res.json()) as YourDoctorPageData;
         setPageData(json);
@@ -88,7 +91,7 @@ const YourDoctor: React.FC = () => {
       }
     };
     load();
-  }, []);
+  }, [locale, tCommon]);
 
   if (loading) {
     return (

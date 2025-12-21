@@ -5,6 +5,8 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './HotSprings.module.scss';
 import config from '@/config';
+import { useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 import KyndykCard from './KyndykCard';
 import TskuaraCard from './TskuaraCard';
 import BabusharaCard from './BabusharaCard';
@@ -43,6 +45,7 @@ const formatText = (text: string) => {
 };
 
 const HotSprings: React.FC = () => {
+  const { locale } = useLocale();
   const [data, setData] = useState<SpringsPage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -50,7 +53,8 @@ const HotSprings: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/hot-springs/page/content/`, { cache: 'no-store' });
+        const url = getApiUrl('/api/hot-springs/page/content/', locale);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load hot springs');
         const json = (await res.json()) as SpringsPage;
         setData(json);
@@ -62,7 +66,7 @@ const HotSprings: React.FC = () => {
       }
     };
     load();
-  }, []);
+  }, [locale]);
 
   if (loading) {
     return (

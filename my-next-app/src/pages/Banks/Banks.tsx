@@ -6,7 +6,8 @@ import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './Banks.module.scss';
 import config from '@/config';
-import { useTranslations } from '@/i18n/LocaleContext';
+import { useTranslations, useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 type BankData = {
   id: number;
@@ -28,6 +29,7 @@ type BanksPageData = {
 const API_BASE = config.API_BASE;
 
 const Banks: React.FC = () => {
+  const { locale } = useLocale();
   const [pageData, setPageData] = useState<BanksPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -37,7 +39,8 @@ const Banks: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/banks/page/content/`, { cache: 'no-store' });
+        const url = getApiUrl('/api/banks/page/content/', locale);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load banks');
         const json = (await res.json()) as BanksPageData;
         setPageData(json);

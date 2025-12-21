@@ -6,6 +6,8 @@ import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './GasStationsSukhum.module.scss';
 import config from '@/config';
+import { useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 type City = { id: number; name: string; title?: string; order: number };
 type GasStation = {
@@ -31,12 +33,14 @@ const API_BASE = config.API_BASE;
 const GasStationsSukhum: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
+  const { locale } = useLocale();
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/gas-stations/page/city_page/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
+        const url = getApiUrl(`/api/gas-stations/page/city_page/${encodeURIComponent('Сухум')}/`, locale);
+        const res = await fetch(url, { cache: 'no-store' });
         
         if (!res.ok) {
           if (res.status === 404) {
@@ -56,7 +60,7 @@ const GasStationsSukhum: React.FC = () => {
       }
     };
     load();
-  }, []);
+  }, [locale]);
 
   if (loading) {
     return (

@@ -5,6 +5,8 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import styles from './Government_structure.module.scss';
 import config from '@/config';
+import { useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 type GovernmentBlock = {
   id: number;
@@ -21,6 +23,7 @@ type GovernmentPageData = {
 const API_BASE = config.API_BASE;
 
 const GovernmentStructure = () => {
+  const { locale } = useLocale();
   const [pageData, setPageData] = useState<GovernmentPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -28,7 +31,8 @@ const GovernmentStructure = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/government-structure/page/content/`, { cache: 'no-store' });
+        const url = getApiUrl('/api/government-structure/page/content/', locale);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load government structure');
         const json = (await res.json()) as GovernmentPageData;
         setPageData(json);
@@ -40,7 +44,7 @@ const GovernmentStructure = () => {
       }
     };
     load();
-  }, []);
+  }, [locale]);
 
   if (loading) {
     return (

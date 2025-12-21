@@ -5,7 +5,8 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './MobileCommunication.module.scss';
 import config from '@/config';
-import { useTranslations } from '@/i18n/LocaleContext';
+import { useTranslations, useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 interface ProviderCard {
   id: number;
@@ -30,6 +31,7 @@ interface MobileCommunicationPageData {
 const API_BASE = config.API_BASE;
 
 const MobileCommunication: React.FC = () => {
+  const { locale } = useLocale();
   const [data, setData] = useState<MobileCommunicationPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +41,8 @@ const MobileCommunication: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/mobile-communication/page/content/`, { cache: 'no-store' });
+        const url = getApiUrl('/api/mobile-communication/page/content/', locale);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load mobile communication page');
         const json = (await res.json()) as MobileCommunicationPageData;
         setData(json);
@@ -51,7 +54,7 @@ const MobileCommunication: React.FC = () => {
       }
     };
     load();
-  }, []);
+  }, [locale, tCommon]);
 
   if (loading) {
     return (

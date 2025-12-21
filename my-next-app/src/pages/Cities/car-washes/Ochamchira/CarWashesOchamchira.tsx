@@ -6,6 +6,8 @@ import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './CarWashesOchamchira.module.scss';
 import config from '@/config';
+import { useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 type City = { id: number; name: string; title?: string; order: number };
 type CarWash = {
@@ -33,12 +35,14 @@ const API_BASE = config.API_BASE;
 const CarWashesOchamchira: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
+  const { locale } = useLocale();
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/car-washes/page/city_page/${encodeURIComponent('Очамчыра')}/`, { cache: 'no-store' });
+        const url = getApiUrl(`/api/car-washes/page/city_page/${encodeURIComponent('Очамчыра')}/`, locale);
+        const res = await fetch(url, { cache: 'no-store' });
         
         if (!res.ok) {
           if (res.status === 404) {
@@ -58,7 +62,7 @@ const CarWashesOchamchira: React.FC = () => {
       }
     };
     load();
-  }, []);
+  }, [locale]);
 
   if (loading) {
     return (

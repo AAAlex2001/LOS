@@ -5,6 +5,8 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './AbkhazianCustoms.module.scss';
 import config from '@/config';
+import { useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 type CustomSection = {
   id: number;
@@ -31,13 +33,15 @@ const TextSection = ({ title, children }: { title: string; children: React.React
 );
 
 const AbkhazianCustoms = () => {
+  const { locale } = useLocale();
   const [data, setData] = useState<CustomsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/abkhazian-customs/page/content/`, { cache: 'no-store' });
+        const url = getApiUrl('/api/abkhazian-customs/page/content/', locale);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load');
         const json = await res.json();
         setData(json);
@@ -50,7 +54,7 @@ const AbkhazianCustoms = () => {
     };
     
     loadData();
-  }, []);
+  }, [locale]);
 
   if (loading) {
     return (

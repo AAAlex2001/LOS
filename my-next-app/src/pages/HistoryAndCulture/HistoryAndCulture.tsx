@@ -4,7 +4,8 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import styles from './HistoryAndCulture.module.scss';
 import config from '@/config';
-import { useTranslations } from '@/i18n/LocaleContext';
+import { useTranslations, useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 type HistorySection = {
   id: number;
@@ -39,6 +40,7 @@ const ImageBlock = ({ src, alt }: { src: string; alt: string }) => (
 
 
 const HistoryAndCulture = () => {
+  const { locale } = useLocale();
   const historyRef = useRef<HTMLHeadingElement>(null);
   const cultureRef = useRef<HTMLHeadingElement>(null);
 
@@ -57,13 +59,15 @@ const HistoryAndCulture = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const historyRes = await fetch(`${API_BASE}/api/history-and-culture/history-sections/`, { cache: 'no-store' });
+        const historyUrl = getApiUrl('/api/history-and-culture/history-sections/', locale);
+        const historyRes = await fetch(historyUrl, { cache: 'no-store' });
         if (historyRes.ok) {
           const historyData = await historyRes.json();
           setHistorySections(historyData);
         }
 
-        const cultureRes = await fetch(`${API_BASE}/api/history-and-culture/culture-sections/`, { cache: 'no-store' });
+        const cultureUrl = getApiUrl('/api/history-and-culture/culture-sections/', locale);
+        const cultureRes = await fetch(cultureUrl, { cache: 'no-store' });
         if (cultureRes.ok) {
           const cultureData = await cultureRes.json();
           setCultureSections(cultureData);
@@ -76,7 +80,7 @@ const HistoryAndCulture = () => {
     };
 
     loadData();
-  }, []);
+  }, [locale]);
 
   if (loading) {
     return (

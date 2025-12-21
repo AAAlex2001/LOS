@@ -5,7 +5,8 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './Taxi.module.scss';
 import config from '@/config';
-import { useTranslations } from '@/i18n/LocaleContext';
+import { useTranslations, useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 type TaxiService = {
   id: number;
@@ -26,6 +27,7 @@ type TaxiPageData = {
 const API_BASE = config.API_BASE;
 
 const Taxi: React.FC = () => {
+  const { locale } = useLocale();
   const [pageData, setPageData] = useState<TaxiPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -35,7 +37,8 @@ const Taxi: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/taxi/page/content/`, { cache: 'no-store' });
+        const url = getApiUrl('/api/taxi/page/content/', locale);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load taxi');
         const json = (await res.json()) as TaxiPageData;
         setPageData(json);
@@ -47,7 +50,7 @@ const Taxi: React.FC = () => {
       }
     };
     load();
-  }, []);
+  }, [locale, tCommon]);
 
   const { topRowServices, bottomRowServices } = useMemo(() => {
     const list = pageData?.services ?? [];

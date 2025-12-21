@@ -6,7 +6,8 @@ import Footer from '@/components/Footer/Footer';
 import styles from './Parties.module.scss';
 import tabStyles from './MainTabs.module.scss';
 import config from '@/config';
-import { useTranslations } from '@/i18n/LocaleContext';
+import { useTranslations, useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 // Import city card components
 import PartyCardSuhum from './PartyCardSuhum';
@@ -71,6 +72,7 @@ interface PartiesPageData {
 const API_BASE = config.API_BASE;
 
 const Parties: React.FC = () => {
+  const { locale } = useLocale();
   const [data, setData] = useState<PartiesPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -80,7 +82,8 @@ const Parties: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/parties/page/content/`, { cache: 'no-store' });
+        const url = getApiUrl('/api/parties/page/content/', locale);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load parties page');
         const json = (await res.json()) as PartiesPageData;
         setData(json);
@@ -92,7 +95,7 @@ const Parties: React.FC = () => {
       }
     };
     load();
-  }, []);
+  }, [locale, tCommon]);
 
   // Scroll to city function
   const scrollToCity = (cityId: string) => {

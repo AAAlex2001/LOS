@@ -5,6 +5,8 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './TransportCommunications.module.scss';
 import config from '@/config';
+import { useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 interface TransportBlock {
   id: number;
@@ -24,6 +26,7 @@ interface TransportCommunicationsPageData {
 const API_BASE = config.API_BASE;
 
 const TransportCommunications = () => {
+  const { locale } = useLocale();
   const [data, setData] = useState<TransportCommunicationsPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +34,8 @@ const TransportCommunications = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/transport-communications/page/content/`, { cache: 'no-store' });
+        const url = getApiUrl('/api/transport-communications/page/content/', locale);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load transport communications');
         const json = (await res.json()) as TransportCommunicationsPageData;
         setData(json);
@@ -43,7 +47,7 @@ const TransportCommunications = () => {
       }
     };
     load();
-  }, []);
+  }, [locale]);
 
   if (loading) {
     return (

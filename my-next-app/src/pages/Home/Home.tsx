@@ -9,7 +9,8 @@ import Popup from '@/components/Popup/Popup';
 import AdSlider from '@/components/AdSlider/AdSlider';
 import styles from './Home.module.scss';
 import config from '@/config';
-import { useTranslations } from '@/i18n/LocaleContext';
+import { useTranslations, useLocale } from '@/i18n/LocaleContext';
+import { getApiUrl } from '@/utils/api';
 
 type HomeData = {
   hero_text_primary: string;
@@ -50,10 +51,12 @@ const HomePage = () => {
   const t = useTranslations('home');
   const tCommon = useTranslations('common');
 
+  const { locale } = useLocale();
+
   useEffect(() => {
     const load = async () => {
       try {
-        const url = `${API_BASE}/api/home/page/content/`;
+        const url = getApiUrl('/api/home/page/content/', locale);
         const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load homepage');
         const json = await res.json();
@@ -64,7 +67,7 @@ const HomePage = () => {
       }
     };
     load();
-  }, []);
+  }, [locale, tCommon]);
 
   const sliderItems = data?.slider_items?.map(i => ({ type: i.media_type, src: toMedia(i.url) })) || [];
   const cities = data?.cities || [];
