@@ -1,0 +1,31 @@
+.languageSwitcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.langButton {
+  background: transparent;
+  border: none;
+  color: #1129BD;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(17, 41, 189, 0.1);
+  }
+
+  &.active {
+    background: #1129BD;
+    color: white;
+  }
+}
+
+.separator {
+  color: #1129BD;
+  font-size: 14px;
+}

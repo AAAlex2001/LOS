@@ -5,6 +5,7 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './Excursions.module.scss';
 import config from '@/config';
+import { useTranslations } from '@/i18n/LocaleContext';
 
 interface ExcursionCard {
   id: number;
@@ -24,6 +25,8 @@ const Excursions: React.FC = () => {
   const [services, setServices] = useState<ExcursionCard[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations('excursions');
+  const tCommon = useTranslations('common');
 
   useEffect(() => {
     const load = async () => {
@@ -40,7 +43,7 @@ const Excursions: React.FC = () => {
         setServices(srv);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(tCommon('error'));
         setServices([]);
       } finally {
         setLoading(false);
@@ -56,7 +59,7 @@ const Excursions: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{tCommon('loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -67,8 +70,8 @@ const Excursions: React.FC = () => {
     <div className={styles.pageWrapper}>
       <Header />
       <main className={styles.mainContent}>
-        <h1 className={styles.mainTitle}>Экскурсии</h1>
-        
+        <h1 className={styles.mainTitle}>{t('title')}</h1>
+
         <section className={styles.excursionContainer}>
           <div className={styles.row}>
             {top.map((excursion) => (
@@ -88,7 +91,7 @@ const Excursions: React.FC = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    САЙТ: {excursion.site}
+                    {tCommon('site')}: {excursion.site}
                   </a>
                 </div>
               </article>
@@ -112,7 +115,7 @@ const Excursions: React.FC = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    САЙТ: {excursion.site}
+                    {tCommon('site')}: {excursion.site}
                   </a>
                 </div>
               </article>
@@ -125,4 +128,4 @@ const Excursions: React.FC = () => {
   );
 };
 
-export default Excursions; 
+export default Excursions;

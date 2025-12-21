@@ -5,6 +5,7 @@ import "../styles/styles.scss";
 import ScrollToTop from "@/components/ScrollToTop/ScrollToTop";
 import "@/components/ScrollToTop/ScrollToTop.scss";
 import ClientWrapper from "@/components/Loader/ClientWrapper";
+import { LocaleProvider } from "@/i18n/LocaleContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -101,10 +102,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ClientWrapper>
-          {children}
-        </ClientWrapper>
-        <ScrollToTop />
+        <LocaleProvider>
+          <ClientWrapper>
+            {children}
+          </ClientWrapper>
+          <ScrollToTop />
+        </LocaleProvider>
       </body>
     </html>
   );

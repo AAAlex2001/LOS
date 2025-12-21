@@ -6,6 +6,7 @@ import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './Banks.module.scss';
 import config from '@/config';
+import { useTranslations } from '@/i18n/LocaleContext';
 
 type BankData = {
   id: number;
@@ -30,6 +31,8 @@ const Banks: React.FC = () => {
   const [pageData, setPageData] = useState<BanksPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations('banks');
+  const tCommon = useTranslations('common');
 
   useEffect(() => {
     const load = async () => {
@@ -40,7 +43,7 @@ const Banks: React.FC = () => {
         setPageData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(tCommon('error'));
       } finally {
         setLoading(false);
       }
@@ -53,7 +56,7 @@ const Banks: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{tCommon('loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -65,7 +68,7 @@ const Banks: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error || tCommon('error')}</h1>
         </main>
         <Footer />
       </div>
@@ -75,26 +78,22 @@ const Banks: React.FC = () => {
   return (
     <div className={styles.pageWrapper}>
       <Header />
-      
+
       <main className={styles.mainContent}>
-        {/* Заголовок */}
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Банки</h1>
+          <h1 className={styles.mainTitle}>{t('title')}</h1>
         </section>
 
-        {/* Карточки банков */}
         <section className={styles.cardsSection}>
           {(!pageData.banks || pageData.banks.length === 0) ? (
-            <div className={styles.noData}>Нет данных о банках</div>
+            <div className={styles.noData}>{t('noData')}</div>
           ) : (
             pageData.banks.map((bank) => (
               <div key={bank.id} className={styles.buildingCard}>
-                {/* Изображение (логотип банка) */}
                 <div className={styles.imageContainer}>
                   <img src={`${API_BASE}/media/${bank.image_url}`} alt={bank.name} className={styles.buildingImage} />
                 </div>
 
-                {/* Информация */}
                 <div className={styles.infoContainer}>
                   <h2 className={styles.buildingName}>
                     {bank.name_link ? (
@@ -105,27 +104,27 @@ const Banks: React.FC = () => {
                       bank.name
                     )}
                   </h2>
-                  
+
                   <div className={styles.infoBlock}>
                     {bank.working_hours && (
                       <div className={styles.infoItem}>
-                        <span className={styles.infoLabel}>Режим работы:</span>
+                        <span className={styles.infoLabel}>{t('workingHours')}</span>
                         <span className={styles.infoValue}>{bank.working_hours}</span>
                       </div>
                     )}
 
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoLabel}>{t('contacts')}</span>
                       <span className={styles.infoValue}>{bank.contacts}</span>
                     </div>
 
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Почта:</span>
+                      <span className={styles.infoLabel}>{t('email')}</span>
                       <a href={`mailto:${bank.email}`} className={`${styles.infoValue} ${styles.link}`}>{bank.email}</a>
                     </div>
 
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Адрес:</span>
+                      <span className={styles.infoLabel}>{t('address')}</span>
                       {bank.address_link ? (
                         <a href={bank.address_link} target="_blank" rel="noopener noreferrer" className={`${styles.infoValue} ${styles.link}`}>{bank.address}</a>
                       ) : (
@@ -135,7 +134,7 @@ const Banks: React.FC = () => {
 
                     {bank.name_link && (
                       <div className={styles.infoItem}>
-                        <span className={styles.infoLabel}>Сайт:</span>
+                        <span className={styles.infoLabel}>{t('website')}</span>
                         <a href={bank.name_link} target="_blank" rel="noopener noreferrer" className={`${styles.infoValue} ${styles.link}`}>{bank.name_link}</a>
                       </div>
                     )}
@@ -153,4 +152,4 @@ const Banks: React.FC = () => {
   );
 };
 
-export default Banks; 
+export default Banks;

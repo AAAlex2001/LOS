@@ -9,6 +9,7 @@ import Popup from '@/components/Popup/Popup';
 import AdSlider from '@/components/AdSlider/AdSlider';
 import styles from './Home.module.scss';
 import config from '@/config';
+import { useTranslations } from '@/i18n/LocaleContext';
 
 type HomeData = {
   hero_text_primary: string;
@@ -46,6 +47,8 @@ const HomePage = () => {
   const [activePopup, setActivePopup] = useState<string | null>(null);
   const [data, setData] = useState<HomeData | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations('home');
+  const tCommon = useTranslations('common');
 
   useEffect(() => {
     const load = async () => {
@@ -57,7 +60,7 @@ const HomePage = () => {
         setData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(tCommon('error'));
       }
     };
     load();

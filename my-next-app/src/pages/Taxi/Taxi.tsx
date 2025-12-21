@@ -5,8 +5,8 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './Taxi.module.scss';
 import config from '@/config';
+import { useTranslations } from '@/i18n/LocaleContext';
 
-// Types that reflect CMS API
 type TaxiService = {
   id: number;
   name: string;
@@ -29,6 +29,8 @@ const Taxi: React.FC = () => {
   const [pageData, setPageData] = useState<TaxiPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations('taxi');
+  const tCommon = useTranslations('common');
 
   useEffect(() => {
     const load = async () => {
@@ -39,7 +41,7 @@ const Taxi: React.FC = () => {
         setPageData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(tCommon('error'));
       } finally {
         setLoading(false);
       }
@@ -60,7 +62,7 @@ const Taxi: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{tCommon('loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -72,7 +74,7 @@ const Taxi: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error || tCommon('error')}</h1>
         </main>
         <Footer />
       </div>
@@ -83,8 +85,8 @@ const Taxi: React.FC = () => {
     <div className={styles.pageWrapper}>
       <Header />
       <main className={styles.mainContent}>
-        <h1 className={styles.mainTitle}>Такси</h1>
-        
+        <h1 className={styles.mainTitle}>{t('title')}</h1>
+
         <div className={styles.fullWidthSection}>
           <div
             className={styles.backgroundImageSection}
@@ -97,7 +99,7 @@ const Taxi: React.FC = () => {
           >
             <div className={styles.introOverlay}>
               <p className={styles.introText} style={{ whiteSpace: 'pre-line' }}>
-                {pageData.intro_text || 'Вводный текст не настроен'}
+                {pageData.intro_text || t('introNotConfigured')}
               </p>
             </div>
           </div>
@@ -119,9 +121,9 @@ const Taxi: React.FC = () => {
                   <a href={taxi.site} className={styles.cardTitle} target="_blank" rel="noopener noreferrer">
                     {taxi.name}
                   </a>
-                  <p className={styles.workingHours}>Время работы: {taxi.working_hours}</p>
+                  <p className={styles.workingHours}>{t('workingHours')} {taxi.working_hours}</p>
                   <div className={styles.phoneSection}>
-                    <p className={styles.orderLabel}>Заказать такси:</p>
+                    <p className={styles.orderLabel}>{t('orderTaxi')}</p>
                     <div className={styles.phoneList}>
                       {taxi.phones.map((phone, index) => (
                         <p key={index} className={styles.phone}>{phone}</p>
@@ -147,9 +149,9 @@ const Taxi: React.FC = () => {
                   <a href={taxi.site} className={styles.cardTitle} target="_blank" rel="noopener noreferrer">
                     {taxi.name}
                   </a>
-                  <p className={styles.workingHours}>Время работы: {taxi.working_hours}</p>
+                  <p className={styles.workingHours}>{t('workingHours')} {taxi.working_hours}</p>
                   <div className={styles.phoneSection}>
-                    <p className={styles.orderLabel}>Заказать такси:</p>
+                    <p className={styles.orderLabel}>{t('orderTaxi')}</p>
                     <div className={styles.phoneList}>
                       {taxi.phones.map((phone, index) => (
                         <p key={index} className={styles.phone}>{phone}</p>
@@ -167,4 +169,4 @@ const Taxi: React.FC = () => {
   );
 };
 
-export default Taxi; 
+export default Taxi;
