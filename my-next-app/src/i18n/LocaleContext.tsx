@@ -31,19 +31,23 @@ export function LocaleProvider({ children, defaultLocale = 'ru' }: LocaleProvide
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Load saved locale from localStorage
-    const savedLocale = localStorage.getItem('locale') as Locale | null;
-    if (savedLocale && (savedLocale === 'ru' || savedLocale === 'en')) {
-      setLocaleState(savedLocale);
+    // Load saved locale from localStorage only on client side
+    if (typeof window !== 'undefined') {
+      const savedLocale = localStorage.getItem('locale') as Locale | null;
+      if (savedLocale && (savedLocale === 'ru' || savedLocale === 'en')) {
+        setLocaleState(savedLocale);
+      }
     }
     setMounted(true);
   }, []);
 
   const setLocale = (newLocale: Locale) => {
     setLocaleState(newLocale);
-    localStorage.setItem('locale', newLocale);
-    // Update html lang attribute
-    document.documentElement.lang = newLocale;
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('locale', newLocale);
+      // Update html lang attribute
+      document.documentElement.lang = newLocale;
+    }
   };
 
   const messages = messagesMap[locale];
@@ -67,6 +71,14 @@ export function LocaleProvider({ children, defaultLocale = 'ru' }: LocaleProvide
 export function useLocale() {
   const context = useContext(LocaleContext);
   if (context === undefined) {
+    // Во время статической генерации возвращаем значения по умолчанию
+    if (typeof window === 'undefined') {
+      return {
+        locale: 'ru' as Locale,
+        setLocale: () => {},
+        messages: messagesMap['ru'],
+      };
+    }
     throw new Error('useLocale must be used within a LocaleProvider');
   }
   return context;
