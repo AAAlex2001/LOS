@@ -21,7 +21,7 @@ from .models import (
 class SliderInline(TranslationTabularInline):
     model = HomeSliderItem
     extra = 1
-    fields = ("media_type", "image", "video", "mobile_video", "alt", "alt_en", "order", "preview")
+    fields = ("media_type", "image", "video", "mobile_video", "alt", "order", "preview")
     readonly_fields = ("preview",)
 
     def preview(self, obj):
@@ -33,7 +33,7 @@ class SliderInline(TranslationTabularInline):
 class CityInline(TranslationTabularInline):
     model = HomeCity
     extra = 1
-    fields = ("image", "title", "title_en", "description", "description_en", "order", "preview")
+    fields = ("image", "title", "description", "order", "preview")
     readonly_fields = ("preview",)
 
     def preview(self, obj):
@@ -45,7 +45,7 @@ class CityInline(TranslationTabularInline):
 class ActivityInline(TranslationTabularInline):
     model = HomeActivity
     extra = 1
-    fields = ("image", "title", "title_en", "href", "order", "preview")
+    fields = ("image", "title", "href", "order", "preview")
     readonly_fields = ("preview",)
 
     def preview(self, obj):
@@ -57,49 +57,49 @@ class ActivityInline(TranslationTabularInline):
 class ActionButtonInline(TranslationTabularInline):
     model = HomeActionButton
     extra = 1
-    fields = ("label", "label_en", "href", "order")
+    fields = ("label", "href", "order")
 
 
 class PopupItemInline(TranslationTabularInline):
     model = HomePopupItem
     extra = 1
-    fields = ("group", "label", "label_en", "href", "order")
+    fields = ("group", "label", "href", "order")
 
 
 class TabInline(TranslationTabularInline):
     model = HomeTab
     extra = 1
-    fields = ("group", "label", "label_en", "href", "order")
+    fields = ("group", "label", "href", "order")
 
 
 class MobileTabInline(TranslationTabularInline):
     model = MobileHomeTab
     extra = 1
-    fields = ("group", "label", "label_en", "order")
+    fields = ("group", "label", "order")
 
 
 class AboutAbkhaziaCategoryInline(TranslationTabularInline):
     model = AboutAbkhaziaCategory
     extra = 1
-    fields = ("title", "title_en", "slug", "is_active", "order")
+    fields = ("title", "slug", "is_active", "order")
 
 
 class EntertainmentCategoryInline(TranslationTabularInline):
     model = EntertainmentCategory
     extra = 1
-    fields = ("title", "title_en", "slug", "is_active", "order")
+    fields = ("title", "slug", "is_active", "order")
 
 
 class PlanTripCategoryInline(TranslationTabularInline):
     model = PlanTripCategory
     extra = 1
-    fields = ("title", "title_en", "slug", "is_active", "order")
+    fields = ("title", "slug", "is_active", "order")
 
 
 class ImportantTripCategoryInline(TranslationTabularInline):
     model = ImportantTripCategory
     extra = 1
-    fields = ("title", "title_en", "slug", "is_active", "order")
+    fields = ("title", "slug", "is_active", "order")
 
 
 @admin.register(HomePage)
