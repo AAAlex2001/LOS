@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cms', '0015_importantpage_importantsection_importantrule_and_more'),
+        ('cms', '0009_dictionarycategory_split_two_columns'),
     ]
 
     operations = [

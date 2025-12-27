@@ -45,7 +45,7 @@ export function LocaleProvider({ children, defaultLocale = 'ru' }: LocaleProvide
     
     setLocaleState(newLocale);
     
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && pathname) {
       // Update html lang attribute
       document.documentElement.lang = newLocale;
       
