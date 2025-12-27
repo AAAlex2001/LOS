@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from .models import MountainRoutesPage, MountainRoute
 
 
-class MountainRouteInline(admin.TabularInline):
+class MountainRouteInline(TranslationTabularInline):
     model = MountainRoute
     extra = 0
     fields = ("title", "name", "image", "image_preview", "site_url", "phone", "order")
@@ -19,7 +20,7 @@ class MountainRouteInline(admin.TabularInline):
 
 
 @admin.register(MountainRoutesPage)
-class MountainRoutesPageAdmin(admin.ModelAdmin):
+class MountainRoutesPageAdmin(TranslationAdmin):
     list_display = ("id", "main_title", "created_at", "updated_at")
     inlines = [MountainRouteInline]
     readonly_fields = ("og_image_preview", "twitter_image_preview")

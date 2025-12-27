@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 from .models import HotSpringsPage, HotSpring
 
 
-class HotSpringInline(admin.TabularInline):
+class HotSpringInline(TranslationTabularInline):
     model = HotSpring
     extra = 1
     fields = ("title", "location_link", "description", "image", "image_preview", "order")
@@ -20,7 +21,7 @@ class HotSpringInline(admin.TabularInline):
 
 
 @admin.register(HotSpringsPage)
-class HotSpringsPageAdmin(admin.ModelAdmin):
+class HotSpringsPageAdmin(TranslationAdmin):
     list_display = ("id", "seo_title", "updated_at")
     inlines = [HotSpringInline]
 

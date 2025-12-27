@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin
 
 from .models import City, CityCategory
 
@@ -10,7 +11,7 @@ from .models import City, CityCategory
 
 
 @admin.register(City)
-class CityAdmin(admin.ModelAdmin):
+class CityAdmin(TranslationAdmin):
     list_display = ["name", "title", "order", "preview"]
     list_filter = ["page"]
     search_fields = ["name", "title"]

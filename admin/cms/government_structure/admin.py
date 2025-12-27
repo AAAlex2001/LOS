@@ -1,15 +1,16 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 from .models import GovernmentStructurePage, GovernmentBlock
 
 
-class GovernmentBlockInline(admin.TabularInline):
+class GovernmentBlockInline(TranslationTabularInline):
     model = GovernmentBlock
     extra = 1
     fields = ("title", "content", "image", "order")
 
 
 @admin.register(GovernmentStructurePage)
-class GovernmentStructurePageAdmin(admin.ModelAdmin):
+class GovernmentStructurePageAdmin(TranslationAdmin):
     list_display = ("id", "seo_title", "updated_at")
     inlines = [GovernmentBlockInline]
 

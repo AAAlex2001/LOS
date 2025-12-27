@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from .models import (
     MobileCommunicationPage,
@@ -8,7 +9,7 @@ from .models import (
 )
 
 
-class MobileProviderInline(admin.TabularInline):
+class MobileProviderInline(TranslationTabularInline):
     model = MobileProvider
     extra = 0
     fields = ("name", "description", "website_url", "logo_image", "logo_preview", "order")
@@ -22,7 +23,7 @@ class MobileProviderInline(admin.TabularInline):
     logo_preview.short_description = "Превью"
 
 
-class InternetProviderInline(admin.TabularInline):
+class InternetProviderInline(TranslationTabularInline):
     model = InternetProvider
     extra = 0
     fields = ("name", "description", "website_url", "logo_image", "logo_preview", "order")
@@ -37,7 +38,7 @@ class InternetProviderInline(admin.TabularInline):
 
 
 @admin.register(MobileCommunicationPage)
-class MobileCommunicationPageAdmin(admin.ModelAdmin):
+class MobileCommunicationPageAdmin(TranslationAdmin):
     list_display = ("id", "main_title", "created_at", "updated_at")
     inlines = [MobileProviderInline, InternetProviderInline]
     readonly_fields = ("background_image_preview", "og_image_preview", "twitter_image_preview")

@@ -1,8 +1,9 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 from .models import ElementaryDictionaryPage, DictionaryCategory, DictionaryWord
 
 
-class DictionaryCategoryInline(admin.TabularInline):
+class DictionaryCategoryInline(TranslationTabularInline):
     """
     Инлайн для категорий словаря
     """
@@ -12,7 +13,7 @@ class DictionaryCategoryInline(admin.TabularInline):
     ordering = ['order']
 
 
-class DictionaryWordInline(admin.TabularInline):
+class DictionaryWordInline(TranslationTabularInline):
     """
     Инлайн для слов/фраз в странице словаря
     """
@@ -30,7 +31,7 @@ class DictionaryWordInline(admin.TabularInline):
 
 
 @admin.register(ElementaryDictionaryPage)
-class ElementaryDictionaryPageAdmin(admin.ModelAdmin):
+class ElementaryDictionaryPageAdmin(TranslationAdmin):
     """
     Админка для страницы элементарного словаря
     """

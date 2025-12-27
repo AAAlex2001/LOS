@@ -1,17 +1,18 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from .models import AbkhazianCustomsPage, CustomSection
 
 
-class CustomSectionInline(admin.TabularInline):
+class CustomSectionInline(TranslationTabularInline):
     model = CustomSection
     extra = 1
     fields = ("title", "text", "order")
 
 
 @admin.register(AbkhazianCustomsPage)
-class AbkhazianCustomsPageAdmin(admin.ModelAdmin):
+class AbkhazianCustomsPageAdmin(TranslationAdmin):
     list_display = ("id", "updated_at")
     inlines = [CustomSectionInline]
     readonly_fields = ("seo_preview", "hero_image_preview")

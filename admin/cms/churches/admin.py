@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from .models import ChurchesPage, ChurchCity, Church
 
 
-class ChurchInline(admin.TabularInline):
+class ChurchInline(TranslationTabularInline):
     model = Church
     extra = 1
     fields = ("city", "name", "name_link", "working_hours", "address", "address_link", "description", "services", "image", "order", "preview")
@@ -34,14 +35,14 @@ class ChurchInline(admin.TabularInline):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
-class ChurchCityInline(admin.TabularInline):
+class ChurchCityInline(TranslationTabularInline):
     model = ChurchCity
     extra = 1
     fields = ("name", "title", "order")
 
 
 @admin.register(ChurchesPage)
-class ChurchesPageAdmin(admin.ModelAdmin):
+class ChurchesPageAdmin(TranslationAdmin):
     list_display = ("id", "updated_at")
     inlines = [ChurchCityInline, ChurchInline]
     readonly_fields = ("seo_preview",)

@@ -1,9 +1,10 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from .models import TaxiPage, TaxiService
 
 
-class TaxiServiceInline(admin.TabularInline):
+class TaxiServiceInline(TranslationTabularInline):
     model = TaxiService
     extra = 0
     fields = ("name", "working_hours", "phones_raw", "site", "image", "order")
@@ -11,7 +12,7 @@ class TaxiServiceInline(admin.TabularInline):
 
 
 @admin.register(TaxiPage)
-class TaxiPageAdmin(admin.ModelAdmin):
+class TaxiPageAdmin(TranslationAdmin):
     list_display = ("id", "main_title", "created_at", "updated_at")
     inlines = [TaxiServiceInline]
 

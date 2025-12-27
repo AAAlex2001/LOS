@@ -1,11 +1,12 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 
 from .models import SportsGymsPage, SportsGym
 
 
-class SportsGymInline(admin.TabularInline):
+class SportsGymInline(TranslationTabularInline):
     model = SportsGym
     extra = 1
     fields = ("name", "name_link", "working_hours", "address", "address_link", "contacts", "image", "order", "preview")
@@ -20,7 +21,7 @@ class SportsGymInline(admin.TabularInline):
 
 
 @admin.register(SportsGymsPage)
-class SportsGymsPageAdmin(admin.ModelAdmin):
+class SportsGymsPageAdmin(TranslationAdmin):
     list_display = ("id", "updated_at")
     inlines = [SportsGymInline]
     readonly_fields = ("seo_preview",)

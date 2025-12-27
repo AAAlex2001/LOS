@@ -1,8 +1,9 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 from .models import WelcomePage, WelcomeIcon
 
 
-class WelcomeIconInline(admin.TabularInline):
+class WelcomeIconInline(TranslationTabularInline):
     model = WelcomeIcon
     extra = 0
     fields = ('order', 'image')
@@ -10,6 +11,6 @@ class WelcomeIconInline(admin.TabularInline):
 
 
 @admin.register(WelcomePage)
-class WelcomePageAdmin(admin.ModelAdmin):
+class WelcomePageAdmin(TranslationAdmin):
     list_display = ('__str__',)
     inlines = [WelcomeIconInline]

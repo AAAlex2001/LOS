@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from .models import HotelsPage, HotelCity, Hotel
 
 
-class HotelInline(admin.TabularInline):
+class HotelInline(TranslationTabularInline):
     model = Hotel
     extra = 1
     fields = ("city", "name", "address", "address_link", "contacts", "price", "image", "order", "preview")
@@ -34,14 +35,14 @@ class HotelInline(admin.TabularInline):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
-class HotelCityInline(admin.TabularInline):
+class HotelCityInline(TranslationTabularInline):
     model = HotelCity
     extra = 1
     fields = ("name", "title", "order")
 
 
 @admin.register(HotelsPage)
-class HotelsPageAdmin(admin.ModelAdmin):
+class HotelsPageAdmin(TranslationAdmin):
     list_display = ("id", "updated_at")
     inlines = [HotelCityInline, HotelInline]
     readonly_fields = ("seo_preview",)

@@ -58,14 +58,14 @@ const Footer = () => {
   const t = useTranslations('footer');
 
   const defaultQuickLinks = [
-    { label: t('cities'), href: '/cities' },
-    { label: t('communication'), href: '/mobile-communication' },
-    { label: t('taxi'), href: '/taxi' },
-    { label: t('yourDoctor'), href: '/your-doctor' },
-    { label: t('importantToKnow'), href: '/important' },
-    { label: t('historyAndCulture'), href: '/history-and-culture' },
-    { label: t('entertainment'), href: '/parties' },
-    { label: t('banks'), href: '/banks' },
+    { label: t('cities'), href: `/${locale}/cities` },
+    { label: t('communication'), href: `/${locale}/mobile-communication` },
+    { label: t('taxi'), href: `/${locale}/taxi` },
+    { label: t('yourDoctor'), href: `/${locale}/your-doctor` },
+    { label: t('importantToKnow'), href: `/${locale}/important` },
+    { label: t('historyAndCulture'), href: `/${locale}/history-and-culture` },
+    { label: t('entertainment'), href: `/${locale}/parties` },
+    { label: t('banks'), href: `/${locale}/banks` },
   ];
 
   useEffect(() => {
@@ -96,8 +96,8 @@ const Footer = () => {
   }));
 
   const legalLinks = footerData?.links.filter(link => link.category === 'legal') || [
-    { id: 1, category: 'legal', label: t('accessibilityAndTerms'), url: '/accessibility-and-terms', order: 1 },
-    { id: 2, category: 'legal', label: t('privacyPolicy'), url: '/privacy-policy', order: 2 }
+    { id: 1, category: 'legal', label: t('accessibilityAndTerms'), url: `/${locale}/accessibility-and-terms`, order: 1 },
+    { id: 2, category: 'legal', label: t('privacyPolicy'), url: `/${locale}/privacy-policy`, order: 2 }
   ];
 
   const socialIcons: Array<{ src: string; alt: string; w: number; h: number; href: string; id?: number }> =

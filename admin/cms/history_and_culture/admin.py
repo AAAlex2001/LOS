@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 from .models import HistoryAndCulturePage, HistorySection, CultureSection
 
 
-class HistorySectionInline(admin.TabularInline):
+class HistorySectionInline(TranslationTabularInline):
     model = HistorySection
     extra = 0
     fields = ['title', 'content', 'image', 'image_preview', 'order']
@@ -20,7 +21,7 @@ class HistorySectionInline(admin.TabularInline):
     image_preview.short_description = "Превью"
 
 
-class CultureSectionInline(admin.TabularInline):
+class CultureSectionInline(TranslationTabularInline):
     model = CultureSection
     extra = 0
     fields = ['title', 'content', 'image', 'image_preview', 'order']
@@ -38,7 +39,7 @@ class CultureSectionInline(admin.TabularInline):
 
 
 @admin.register(HistoryAndCulturePage)
-class HistoryAndCulturePageAdmin(admin.ModelAdmin):
+class HistoryAndCulturePageAdmin(TranslationAdmin):
     list_display = ['__str__', 'seo_title', 'created_at', 'updated_at']
     readonly_fields = ['created_at', 'updated_at']
     inlines = [HistorySectionInline, CultureSectionInline]

@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from .models import (
     HomePage,
@@ -17,7 +18,7 @@ from .models import (
 )
 
 
-class SliderInline(admin.TabularInline):
+class SliderInline(TranslationTabularInline):
     model = HomeSliderItem
     extra = 1
     fields = ("media_type", "image", "video", "mobile_video", "alt", "alt_en", "order", "preview")
@@ -29,7 +30,7 @@ class SliderInline(admin.TabularInline):
         return "—"
 
 
-class CityInline(admin.TabularInline):
+class CityInline(TranslationTabularInline):
     model = HomeCity
     extra = 1
     fields = ("image", "title", "title_en", "description", "description_en", "order", "preview")
@@ -41,7 +42,7 @@ class CityInline(admin.TabularInline):
         return "—"
 
 
-class ActivityInline(admin.TabularInline):
+class ActivityInline(TranslationTabularInline):
     model = HomeActivity
     extra = 1
     fields = ("image", "title", "title_en", "href", "order", "preview")
@@ -53,56 +54,56 @@ class ActivityInline(admin.TabularInline):
         return "—"
 
 
-class ActionButtonInline(admin.TabularInline):
+class ActionButtonInline(TranslationTabularInline):
     model = HomeActionButton
     extra = 1
     fields = ("label", "label_en", "href", "order")
 
 
-class PopupItemInline(admin.TabularInline):
+class PopupItemInline(TranslationTabularInline):
     model = HomePopupItem
     extra = 1
     fields = ("group", "label", "label_en", "href", "order")
 
 
-class TabInline(admin.TabularInline):
+class TabInline(TranslationTabularInline):
     model = HomeTab
     extra = 1
     fields = ("group", "label", "label_en", "href", "order")
 
 
-class MobileTabInline(admin.TabularInline):
+class MobileTabInline(TranslationTabularInline):
     model = MobileHomeTab
     extra = 1
     fields = ("group", "label", "label_en", "order")
 
 
-class AboutAbkhaziaCategoryInline(admin.TabularInline):
+class AboutAbkhaziaCategoryInline(TranslationTabularInline):
     model = AboutAbkhaziaCategory
     extra = 1
     fields = ("title", "title_en", "slug", "is_active", "order")
 
 
-class EntertainmentCategoryInline(admin.TabularInline):
+class EntertainmentCategoryInline(TranslationTabularInline):
     model = EntertainmentCategory
     extra = 1
     fields = ("title", "title_en", "slug", "is_active", "order")
 
 
-class PlanTripCategoryInline(admin.TabularInline):
+class PlanTripCategoryInline(TranslationTabularInline):
     model = PlanTripCategory
     extra = 1
     fields = ("title", "title_en", "slug", "is_active", "order")
 
 
-class ImportantTripCategoryInline(admin.TabularInline):
+class ImportantTripCategoryInline(TranslationTabularInline):
     model = ImportantTripCategory
     extra = 1
     fields = ("title", "title_en", "slug", "is_active", "order")
 
 
 @admin.register(HomePage)
-class HomePageAdmin(admin.ModelAdmin):
+class HomePageAdmin(TranslationAdmin):
     list_display = ("id", "updated_at")
     inlines = [TabInline, MobileTabInline, AboutAbkhaziaCategoryInline, EntertainmentCategoryInline, PlanTripCategoryInline, ImportantTripCategoryInline, SliderInline, CityInline, ActivityInline, ActionButtonInline, PopupItemInline]
     readonly_fields = ("seo_preview",)

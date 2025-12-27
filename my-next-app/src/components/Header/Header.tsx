@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Header.module.scss';
 import { useState } from 'react';
-import { useTranslations } from '@/i18n/LocaleContext';
+import { useTranslations, useLocale } from '@/i18n/LocaleContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher';
 
 const Header = () => {
@@ -11,6 +11,7 @@ const Header = () => {
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
   const t = useTranslations('header');
+  const { locale } = useLocale();
 
   return (
     <>
@@ -47,7 +48,7 @@ const Header = () => {
       <header className={styles.header}>
         <div className={styles.headerContent}>
           {/* Left block: Logo */}
-          <Link href="/" className={styles.logoSection} onClick={closeMenu}>
+          <Link href={`/${locale}`} className={styles.logoSection} onClick={closeMenu}>
           <Image
             src="/assets/IMG_1557.png"
             alt="Logo"

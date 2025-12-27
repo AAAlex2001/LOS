@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from .models import TransportCommunicationsPage, TransportBlock
 
 
-class TransportBlockInline(admin.TabularInline):
+class TransportBlockInline(TranslationTabularInline):
     model = TransportBlock
     extra = 0
     fields = ("title", "location_link", "image_1", "image_1_preview", "image_2", "image_2_preview", "order")
@@ -25,7 +26,7 @@ class TransportBlockInline(admin.TabularInline):
 
 
 @admin.register(TransportCommunicationsPage)
-class TransportCommunicationsPageAdmin(admin.ModelAdmin):
+class TransportCommunicationsPageAdmin(TranslationAdmin):
     list_display = ("id", "main_title", "created_at", "updated_at")
     inlines = [TransportBlockInline]
     readonly_fields = ("og_image_preview", "twitter_image_preview")

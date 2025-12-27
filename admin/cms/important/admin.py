@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 from .models import ImportantPage, ImportantSection, ImportantRule, ImportantImage
 
 
-class ImportantTaxiRuleInline(admin.TabularInline):
+class ImportantTaxiRuleInline(TranslationTabularInline):
     model = ImportantRule
     extra = 0
     fields = ('section', 'rule_type', 'title', 'description', 'order')
@@ -13,7 +14,7 @@ class ImportantTaxiRuleInline(admin.TabularInline):
         return super().get_queryset(request).filter(section__section_type='taxi-etiquette')
 
 
-class ImportantPublicBehaviorRuleInline(admin.TabularInline):
+class ImportantPublicBehaviorRuleInline(TranslationTabularInline):
     model = ImportantRule
     extra = 0
     fields = ('section', 'title', 'description', 'order')
@@ -23,7 +24,7 @@ class ImportantPublicBehaviorRuleInline(admin.TabularInline):
         return super().get_queryset(request).filter(section__section_type='public-behavior')
 
 
-class ImportantImageInline(admin.TabularInline):
+class ImportantImageInline(TranslationTabularInline):
     model = ImportantImage
     extra = 0
     fields = ('section', 'image', 'image_preview', 'title', 'description', 'alt_text', 'order')
@@ -115,7 +116,7 @@ class ImportantTaxiEtiquetteSectionInline(admin.StackedInline):
 
 
 @admin.register(ImportantPage)
-class ImportantPageAdmin(admin.ModelAdmin):
+class ImportantPageAdmin(TranslationAdmin):
     fieldsets = (
         ('Основная информация', {
             'fields': ('title',)

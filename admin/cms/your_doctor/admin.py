@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from .models import (
     YourDoctorPage,
@@ -11,7 +12,7 @@ from .models import (
 )
 
 
-class HospitalInline(admin.TabularInline):
+class HospitalInline(TranslationTabularInline):
     model = Hospital
     extra = 0
     fields = ("name", "name_link", "working_hours", "address", "address_link", "contacts", "image", "image_preview", "order")
@@ -25,7 +26,7 @@ class HospitalInline(admin.TabularInline):
     image_preview.short_description = "Превью"
 
 
-class PrivateClinicInline(admin.TabularInline):
+class PrivateClinicInline(TranslationTabularInline):
     model = PrivateClinic
     extra = 0
     fields = ("name", "name_link", "working_hours", "address", "address_link", "contacts", "image", "image_preview", "order")
@@ -39,7 +40,7 @@ class PrivateClinicInline(admin.TabularInline):
     image_preview.short_description = "Превью"
 
 
-class DentistryInline(admin.TabularInline):
+class DentistryInline(TranslationTabularInline):
     model = Dentistry
     extra = 0
     fields = ("name", "name_link", "working_hours", "address", "address_link", "contacts", "image", "image_preview", "order")
@@ -53,7 +54,7 @@ class DentistryInline(admin.TabularInline):
     image_preview.short_description = "Превью"
 
 
-class VetClinicInline(admin.TabularInline):
+class VetClinicInline(TranslationTabularInline):
     model = VetClinic
     extra = 0
     fields = ("name", "name_link", "working_hours", "address", "address_link", "contacts", "image", "image_preview", "order")
@@ -67,7 +68,7 @@ class VetClinicInline(admin.TabularInline):
     image_preview.short_description = "Превью"
 
 
-class DoctorsGroupInline(admin.TabularInline):
+class DoctorsGroupInline(TranslationTabularInline):
     model = DoctorsGroup
     extra = 0
     fields = ("hospital_name", "doctors_raw", "order")
@@ -75,7 +76,7 @@ class DoctorsGroupInline(admin.TabularInline):
 
 
 @admin.register(YourDoctorPage)
-class YourDoctorPageAdmin(admin.ModelAdmin):
+class YourDoctorPageAdmin(TranslationAdmin):
     list_display = ("id", "main_title", "created_at", "updated_at")
     inlines = [HospitalInline, PrivateClinicInline, DentistryInline, VetClinicInline, DoctorsGroupInline]
     readonly_fields = ("logo_preview", "hospitals_hero_preview", "og_image_preview", "twitter_image_preview")

@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from .models import MusicPage, MusicTrack
 
 
-class MusicTrackInline(admin.TabularInline):
+class MusicTrackInline(TranslationTabularInline):
     model = MusicTrack
     extra = 1
     fields = ("title", "artist", "audio_file", "is_active", "order")
@@ -14,7 +15,7 @@ class MusicTrackInline(admin.TabularInline):
 
 
 @admin.register(MusicPage)
-class MusicPageAdmin(admin.ModelAdmin):
+class MusicPageAdmin(TranslationAdmin):
     list_display = ("id", "updated_at")
     inlines = [MusicTrackInline]
     readonly_fields = ("seo_preview", "intro_bg_image_preview", "main_image_preview", "og_image_preview", "twitter_image_preview")

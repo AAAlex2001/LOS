@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline, TranslationStackedInline
 
 from .models import PartiesPage, PartyCity, PartyEvent, PartySliderItem
 
 
 
 
-class PartyCityInline(admin.TabularInline):
+class PartyCityInline(TranslationTabularInline):
     model = PartyCity
     extra = 1
     fields = ("name", "slug", "city_image", "city_image_preview", "order")
@@ -20,7 +21,7 @@ class PartyCityInline(admin.TabularInline):
     city_image_preview.short_description = "Превью"
 
 
-class PartyEventInline(admin.StackedInline):
+class PartyEventInline(TranslationStackedInline):
     model = PartyEvent
     extra = 2
     fields = ("city", "title", "date_info", "location", "location_link", "description", "event_url", "order")
@@ -47,7 +48,7 @@ class PartySliderItemInline(admin.StackedInline):
 
 
 @admin.register(PartiesPage)
-class PartiesPageAdmin(admin.ModelAdmin):
+class PartiesPageAdmin(TranslationAdmin):
     list_display = ("id", "main_title", "created_at", "updated_at")
     inlines = [PartyCityInline, PartyEventInline, PartySliderItemInline]
     readonly_fields = (

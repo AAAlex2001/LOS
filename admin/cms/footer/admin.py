@@ -1,8 +1,9 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 from .models import Footer, FooterLink, SocialLink
 
 
-class FooterLinkInline(admin.TabularInline):
+class FooterLinkInline(TranslationTabularInline):
     model = FooterLink
     extra = 1
     fields = ('category', 'label', 'url', 'order')
@@ -19,7 +20,7 @@ class SocialLinkInline(admin.TabularInline):
 
 
 @admin.register(Footer)
-class FooterAdmin(admin.ModelAdmin):
+class FooterAdmin(TranslationAdmin):
     list_display = ('id', 'email', 'updated_at')
     fieldsets = (
         ('О сервисе', {

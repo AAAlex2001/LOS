@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from .models import CarWashesPage, CarWashCity, CarWash
 
 
-class CarWashInline(admin.TabularInline):
+class CarWashInline(TranslationTabularInline):
     model = CarWash
     extra = 1
     fields = ("city", "name", "name_link", "working_hours", "address", "address_link", "contacts", "services", "image", "order", "preview")
@@ -34,14 +35,14 @@ class CarWashInline(admin.TabularInline):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
-class CarWashCityInline(admin.TabularInline):
+class CarWashCityInline(TranslationTabularInline):
     model = CarWashCity
     extra = 1
     fields = ("name", "title", "order")
 
 
 @admin.register(CarWashesPage)
-class CarWashesPageAdmin(admin.ModelAdmin):
+class CarWashesPageAdmin(TranslationAdmin):
     list_display = ("id", "updated_at")
     inlines = [CarWashCityInline, CarWashInline]
     readonly_fields = ("seo_preview",)

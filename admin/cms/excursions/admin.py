@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 from .models import ExcursionsPage, ExcursionService
 
 
-class ExcursionInline(admin.TabularInline):
+class ExcursionInline(TranslationTabularInline):
     model = ExcursionService
     extra = 1
     fields = ("contacts", "site", "image", "order", "preview")
@@ -18,7 +19,7 @@ class ExcursionInline(admin.TabularInline):
 
 
 @admin.register(ExcursionsPage)
-class ExcursionsPageAdmin(admin.ModelAdmin):
+class ExcursionsPageAdmin(TranslationAdmin):
     list_display = ["id", "seo_title", "created_at", "updated_at"]
     list_filter = ["created_at", "updated_at"]
     search_fields = ["seo_title", "seo_description"]

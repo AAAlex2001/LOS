@@ -1,23 +1,24 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from .models import AbkhazianCuisinePage, CuisineSection, MainDish
 
 
-class CuisineSectionInline(admin.TabularInline):
+class CuisineSectionInline(TranslationTabularInline):
     model = CuisineSection
     extra = 1
     fields = ("title", "text", "order")
 
 
-class MainDishInline(admin.TabularInline):
+class MainDishInline(TranslationTabularInline):
     model = MainDish
     extra = 1
     fields = ("name", "description", "order")
 
 
 @admin.register(AbkhazianCuisinePage)
-class AbkhazianCuisinePageAdmin(admin.ModelAdmin):
+class AbkhazianCuisinePageAdmin(TranslationAdmin):
     list_display = ("id", "updated_at")
     inlines = [CuisineSectionInline, MainDishInline]
     readonly_fields = ("seo_preview", "hero_image_preview")

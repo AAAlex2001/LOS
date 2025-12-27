@@ -99,6 +99,17 @@ LANGUAGES = [
 MODELTRANSLATION_DEFAULT_LANGUAGE = "ru"
 MODELTRANSLATION_FALLBACK_LANGUAGES = ("ru", "en")
 
+# Modeltranslation admin settings - показывать вкладки для языков
+MODELTRANSLATION_TRANSLATION_FILES = ()
+MODELTRANSLATION_PREPOPULATE_LANGUAGE = "ru"  # По умолчанию показывать русский язык
+
+# Настройка отображения полей в админке
+# 'tabs' - вкладки для каждого языка (удобнее)
+# 'fieldsets' - группировка по полям
+MODELTRANSLATION_ADMIN_CSS = {
+    'all': ('modeltranslation/css/tabbed_translation_fields.css',),
+}
+
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"

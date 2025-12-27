@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from .models import BanksPage, Bank
 
 
-class BankInline(admin.TabularInline):
+class BankInline(TranslationTabularInline):
     model = Bank
     extra = 1
     fields = ("name", "name_link", "working_hours", "address", "address_link", "contacts", "email", "image", "order", "preview")
@@ -19,7 +20,7 @@ class BankInline(admin.TabularInline):
 
 
 @admin.register(BanksPage)
-class BanksPageAdmin(admin.ModelAdmin):
+class BanksPageAdmin(TranslationAdmin):
     list_display = ("id", "updated_at")
     inlines = [BankInline]
     readonly_fields = ("seo_preview",)

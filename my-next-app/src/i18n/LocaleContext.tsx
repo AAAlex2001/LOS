@@ -1,8 +1,8 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-
-type Locale = 'ru' | 'en';
+import { useRouter, usePathname } from 'next/navigation';
+import { Locale, locales } from './config';
 
 interface LocaleContextType {
   locale: Locale;
@@ -29,24 +29,39 @@ interface LocaleProviderProps {
 export function LocaleProvider({ children, defaultLocale = 'ru' }: LocaleProviderProps) {
   const [locale, setLocaleState] = useState<Locale>(defaultLocale);
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    // Load saved locale from localStorage only on client side
-    if (typeof window !== 'undefined') {
-      const savedLocale = localStorage.getItem('locale') as Locale | null;
-      if (savedLocale && (savedLocale === 'ru' || savedLocale === 'en')) {
-        setLocaleState(savedLocale);
-      }
-    }
     setMounted(true);
-  }, []);
+    // Update html lang attribute
+    if (typeof window !== 'undefined') {
+      document.documentElement.lang = defaultLocale;
+    }
+  }, [defaultLocale]);
 
   const setLocale = (newLocale: Locale) => {
+    if (!locales.includes(newLocale)) return;
+    
     setLocaleState(newLocale);
+    
     if (typeof window !== 'undefined') {
-      localStorage.setItem('locale', newLocale);
       // Update html lang attribute
       document.documentElement.lang = newLocale;
+      
+      // Get current path without locale
+      const segments = pathname.split('/');
+      const currentLocale = segments[1];
+      
+      // Replace locale in URL
+      if (locales.includes(currentLocale as Locale)) {
+        segments[1] = newLocale;
+      } else {
+        segments.splice(1, 0, newLocale);
+      }
+      
+      const newPath = segments.join('/');
+      router.push(newPath);
     }
   };
 

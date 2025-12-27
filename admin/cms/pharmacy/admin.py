@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from .models import PharmacyPage, PharmacyCity, PharmacyItem
 
 
-class PharmacyItemInline(admin.TabularInline):
+class PharmacyItemInline(TranslationTabularInline):
     model = PharmacyItem
     extra = 1
     fields = ("city", "name", "name_link", "working_hours", "address", "address_link", "contacts", "image", "order", "preview")
@@ -34,14 +35,14 @@ class PharmacyItemInline(admin.TabularInline):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
-class PharmacyCityInline(admin.TabularInline):
+class PharmacyCityInline(TranslationTabularInline):
     model = PharmacyCity
     extra = 1
     fields = ("name", "title", "order")
 
 
 @admin.register(PharmacyPage)
-class PharmacyPageAdmin(admin.ModelAdmin):
+class PharmacyPageAdmin(TranslationAdmin):
     list_display = ("id", "updated_at")
     inlines = [PharmacyCityInline, PharmacyItemInline]
     readonly_fields = ("seo_preview",)
