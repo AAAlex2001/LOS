@@ -136,13 +136,6 @@
 
 /* Responsive Design */
 
-/* Large Desktop (1441px+) */
-@media (min-width: 1441px) {
-  .doctorsWrapper {
-    padding: 0 calc((100vw - 1238px) / 2);
-  }
-}
-
 /* Desktop (1200px - 1440px) */
 @media (max-width: 1440px) and (min-width: 1200px) {
   .doctorsWrapper {
@@ -302,40 +295,3 @@
     padding: 0px;
   }
 }
-
-/* Mobile Small (< 320px) */
-@media (max-width: 319px) {
-  .doctorsWrapper {
-    padding: 0 3%;
-  }
-  
-  .mainTitle {
-    font-size: 20px;
-    line-height: 26px;
-  }
-  
-  .hospitalTitle {
-    font-size: 18px;
-    line-height: 24px;
-    text-align: left;
-    min-width: 0;
-  }
-  
-  .doctorsList,
-  .doctorsListUnderlined {
-    font-size: 18px;
-    line-height: 24px;
-  }
-  
-  .doctorsContainer {
-    gap: 15px;
-  }
-  
-  .hospitalSection {
-    gap: 6px;
-  }
-  
-  .titleContainer {
-    margin-bottom: 20px;
-  }
-} 
