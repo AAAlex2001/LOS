@@ -161,7 +161,7 @@ const CarWashesSukhum: React.FC = () => {
                   
                   {carWash.services && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Услуги:</span>
+                      <span className={styles.infoLabel}>{t('common.services')}:</span>
                       <span className={styles.infoValue}>{carWash.services}</span>
                     </div>
                   )}

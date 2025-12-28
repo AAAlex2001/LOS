@@ -99,7 +99,7 @@ const BeachesGal: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Гал: пляжи'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('categoryPages.beaches')}</h1>
           </section>
 
           {/* Карточки пляжей */}

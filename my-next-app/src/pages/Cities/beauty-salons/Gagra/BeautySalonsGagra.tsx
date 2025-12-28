@@ -100,7 +100,7 @@ const BeautySalonsGagra: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Гагра: салоны красоты'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('categoryPages.beautySalons')}</h1>
           </section>
 
           {/* Карточки салонов */}
@@ -159,7 +159,7 @@ const BeautySalonsGagra: React.FC = () => {
                   
                   {salon.services && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Услуги:</span>
+                      <span className={styles.infoLabel}>{t('common.services')}:</span>
                       <span className={styles.infoValue}>{salon.services}</span>
                     </div>
                   )}

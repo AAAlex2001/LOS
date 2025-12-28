@@ -99,7 +99,7 @@ const ParkingLotsPitsunda: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Пицунда: парковки для автомобилей'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('categoryPages.parkingLots')}</h1>
           </section>
 
           {/* Карточки парковок */}

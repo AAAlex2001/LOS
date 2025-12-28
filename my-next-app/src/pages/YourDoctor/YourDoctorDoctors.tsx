@@ -31,7 +31,7 @@ const YourDoctorDoctors: React.FC<Props> = ({ doctors_groups }) => {
               <h3 className={styles.hospitalTitle}>{hospital.hospital_name}</h3>
             </div>
             <div className={styles.doctorsListContainer}>
-              <div className={hospital.hospital_name === '«Лабквест»' ? styles.doctorsListUnderlined : styles.doctorsList}>
+              <div className={hospital.hospital_name?.toLowerCase().includes('лабквест') ? styles.doctorsListUnderlined : styles.doctorsList}>
                 {hospital.doctors.map((doctor: string, index: number) => {
                   const shouldNumber = hospital.doctors.length > 1;
                   return (

@@ -98,7 +98,7 @@ const CitiesNewafon: React.FC = () => {
           {bannerSrc && (
             <img
               src={bannerSrc}
-              alt={`Вид на город ${data?.city?.name || 'Новый Афон'}`}
+              alt={`${t('cities.viewCity')} ${data?.city?.name || t('cities.newAfon')}`}
               className={styles.bannerBackground}
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />

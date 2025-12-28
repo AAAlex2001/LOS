@@ -99,7 +99,7 @@ const BeachesSukhum: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Сухум: пляжи'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('categoryPages.beaches')}</h1>
           </section>
 
           {/* Карточки пляжей */}

@@ -96,7 +96,7 @@ const CulturalAttractionsNewAfon: React.FC = () => {
       
       <main className={styles.mainContent}>
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>{data?.title || 'Новый Афон: культурные достопримечательности'}</h1>
+          <h1 className={styles.mainTitle}>{data?.title || t('categoryPages.culturalAttractions')}</h1>
         </section>
 
         <section className={styles.attractionsSection}>

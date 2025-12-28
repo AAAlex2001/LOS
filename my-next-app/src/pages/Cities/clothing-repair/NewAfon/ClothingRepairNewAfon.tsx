@@ -101,7 +101,7 @@ const ClothingRepairNewAfon: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Новый Афон: ремонт одежды и обуви'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('categoryPages.clothingRepair')}</h1>
           </section>
 
           {/* Карточки ремонта */}
@@ -167,7 +167,7 @@ const ClothingRepairNewAfon: React.FC = () => {
                   
                   {repair.services && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Услуги:</span>
+                      <span className={styles.infoLabel}>{t('common.services')}:</span>
                       <span className={styles.infoValue}>{repair.services}</span>
                     </div>
                   )}

@@ -100,7 +100,7 @@ const RestaurantsNewAfon: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Новый Афон: рестораны'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('categoryPages.restaurants')}</h1>
           </section>
 
           {/* Карточки ресторанов */}

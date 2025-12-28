@@ -100,7 +100,7 @@ const ChurchesTkuarchal: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Ткуарчал: церкви и храмы'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('categoryPages.churches')}</h1>
           </section>
 
           {/* Карточки церквей */}

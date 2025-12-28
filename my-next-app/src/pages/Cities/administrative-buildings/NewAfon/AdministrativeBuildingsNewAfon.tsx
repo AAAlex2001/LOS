@@ -99,7 +99,7 @@ const AdministrativeBuildingsNewAfon: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Новый Афон: административные здания, правоохранительный блок'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('categoryPages.administrativeBuildings')}</h1>
           </section>
 
           {/* Карточки зданий */}

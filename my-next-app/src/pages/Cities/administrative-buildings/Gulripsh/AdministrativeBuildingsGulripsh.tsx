@@ -99,7 +99,7 @@ const AdministrativeBuildingsGulripsh: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Гулрыпш: административные здания, правоохранительный блок'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('categoryPages.administrativeBuildings')}</h1>
           </section>
 
           {/* Карточки зданий */}
