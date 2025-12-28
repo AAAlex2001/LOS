@@ -88,12 +88,12 @@
   },
   "yourDoctor": {
     "title": "Your Doctor",
+    "logo": "Your Doctor logo",
     "hospitals": "Hospitals",
     "privateClinics": "Private Clinics",
-    "dentistry": "Dentistry",
+    "dentistry": "Dental Clinics",
     "doctors": "Doctors",
-    "vetClinics": "Vet Clinics",
-    "logo": "Your Doctor logo",
+    "vetClinics": "Veterinary Clinics",
     "contentPlaceholder": "Content for section \"{section}\" will be here."
   },
   "important": {
@@ -172,13 +172,6 @@
   },
   "accessibilityAndTerms": {
     "defaultTitle": "Accessibility and Terms of Use"
-  },
-  "yourDoctor": {
-    "hospitals": "Hospitals",
-    "privateClinics": "Private Clinics",
-    "dentistry": "Dental Clinics",
-    "vetClinics": "Veterinary Clinics",
-    "doctors": "Doctors"
   },
   "categoryPages": {
     "beaches": "Beaches",

@@ -24,7 +24,7 @@ class CitiesPageViewSet(viewsets.ReadOnlyModelViewSet):
         except Exception as e:
             return Response({"error": str(e)}, status=500)
 
-    @action(detail=False, methods=['get'], url_path='city_page/(?P<city_name>[^/]+)')
+    @action(detail=False, methods=['get'], url_path='city_page/(?P<city_name>[^/]+)/?')
     def city_page(self, request, city_name=None):
         """Получить данные страницы конкретного города"""
         try:
@@ -32,10 +32,12 @@ class CitiesPageViewSet(viewsets.ReadOnlyModelViewSet):
             if not page:
                 return Response({"error": "Страница городов не найдена"}, status=404)
             
-            # Найти город по имени
+            from urllib.parse import unquote
+            city_name = unquote(city_name) if city_name else None
+            
             city = City.objects.filter(
                 page=page,
-                name__icontains=city_name
+                name__iexact=city_name
             ).first()
             
             if not city:

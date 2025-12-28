@@ -57,6 +57,12 @@ const Footer = () => {
   const [loading, setLoading] = useState(true);
   const t = useTranslations('footer');
 
+  const adaptHref = (href: string) => {
+    if (!href) return href;
+    const withoutLang = href.replace(/^\/(ru|en)\//, '/');
+    return locale === 'ru' ? `/ru${withoutLang}` : `/en${withoutLang}`;
+  };
+
   const defaultQuickLinks = [
     { label: t('cities'), href: `/${locale}/cities` },
     { label: t('communication'), href: `/${locale}/mobile-communication` },
@@ -135,7 +141,7 @@ const Footer = () => {
           <h3 className={styles.quickLinksTitle}>{t('quickLinks')}</h3>
           <nav className={styles.quickLinks}>
             {quickLinks.map((link) => (
-              <Link href={link.url} key={link.id} className={styles.quickLinkItem}>
+              <Link href={adaptHref(link.url)} key={link.id} className={styles.quickLinkItem}>
                 {link.label}
               </Link>
             ))}
@@ -206,7 +212,7 @@ const Footer = () => {
       <div className={styles.bottomRow}>
         <nav className={styles.legalLinks}>
           {legalLinks.map((link) => (
-            <Link href={link.url} key={link.id} className={styles.legalLink}>
+            <Link href={adaptHref(link.url)} key={link.id} className={styles.legalLink}>
               {link.label}
             </Link>
           ))}

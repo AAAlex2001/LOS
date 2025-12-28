@@ -88,12 +88,12 @@
   },
   "yourDoctor": {
     "title": "Ваш доктор",
+    "logo": "Ваш доктор логотип",
     "hospitals": "Больницы",
     "privateClinics": "Частные клиники",
-    "dentistry": "Стоматология",
+    "dentistry": "Стоматологические клиники",
     "doctors": "Врачи",
-    "vetClinics": "Вет. клиники",
-    "logo": "Ваш доктор логотип",
+    "vetClinics": "Ветеринарные клиники",
     "contentPlaceholder": "Контент для раздела \"{section}\" будет здесь."
   },
   "important": {
@@ -172,13 +172,6 @@
   },
   "accessibilityAndTerms": {
     "defaultTitle": "Доступность и правила пользования сайтом"
-  },
-  "yourDoctor": {
-    "hospitals": "Больницы",
-    "privateClinics": "Частные клиники",
-    "dentistry": "Стоматологические клиники",
-    "vetClinics": "Ветеринарные клиники",
-    "doctors": "Врачи"
   },
   "categoryPages": {
     "beaches": "Пляжи",

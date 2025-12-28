@@ -69,6 +69,12 @@ const HomePage = () => {
     load();
   }, [locale, tCommon]);
 
+  const adaptHref = (href: string) => {
+    if (!href) return href;
+    const withoutLang = href.replace(/^\/(ru|en)\//, '/');
+    return locale === 'ru' ? `/ru${withoutLang}` : `/en${withoutLang}`;
+  };
+
   const sliderItems = data?.slider_items?.map(i => ({ type: i.media_type, src: toMedia(i.url) })) || [];
   const cities = data?.cities || [];
   const activities = data?.activities || [];
@@ -85,10 +91,10 @@ const HomePage = () => {
   })();
 
   const popupData = {
-    about: (data?.popup_items || []).filter(i => i.group === 'about').map(i => ({ label: i.label, href: i.href })),
-    activities: (data?.popup_items || []).filter(i => i.group === 'activities').map(i => ({ label: i.label, href: i.href })),
-    booking: (data?.popup_items || []).filter(i => i.group === 'booking').map(i => ({ label: i.label, href: i.href })),
-    essentials: (data?.popup_items || []).filter(i => i.group === 'essentials').map(i => ({ label: i.label, href: i.href })),
+    about: (data?.popup_items || []).filter(i => i.group === 'about').map(i => ({ label: i.label, href: adaptHref(i.href) })),
+    activities: (data?.popup_items || []).filter(i => i.group === 'activities').map(i => ({ label: i.label, href: adaptHref(i.href) })),
+    booking: (data?.popup_items || []).filter(i => i.group === 'booking').map(i => ({ label: i.label, href: adaptHref(i.href) })),
+    essentials: (data?.popup_items || []).filter(i => i.group === 'essentials').map(i => ({ label: i.label, href: adaptHref(i.href) })),
   };
 
   if (error) {
@@ -119,7 +125,7 @@ const HomePage = () => {
                   onMouseLeave={() => setActivePopup(null)}
                 >
                   <div className={styles.tabItem}>
-                    <Link href={tabsByGroup.about[0]?.href || '#'}>
+                    <Link href={adaptHref(tabsByGroup.about[0]?.href || '#')}>
                       {tabsByGroup.about[0]?.label}
                     </Link>
                     {activePopup === 'about' && <Popup items={popupData.about} />}
@@ -131,7 +137,7 @@ const HomePage = () => {
                   onMouseLeave={() => setActivePopup(null)}
                 >
                   <div className={styles.tabItem}>
-                    <Link href={tabsByGroup.activities[0]?.href || '#'}>
+                    <Link href={adaptHref(tabsByGroup.activities[0]?.href || '#')}>
                       {tabsByGroup.activities[0]?.label}
                     </Link>
                     {activePopup === 'activities' && <Popup items={popupData.activities} />}
@@ -143,7 +149,7 @@ const HomePage = () => {
                   onMouseLeave={() => setActivePopup(null)}
                 >
                   <div className={styles.tabItem}>
-                    <Link href={tabsByGroup.booking[0]?.href || '#'}>
+                    <Link href={adaptHref(tabsByGroup.booking[0]?.href || '#')}>
                       {tabsByGroup.booking[0]?.label}
                     </Link>
                     {activePopup === 'booking' && <Popup items={popupData.booking} />}
@@ -155,7 +161,7 @@ const HomePage = () => {
                   onMouseLeave={() => setActivePopup(null)}
                 >
                   <div className={styles.tabItem}>
-                    <Link href={tabsByGroup.essentials[0]?.href || '#'}>
+                    <Link href={adaptHref(tabsByGroup.essentials[0]?.href || '#')}>
                       {tabsByGroup.essentials[0]?.label}
                     </Link>
                     {activePopup === 'essentials' && <Popup items={popupData.essentials} />}
@@ -228,7 +234,7 @@ const HomePage = () => {
                      </div>
                 </div>
                 {data.cta_button_label && (
-                  <Link href={data.cta_button_href || '#'} className={styles.bookingButton}>
+                  <Link href={adaptHref(data.cta_button_href || '#')} className={styles.bookingButton}>
                     {data.cta_button_label}
                     <svg width="31" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4L12 20M12 4L18 10M12 4L6 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   </Link>
@@ -255,7 +261,7 @@ const HomePage = () => {
             </div>
             <div className={styles.activitiesGrid}>
                 {activities.map((activity) => (
-                    <Link key={activity.title} href={activity.href} className={styles.activityCard}>
+                    <Link key={activity.title} href={adaptHref(activity.href)} className={styles.activityCard}>
                         <div className={styles.activityImage} style={{ backgroundImage: `url(${toMedia(activity.image_url)})` }} />
                         <div className={styles.activityInfo}>
                             <h3>{activity.title}</h3>
@@ -270,7 +276,7 @@ const HomePage = () => {
             {data.actions_section_title && <h2 className={styles.sectionTitle}>{data.actions_section_title}</h2>}
             <div className={styles.actionsGrid}>
                 {actionButtons.map(({label, href}) => (
-                    <Link key={label} href={href} className={styles.actionButton}>{label}</Link>
+                    <Link key={label} href={adaptHref(href)} className={styles.actionButton}>{label}</Link>
                 ))}
             </div>
         </section>
