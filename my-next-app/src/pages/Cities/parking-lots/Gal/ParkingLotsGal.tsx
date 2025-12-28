@@ -8,7 +8,7 @@ import styles from './ParkingLotsGal.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { getApiUrl } from '@/utils/api';
-import { useTranslations } from 'next-intl';
+import { useTranslations } from '@/i18n/TranslationsContext';
 
 type City = { id: number; name: string; title?: string; order: number };
 type ParkingLot = {
@@ -33,7 +33,7 @@ type CityPageData = {
 const API_BASE = config.API_BASE;
 
 const ParkingLotsGal: React.FC = () => {
-  const t = useTranslations('ParkingLots');
+  const t = useTranslations();
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const { locale } = useLocale();

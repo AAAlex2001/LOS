@@ -9,7 +9,6 @@ import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
-import { useTranslations } from '@/i18n/TranslationsContext';
 
 type City = { id: number; name: string; title?: string; order: number };
 type CarWash = {
@@ -40,7 +39,6 @@ const CarWashesGal: React.FC = () => {
   const { locale } = useLocale();
   const t = useTranslations();
   const [error, setError] = React.useState<string | null>(null);
-  const t = useTranslations();
 
   React.useEffect(() => {
     const load = async () => {
