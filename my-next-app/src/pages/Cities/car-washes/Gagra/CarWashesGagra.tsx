@@ -102,7 +102,7 @@ const CarWashesGagra: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || t('common.error')}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('categories.carWashes')}</h1>
           </section>
 
           {/* Карточки моек */}

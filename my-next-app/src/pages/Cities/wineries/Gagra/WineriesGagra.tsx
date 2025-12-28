@@ -99,7 +99,7 @@ const WineriesGagra: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || t('common.error')}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('categories.wineries')}</h1>
           </section>
 
           {/* Карточки виноделен */}

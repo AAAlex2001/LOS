@@ -99,7 +99,7 @@ const ShopsAndMarketsGal: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Гал: магазины и рынки'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('categories.shopsAndMarkets')}</h1>
           </section>
 
           {/* Карточки магазинов */}

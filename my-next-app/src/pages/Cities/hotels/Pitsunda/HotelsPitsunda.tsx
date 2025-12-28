@@ -98,7 +98,7 @@ const HotelsPitsunda: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || t('common.error')}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('categories.hotels')}</h1>
           </section>
 
           {/* Карточки отелей */}
