@@ -2,13 +2,21 @@
 
 import React, { useEffect, useState } from 'react';
 import '@/styles/styles.scss';
-import { useTranslations } from '@/i18n/TranslationsContext';
+import { useLocale } from '@/i18n/LocaleContext';
 
 const SCROLL_THRESHOLD = 200; // px
 
 const ScrollToTop: React.FC = () => {
-  const t = useTranslations();
   const [visible, setVisible] = useState(false);
+  
+  // Try to get locale context, but don't fail if it's not available
+  let ariaLabel = 'Scroll to top';
+  try {
+    const { locale } = useLocale();
+    ariaLabel = locale === 'ru' ? 'Наверх' : 'Scroll to top';
+  } catch {
+    // Provider not available, use default
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,7 +37,7 @@ const ScrollToTop: React.FC = () => {
     <button
       className={`scroll-to-top-btn${visible ? ' show' : ''}`}
       onClick={scrollToTop}
-      aria-label={t('common.scrollToTop')}
+      aria-label={ariaLabel}
     >
       <i className="fas fa-arrow-up" aria-hidden="true"></i>
     </button>
