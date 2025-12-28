@@ -145,7 +145,9 @@
     "title": "Элементарный словарь",
     "noData": "Нет данных о словаре",
     "inRussian": "На русском",
-    "inAbkhazian": "На абхазском"
+    "inAbkhazian": "На абхазском",
+    "russianWord": "Русское слово (English translation)",
+    "abkhazianWord": "Абхазское слово (English translation)"
   },
   "privacyPolicy": {
     "title": "Политика конфиденциальности сайта"

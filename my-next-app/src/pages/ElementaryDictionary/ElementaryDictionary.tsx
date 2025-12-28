@@ -83,8 +83,12 @@ const ElementaryDictionary: React.FC = () => {
   const renderTable = (items: WordPair[]) => (
     <div className={styles.dictionaryTable}>
       <div className={styles.row}>
-        <div className={styles.cellHeader} style={{ textAlign: 'center' }}>{t('elementaryDictionary.inRussian')}</div>
-        <div className={styles.cellHeader} style={{ textAlign: 'center' }}>{t('elementaryDictionary.inAbkhazian')}</div>
+        <div className={styles.cellHeader} style={{ textAlign: 'center' }}>
+          {locale === 'en' ? t('elementaryDictionary.russianWord') : t('elementaryDictionary.inRussian')}
+        </div>
+        <div className={styles.cellHeader} style={{ textAlign: 'center' }}>
+          {locale === 'en' ? t('elementaryDictionary.abkhazianWord') : t('elementaryDictionary.inAbkhazian')}
+        </div>
       </div>
       {items.map((w, idx) => (
         <div key={`${w.id}-${idx}`} className={styles.row}>

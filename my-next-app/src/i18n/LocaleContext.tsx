@@ -27,7 +27,16 @@ interface LocaleProviderProps {
 }
 
 export function LocaleProvider({ children, defaultLocale = 'ru' }: LocaleProviderProps) {
-  const [locale, setLocaleState] = useState<Locale>(defaultLocale);
+  const [locale, setLocaleState] = useState<Locale>(() => {
+    // Initialize from localStorage on mount
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('locale');
+      if (saved && locales.includes(saved as Locale)) {
+        return saved as Locale;
+      }
+    }
+    return defaultLocale;
+  });
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -36,32 +45,37 @@ export function LocaleProvider({ children, defaultLocale = 'ru' }: LocaleProvide
     setMounted(true);
     // Update html lang attribute
     if (typeof window !== 'undefined') {
-      document.documentElement.lang = defaultLocale;
+      document.documentElement.lang = locale;
     }
-  }, [defaultLocale]);
+  }, [locale]);
 
   const setLocale = (newLocale: Locale) => {
     if (!locales.includes(newLocale)) return;
     
     setLocaleState(newLocale);
     
-    if (typeof window !== 'undefined' && pathname) {
+    if (typeof window !== 'undefined') {
+      // Save to localStorage
+      localStorage.setItem('locale', newLocale);
+      
       // Update html lang attribute
       document.documentElement.lang = newLocale;
       
-      // Get current path without locale
-      const segments = pathname.split('/');
-      const currentLocale = segments[1];
-      
-      // Replace locale in URL
-      if (locales.includes(currentLocale as Locale)) {
-        segments[1] = newLocale;
-      } else {
-        segments.splice(1, 0, newLocale);
+      if (pathname) {
+        // Get current path without locale
+        const segments = pathname.split('/');
+        const currentLocale = segments[1];
+        
+        // Replace locale in URL
+        if (locales.includes(currentLocale as Locale)) {
+          segments[1] = newLocale;
+        } else {
+          segments.splice(1, 0, newLocale);
+        }
+        
+        const newPath = segments.join('/');
+        router.push(newPath);
       }
-      
-      const newPath = segments.join('/');
-      router.push(newPath);
     }
   };
 
