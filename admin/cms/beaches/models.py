@@ -33,7 +33,7 @@ class BeachesPage(TimestampedModel):
 
 class BeachCity(TimestampedModel):
     page = models.ForeignKey(BeachesPage, on_delete=models.CASCADE, related_name="cities")
-    name = models.CharField("Город", max_length=255)
+    name = models.CharField("Город", max_length=255, blank=True)
     title = models.CharField("Заголовок страницы города", max_length=255, blank=True, help_text="Если пусто, будет сформирован автоматически")
     order = models.PositiveIntegerField(default=0)
 
@@ -49,9 +49,9 @@ class BeachCity(TimestampedModel):
 class Beach(TimestampedModel):
     page = models.ForeignKey(BeachesPage, on_delete=models.CASCADE, related_name="beaches")
     city = models.ForeignKey(BeachCity, on_delete=models.CASCADE, related_name="beaches")
-    name = models.CharField("Название", max_length=255)
+    name = models.CharField("Название", max_length=255, blank=True)
     name_link = models.URLField("Ссылка", blank=True)
-    address = models.CharField("Адрес", max_length=500)
+    address = models.CharField("Адрес", max_length=500, blank=True)
     address_link = models.URLField("Ссылка на карту", blank=True)
     description = models.TextField("Описание", blank=True, help_text="Один-два абзаца; двойной Enter = новый абзац")
     phone = models.CharField("Телефон", max_length=255, blank=True)

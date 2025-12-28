@@ -33,7 +33,7 @@ class HotelsPage(TimestampedModel):
 
 class HotelCity(TimestampedModel):
     page = models.ForeignKey(HotelsPage, on_delete=models.CASCADE, related_name="cities")
-    name = models.CharField("Город", max_length=255)
+    name = models.CharField("Город", max_length=255, blank=True)
     title = models.CharField("Заголовок страницы города", max_length=255, blank=True, help_text="Если пусто, будет сформирован автоматически")
     order = models.PositiveIntegerField(default=0)
 
@@ -49,8 +49,8 @@ class HotelCity(TimestampedModel):
 class Hotel(TimestampedModel):
     page = models.ForeignKey(HotelsPage, on_delete=models.CASCADE, related_name="hotels")
     city = models.ForeignKey(HotelCity, on_delete=models.CASCADE, related_name="hotels")
-    name = models.CharField("Название", max_length=255)
-    address = models.CharField("Адрес", max_length=500)
+    name = models.CharField("Название", max_length=255, blank=True)
+    address = models.CharField("Адрес", max_length=500, blank=True)
     address_link = models.URLField("Ссылка на карту", blank=True)
     contacts = models.CharField("Контакты", max_length=255, blank=True)
     price = models.CharField("Цена", max_length=255, blank=True)

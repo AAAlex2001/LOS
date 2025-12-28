@@ -33,7 +33,7 @@ class BeautySalonsPage(TimestampedModel):
 
 class BeautySalonCity(TimestampedModel):
     page = models.ForeignKey(BeautySalonsPage, on_delete=models.CASCADE, related_name="cities")
-    name = models.CharField("Город", max_length=255)
+    name = models.CharField("Город", max_length=255, blank=True)
     title = models.CharField("Заголовок страницы города", max_length=255, blank=True, help_text="Если пусто, будет сформирован автоматически")
     order = models.PositiveIntegerField(default=0)
 
@@ -49,9 +49,9 @@ class BeautySalonCity(TimestampedModel):
 class BeautySalon(TimestampedModel):
     page = models.ForeignKey(BeautySalonsPage, on_delete=models.CASCADE, related_name="beauty_salons")
     city = models.ForeignKey(BeautySalonCity, on_delete=models.CASCADE, related_name="beauty_salons")
-    name = models.CharField("Название", max_length=255)
+    name = models.CharField("Название", max_length=255, blank=True)
     name_link = models.URLField("Ссылка на сайт", blank=True)
-    address = models.CharField("Адрес", max_length=500)
+    address = models.CharField("Адрес", max_length=500, blank=True)
     address_link = models.URLField("Ссылка на карту", blank=True)
     phone = models.CharField("Телефон", max_length=255, blank=True)
     working_hours = models.CharField("Режим работы", max_length=255, blank=True)

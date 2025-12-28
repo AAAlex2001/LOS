@@ -33,7 +33,7 @@ class ChurchesPage(TimestampedModel):
 
 class ChurchCity(TimestampedModel):
     page = models.ForeignKey(ChurchesPage, on_delete=models.CASCADE, related_name="cities")
-    name = models.CharField("Город", max_length=255)
+    name = models.CharField("Город", max_length=255, blank=True)
     title = models.CharField("Заголовок страницы города", max_length=255, blank=True, help_text="Если пусто, будет сформирован автоматически")
     order = models.PositiveIntegerField(default=0)
 
@@ -49,9 +49,9 @@ class ChurchCity(TimestampedModel):
 class Church(TimestampedModel):
     page = models.ForeignKey(ChurchesPage, on_delete=models.CASCADE, related_name="churches")
     city = models.ForeignKey(ChurchCity, on_delete=models.CASCADE, related_name="churches")
-    name = models.CharField("Название", max_length=255)
+    name = models.CharField("Название", max_length=255, blank=True)
     name_link = models.URLField("Ссылка на сайт", blank=True)
-    address = models.CharField("Адрес", max_length=500)
+    address = models.CharField("Адрес", max_length=500, blank=True)
     address_link = models.URLField("Ссылка на карту", blank=True)
     working_hours = models.CharField("Режим работы", max_length=255, blank=True)
     description = models.TextField("Описание", blank=True, help_text="Описание церкви, история, особенности")

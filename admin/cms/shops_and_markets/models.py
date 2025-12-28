@@ -33,7 +33,7 @@ class ShopsAndMarketsPage(TimestampedModel):
 
 class ShopCity(TimestampedModel):
     page = models.ForeignKey(ShopsAndMarketsPage, on_delete=models.CASCADE, related_name="cities")
-    name = models.CharField("Город", max_length=255)
+    name = models.CharField("Город", max_length=255, blank=True)
     title = models.CharField("Заголовок страницы города", max_length=255, blank=True, help_text="Если пусто, будет сформирован автоматически")
     order = models.PositiveIntegerField(default=0)
 
@@ -49,9 +49,9 @@ class ShopCity(TimestampedModel):
 class ShopOrMarket(TimestampedModel):
     page = models.ForeignKey(ShopsAndMarketsPage, on_delete=models.CASCADE, related_name="shops")
     city = models.ForeignKey(ShopCity, on_delete=models.CASCADE, related_name="shops")
-    name = models.CharField("Название", max_length=255)
+    name = models.CharField("Название", max_length=255, blank=True)
     working_hours = models.CharField("Часы работы", max_length=255, blank=True)
-    address = models.CharField("Адрес", max_length=500)
+    address = models.CharField("Адрес", max_length=500, blank=True)
     address_link = models.URLField("Ссылка на карту", blank=True)
     contacts = models.CharField("Контакты", max_length=255, blank=True)
     image = models.ImageField("Изображение", upload_to="shops_and_markets/images/", blank=True)

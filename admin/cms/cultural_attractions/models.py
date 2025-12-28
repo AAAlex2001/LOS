@@ -33,7 +33,7 @@ class CulturalAttractionsPage(TimestampedModel):
 
 class CulturalAttractionCity(TimestampedModel):
     page = models.ForeignKey(CulturalAttractionsPage, on_delete=models.CASCADE, related_name="cities")
-    name = models.CharField("Город", max_length=255)
+    name = models.CharField("Город", max_length=255, blank=True)
     title = models.CharField("Заголовок страницы города", max_length=255, blank=True, help_text="Если пусто, будет сформирован автоматически")
     order = models.PositiveIntegerField(default=0)
 
@@ -49,10 +49,10 @@ class CulturalAttractionCity(TimestampedModel):
 class CulturalAttraction(TimestampedModel):
     page = models.ForeignKey(CulturalAttractionsPage, on_delete=models.CASCADE, related_name="attractions")
     city = models.ForeignKey(CulturalAttractionCity, on_delete=models.CASCADE, related_name="attractions")
-    name = models.CharField("Название", max_length=255)
+    name = models.CharField("Название", max_length=255, blank=True)
     name_link = models.URLField("Ссылка на сайт", blank=True)
-    description = models.TextField("Описание", help_text="Подробное описание достопримечательности")
-    address = models.CharField("Адрес", max_length=500)
+    description = models.TextField("Описание", blank=True, help_text="Подробное описание достопримечательности")
+    address = models.CharField("Адрес", max_length=500, blank=True)
     address_link = models.URLField("Ссылка на карту", blank=True)
     working_hours = models.CharField("Режим работы", max_length=255, blank=True)
     image = models.ImageField("Изображение", upload_to="cultural_attractions/images/", blank=True)
