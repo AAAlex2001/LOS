@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import styles from './CitiesGudauta.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
+import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
 
 const API_BASE = config.API_BASE;
@@ -21,6 +22,7 @@ type CitiesPageData = {
 
 const CitiesGudauta: React.FC = () => {
   const router = useRouter();
+  const t = useTranslations();
   const [data, setData] = React.useState<CitiesPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const { locale } = useLocale();
@@ -56,7 +58,7 @@ const CitiesGudauta: React.FC = () => {
     return (
       <div className={styles.gudautaWrapper}>
         <main className={styles.gudautaContent}>
-          <h1 className={styles.gudautaTitle}>Загрузка...</h1>
+          <h1 className={styles.gudautaTitle}>{t('common.loading')}</h1>
         </main>
       </div>
     );
@@ -66,7 +68,7 @@ const CitiesGudauta: React.FC = () => {
     return (
       <div className={styles.gudautaWrapper}>
         <main className={styles.gudautaContent}>
-          <h1 className={styles.gudautaTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.gudautaTitle}>{error || t('common.error')}</h1>
         </main>
       </div>
     );
@@ -81,7 +83,7 @@ const CitiesGudauta: React.FC = () => {
   return (
     <div className={styles.gudautaWrapper}>
       <main className={styles.gudautaContent}>
-        <h1 className={styles.gudautaTitle}>{data?.title || 'ГУДАУТА'}</h1>
+        <h1 className={styles.gudautaTitle}>{data?.title || t('cities.gudautaTitle')}</h1>
 
         <section className={styles.gudautaBanner}>
           <img

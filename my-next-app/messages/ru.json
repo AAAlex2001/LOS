@@ -10,7 +10,10 @@
     "workingHours": "Режим работы",
     "address": "Адрес",
     "email": "Почта",
-    "website": "Сайт"
+    "website": "Сайт",
+    "scrollToTop": "Наверх",
+    "languageRussian": "Русский",
+    "languageEnglish": "English"
   },
   "header": {
     "classifieds": "Доска объявлений",
@@ -55,7 +58,16 @@
     "ochamchira": "Очамчыра",
     "tkuarchal": "Ткуарчал",
     "gal": "Гал",
-    "viewCity": "Вид на город"
+    "viewCity": "Вид на город",
+    "sukhumTitle": "СУХУМ",
+    "gagraTitle": "ГАГРА",
+    "pitsundaTitle": "ПИЦУНДА",
+    "gudautaTitle": "ГУДАУТА",
+    "newAfonTitle": "НОВЫЙ АФОН",
+    "gulripshTitle": "ГУЛРЫПШ",
+    "ochamchiraTitle": "ОЧАМЧЫРА",
+    "tkuarchalTitle": "ТКУАРЧАЛ",
+    "galTitle": "ГАЛ"
   },
   "banks": {
     "title": "Банки",
@@ -98,7 +110,10 @@
     "title": "Экскурсии"
   },
   "parties": {
-    "title": "Развлечения"
+    "title": "Развлечения",
+    "aboutEvent": "О событии",
+    "eventLink": "Ссылка на мероприятие:",
+    "noInfo": "Пока нет информации"
   },
   "mobileCommunication": {
     "title": "Связь"
@@ -106,7 +121,8 @@
   "mountainRoutes": {
     "title": "Горные маршруты",
     "phone": "Тел.:",
-    "contacts": "Контакты:"
+    "contacts": "Контакты:",
+    "errorLoading": "Ошибка загрузки данных"
   },
   "hotSprings": {
     "title": "Горячие источники"
@@ -115,19 +131,50 @@
     "title": "Государственное устройство"
   },
   "abkhazianCuisine": {
-    "title": "Абхазская кухня"
+    "title": "Абхазская кухня",
+    "mainDishesTitle": "Основные блюда и их особенности",
+    "noDishesData": "Нет данных о блюдах"
   },
   "abkhazianCustoms": {
-    "title": "Абхазские обычаи"
+    "title": "Абхазские обычаи",
+    "introNotConfigured": "Вводный текст не настроен",
+    "noData": "Нет данных о обычаях"
   },
   "elementaryDictionary": {
-    "title": "Элементарный словарь"
+    "title": "Элементарный словарь",
+    "noData": "Нет данных о словаре",
+    "inRussian": "На русском",
+    "inAbkhazian": "На абхазском"
   },
   "privacyPolicy": {
     "title": "Политика конфиденциальности сайта"
   },
   "accessibilityAndTerms": {
     "title": "Доступность и правила пользования сайтом"
+  },
+  "transportCommunications": {
+    "title": "Транспортное сообщение",
+    "errorLoading": "Ошибка загрузки данных"
+  },
+  "taxiEtiquette": {
+    "passengerIntro": "Этикет для пассажиров: чтобы ваша поездка на такси прошла без недопонимания и оставила только положительные впечатления, рекомендуем соблюдать простые правила.",
+    "passengerConclusion": "Такси — это тоже часть путешествия. Уважение, вежливость и спокойствие делают его лучше для всех!",
+    "driverIntro": "Этикет водителя такси: как создать комфорт для пассажира и заработать уважение",
+    "driverDescription": "Таксист в Абхазии — это не просто перевозчик, а представитель гостеприимной страны. Вот несколько простых правил, которые сделают вашу работу приятнее, а сервис — качественнее.",
+    "driverConclusion": "Уважение к пассажиру — это уважение к себе. Таксист с хорошим сервисом всегда выигрывает в репутации, чаевых и количестве клиентов."
+  },
+  "privacyPolicy": {
+    "defaultTitle": "Политика конфиденциальности сайта"
+  },
+  "accessibilityAndTerms": {
+    "defaultTitle": "Доступность и правила пользования сайтом"
+  },
+  "yourDoctor": {
+    "hospitals": "Больницы",
+    "privateClinics": "Частные клиники",
+    "dentistry": "Стоматологические клиники",
+    "vetClinics": "Ветеринарные клиники",
+    "doctors": "Врачи"
   },
   "categoryPages": {
     "beaches": "Пляжи",
@@ -139,6 +186,8 @@
     "clothingRepair": "Ремонт одежды",
     "shopsAndMarkets": "Магазины и рынки",
     "churches": "Церкви",
+    "description": "Описание",
+    "services": "Богослужения",
     "culturalAttractions": "Культурные достопримечательности",
     "administrativeBuildings": "Административные здания",
     "parkingLots": "Парковки",

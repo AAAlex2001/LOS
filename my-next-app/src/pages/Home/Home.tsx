@@ -233,7 +233,7 @@ const HomePage = () => {
                     <svg width="31" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4L12 20M12 4L18 10M12 4L6 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   </Link>
                 )}
-                <p className={styles.bookingFinePrint}>Без&nbsp;комиссий · Поддержка 24/7 · Гарантия заселения</p>
+                <p className={styles.bookingFinePrint}>{t('home.noFees')}</p>
              </div>
         </section> */}
 

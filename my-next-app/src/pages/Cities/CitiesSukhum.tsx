@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import styles from './CitiesSukhum.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
+import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
 
 const API_BASE = config.API_BASE;
@@ -19,6 +20,7 @@ type CitiesPageData = {
 
 const CitiesSukhum: React.FC = () => {
   const router = useRouter();
+  const t = useTranslations();
   const [data, setData] = React.useState<CitiesPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const { locale } = useLocale();
@@ -52,7 +54,7 @@ const CitiesSukhum: React.FC = () => {
     return (
       <div className={styles.pageWrapper}>
         <main className={styles.mainContent}>
-          <h1 className={styles.pageTitle}>Загрузка...</h1>
+          <h1 className={styles.pageTitle}>{t('common.loading')}</h1>
         </main>
       </div>
     );
@@ -62,7 +64,7 @@ const CitiesSukhum: React.FC = () => {
     return (
       <div className={styles.pageWrapper}>
         <main className={styles.mainContent}>
-          <h1 className={styles.pageTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.pageTitle}>{error || t('common.error')}</h1>
         </main>
       </div>
     );
@@ -80,7 +82,7 @@ const CitiesSukhum: React.FC = () => {
   return (
     <div className={styles.pageWrapper}>
       <main className={styles.mainContent}>
-        <h1 className={styles.pageTitle}>{data?.title || 'СУХУМ'}</h1>
+        <h1 className={styles.pageTitle}>{data?.title || t('cities.sukhumTitle')}</h1>
 
         <section className={styles.bannerSection}>
           <img

@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './ImportantPublicBehavior.module.scss';
 import config from '@/config';
+import { useTranslations } from '@/i18n/TranslationsContext';
 
 type ImportantRule = {
   id: number;
@@ -75,9 +76,11 @@ const ImageBlock = ({ src, alt, title, description }: { src: string; alt: string
 );
 
 const ImportantPublicBehavior: React.FC<Props> = ({ section }) => {
+  const t = useTranslations();
+  
   // Проверяем существование section
   if (!section) {
-    return <div>Загрузка...</div>;
+    return <div>{t('common.loading')}</div>;
   }
 
   // Группируем правила по типам

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import styles from './YourDoctorDoctors.module.scss';
+import { useTranslations } from '@/i18n/TranslationsContext';
 
 type DoctorsGroup = {
   id: number;
@@ -13,11 +14,13 @@ type DoctorsGroup = {
 type Props = { doctors_groups: DoctorsGroup[] };
 
 const YourDoctorDoctors: React.FC<Props> = ({ doctors_groups }) => {
+  const t = useTranslations();
+  
   return (
     <div className={styles.doctorsWrapper}>
       {/* Заголовок */}
       <div className={styles.titleContainer}>
-        <h2 className={styles.mainTitle}>Врачи</h2>
+        <h2 className={styles.mainTitle}>{t('yourDoctor.doctors')}</h2>
       </div>
 
       {/* Список врачей по больницам */}

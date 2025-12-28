@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './ImportantTaxiEtiquette.module.scss';
 import config from '@/config';
+import { useTranslations } from '@/i18n/TranslationsContext';
 
 type ImportantRule = {
   id: number;
@@ -70,9 +71,11 @@ const EtiquetteRule = ({ number, title, description }: { number: number; title: 
 );
 
 const ImportantTaxiEtiquette: React.FC<Props> = ({ section }) => {
+  const t = useTranslations();
+  
   // Проверяем существование section
   if (!section) {
-    return <div>Загрузка...</div>;
+    return <div>{t('common.loading')}</div>;
   }
 
   // Группируем правила по типам
@@ -99,7 +102,7 @@ const ImportantTaxiEtiquette: React.FC<Props> = ({ section }) => {
         >
           <div className={styles.introOverlay}>
             <p className={styles.introText}>
-              {section.passenger_intro_text || "Этикет для пассажиров: чтобы ваша поездка на такси прошла без недопонимания и оставила только положительные впечатления, рекомендуем соблюдать простые правила."}
+              {section.passenger_intro_text || t('taxiEtiquette.passengerIntro')}
             </p>
           </div>
         </div>
@@ -118,7 +121,7 @@ const ImportantTaxiEtiquette: React.FC<Props> = ({ section }) => {
 
       <div className={styles.conclusionSection}>
         <p className={styles.conclusionText}>
-          {section.passenger_conclusion_text || "Такси — это тоже часть путешествия. Уважение, вежливость и спокойствие делают его лучше для всех!"}
+          {section.passenger_conclusion_text || t('taxiEtiquette.passengerConclusion')}
         </p>
       </div>
 
@@ -133,7 +136,7 @@ const ImportantTaxiEtiquette: React.FC<Props> = ({ section }) => {
         >
           <div className={styles.introOverlay}>
             <p className={styles.introText}>
-              {section.driver_intro_text || "Этикет водителя такси: как создать комфорт для пассажира и заработать уважение"}
+              {section.driver_intro_text || t('taxiEtiquette.driverIntro')}
             </p>
           </div>
         </div>
@@ -141,7 +144,7 @@ const ImportantTaxiEtiquette: React.FC<Props> = ({ section }) => {
 
       <div className={styles.driverIntroSection}>
         <p className={styles.driverIntroText}>
-          {section.driver_description_text || "Таксист в Абхазии — это не просто перевозчик, а представитель гостеприимной страны. Вот несколько простых правил, которые сделают вашу работу приятнее, а сервис — качественнее."}
+          {section.driver_description_text || t('taxiEtiquette.driverDescription')}
         </p>
       </div>
 
@@ -158,7 +161,7 @@ const ImportantTaxiEtiquette: React.FC<Props> = ({ section }) => {
 
       <div className={styles.finalConclusionSection}>
         <p className={styles.finalConclusionText}>
-          {section.driver_conclusion_text || "Уважение к пассажиру — это уважение к себе. Таксист с хорошим сервисом всегда выигрывает в репутации, чаевых и количестве клиентов."}
+          {section.driver_conclusion_text || t('taxiEtiquette.driverConclusion')}
         </p>
       </div>
     </div>

@@ -3,6 +3,7 @@
 import React from 'react';
 import styles from './YourDoctorPrivateClinics.module.scss';
 import config from '@/config';
+import { useTranslations } from '@/i18n/TranslationsContext';
 
 type PrivateClinic = {
   id: number;
@@ -21,11 +22,13 @@ const API_BASE = config.API_BASE;
 type Props = { private_clinics: PrivateClinic[] };
 
 const YourDoctorPrivateClinics: React.FC<Props> = ({ private_clinics }) => {
+  const t = useTranslations();
+  
   return (
     <div className={styles.clinicsWrapper}>
       {/* Заголовок */}
       <section className={styles.titleSection}>
-        <h1 className={styles.mainTitle}>Частные клиники</h1>
+        <h1 className={styles.mainTitle}>{t('yourDoctor.privateClinics')}</h1>
       </section>
 
       {/* Карточки клиник */}
@@ -59,13 +62,13 @@ const YourDoctorPrivateClinics: React.FC<Props> = ({ private_clinics }) => {
               <div className={styles.infoBlock}>
                 {clinic.working_hours && (
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Режим работы:</span>
+                    <span className={styles.infoLabel}>{t('common.workingHours')}:</span>
                     <span className={styles.infoValue}>{clinic.working_hours}</span>
                   </div>
                 )}
                 
                 <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Адрес:</span>
+                  <span className={styles.infoLabel}>{t('common.address')}:</span>
                   <span className={`${styles.infoValue} ${clinic.address_link ? styles.addressLink : ''}`}>
                     {clinic.address_link ? (
                       <a href={clinic.address_link} target="_blank" rel="noopener noreferrer">{clinic.address}</a>
@@ -76,7 +79,7 @@ const YourDoctorPrivateClinics: React.FC<Props> = ({ private_clinics }) => {
                 </div>
                 
                 <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Контакты:</span>
+                  <span className={styles.infoLabel}>{t('common.contacts')}:</span>
                   <span className={styles.infoValue}>{clinic.contacts}</span>
                 </div>
               </div>

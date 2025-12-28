@@ -3,6 +3,7 @@
 import React from 'react';
 import styles from './YourDoctorDentistry.module.scss';
 import config from '@/config';
+import { useTranslations } from '@/i18n/TranslationsContext';
 
 type Dentistry = {
   id: number;
@@ -21,11 +22,13 @@ const API_BASE = config.API_BASE;
 type Props = { dentistries: Dentistry[] };
 
 const YourDoctorDentistry: React.FC<Props> = ({ dentistries }) => {
+  const t = useTranslations();
+  
   return (
     <div className={styles.stomacWrapper}>
       {/* Заголовок */}
       <section className={styles.titleSection}>
-        <h1 className={styles.mainTitle}>Стоматологические клиники</h1>
+        <h1 className={styles.mainTitle}>{t('yourDoctor.dentistry')}</h1>
       </section>
 
       {/* Карточки стоматологических клиник */}
@@ -59,13 +62,13 @@ const YourDoctorDentistry: React.FC<Props> = ({ dentistries }) => {
               <div className={styles.infoBlock}>
                 {dentistry.working_hours && (
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Режим работы:</span>
+                    <span className={styles.infoLabel}>{t('common.workingHours')}:</span>
                     <span className={styles.infoValue}>{dentistry.working_hours}</span>
                   </div>
                 )}
                 
                 <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Адрес:</span>
+                  <span className={styles.infoLabel}>{t('common.address')}:</span>
                   <span className={`${styles.infoValue} ${dentistry.address_link ? styles.addressLink : ''}`}>
                     {dentistry.address_link ? (
                       <a href={dentistry.address_link} target="_blank" rel="noopener noreferrer">{dentistry.address}</a>
@@ -76,7 +79,7 @@ const YourDoctorDentistry: React.FC<Props> = ({ dentistries }) => {
                 </div>
                 
                 <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Контакты:</span>
+                  <span className={styles.infoLabel}>{t('common.contacts')}:</span>
                   <span className={styles.infoValue}>{dentistry.contacts}</span>
                 </div>
               </div>

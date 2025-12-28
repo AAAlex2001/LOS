@@ -2,10 +2,12 @@
 
 import React, { useEffect, useState } from 'react';
 import '@/styles/styles.scss';
+import { useTranslations } from '@/i18n/TranslationsContext';
 
 const SCROLL_THRESHOLD = 200; // px
 
 const ScrollToTop: React.FC = () => {
+  const t = useTranslations();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -27,7 +29,7 @@ const ScrollToTop: React.FC = () => {
     <button
       className={`scroll-to-top-btn${visible ? ' show' : ''}`}
       onClick={scrollToTop}
-      aria-label="Наверх"
+      aria-label={t('common.scrollToTop')}
     >
       <i className="fas fa-arrow-up" aria-hidden="true"></i>
     </button>

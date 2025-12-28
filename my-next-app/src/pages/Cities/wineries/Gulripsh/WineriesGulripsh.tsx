@@ -7,6 +7,7 @@ import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './WineriesGulripsh.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
+import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
 
 type City = { id: number; name: string; title?: string; order: number };
@@ -35,6 +36,7 @@ const WineriesGulripsh: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const { locale } = useLocale();
+  const t = useTranslations();
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
@@ -68,7 +70,7 @@ const WineriesGulripsh: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{t('common.loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -80,7 +82,7 @@ const WineriesGulripsh: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error || t('common.error')}</h1>
         </main>
         <Footer />
       </div>
@@ -97,7 +99,7 @@ const WineriesGulripsh: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Гулрыпш: винодельни'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('common.error')}</h1>
           </section>
 
           {/* Карточки виноделен */}
@@ -130,7 +132,7 @@ const WineriesGulripsh: React.FC = () => {
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={styles.infoLabel}>{t('common.address')}:</span>
                     <span className={`${styles.infoValue} ${winery.address_link ? styles.addressLink : ''}`}>
                       {winery.address_link ? (
                         <a href={winery.address_link} target="_blank" rel="noopener noreferrer">{winery.address}</a>
@@ -142,14 +144,14 @@ const WineriesGulripsh: React.FC = () => {
                   
                   {winery.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoLabel}>{t('common.workingHours')}:</span>
                       <span className={styles.infoValue}>{winery.working_hours}</span>
                     </div>
                   )}
                   
                   {winery.phone && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoLabel}>{t('common.phone')}:</span>
                       <span className={styles.infoValue}>{winery.phone}</span>
                     </div>
                   )}

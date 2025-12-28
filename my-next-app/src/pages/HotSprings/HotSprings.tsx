@@ -7,6 +7,7 @@ import styles from './HotSprings.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { getApiUrl } from '@/utils/api';
+import { useTranslations } from '@/i18n/TranslationsContext';
 import KyndykCard from './KyndykCard';
 import TskuaraCard from './TskuaraCard';
 import BabusharaCard from './BabusharaCard';
@@ -46,6 +47,7 @@ const formatText = (text: string) => {
 
 const HotSprings: React.FC = () => {
   const { locale } = useLocale();
+  const t = useTranslations();
   const [data, setData] = useState<SpringsPage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -60,7 +62,7 @@ const HotSprings: React.FC = () => {
         setData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(t('common.error'));
       } finally {
         setLoading(false);
       }
@@ -73,7 +75,7 @@ const HotSprings: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{t('common.loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -90,7 +92,7 @@ const HotSprings: React.FC = () => {
     <div className={styles.pageWrapper}>
       <Header />
       <main className={styles.mainContent}>
-        <h1 className={styles.mainTitle}>Горячие источники</h1>
+        <h1 className={styles.mainTitle}>{t('hotSprings.title')}</h1>
 
         {heroParagraphs.length > 0 && (
           <div className={styles.fullWidthSection}>

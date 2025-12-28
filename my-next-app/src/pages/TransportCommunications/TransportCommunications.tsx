@@ -7,6 +7,7 @@ import styles from './TransportCommunications.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { getApiUrl } from '@/utils/api';
+import { useTranslations } from '@/i18n/TranslationsContext';
 
 interface TransportBlock {
   id: number;
@@ -27,6 +28,7 @@ const API_BASE = config.API_BASE;
 
 const TransportCommunications = () => {
   const { locale } = useLocale();
+  const t = useTranslations();
   const [data, setData] = useState<TransportCommunicationsPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -41,7 +43,7 @@ const TransportCommunications = () => {
         setData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError('error');
       } finally {
         setLoading(false);
       }
@@ -54,7 +56,7 @@ const TransportCommunications = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{t('common.loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -66,7 +68,7 @@ const TransportCommunications = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error ? t('transportCommunications.errorLoading') : t('transportCommunications.errorLoading')}</h1>
         </main>
         <Footer />
       </div>

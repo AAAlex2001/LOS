@@ -60,8 +60,8 @@ class DictionaryWord(TimestampedModel):
     """
     page = models.ForeignKey(ElementaryDictionaryPage, on_delete=models.CASCADE, related_name="words", null=True, blank=True)
     category = models.ForeignKey(DictionaryCategory, on_delete=models.CASCADE, related_name="words")
-    russian = models.CharField(max_length=500, help_text="Перевод на русском языке")
-    abkhazian = models.CharField(max_length=500, help_text="Перевод на абхазском языке")
+    russian = models.CharField(max_length=500, blank=True, help_text="Перевод на русском языке")
+    abkhazian = models.CharField(max_length=500, blank=True, help_text="Перевод на абхазском языке")
     order = models.PositiveIntegerField(default=0, help_text="Порядок сортировки")
 
     class Meta:

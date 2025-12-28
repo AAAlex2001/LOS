@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import styles from './CitiesOchamchira.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
+import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
 
 const API_BASE = config.API_BASE;
@@ -19,6 +20,7 @@ type CitiesPageData = {
 
 const CitiesOchamchira: React.FC = () => {
   const router = useRouter();
+  const t = useTranslations();
   const [data, setData] = React.useState<CitiesPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const { locale } = useLocale();
@@ -52,7 +54,7 @@ const CitiesOchamchira: React.FC = () => {
     return (
       <div className={styles.ochamchiraWrapper}>
         <main className={styles.ochamchiraContent}>
-          <h1 className={styles.ochamchiraTitle}>Загрузка...</h1>
+          <h1 className={styles.ochamchiraTitle}>{t('common.loading')}</h1>
         </main>
       </div>
     );
@@ -62,7 +64,7 @@ const CitiesOchamchira: React.FC = () => {
     return (
       <div className={styles.ochamchiraWrapper}>
         <main className={styles.ochamchiraContent}>
-          <h1 className={styles.ochamchiraTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.ochamchiraTitle}>{error || t('common.error')}</h1>
         </main>
       </div>
     );
@@ -80,7 +82,7 @@ const CitiesOchamchira: React.FC = () => {
   return (
     <div className={styles.ochamchiraWrapper}>
       <main className={styles.ochamchiraContent}>
-        <h1 className={styles.ochamchiraTitle}>{data?.title || 'ОЧАМЧЫРА'}</h1>
+        <h1 className={styles.ochamchiraTitle}>{data?.title || t('cities.ochamchiraTitle')}</h1>
 
         <section className={styles.ochamchiraBanner}>
           <img

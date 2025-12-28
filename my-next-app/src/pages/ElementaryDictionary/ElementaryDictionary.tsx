@@ -8,6 +8,17 @@ import styles from './ElementaryDictionary.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { getApiUrl } from '@/utils/api';
+import { useTranslations } from '@/i18n/TranslationsContext';
+
+// Функция для склонения слова "слово"
+const pluralizeWord = (count: number, locale: string): string => {
+  if (locale === 'en') {
+    return count === 1 ? 'word' : 'words';
+  }
+  // Русский
+  const cases = [2, 0, 1, 1, 1, 2];
+  return ['слово', 'слова', 'слов'][(count % 100 > 4 && count % 100 < 20) ? 2 : cases[Math.min(count % 10, 5)]];
+};
 
 interface WordPair {
   id: number;
@@ -46,6 +57,7 @@ const getColumns = (list: WordPair[], forceSplit = false): WordPair[][] => {
 
 const ElementaryDictionary: React.FC = () => {
   const { locale } = useLocale();
+  const t = useTranslations();
   const [pageData, setPageData] = useState<ElementaryDictionaryPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -60,7 +72,7 @@ const ElementaryDictionary: React.FC = () => {
         setPageData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(t('common.error'));
       } finally {
         setLoading(false);
       }
@@ -71,8 +83,8 @@ const ElementaryDictionary: React.FC = () => {
   const renderTable = (items: WordPair[]) => (
     <div className={styles.dictionaryTable}>
       <div className={styles.row}>
-        <div className={styles.cellHeader} style={{ textAlign: 'center' }}>На русском</div>
-        <div className={styles.cellHeader} style={{ textAlign: 'center' }}>На абхазском</div>
+        <div className={styles.cellHeader} style={{ textAlign: 'center' }}>{t('elementaryDictionary.inRussian')}</div>
+        <div className={styles.cellHeader} style={{ textAlign: 'center' }}>{t('elementaryDictionary.inAbkhazian')}</div>
       </div>
       {items.map((w, idx) => (
         <div key={`${w.id}-${idx}`} className={styles.row}>
@@ -88,7 +100,7 @@ const ElementaryDictionary: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{t('common.loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -100,7 +112,7 @@ const ElementaryDictionary: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error || t('common.error')}</h1>
         </main>
         <Footer />
       </div>
@@ -114,13 +126,13 @@ const ElementaryDictionary: React.FC = () => {
       <main className={styles.mainContent}>
         {/* Заголовок */}
         <section className={styles.titleSection}>
-          <h1 className={styles.mainTitle}>Элементарный словарь</h1>
+          <h1 className={styles.mainTitle}>{t('elementaryDictionary.title')}</h1>
         </section>
 
         {/* Категории словаря */}
         <section className={styles.sectionsContainer}>
           {(!pageData.categories || pageData.categories.length === 0) ? (
-            <div className={styles.noData}>Нет данных о словаре</div>
+            <div className={styles.noData}>{t('elementaryDictionary.noData')}</div>
           ) : (
             (() => {
               const items = (pageData.categories || []).map((category) => {
@@ -157,7 +169,7 @@ const ElementaryDictionary: React.FC = () => {
                     return (
                       <div key={category.id} className={blockClass}>
                         <h2 className={`${styles.sectionTitle} ${styles.titleCenter}`}>
-                          {`${category.title} (${words.length} ${words.length === 1 ? 'слово' : words.length < 5 ? 'слова' : 'слов'})`}
+                          {`${category.title} (${words.length} ${pluralizeWord(words.length, locale)})`}
                         </h2>
                         {forceTwo ? (
                           <div className={styles.tablesRow}>

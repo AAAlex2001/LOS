@@ -1,6 +1,7 @@
 import React from 'react';
 import cardStyles from './PartyCardGagra.module.scss';
 import AdSlider from '@/components/AdSlider/AdSlider';
+import { useTranslations } from '@/i18n/TranslationsContext';
 
 interface PartyEvent {
   id: number;
@@ -42,6 +43,7 @@ interface PartyCardGagraProps {
 }
 
 const PartyCardGagra: React.FC<PartyCardGagraProps> = ({ city, events, sliderItems }) => {
+  const t = useTranslations();
   const toImageUrl = (p?: string) => {
     if (!p) return '';
     return p.startsWith('http') ? p : `http://109.196.103.12:8000${p}`;
@@ -63,7 +65,7 @@ const PartyCardGagra: React.FC<PartyCardGagraProps> = ({ city, events, sliderIte
       <div className={cardStyles.contentSection}>
         {/* City Title */}
         <div className={cardStyles.cityTitle}>
-          <h2 className={cardStyles.cityTitleText}>{city?.name || 'Гагра'}</h2>
+          <h2 className={cardStyles.cityTitleText}>{city?.name || t('cities.gagra')}</h2>
         </div>
 
         {/* Events Container */}
@@ -99,14 +101,14 @@ const PartyCardGagra: React.FC<PartyCardGagraProps> = ({ city, events, sliderIte
                   )}
                   {event.description && (
                     <div className={cardStyles.eventDescription}>
-                      <h4 className={cardStyles.descriptionTitle}>О событии</h4>
+                      <h4 className={cardStyles.descriptionTitle}>{t('parties.aboutEvent')}</h4>
                       <p className={cardStyles.descriptionText} style={{ whiteSpace: 'pre-line' }}>
                         {event.description}
                       </p>
                       {event.event_url && (
                         <div className={cardStyles.eventLink}>
                           <span className={cardStyles.linkText}>
-                            <span className={cardStyles.linkLabel}>Ссылка на мероприятие: </span>
+                            <span className={cardStyles.linkLabel}>{t('parties.eventLink')} </span>
                                    <a
                                      href={event.event_url}
                                      target="_blank"
@@ -131,7 +133,7 @@ const PartyCardGagra: React.FC<PartyCardGagraProps> = ({ city, events, sliderIte
               padding: 'clamp(60px, 15vw, 200px) 20px',
               lineHeight: '1.2'
             }}>
-              Пока нет информации
+              {t('parties.noInfo')}
             </div>
           )}
 

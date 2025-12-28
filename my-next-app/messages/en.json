@@ -10,7 +10,10 @@
     "workingHours": "Working hours",
     "address": "Address",
     "email": "Email",
-    "website": "Website"
+    "website": "Website",
+    "scrollToTop": "Back to top",
+    "languageRussian": "Русский",
+    "languageEnglish": "English"
   },
   "header": {
     "classifieds": "Classifieds",
@@ -55,7 +58,16 @@
     "ochamchira": "Ochamchira",
     "tkuarchal": "Tkuarchal",
     "gal": "Gal",
-    "viewCity": "View of the city"
+    "viewCity": "View of the city",
+    "sukhumTitle": "SUKHUM",
+    "gagraTitle": "GAGRA",
+    "pitsundaTitle": "PITSUNDA",
+    "gudautaTitle": "GUDAUTA",
+    "newAfonTitle": "NEW AFON",
+    "gulripshTitle": "GULRIPSH",
+    "ochamchiraTitle": "OCHAMCHIRA",
+    "tkuarchalTitle": "TKUARCHAL",
+    "galTitle": "GAL"
   },
   "banks": {
     "title": "Banks",
@@ -98,7 +110,10 @@
     "title": "Excursions"
   },
   "parties": {
-    "title": "Entertainment"
+    "title": "Entertainment",
+    "aboutEvent": "About the event",
+    "eventLink": "Event link:",
+    "noInfo": "No information available yet"
   },
   "mobileCommunication": {
     "title": "Communication"
@@ -106,7 +121,8 @@
   "mountainRoutes": {
     "title": "Mountain Routes",
     "phone": "Tel.:",
-    "contacts": "Contacts:"
+    "contacts": "Contacts:",
+    "errorLoading": "Error loading data"
   },
   "hotSprings": {
     "title": "Hot Springs"
@@ -115,19 +131,50 @@
     "title": "Government Structure"
   },
   "abkhazianCuisine": {
-    "title": "Abkhazian Cuisine"
+    "title": "Abkhazian Cuisine",
+    "mainDishesTitle": "Main dishes and their features",
+    "noDishesData": "No data about dishes"
   },
   "abkhazianCustoms": {
-    "title": "Abkhazian Customs"
+    "title": "Abkhazian Customs",
+    "introNotConfigured": "Intro text is not configured",
+    "noData": "No data about customs"
   },
   "elementaryDictionary": {
-    "title": "Elementary Dictionary"
+    "title": "Elementary Dictionary",
+    "noData": "No dictionary data available",
+    "inRussian": "In Russian",
+    "inAbkhazian": "In Abkhazian"
   },
   "privacyPolicy": {
     "title": "Privacy Policy"
   },
   "accessibilityAndTerms": {
     "title": "Accessibility and Terms of Use"
+  },
+  "transportCommunications": {
+    "title": "Transport Communications",
+    "errorLoading": "Error loading data"
+  },
+  "taxiEtiquette": {
+    "passengerIntro": "Etiquette for passengers: to ensure your taxi ride goes smoothly and leaves only positive impressions, we recommend following simple rules.",
+    "passengerConclusion": "A taxi is also part of the journey. Respect, politeness and calmness make it better for everyone!",
+    "driverIntro": "Taxi driver etiquette: how to create comfort for the passenger and earn respect",
+    "driverDescription": "A taxi driver in Abkhazia is not just a carrier, but a representative of a hospitable country. Here are a few simple rules that will make your work more pleasant and service better.",
+    "driverConclusion": "Respect for the passenger is respect for yourself. A taxi driver with good service always wins in reputation, tips and number of clients."
+  },
+  "privacyPolicy": {
+    "defaultTitle": "Website Privacy Policy"
+  },
+  "accessibilityAndTerms": {
+    "defaultTitle": "Accessibility and Terms of Use"
+  },
+  "yourDoctor": {
+    "hospitals": "Hospitals",
+    "privateClinics": "Private Clinics",
+    "dentistry": "Dental Clinics",
+    "vetClinics": "Veterinary Clinics",
+    "doctors": "Doctors"
   },
   "categoryPages": {
     "beaches": "Beaches",
@@ -139,6 +186,8 @@
     "clothingRepair": "Clothing Repair",
     "shopsAndMarkets": "Shops and Markets",
     "churches": "Churches",
+    "description": "Description",
+    "services": "Church Services",
     "culturalAttractions": "Cultural Attractions",
     "administrativeBuildings": "Administrative Buildings",
     "parkingLots": "Parking Lots",

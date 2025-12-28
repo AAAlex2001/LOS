@@ -8,6 +8,7 @@ import styles from './AbkhazianCuizine.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { getApiUrl } from '@/utils/api';
+import { useTranslations } from '@/i18n/TranslationsContext';
 
 type CuisineSection = {
   id: number;
@@ -33,8 +34,7 @@ type CuisinePageData = {
 const API_BASE = config.API_BASE;
 
 const AbkhazianCuizine = () => {
-  const { locale } = useLocale();
-  const [data, setData] = useState<CuisinePageData | null>(null);
+  const { locale } = useLocale();  const t = useTranslations();  const [data, setData] = useState<CuisinePageData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -73,7 +73,7 @@ const AbkhazianCuizine = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Ошибка загрузки данных</h1>
+          <h1 className={styles.mainTitle}>{t('common.error')}</h1>
         </main>
         <Footer />
       </div>
@@ -109,7 +109,7 @@ const AbkhazianCuizine = () => {
           ))}
 
           <section className={styles.textBlock}>
-            <h2 className={styles.sectionTitle}>Основные блюда и их особенности</h2>
+            <h2 className={styles.sectionTitle}>{t('abkhazianCuisine.mainDishesTitle')}</h2>
             <div className={styles.mainDishesList}>
               {data.main_dishes && data.main_dishes.length > 0 ? (
                 data.main_dishes.map((dish, idx) => (
@@ -119,7 +119,7 @@ const AbkhazianCuizine = () => {
                   </p>
                 ))
               ) : (
-                <p>Нет данных о блюдах</p>
+                <p>{t('abkhazianCuisine.noDishesData')}</p>
               )}
             </div>
           </section>

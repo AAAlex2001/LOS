@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import styles from './CitiesGagra.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
+import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
 
 const API_BASE = config.API_BASE;
@@ -19,6 +20,7 @@ type CitiesPageData = {
 
 const CitiesGagra: React.FC = () => {
   const router = useRouter();
+  const t = useTranslations();
   const [data, setData] = React.useState<CitiesPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const { locale } = useLocale();
@@ -54,7 +56,7 @@ const categories: Category[] = (data?.city?.categories || []).slice().sort((a, b
     return (
       <div className={styles.gagraWrapper}>
         <main className={styles.gagraContent}>
-          <h1 className={styles.gagraTitle}>Загрузка...</h1>
+          <h1 className={styles.gagraTitle}>{t('common.loading')}</h1>
         </main>
       </div>
     );
@@ -64,7 +66,7 @@ const categories: Category[] = (data?.city?.categories || []).slice().sort((a, b
     return (
       <div className={styles.gagraWrapper}>
         <main className={styles.gagraContent}>
-          <h1 className={styles.gagraTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.gagraTitle}>{error || t('common.error')}</h1>
         </main>
       </div>
     );
@@ -79,7 +81,7 @@ const categories: Category[] = (data?.city?.categories || []).slice().sort((a, b
   return (
     <div className={styles.gagraWrapper}>
       <main className={styles.gagraContent}>
-        <h1 className={styles.gagraTitle}>ГАГРА</h1>
+        <h1 className={styles.gagraTitle}>{data?.title || t('cities.gagraTitle')}</h1>
 
         <section className={styles.gagraBanner}>
           <img

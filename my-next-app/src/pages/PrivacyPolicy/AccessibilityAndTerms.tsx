@@ -7,6 +7,7 @@ import styles from './PrivacyPolicy.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { getApiUrl } from '@/utils/api';
+import { useTranslations } from '@/i18n/TranslationsContext';
 
 const API_BASE = config.API_BASE;
 
@@ -17,6 +18,7 @@ interface AccessibilityAndTermsData {
 
 const AccessibilityAndTerms: React.FC = () => {
   const { locale } = useLocale();
+  const t = useTranslations();
   const [data, setData] = useState<AccessibilityAndTermsData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -44,7 +46,7 @@ const AccessibilityAndTerms: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.title}>Загрузка...</h1>
+          <h1 className={styles.title}>{t('common.loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -56,7 +58,7 @@ const AccessibilityAndTerms: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.title}>Ошибка загрузки данных</h1>
+          <h1 className={styles.title}>{t('common.error')}</h1>
         </main>
         <Footer />
       </div>
@@ -67,7 +69,7 @@ const AccessibilityAndTerms: React.FC = () => {
     <div className={styles.pageWrapper}>
       <Header />
       <main className={styles.mainContent}>
-        <h1 className={styles.title}>{data.title || 'Доступность и правила пользования сайтом'}</h1>
+        <h1 className={styles.title}>{data.title || t('accessibilityAndTerms.defaultTitle')}</h1>
         <div className={styles.content} dangerouslySetInnerHTML={{ __html: data.content }} />
       </main>
       <Footer />

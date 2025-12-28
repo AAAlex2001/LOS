@@ -5,6 +5,7 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './PharmacyPitsunda.module.scss';
+import { useTranslations } from '@/i18n/TranslationsContext';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { getApiUrl } from '@/utils/api';
@@ -35,6 +36,7 @@ const PharmacyPitsunda: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const { locale } = useLocale();
+  const t = useTranslations();
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
@@ -68,7 +70,7 @@ const PharmacyPitsunda: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{t('loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -80,7 +82,7 @@ const PharmacyPitsunda: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error || t('error')}</h1>
         </main>
         <Footer />
       </div>
@@ -97,7 +99,7 @@ const PharmacyPitsunda: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Пицунда: аптеки'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('common.error')}</h1>
           </section>
 
           {/* Карточки аптек */}
@@ -130,7 +132,7 @@ const PharmacyPitsunda: React.FC = () => {
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={styles.infoLabel}>{t('address')}</span>
                     <span className={`${styles.infoValue} ${pharmacy.address_link ? styles.addressLink : ''}`}>
                       {pharmacy.address_link ? (
                         <a href={pharmacy.address_link} target="_blank" rel="noopener noreferrer">{pharmacy.address}</a>
@@ -142,14 +144,14 @@ const PharmacyPitsunda: React.FC = () => {
                   
                   {pharmacy.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoLabel}>{t('workingHours')}</span>
                       <span className={styles.infoValue}>{pharmacy.working_hours}</span>
                     </div>
                   )}
                   
                   {pharmacy.phone && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoLabel}>{t('phone')}</span>
                       <span className={styles.infoValue}>{pharmacy.phone}</span>
                     </div>
                   )}

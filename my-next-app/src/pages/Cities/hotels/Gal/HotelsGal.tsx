@@ -7,6 +7,7 @@ import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './HotelsGal.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
+import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
 
 type City = { id: number; name: string; title?: string; order: number };
@@ -34,6 +35,7 @@ const HotelsGal: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const { locale } = useLocale();
+  const t = useTranslations();
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
@@ -67,7 +69,7 @@ const HotelsGal: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{t('common.loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -79,7 +81,7 @@ const HotelsGal: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error || t('common.error')}</h1>
         </main>
         <Footer />
       </div>
@@ -96,7 +98,7 @@ const HotelsGal: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Гал: отели'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('common.error')}</h1>
           </section>
 
           {/* Карточки отелей */}
@@ -121,7 +123,7 @@ const HotelsGal: React.FC = () => {
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={styles.infoLabel}>{t('common.address')}:</span>
                     <span className={`${styles.infoValue} ${hotel.address_link ? styles.addressLink : ''}`}>
                       {hotel.address_link ? (
                         <a href={hotel.address_link} target="_blank" rel="noopener noreferrer">{hotel.address}</a>
@@ -133,14 +135,14 @@ const HotelsGal: React.FC = () => {
                   
                   {hotel.contacts && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoLabel}>{t('common.contacts')}:</span>
                       <span className={styles.infoValue}>{hotel.contacts}</span>
                     </div>
                   )}
                   
                   {hotel.price && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Цена:</span>
+                      <span className={styles.infoLabel}>{t('common.price')}:</span>
                       <span className={styles.infoValue}>{hotel.price}</span>
                     </div>
                   )}

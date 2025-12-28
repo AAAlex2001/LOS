@@ -21,13 +21,6 @@ class DictionaryWordInline(TranslationTabularInline):
     extra = 1
     fields = ['category', 'russian', 'abkhazian', 'order']
     ordering = ['order']
-    
-    # Делаем поля компактнее
-    def get_formset(self, request, obj=None, **kwargs):
-        formset = super().get_formset(request, obj, **kwargs)
-        formset.form.base_fields['russian'].widget.attrs.update({'rows': 2, 'cols': 30})
-        formset.form.base_fields['abkhazian'].widget.attrs.update({'rows': 2, 'cols': 30})
-        return formset
 
 
 @admin.register(ElementaryDictionaryPage)

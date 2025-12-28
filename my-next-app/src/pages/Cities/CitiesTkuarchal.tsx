@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import styles from './CitiesTkuarchal.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
+import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
 
 const API_BASE = config.API_BASE;
@@ -19,6 +20,7 @@ type CitiesPageData = {
 
 const CitiesTkuarchal: React.FC = () => {
   const router = useRouter();
+  const t = useTranslations();
   const [data, setData] = React.useState<CitiesPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const { locale } = useLocale();
@@ -52,7 +54,7 @@ const CitiesTkuarchal: React.FC = () => {
     return (
       <div className={styles.tkuarchalWrapper}>
         <main className={styles.tkuarchalContent}>
-          <h1 className={styles.tkuarchalTitle}>Загрузка...</h1>
+          <h1 className={styles.tkuarchalTitle}>{t('common.loading')}</h1>
         </main>
       </div>
     );
@@ -62,7 +64,7 @@ const CitiesTkuarchal: React.FC = () => {
     return (
       <div className={styles.tkuarchalWrapper}>
         <main className={styles.tkuarchalContent}>
-          <h1 className={styles.tkuarchalTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.tkuarchalTitle}>{error || t('common.error')}</h1>
         </main>
       </div>
     );
@@ -80,7 +82,7 @@ const CitiesTkuarchal: React.FC = () => {
   return (
     <div className={styles.tkuarchalWrapper}>
       <main className={styles.tkuarchalContent}>
-        <h1 className={styles.tkuarchalTitle}>{data?.title || 'ТКУАРЧАЛ'}</h1>
+        <h1 className={styles.tkuarchalTitle}>{data?.title || t('cities.tkuarchalTitle')}</h1>
 
         <section className={styles.tkuarchalBanner}>
           <img

@@ -7,6 +7,7 @@ import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './BeautySalonsSukhum.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
+import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
 
 type City = { id: number; name: string; title?: string; order: number };
@@ -36,6 +37,7 @@ const BeautySalonsSukhum: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const { locale } = useLocale();
+  const t = useTranslations();
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
@@ -69,7 +71,7 @@ const BeautySalonsSukhum: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{t('common.loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -81,7 +83,7 @@ const BeautySalonsSukhum: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error || t('common.error')}</h1>
         </main>
         <Footer />
       </div>

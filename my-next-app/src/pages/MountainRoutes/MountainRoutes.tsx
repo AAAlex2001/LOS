@@ -7,6 +7,7 @@ import styles from './MountainRoutes.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { getApiUrl } from '@/utils/api';
+import { useTranslations } from '@/i18n/TranslationsContext';
 
 interface RouteItem {
   id: number;
@@ -29,6 +30,7 @@ const API_BASE = config.API_BASE;
 
 const MountainRoutes: React.FC = () => {
   const { locale } = useLocale();
+  const t = useTranslations();
   const [data, setData] = useState<MountainRoutesPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -43,7 +45,7 @@ const MountainRoutes: React.FC = () => {
         setData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError('error');
       } finally {
         setLoading(false);
       }
@@ -56,7 +58,7 @@ const MountainRoutes: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{t('common.loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -68,7 +70,7 @@ const MountainRoutes: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{t('mountainRoutes.errorLoading')}</h1>
         </main>
         <Footer />
       </div>
@@ -105,9 +107,9 @@ const MountainRoutes: React.FC = () => {
                   {route.title && <h3 className={styles.cardTitle}>{route.title}</h3>}
                   {route.name && <p className={styles.cardName}>{route.name}</p>}
                   {route.phone && !route.image && (
-                    <p className={styles.cardPhone}>Тел.: {route.phone}</p>
+                    <p className={styles.cardPhone}>{t('mountainRoutes.phone')} {route.phone}</p>
                   )}
-                  {route.phone && route.image && <p className={styles.phone}>Контакты: {route.phone}</p>}
+                  {route.phone && route.image && <p className={styles.phone}>{t('mountainRoutes.contacts')} {route.phone}</p>}
                   {route.site_url && (
                     <a
                       href={route.site_url}
@@ -115,7 +117,7 @@ const MountainRoutes: React.FC = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {'САЙТ: '}{route.site_url}
+                      {t('common.site')}: {route.site_url}
                     </a>
                   )}
                 </div>
@@ -139,9 +141,9 @@ const MountainRoutes: React.FC = () => {
                   {route.title && <h3 className={styles.cardTitle}>{route.title}</h3>}
                   {route.name && <p className={styles.cardName}>{route.name}</p>}
                   {route.phone && !route.image && (
-                    <p className={styles.cardPhone}>Тел.: {route.phone}</p>
+                    <p className={styles.cardPhone}>{t('mountainRoutes.phone')} {route.phone}</p>
                   )}
-                  {route.phone && route.image && <p className={styles.phone}>Контакты: {route.phone}</p>}
+                  {route.phone && route.image && <p className={styles.phone}>{t('mountainRoutes.contacts')} {route.phone}</p>}
                   {route.site_url && (
                     <a
                       href={route.site_url}
@@ -149,7 +151,7 @@ const MountainRoutes: React.FC = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {'САЙТ: '}{route.site_url}
+                      {t('common.site')}: {route.site_url}
                     </a>
                   )}
                 </div>

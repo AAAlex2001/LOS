@@ -7,6 +7,7 @@ import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './CarWashesTkuarchal.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
+import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
 
 type City = { id: number; name: string; title?: string; order: number };
@@ -36,6 +37,7 @@ const CarWashesTkuarchal: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const { locale } = useLocale();
+  const t = useTranslations();
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
@@ -69,7 +71,7 @@ const CarWashesTkuarchal: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{t('common.loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -81,7 +83,7 @@ const CarWashesTkuarchal: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error || t('common.error')}</h1>
         </main>
         <Footer />
       </div>
@@ -98,7 +100,7 @@ const CarWashesTkuarchal: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Ткуарчал: мойки машин'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('common.error')}</h1>
           </section>
 
           {/* Карточки моек */}
@@ -131,7 +133,7 @@ const CarWashesTkuarchal: React.FC = () => {
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={styles.infoLabel}>{t('common.address')}</span>
                     <span className={`${styles.infoValue} ${carWash.address_link ? styles.addressLink : ''}`}>
                       {carWash.address_link ? (
                         <a href={carWash.address_link} target="_blank" rel="noopener noreferrer">{carWash.address}</a>
@@ -143,21 +145,21 @@ const CarWashesTkuarchal: React.FC = () => {
                   
                   {carWash.contacts && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoLabel}>{t('common.contacts')}</span>
                       <span className={styles.infoValue}>{carWash.contacts}</span>
                     </div>
                   )}
                   
                   {carWash.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoLabel}>{t('common.workingHours')}</span>
                       <span className={styles.infoValue}>{carWash.working_hours}</span>
                     </div>
                   )}
                   
                   {carWash.services && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Услуги:</span>
+                      <span className={styles.infoLabel}>{t('carWashes.services')}</span>
                       <span className={styles.infoValue}>{carWash.services}</span>
                     </div>
                   )}

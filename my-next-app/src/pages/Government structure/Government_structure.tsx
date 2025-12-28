@@ -7,6 +7,7 @@ import styles from './Government_structure.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { getApiUrl } from '@/utils/api';
+import { useTranslations } from '@/i18n/TranslationsContext';
 
 type GovernmentBlock = {
   id: number;
@@ -24,6 +25,7 @@ const API_BASE = config.API_BASE;
 
 const GovernmentStructure = () => {
   const { locale } = useLocale();
+  const t = useTranslations();
   const [pageData, setPageData] = useState<GovernmentPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -38,7 +40,7 @@ const GovernmentStructure = () => {
         setPageData(json);
       } catch (e) {
         console.error(e);
-        setError('Ошибка загрузки данных');
+        setError(t('common.error'));
       } finally {
         setLoading(false);
       }
@@ -51,7 +53,7 @@ const GovernmentStructure = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{t('common.loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -63,7 +65,7 @@ const GovernmentStructure = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error || t('common.error')}</h1>
         </main>
         <Footer />
       </div>
@@ -76,7 +78,7 @@ const GovernmentStructure = () => {
     <div className={styles.pageWrapper}>
       <Header />
       <main className={styles.mainContent}>
-        <h1 className={styles.mainTitle}>Государственное устройство</h1>
+        <h1 className={styles.mainTitle}>{t('governmentStructure.title')}</h1>
 
         {blocks.map((b) => (
           <React.Fragment key={b.id}>

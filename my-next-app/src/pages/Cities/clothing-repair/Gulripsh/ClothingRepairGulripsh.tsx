@@ -7,6 +7,7 @@ import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './ClothingRepairGulripsh.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
+import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
 
 type City = { id: number; name: string; title?: string; order: number };
@@ -37,6 +38,7 @@ const ClothingRepairGulripsh: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const { locale } = useLocale();
+  const t = useTranslations();
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
@@ -70,7 +72,7 @@ const ClothingRepairGulripsh: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{t('common.loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -82,7 +84,7 @@ const ClothingRepairGulripsh: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error || t('common.error')}</h1>
         </main>
         <Footer />
       </div>
@@ -132,7 +134,7 @@ const ClothingRepairGulripsh: React.FC = () => {
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={styles.infoLabel}>{t('common.address')}:</span>
                     <span className={`${styles.infoValue} ${repair.address_link ? styles.addressLink : ''}`}>
                       {repair.address_link ? (
                         <a href={repair.address_link} target="_blank" rel="noopener noreferrer">{repair.address}</a>
@@ -144,21 +146,21 @@ const ClothingRepairGulripsh: React.FC = () => {
                   
                   {repair.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoLabel}>{t('common.workingHours')}:</span>
                       <span className={styles.infoValue}>{repair.working_hours}</span>
                     </div>
                   )}
                   
                   {repair.contacts && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoLabel}>{t('common.contacts')}:</span>
                       <span className={styles.infoValue}>{repair.contacts}</span>
                     </div>
                   )}
                   
                   {repair.description && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Описание:</span>
+                      <span className={styles.infoLabel}>{t('categories.description')}:</span>
                       <span className={styles.infoValue}>{repair.description}</span>
                     </div>
                   )}

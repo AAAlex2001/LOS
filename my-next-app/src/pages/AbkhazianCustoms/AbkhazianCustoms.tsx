@@ -7,6 +7,7 @@ import styles from './AbkhazianCustoms.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { getApiUrl } from '@/utils/api';
+import { useTranslations } from '@/i18n/TranslationsContext';
 
 type CustomSection = {
   id: number;
@@ -33,8 +34,7 @@ const TextSection = ({ title, children }: { title: string; children: React.React
 );
 
 const AbkhazianCustoms = () => {
-  const { locale } = useLocale();
-  const [data, setData] = useState<CustomsPageData | null>(null);
+  const { locale } = useLocale();  const t = useTranslations();  const [data, setData] = useState<CustomsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const AbkhazianCustoms = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{t('common.loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -73,7 +73,7 @@ const AbkhazianCustoms = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Ошибка загрузки данных</h1>
+          <h1 className={styles.mainTitle}>{t('common.error')}</h1>
         </main>
         <Footer />
       </div>
@@ -102,7 +102,7 @@ const AbkhazianCustoms = () => {
                     </p>
                   ))
                 ) : (
-                  <p className={styles.introText}>Вводный текст не настроен</p>
+                  <p className={styles.introText}>{t('abkhazianCustoms.introNotConfigured')}</p>
                 )}
               </div>
             </div>
@@ -129,7 +129,7 @@ const AbkhazianCustoms = () => {
           </TextSection>
             ))
           ) : (
-            <div className={styles.noData}>Нет данных о обычаях</div>
+            <div className={styles.noData}>{t('abkhazianCustoms.noData')}</div>
           )}
         </div>
       </main>

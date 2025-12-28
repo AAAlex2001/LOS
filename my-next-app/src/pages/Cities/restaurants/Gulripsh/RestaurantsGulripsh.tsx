@@ -7,6 +7,7 @@ import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import styles from './RestaurantsGulripsh.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
+import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
 
 type City = { id: number; name: string; title?: string; order: number };
@@ -36,6 +37,7 @@ const RestaurantsGulripsh: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const { locale } = useLocale();
+  const t = useTranslations();
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
@@ -69,7 +71,7 @@ const RestaurantsGulripsh: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{t('common.loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -81,7 +83,7 @@ const RestaurantsGulripsh: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error || t('common.error')}</h1>
         </main>
         <Footer />
       </div>
@@ -98,7 +100,7 @@ const RestaurantsGulripsh: React.FC = () => {
         <div className={styles.buildingsWrapper}>
           {/* Заголовок */}
           <section className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>{data?.title || 'Гулрыпш: рестораны'}</h1>
+            <h1 className={styles.mainTitle}>{data?.title || t('common.error')}</h1>
           </section>
 
           {/* Карточки ресторанов */}
@@ -131,7 +133,7 @@ const RestaurantsGulripsh: React.FC = () => {
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={styles.infoLabel}>{t('common.address')}:</span>
                     <span className={`${styles.infoValue} ${restaurant.address_link ? styles.addressLink : ''}`}>
                       {restaurant.address_link ? (
                         <a href={restaurant.address_link} target="_blank" rel="noopener noreferrer">{restaurant.address}</a>
@@ -143,21 +145,21 @@ const RestaurantsGulripsh: React.FC = () => {
                   
                   {restaurant.phone && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoLabel}>{t('common.phone')}:</span>
                       <span className={styles.infoValue}>{restaurant.phone}</span>
                     </div>
                   )}
                   
                   {restaurant.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoLabel}>{t('common.workingHours')}:</span>
                       <span className={styles.infoValue}>{restaurant.working_hours}</span>
                     </div>
                   )}
                   
                   {restaurant.description && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Описание:</span>
+                      <span className={styles.infoLabel}>{t('categories.description')}:</span>
                       <span className={styles.infoValue}>{restaurant.description}</span>
                     </div>
                   )}

@@ -8,6 +8,7 @@ import styles from './ChurchesPitsunda.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { getApiUrl } from '@/utils/api';
+import { useTranslations } from '@/i18n/TranslationsContext';
 
 type City = { id: number; name: string; title?: string; order: number };
 type Church = {
@@ -36,6 +37,7 @@ const ChurchesPitsunda: React.FC = () => {
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const { locale } = useLocale();
+  const t = useTranslations();
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
@@ -69,7 +71,7 @@ const ChurchesPitsunda: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{t('common.loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -81,7 +83,7 @@ const ChurchesPitsunda: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error || t('common.error')}</h1>
         </main>
         <Footer />
       </div>
@@ -131,7 +133,7 @@ const ChurchesPitsunda: React.FC = () => {
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={styles.infoLabel}>{t('common.address')}:</span>
                     <span className={`${styles.infoValue} ${church.address_link ? styles.addressLink : ''}`}>
                       {church.address_link ? (
                         <a href={church.address_link} target="_blank" rel="noopener noreferrer">{church.address}</a>
@@ -143,21 +145,21 @@ const ChurchesPitsunda: React.FC = () => {
                   
                   {church.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoLabel}>{t('common.workingHours')}:</span>
                       <span className={styles.infoValue}>{church.working_hours}</span>
                     </div>
                   )}
                   
                   {church.description && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Описание:</span>
+                      <span className={styles.infoLabel}>{t('categories.description')}:</span>
                       <span className={styles.infoValue}>{church.description}</span>
                     </div>
                   )}
                   
                   {church.services && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Богослужения:</span>
+                      <span className={styles.infoLabel}>{t('categories.services')}:</span>
                       <span className={styles.infoValue}>{church.services}</span>
                     </div>
                   )}

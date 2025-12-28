@@ -8,6 +8,7 @@ import styles from './ParkingLotsGulripsh.module.scss';
 import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { getApiUrl } from '@/utils/api';
+import { useTranslations } from 'next-intl';
 
 type City = { id: number; name: string; title?: string; order: number };
 type ParkingLot = {
@@ -32,6 +33,7 @@ type CityPageData = {
 const API_BASE = config.API_BASE;
 
 const ParkingLotsGulripsh: React.FC = () => {
+  const t = useTranslations('ParkingLots');
   const [data, setData] = React.useState<CityPageData | null>(null);
   const [loading, setLoading] = React.useState(true);
   const { locale } = useLocale();
@@ -68,7 +70,7 @@ const ParkingLotsGulripsh: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{t('loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -80,7 +82,7 @@ const ParkingLotsGulripsh: React.FC = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>{error || 'Ошибка загрузки данных'}</h1>
+          <h1 className={styles.mainTitle}>{error || t('loadingError')}</h1>
         </main>
         <Footer />
       </div>
@@ -130,7 +132,7 @@ const ParkingLotsGulripsh: React.FC = () => {
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={styles.infoLabel}>{t('address')}</span>
                     <span className={`${styles.infoValue} ${lot.address_link ? styles.addressLink : ''}`}>
                       {lot.address_link ? (
                         <a href={lot.address_link} target="_blank" rel="noopener noreferrer">{lot.address}</a>
@@ -142,14 +144,14 @@ const ParkingLotsGulripsh: React.FC = () => {
                   
                   {lot.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoLabel}>{t('workingHours')}</span>
                       <span className={styles.infoValue}>{lot.working_hours}</span>
                     </div>
                   )}
                   
                   {lot.contacts && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoLabel}>{t('contacts')}</span>
                       <span className={styles.infoValue}>{lot.contacts}</span>
                     </div>
                   )}
