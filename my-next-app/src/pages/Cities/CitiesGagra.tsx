@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
@@ -34,7 +34,7 @@ const CitiesGagra: React.FC = () => {
         if (!res.ok) {
           if (res.status === 404) {
             const errorData = await res.json();
-            throw new Error(errorData.error || 'Страница не найдена');
+            throw new Error(errorData.error || t('common.pageNotFound'));
           }
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }
@@ -42,7 +42,7 @@ const CitiesGagra: React.FC = () => {
         setData(json);
       } catch (e) {
         console.error(e);
-        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+        setError(e instanceof Error ? e.message : t('common.error'));
       } finally {
         setLoading(false);
       }
@@ -86,7 +86,7 @@ const categories: Category[] = (data?.city?.categories || []).slice().sort((a, b
         <section className={styles.gagraBanner}>
           <img
             src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : ''}
-            alt="Вид на город Гагра"
+            alt={t('cities.viewCity')}
             className={styles.gagraImage}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />

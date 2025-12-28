@@ -61,7 +61,7 @@ const AbkhazianCuizine = () => {
       <div className={styles.pageWrapper}>
         <Header />
         <main className={styles.mainContent}>
-          <h1 className={styles.mainTitle}>Загрузка...</h1>
+          <h1 className={styles.mainTitle}>{t('common.loading')}</h1>
         </main>
         <Footer />
       </div>
@@ -89,12 +89,12 @@ const AbkhazianCuizine = () => {
     <div className={styles.pageWrapper}>
       <Header />
       <main className={styles.mainContent}>
-        <h1 className={styles.mainTitle}>{data.main_title || 'Абхазская кухня'}</h1>
+        <h1 className={styles.mainTitle}>{data.main_title || t('abkhazianCuisine.title')}</h1>
         {heroImageSrc && (
           <div className={styles.heroImageContainer}>
             <img
               src={heroImageSrc}
-              alt="Абхазская кухня"
+              alt={t('abkhazianCuisine.title')}
               className={styles.heroImage}
             />
           </div>

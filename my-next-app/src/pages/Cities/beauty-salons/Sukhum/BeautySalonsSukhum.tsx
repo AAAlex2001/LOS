@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import Header from '@/components/Header/Header';
@@ -49,7 +49,7 @@ const BeautySalonsSukhum: React.FC = () => {
         if (!res.ok) {
           if (res.status === 404) {
             const errorData = await res.json();
-            throw new Error(errorData.error || 'Страница не найдена');
+            throw new Error(errorData.error || t('common.pageNotFound'));
           }
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }
@@ -58,7 +58,7 @@ const BeautySalonsSukhum: React.FC = () => {
         setData(json);
       } catch (e) {
         console.error(e);
-        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+        setError(e instanceof Error ? e.message : t('common.error'));
       } finally {
         setLoading(false);
       }
@@ -133,7 +133,7 @@ const BeautySalonsSukhum: React.FC = () => {
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={styles.infoLabel}>{t('common.address')}:</span>
                     <span className={`${styles.infoValue} ${salon.address_link ? styles.addressLink : ''}`}>
                       {salon.address_link ? (
                         <a href={salon.address_link} target="_blank" rel="noopener noreferrer">{salon.address}</a>
@@ -145,14 +145,14 @@ const BeautySalonsSukhum: React.FC = () => {
                   
                   {salon.phone && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoLabel}>{t('common.phone')}:</span>
                       <span className={styles.infoValue}>{salon.phone}</span>
                     </div>
                   )}
                   
                   {salon.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoLabel}>{t('common.workingHours')}:</span>
                       <span className={styles.infoValue}>{salon.working_hours}</span>
                     </div>
                   )}

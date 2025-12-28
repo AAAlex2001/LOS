@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
@@ -34,7 +34,7 @@ const CitiesGulripsh: React.FC = () => {
         if (!res.ok) {
           if (res.status === 404) {
             const errorData = await res.json();
-            throw new Error(errorData.error || 'Страница не найдена');
+            throw new Error(errorData.error || t('common.pageNotFound'));
           }
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }
@@ -42,7 +42,7 @@ const CitiesGulripsh: React.FC = () => {
         setData(json);
       } catch (e) {
         console.error(e);
-        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+        setError(e instanceof Error ? e.message : t('common.error'));
       } finally {
         setLoading(false);
       }
@@ -87,7 +87,7 @@ const CitiesGulripsh: React.FC = () => {
         <section className={styles.gulripshBanner}>
           <img
             src={bannerSrc}
-            alt="Вид на город Гулрыпш"
+            alt={t('cities.viewCity')}
             className={styles.gulripshImage}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />

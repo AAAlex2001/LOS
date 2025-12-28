@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
@@ -36,7 +36,7 @@ const CitiesGudauta: React.FC = () => {
         if (!res.ok) {
           if (res.status === 404) {
             const errorData = await res.json();
-            throw new Error(errorData.error || 'Страница не найдена');
+            throw new Error(errorData.error || t('common.pageNotFound'));
           }
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }
@@ -44,7 +44,7 @@ const CitiesGudauta: React.FC = () => {
         setData(json);
       } catch (e) {
         console.error(e);
-        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+        setError(e instanceof Error ? e.message : t('common.error'));
       } finally {
         setLoading(false);
       }
@@ -88,7 +88,7 @@ const CitiesGudauta: React.FC = () => {
         <section className={styles.gudautaBanner}>
           <img
             src={data?.city?.image_url ? `${API_BASE}/media/${data.city.image_url}` : ''}
-            alt="Вид на город Гудаута"
+            alt={t('cities.viewCity')}
             className={styles.gudautaImage}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />

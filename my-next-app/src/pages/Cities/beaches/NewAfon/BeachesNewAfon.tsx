@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import Header from '@/components/Header/Header';
@@ -48,7 +48,7 @@ const BeachesNewAfon: React.FC = () => {
         if (!res.ok) {
           if (res.status === 404) {
             const errorData = await res.json();
-            throw new Error(errorData.error || 'Страница не найдена');
+            throw new Error(errorData.error || t('common.pageNotFound'));
           }
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }
@@ -57,7 +57,7 @@ const BeachesNewAfon: React.FC = () => {
         setData(json);
       } catch (e) {
         console.error(e);
-        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+        setError(e instanceof Error ? e.message : t('common.error'));
       } finally {
         setLoading(false);
       }
@@ -132,7 +132,7 @@ const BeachesNewAfon: React.FC = () => {
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={styles.infoLabel}>{t('common.address')}:</span>
                     <span className={`${styles.infoValue} ${beach.address_link ? styles.addressLink : ''}`}>
                       {beach.address_link ? (
                         <a href={beach.address_link} target="_blank" rel="noopener noreferrer">{beach.address}</a>
@@ -144,14 +144,14 @@ const BeachesNewAfon: React.FC = () => {
                   
                   {beach.phone && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Телефон:</span>
+                      <span className={styles.infoLabel}>{t('common.phone')}:</span>
                       <span className={styles.infoValue}>{beach.phone}</span>
                     </div>
                   )}
                   
                   {beach.description && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Информация:</span>
+                      <span className={styles.infoLabel}>{t('categoryPages.description')}:</span>
                       <span className={styles.infoValue}>{beach.description}</span>
                     </div>
                   )}

@@ -89,7 +89,7 @@ const AbkhazianCustoms = () => {
     <div className={styles.pageWrapper}>
       <Header />
       <main className={styles.mainContent}>
-        <h1 className={styles.mainTitle}>{data.main_title || 'Абхазские национальные обычаи'}</h1>
+        <h1 className={styles.mainTitle}>{data.main_title || t('abkhazianCustoms.title')}</h1>
         
         <div className={styles.fullWidthSection}>
           <div className={styles.backgroundImageSection}>
@@ -114,7 +114,7 @@ const AbkhazianCustoms = () => {
         <div className={styles.mainImage}>
             <img 
               src={heroImageSrc}
-            alt="Абхазские традиции" 
+            alt={t('abkhazianCustoms.title')} 
             className={styles.image}
           />
         </div>

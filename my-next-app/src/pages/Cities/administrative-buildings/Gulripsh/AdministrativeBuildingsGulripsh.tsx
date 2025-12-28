@@ -48,7 +48,7 @@ const AdministrativeBuildingsGulripsh: React.FC = () => {
         if (!res.ok) {
           if (res.status === 404) {
             const errorData = await res.json();
-            throw new Error(errorData.error || 'Страница не найдена');
+            throw new Error(errorData.error || t('common.pageNotFound'));
           }
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }
@@ -57,7 +57,7 @@ const AdministrativeBuildingsGulripsh: React.FC = () => {
         setData(json);
       } catch (e) {
         console.error(e);
-        setError(e instanceof Error ? e.message : 'Ошибка загрузки данных');
+        setError(e instanceof Error ? e.message : t('common.error'));
       } finally {
         setLoading(false);
       }
@@ -133,13 +133,13 @@ const AdministrativeBuildingsGulripsh: React.FC = () => {
                 <div className={styles.infoBlock}>
                   {building.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Режим работы:</span>
+                      <span className={styles.infoLabel}>{t('common.workingHours')}:</span>
                       <span className={styles.infoValue}>{building.working_hours}</span>
                     </div>
                   )}
                   
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Адрес:</span>
+                    <span className={styles.infoLabel}>{t('common.address')}:</span>
                     <span className={`${styles.infoValue} ${building.address_link ? styles.addressLink : ''}`}>
                       {building.address_link ? (
                         <a href={building.address_link} target="_blank" rel="noopener noreferrer">{building.address}</a>
@@ -151,7 +151,7 @@ const AdministrativeBuildingsGulripsh: React.FC = () => {
                   
                   {building.contacts && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>Контакты:</span>
+                      <span className={styles.infoLabel}>{t('common.contacts')}:</span>
                       <span className={styles.infoValue}>{building.contacts}</span>
                     </div>
                   )}
