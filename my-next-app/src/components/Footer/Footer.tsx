@@ -59,8 +59,13 @@ const Footer = () => {
 
   const adaptHref = (href: string) => {
     if (!href) return href;
-    const withoutLang = href.replace(/^\/(ru|en)\//, '/');
-    return locale === 'ru' ? `/ru${withoutLang}` : `/en${withoutLang}`;
+    // Убираем префикс языка если есть
+    let path = href.replace(/^\/(ru|en)\//, '/');
+    // Если путь не начинается со слеша, добавляем его
+    if (!path.startsWith('/')) {
+      path = '/' + path;
+    }
+    return locale === 'ru' ? `/ru${path}` : `/en${path}`;
   };
 
   const defaultQuickLinks = [

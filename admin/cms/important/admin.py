@@ -41,7 +41,7 @@ class ImportantImageInline(TranslationTabularInline):
     image_preview.short_description = "Превью"
 
 
-class ImportantTouristPharmacySectionInline(admin.StackedInline):
+class ImportantTouristPharmacySectionInline(TranslationTabularInline):
     model = ImportantSection
     extra = 0
     fields = ('section_type', 'title', 'content', 'order')
@@ -51,7 +51,7 @@ class ImportantTouristPharmacySectionInline(admin.StackedInline):
         return super().get_queryset(request).filter(section_type='tourist-pharmacy')
 
 
-class ImportantEmergencyPhonesSectionInline(admin.StackedInline):
+class ImportantEmergencyPhonesSectionInline(TranslationTabularInline):
     model = ImportantSection
     extra = 0
     fields = ('section_type', 'title', 'subtitle', 'content', 'order')
@@ -61,7 +61,7 @@ class ImportantEmergencyPhonesSectionInline(admin.StackedInline):
         return super().get_queryset(request).filter(section_type='emergency-phones')
 
 
-class ImportantPublicBehaviorSectionInline(admin.StackedInline):
+class ImportantPublicBehaviorSectionInline(TranslationTabularInline):
     model = ImportantSection
     extra = 0
     fields = ('section_type', 'title', 'image', 'image_preview', 'order')
@@ -81,7 +81,7 @@ class ImportantPublicBehaviorSectionInline(admin.StackedInline):
     image_preview.short_description = "Превью"
 
 
-class ImportantTaxiEtiquetteSectionInline(admin.StackedInline):
+class ImportantTaxiEtiquetteSectionInline(TranslationTabularInline):
     model = ImportantSection
     extra = 0
     fields = (
