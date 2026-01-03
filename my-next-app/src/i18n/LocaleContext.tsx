@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { Locale, locales } from './config';
 
@@ -27,9 +27,22 @@ interface LocaleProviderProps {
 }
 
 export function LocaleProvider({ children, defaultLocale = 'ru' }: LocaleProviderProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const getLocaleFromPathname = (path?: string | null): Locale | null => {
+    if (!path) return null;
+    const segments = path.split('/');
+    const maybeLocale = segments[1];
+    return locales.includes(maybeLocale as Locale) ? (maybeLocale as Locale) : null;
+  };
+
   const [locale, setLocaleState] = useState<Locale>(() => {
-    // Initialize from localStorage on mount
+    // Prefer locale from URL, then localStorage, then default
     if (typeof window !== 'undefined') {
+      const fromPath = getLocaleFromPathname(window.location.pathname);
+      if (fromPath) return fromPath;
+
       const saved = localStorage.getItem('locale');
       if (saved && locales.includes(saved as Locale)) {
         return saved as Locale;
@@ -38,8 +51,14 @@ export function LocaleProvider({ children, defaultLocale = 'ru' }: LocaleProvide
     return defaultLocale;
   });
   const [mounted, setMounted] = useState(false);
-  const router = useRouter();
-  const pathname = usePathname();
+
+  // Keep state in sync with the [locale] URL segment.
+  useEffect(() => {
+    const fromPath = getLocaleFromPathname(pathname);
+    if (fromPath && fromPath !== locale) {
+      setLocaleState(fromPath);
+    }
+  }, [pathname, locale]);
 
   useEffect(() => {
     setMounted(true);
@@ -117,33 +136,35 @@ export function useLocale() {
 export function useTranslations(namespace?: string) {
   const { messages, locale } = useLocale();
 
-  const t = (key: string, params?: Record<string, string | number>) => {
-    const keys = namespace ? `${namespace}.${key}`.split('.') : key.split('.');
-    let value: any = messages;
+  const t = useCallback(
+    (key: string, params?: Record<string, string | number>) => {
+      const keys = namespace ? `${namespace}.${key}`.split('.') : key.split('.');
+      let value: any = messages;
 
-    for (const k of keys) {
-      if (value && typeof value === 'object' && k in value) {
-        value = value[k];
-      } else {
-        console.warn(`Translation key not found: ${namespace ? `${namespace}.${key}` : key}`);
+      for (const k of keys) {
+        if (value && typeof value === 'object' && k in value) {
+          value = value[k];
+        } else {
+          console.warn(`Translation key not found: ${namespace ? `${namespace}.${key}` : key}`);
+          return key;
+        }
+      }
+
+      if (typeof value !== 'string') {
+        console.warn(`Translation value is not a string: ${namespace ? `${namespace}.${key}` : key}`);
         return key;
       }
-    }
 
-    if (typeof value !== 'string') {
-      console.warn(`Translation value is not a string: ${namespace ? `${namespace}.${key}` : key}`);
-      return key;
-    }
+      if (params) {
+        return value.replace(/\{(\w+)\}/g, (_, paramKey) => {
+          return params[paramKey]?.toString() || `{${paramKey}}`;
+        });
+      }
 
-    // Replace parameters
-    if (params) {
-      return value.replace(/\{(\w+)\}/g, (_, paramKey) => {
-        return params[paramKey]?.toString() || `{${paramKey}}`;
-      });
-    }
-
-    return value;
-  };
+      return value;
+    },
+    [messages, namespace, locale]
+  );
 
   return t;
 }

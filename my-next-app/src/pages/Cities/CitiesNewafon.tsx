@@ -38,7 +38,8 @@ const CitiesNewafon: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const url = getApiUrl(`/api/cities/page/city_page/${encodeURIComponent('Новый Афон')}/`, locale);
+        const cityName = t('cities.newAfon');
+        const url = getApiUrl(`/api/cities/page/city_page/${encodeURIComponent(cityName)}/`, locale);
         const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) {
           if (res.status === 404) {

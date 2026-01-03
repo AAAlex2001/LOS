@@ -1,5 +1,31 @@
 import config from '@/config';
 
+const CITY_NAME_RU_TO_EN: Record<string, string> = {
+  'Сухум': 'Sukhum',
+  'Гагра': 'Gagra',
+  'Пицунда': 'Pitsunda',
+  'Гудаута': 'Gudauta',
+  'Новый Афон': 'New Afon',
+  'Гулрыпш': 'Gulripsh',
+  'Очамчыра': 'Ochamchira',
+  'Ткуарчал': 'Tkuarchal',
+  'Гал': 'Gal',
+};
+
+function localizeKnownCityNames(endpoint: string, locale: 'ru' | 'en'): string {
+  const replacements =
+    locale === 'en'
+      ? CITY_NAME_RU_TO_EN
+      : Object.fromEntries(Object.entries(CITY_NAME_RU_TO_EN).map(([ru, en]) => [en, ru]));
+
+  let result = endpoint;
+  for (const [from, to] of Object.entries(replacements)) {
+    result = result.replaceAll(from, to);
+    result = result.replaceAll(encodeURIComponent(from), encodeURIComponent(to));
+  }
+  return result;
+}
+
 /**
  * Добавляет параметр языка к URL API запроса
  * @param url - URL для запроса
@@ -19,7 +45,8 @@ export function addLanguageToUrl(url: string, locale: 'ru' | 'en'): string {
  */
 export function getApiUrl(endpoint: string, locale: 'ru' | 'en'): string {
   const baseUrl = config.API_BASE;
-  const fullUrl = endpoint.startsWith('http') ? endpoint : `${baseUrl}${endpoint}`;
+  const localizedEndpoint = localizeKnownCityNames(endpoint, locale);
+  const fullUrl = localizedEndpoint.startsWith('http') ? localizedEndpoint : `${baseUrl}${localizedEndpoint}`;
   return addLanguageToUrl(fullUrl, locale);
 }
 

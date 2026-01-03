@@ -29,7 +29,8 @@ const CitiesGal: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const url = getApiUrl(`/api/cities/page/city_page/${encodeURIComponent('Гал')}/`, locale);
+        const cityName = t('cities.gal');
+        const url = getApiUrl(`/api/cities/page/city_page/${encodeURIComponent(cityName)}/`, locale);
         const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) {
           if (res.status === 404) {

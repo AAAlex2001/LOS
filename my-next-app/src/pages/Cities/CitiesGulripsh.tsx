@@ -29,7 +29,8 @@ const CitiesGulripsh: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const url = getApiUrl(`/api/cities/page/city_page/${encodeURIComponent('Гулрыпш')}/`, locale);
+        const cityName = t('cities.gulripsh');
+        const url = getApiUrl(`/api/cities/page/city_page/${encodeURIComponent(cityName)}/`, locale);
         const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) {
           if (res.status === 404) {

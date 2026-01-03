@@ -29,7 +29,8 @@ const CitiesOchamchira: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const url = getApiUrl(`/api/cities/page/city_page/${encodeURIComponent('Очамчыра')}/`, locale);
+        const cityName = t('cities.ochamchira');
+        const url = getApiUrl(`/api/cities/page/city_page/${encodeURIComponent(cityName)}/`, locale);
         const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) {
           if (res.status === 404) {

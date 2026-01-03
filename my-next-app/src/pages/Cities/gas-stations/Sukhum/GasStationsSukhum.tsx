@@ -41,7 +41,8 @@ const GasStationsSukhum: React.FC = () => {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const url = getApiUrl(`/api/gas-stations/page/city_page/${encodeURIComponent('Сухум')}/`, locale);
+        const cityName = t('cities.sukhum');
+        const url = getApiUrl(`/api/gas-stations/page/city_page/${encodeURIComponent(cityName)}/`, locale);
         const res = await fetch(url, { cache: 'no-store' });
         
         if (!res.ok) {
