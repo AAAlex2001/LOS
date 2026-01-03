@@ -23,8 +23,8 @@ interface TransportCommunicationsPageData {
 
 const API_BASE = config.API_BASE;
 
-export default function TransportCommunicationsScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function TransportCommunicationsScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const { t } = useTranslation();
   const [data, setData] = useState<TransportCommunicationsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 

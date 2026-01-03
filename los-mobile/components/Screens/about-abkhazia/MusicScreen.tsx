@@ -26,8 +26,8 @@ interface MusicPageData {
   tracks: Track[];
 }
 
-export default function MusicScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean; onClose: () => void }) {
+export default function MusicScreen({ visible, onClose }: { visible: boolean; onClose: () => void }) {
+  const { t } = useTranslation();
   const [pageData, setPageData] = useState<MusicPageData | null>(null);
   const [loading, setLoading] = useState(true);
   // Expo Audio player (managed lifecycle)

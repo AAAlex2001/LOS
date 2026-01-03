@@ -41,8 +41,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function RestaurantsTkuarchalScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function RestaurantsTkuarchalScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const { t } = useTranslation();
   const [pageData, setPageData] = useState<RestaurantsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 

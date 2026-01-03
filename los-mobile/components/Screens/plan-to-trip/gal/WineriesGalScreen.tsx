@@ -39,8 +39,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function WineriesGalScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function WineriesGalScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const { t } = useTranslation();
   const [pageData, setPageData] = useState<WineriesPageData | null>(null);
   const [loading, setLoading] = useState(true);
 

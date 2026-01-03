@@ -18,8 +18,8 @@ type ExcursionCard = {
 
 const API_BASE = config.API_BASE;
 
-export default function ExcursionsScreen({
-  const { t } = useTranslation(); visible, onClose }: Props) {
+export default function ExcursionsScreen({ visible, onClose }: Props) {
+  const { t } = useTranslation();
   const [services, setServices] = useState<ExcursionCard[]>([]);
   const [loading, setLoading] = useState(true);
 

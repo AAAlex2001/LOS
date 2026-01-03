@@ -39,8 +39,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function ParkingLotsOchamchiraScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function ParkingLotsOchamchiraScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const { t } = useTranslation();
   const [pageData, setPageData] = useState<ParkingLotsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 

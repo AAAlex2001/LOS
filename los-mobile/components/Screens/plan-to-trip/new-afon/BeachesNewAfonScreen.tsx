@@ -40,8 +40,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function BeachesNewAfonScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function BeachesNewAfonScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const { t } = useTranslation();
   const [pageData, setPageData] = useState<BeachesPageData | null>(null);
   const [loading, setLoading] = useState(true);
 

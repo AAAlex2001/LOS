@@ -39,8 +39,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function GasStationsGalScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function GasStationsGalScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const { t } = useTranslation();
   const [pageData, setPageData] = useState<GasStationsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 

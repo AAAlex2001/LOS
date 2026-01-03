@@ -6,7 +6,9 @@
       "Bash(npm install:*)",
       "Bash(python scripts/localize.py:*)",
       "Bash(python3:*)",
-      "Bash(where:*)"
+      "Bash(where:*)",
+      "Bash(npm update:*)",
+      "Bash(npx expo start --clear)"
     ]
   }
 }

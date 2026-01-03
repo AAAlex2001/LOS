@@ -25,8 +25,8 @@ const API_BASE = config.API_BASE;
 // Hardcoded background image
 const backgroundImage = require('../../../assets/images/IMG_1932.jpg');
 
-export default function AbkhazianCustomsScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function AbkhazianCustomsScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const { t } = useTranslation();
   const [data, setData] = useState<CustomsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 

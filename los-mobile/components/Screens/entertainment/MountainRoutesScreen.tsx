@@ -28,8 +28,8 @@ type MountainRoutesPageData = {
 
 const API_BASE = config.API_BASE;
 
-export default function MountainRoutesScreen({
-  const { t } = useTranslation(); visible, onClose }: Props) {
+export default function MountainRoutesScreen({ visible, onClose }: Props) {
+  const { t } = useTranslation();
   const [data, setData] = useState<MountainRoutesPageData | null>(null);
   const [loading, setLoading] = useState(true);
 

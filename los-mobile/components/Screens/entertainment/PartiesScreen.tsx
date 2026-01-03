@@ -117,8 +117,8 @@ const parseBoldText = (text: string) => {
   });
 };
 
-export default function PartiesScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function PartiesScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const { t } = useTranslation();
   const { width } = useWindowDimensions();
   const bannerHeight = React.useMemo(() => Math.round(Math.min(360, Math.max(260, width * 0.62))), [width]);
   const [data, setData] = useState<PartiesPageData | null>(null);

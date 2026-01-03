@@ -46,8 +46,8 @@ type CitiesPageData = {
 
 const API_BASE = config.API_BASE;
 
-export default function CitiesScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function CitiesScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const { t } = useTranslation();
   const [data, setData] = useState<CitiesPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [expandedCity, setExpandedCity] = useState<number[]>([]);
@@ -99,21 +99,21 @@ export default function CitiesScreen({
     if (!screensRegistry[citySlug]?.[categorySlug]) {
       const nameSlug = slugify(category.name);
       const alias: Record<string, string> = {
-        t('categories.administrative_slug'): 'administrative-buildings',
-        t('categories.churches_slug'): 'churches',
-        t('categories.beauty_salons_slug'): 'beauty-salons',
-        t('categories.pharmacies_slug'): 'pharmacy',
-        t('categories.wineries_slug'): 'wineries',
-        t('categories.gas_stations_slug'): 'gas-stations',
-        t('categories.attractions_slug'): 'cultural-attractions',
-        t('categories.shops_slug'): 'shops-and-markets',
-        t('categories.shops_alt_slug'): 'shops-and-markets',
-        t('categories.car_washes_slug'): 'car-washes',
-        t('categories.hotels_slug'): 'hotels',
-        t('categories.parking_slug'): 'parking-lots',
-        t('categories.beaches_slug'): 'beaches',
-        t('categories.clothing_repair_slug'): 'clothing-repair',
-        t('categories.restaurants_slug'): 'restaurants',
+        'административные-здания': 'administrative-buildings',
+        'церкви': 'churches',
+        'салоны-красоты': 'beauty-salons',
+        'аптеки': 'pharmacy',
+        'винодельни': 'wineries',
+        'азс': 'gas-stations',
+        'достопримечательности': 'cultural-attractions',
+        'магазины': 'shops-and-markets',
+        'магазины-и-рынки': 'shops-and-markets',
+        'автомойки': 'car-washes',
+        'гостиницы': 'hotels',
+        'парковки': 'parking-lots',
+        'пляжи': 'beaches',
+        'ремонт-одежды': 'clothing-repair',
+        'рестораны': 'restaurants',
       };
       categorySlug = alias[nameSlug] || nameSlug;
     }

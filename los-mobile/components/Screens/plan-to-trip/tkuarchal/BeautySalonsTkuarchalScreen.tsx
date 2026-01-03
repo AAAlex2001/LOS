@@ -41,8 +41,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function BeautySalonsTkuarchalScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function BeautySalonsTkuarchalScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const { t } = useTranslation();
   const [pageData, setPageData] = useState<BeautySalonsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 

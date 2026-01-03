@@ -39,8 +39,8 @@ type YourDoctorPage = {
 const API_BASE = config.API_BASE;
 const toMedia = (p?: string) => (p ? (p.startsWith('http') ? p : `${API_BASE}/media/${p}`) : undefined);
 
-export default function YourDoctorScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean; onClose: () => void }) {
+export default function YourDoctorScreen({ visible, onClose }: { visible: boolean; onClose: () => void }) {
+  const { t } = useTranslation();
   const [data, setData] = useState<YourDoctorPage | null>(null);
   const [loading, setLoading] = useState(true);
 

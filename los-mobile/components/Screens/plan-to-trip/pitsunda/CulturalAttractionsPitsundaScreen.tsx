@@ -39,8 +39,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function CulturalAttractionsPitsundaScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function CulturalAttractionsPitsundaScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const { t } = useTranslation();
   const [pageData, setPageData] = useState<CulturalAttractionsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 

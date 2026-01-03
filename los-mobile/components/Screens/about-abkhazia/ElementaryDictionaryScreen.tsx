@@ -32,8 +32,8 @@ const getColumns = (list: WordPair[]): WordPair[][] => {
   return [list];
 };
 
-export default function ElementaryDictionaryScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function ElementaryDictionaryScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const { t } = useTranslation();
   const [pageData, setPageData] = useState<ElementaryDictionaryPageData | null>(null);
   const [loading, setLoading] = useState(true);
 

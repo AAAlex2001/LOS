@@ -29,8 +29,8 @@ type CuisinePageData = {
 
 const API_BASE = config.API_BASE;
 
-export default function AbkhazianCuizineScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function AbkhazianCuizineScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const { t } = useTranslation();
   const [data, setData] = useState<CuisinePageData | null>(null);
   const [loading, setLoading] = useState(true);
 

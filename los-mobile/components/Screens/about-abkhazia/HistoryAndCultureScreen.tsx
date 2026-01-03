@@ -24,8 +24,8 @@ type CultureSection = {
 
 const API_BASE = config.API_BASE;
 
-export default function HistoryAndCultureScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function HistoryAndCultureScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const { t } = useTranslation();
   const scrollRef = useRef<ScrollView>(null);
   const historyRef = useRef<View>(null);
   const cultureRef = useRef<View>(null);

@@ -65,8 +65,8 @@ const toImageUrl = (url?: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function ImportantScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean; onClose: () => void }) {
+export default function ImportantScreen({ visible, onClose }: { visible: boolean; onClose: () => void }) {
+  const { t } = useTranslation();
   const [page, setPage] = useState<ImportantPage | null>(null);
   const [loading, setLoading] = useState(true);
 

@@ -40,8 +40,8 @@ const parseBoldText = (text: string) => {
   });
 };
 
-export default function HotSpringsScreen({
-  const { t } = useTranslation(); visible, onClose }: Props) {
+export default function HotSpringsScreen({ visible, onClose }: Props) {
+  const { t } = useTranslation();
   const [data, setData] = useState<SpringsPage | null>(null);
   const [loading, setLoading] = useState(true);
 
