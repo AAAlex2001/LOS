@@ -48,7 +48,8 @@ export default function ExcursionsScreen({ visible, onClose }: Props) {
     load();
   }, [visible]);
 
-  const openLink = (url: string) => Linking.openURL(url).catch(() => {});
+  const stripSitePrefix = (value: string) => value.replace(/^\s*(?:САЙТ|WEBSITE|Сайт|Website)\s*:\s*/i, '').trim();
+  const openLink = (url: string) => Linking.openURL(stripSitePrefix(url)).catch(() => {});
 
   const renderCard = (item: ExcursionCard) => (
     <View key={item.id} style={styles.card}>
@@ -72,7 +73,9 @@ export default function ExcursionsScreen({ visible, onClose }: Props) {
             })}
           </Text>
         )}
-        <Text style={styles.link} onPress={() => openLink(item.site)}>САЙТ: {item.site}</Text>
+        <Text style={styles.link} onPress={() => openLink(item.site)}>
+          {t('common.website')} {stripSitePrefix(item.site)}
+        </Text>
       </View>
     </View>
   );

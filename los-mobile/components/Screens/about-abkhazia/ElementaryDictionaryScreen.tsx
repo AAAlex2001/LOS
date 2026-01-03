@@ -98,7 +98,7 @@ export default function ElementaryDictionaryScreen({ visible, onClose }: { visib
               return (
                 <View key={category.id} style={styles.sectionBlock}>
                   <Text style={styles.sectionTitle}>
-                    {`${category.title} (${words.length} ${words.length === 1 ? t('dictionary.word_one') : words.length < 5 ? t('dictionary.word_few') : t('dictionary.word_many')})`}
+                    {category.title}
                   </Text>
                   {renderTable(words)}
                   </View>

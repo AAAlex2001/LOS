@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, TouchableWithoutFeedback } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Image as ExpoImage } from 'expo-image';
+import ImageViewing from 'react-native-image-viewing';
 import config from '@/config';
 import {useTranslation, addLangParam} from '@/i18n';
 
@@ -24,6 +25,7 @@ export default function GovernmentStructureScreen({ visible, onClose }: { visibl
   const [pageData, setPageData] = useState<GovernmentPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [viewerKey, setViewerKey] = useState(0);
 
   useEffect(() => {
     if (!visible) return;
@@ -44,6 +46,12 @@ export default function GovernmentStructureScreen({ visible, onClose }: { visibl
   }, [visible]);
 
   const blocks = (pageData?.blocks || []).slice().sort((a, b) => a.order - b.order);
+
+  const closeViewer = () => {
+    setSelectedImage(null);
+    setViewerKey((k) => k + 1);
+  };
+
   return (
     <Modal visible={visible} animationType="slide" transparent={false} presentationStyle="fullScreen" statusBarTranslucent>
       <View style={styles.container}>
@@ -68,7 +76,10 @@ export default function GovernmentStructureScreen({ visible, onClose }: { visibl
                 {b.image_url ? (
                   <TouchableOpacity
                     activeOpacity={0.9}
-                    onPress={() => setSelectedImage(`${API_BASE}/media/${b.image_url}`)}
+                    onPress={() => {
+                      setSelectedImage(`${API_BASE}/media/${b.image_url}`);
+                      setViewerKey((k) => k + 1);
+                    }}
                     style={styles.imageContainer}
                   >
                     <ExpoImage
@@ -88,43 +99,28 @@ export default function GovernmentStructureScreen({ visible, onClose }: { visibl
             ))
           )}
         </ScrollView>
-        
-        {/* Full Screen Image Modal */}
-        <Modal
-          visible={selectedImage !== null}
-          transparent={true}
-          animationType="fade"
-          onRequestClose={() => setSelectedImage(null)}
-        >
-          <View style={styles.fullScreenImageContainer}>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => setSelectedImage(null)}
-              activeOpacity={0.7}
-            >
-              <Ionicons name="close" size={32} color="#fff" />
-            </TouchableOpacity>
-            {selectedImage && (
-              <ScrollView
-                style={{ flex: 1, width: '100%', height: '100%' }}
-                contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}
-                maximumZoomScale={3}
-                minimumZoomScale={1}
-                centerContent={true}
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-              >
-                <TouchableWithoutFeedback onPress={() => setSelectedImage(null)}>
-                  <ExpoImage
-                    source={{ uri: selectedImage }}
-                    style={styles.fullScreenImage}
-                    contentFit="contain"
-                  />
-                </TouchableWithoutFeedback>
-              </ScrollView>
+
+        {/* Full Screen Image Viewer (pinch-to-zoom, resets on close) */}
+        {selectedImage ? (
+          <ImageViewing
+            key={`viewer-${viewerKey}-${selectedImage}`}
+            images={[{ uri: selectedImage }]}
+            imageIndex={0}
+            visible={true}
+            onRequestClose={closeViewer}
+            HeaderComponent={() => (
+              <View style={styles.viewerHeader} pointerEvents="box-none">
+                <TouchableOpacity
+                  style={styles.closeButton}
+                  onPress={closeViewer}
+                  activeOpacity={0.7}
+                >
+                  <Ionicons name="close" size={32} color="#fff" />
+                </TouchableOpacity>
+              </View>
             )}
-          </View>
-        </Modal>
+          />
+        ) : null}
       </View>
     </Modal>
   );
@@ -187,6 +183,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.95)',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  viewerHeader: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 120,
   },
   closeButton: {
     position: 'absolute',

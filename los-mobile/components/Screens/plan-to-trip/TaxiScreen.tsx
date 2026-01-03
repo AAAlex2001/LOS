@@ -119,7 +119,7 @@ export default function TaxiScreen({ visible, onClose }: { visible: boolean, onC
                     )}
                     
                     {service.working_hours && (
-                      <Text style={styles.workingHours}>Время работы: {service.working_hours}</Text>
+                      <Text style={styles.workingHours}>{t('common.operating_hours')} {service.working_hours}</Text>
                     )}
                     
                     <Text style={styles.orderLabel}>{t('common.order_taxi')}</Text>

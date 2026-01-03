@@ -53,9 +53,12 @@ export default function MountainRoutesScreen({ visible, onClose }: Props) {
 
   const routes = (data?.routes || []).slice().sort((a, b) => a.order - b.order);
 
+  const stripSitePrefix = (value: string) => value.replace(/^\s*(?:САЙТ|WEBSITE|Сайт|Website)\s*:\s*/i, '').trim();
+
   const openLink = (url?: string) => {
     if (!url) return;
-    const clean = url.startsWith('http') ? url : url.replace(t('footer.website_prefix'), '');
+    const cleaned = stripSitePrefix(url);
+    const clean = cleaned.startsWith('http') ? cleaned : cleaned.replace(t('footer.website_prefix'), '');
     Linking.openURL(clean).catch(() => {});
   };
 
@@ -94,7 +97,9 @@ export default function MountainRoutesScreen({ visible, onClose }: Props) {
             </Text>
           )}
           {route.site_url && (
-            <Text onPress={() => openLink(route.site_url)} style={styles.link}>САЙТ: {route.site_url}</Text>
+            <Text onPress={() => openLink(route.site_url)} style={styles.link}>
+              {t('common.website')} {stripSitePrefix(route.site_url)}
+            </Text>
           )}
         </View>
       </View>

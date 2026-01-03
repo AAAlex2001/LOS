@@ -39,6 +39,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
+const normalizeAddress = (value: string) => value.replace(/^\s*(?:Адрес|Address)\s*:\s*/i, '').trim();
+
 export default function CulturalAttractionsNewAfonScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
   const { t } = useTranslation();
   const [pageData, setPageData] = useState<CulturalAttractionsPageData | null>(null);
@@ -123,17 +125,17 @@ export default function CulturalAttractionsNewAfonScreen({ visible, onClose }: {
                     <View style={styles.infoBlock}>
                       {attraction.address_link ? (
                         <TouchableOpacity onPress={() => openLink(attraction.address_link)}>
-                          <Text style={[styles.infoValue, styles.underline]}>Адрес: {attraction.address}</Text>
+                          <Text style={[styles.infoValue, styles.underline]}>{t('common.address')} {normalizeAddress(attraction.address)}</Text>
                         </TouchableOpacity>
                       ) : (
-                        <Text style={styles.infoValue}>Адрес: {attraction.address}</Text>
+                        <Text style={styles.infoValue}>{t('common.address')} {normalizeAddress(attraction.address)}</Text>
                       )}
                     </View>
                   )}
                   
                   {attraction.working_hours && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoValue}>Режим работы: {attraction.working_hours}</Text>
+                      <Text style={styles.infoValue}>{t('common.hours')} {attraction.working_hours}</Text>
                     </View>
                   )}
                 </View>

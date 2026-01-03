@@ -138,7 +138,7 @@ export default function MobileCommunicationScreen({ visible, onClose }: { visibl
                         
                         {provider.website_url && (
                           <TouchableOpacity onPress={() => openLink(provider.website_url)}>
-                            <Text style={styles.websiteLink}>САЙТ: {provider.website_url}</Text>
+                            <Text style={styles.websiteLink}>{t('common.website')} {provider.website_url}</Text>
                           </TouchableOpacity>
                         )}
                       </View>
@@ -186,7 +186,7 @@ export default function MobileCommunicationScreen({ visible, onClose }: { visibl
                         
                         {provider.website_url && (
                           <TouchableOpacity onPress={() => openLink(provider.website_url)}>
-                            <Text style={styles.websiteLink}>САЙТ: {provider.website_url}</Text>
+                            <Text style={styles.websiteLink}>{t('common.website')} {provider.website_url}</Text>
                           </TouchableOpacity>
                         )}
                       </View>

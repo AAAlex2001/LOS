@@ -104,7 +104,7 @@ export default function HistoryAndCultureScreen({ visible, onClose }: { visible:
             <>
           {/* История */}
               <View ref={historyRef}>
-            <Text style={styles.contentTitle}>История Абхазии</Text>
+            <Text style={styles.contentTitle}>{t('about.history_title')}</Text>
           </View>
               {historySections.length === 0 ? (
                 <View style={styles.noDataContainer}>
@@ -130,7 +130,7 @@ export default function HistoryAndCultureScreen({ visible, onClose }: { visible:
 
           {/* Культура */}
               <View ref={cultureRef}>
-            <Text style={[styles.contentTitle, styles.spacedTitle]}>Культура Абхазии</Text>
+            <Text style={[styles.contentTitle, styles.spacedTitle]}>{t('about.culture_title')}</Text>
           </View>
               {cultureSections.length === 0 ? (
                 <View style={styles.noDataContainer}>

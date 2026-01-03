@@ -63,14 +63,14 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
 
   const sections = useMemo(() => {
     const arr: { key: string; label: string; has: boolean }[] = [
-      { key: 'hospitals', label: 'Больницы', has: (data?.hospitals?.length || 0) > 0 },
+      { key: 'hospitals', label: t('important.hospitals'), has: (data?.hospitals?.length || 0) > 0 },
       { key: 'private_clinics', label: t('important.clinics'), has: (data?.private_clinics?.length || 0) > 0 },
-      { key: 'dentistries', label: 'Стоматологии', has: (data?.dentistries?.length || 0) > 0 },
-      { key: 'vet_clinics', label: 'Ветклиники', has: (data?.vet_clinics?.length || 0) > 0 },
-      { key: 'doctors', label: 'Врачи', has: (data?.doctors_groups?.length || 0) > 0 },
+      { key: 'dentistries', label: t('important.dentists'), has: (data?.dentistries?.length || 0) > 0 },
+      { key: 'vet_clinics', label: t('important.vets'), has: (data?.vet_clinics?.length || 0) > 0 },
+      { key: 'doctors', label: t('important.doctors'), has: (data?.doctors_groups?.length || 0) > 0 },
     ];
     return arr.filter(s => s.has);
-  }, [data]);
+  }, [data, t]);
 
   const scrollRef = useRef<ScrollView | null>(null);
   const anchors = useMemo(() => {
@@ -226,7 +226,7 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
                   onLayout={e => { positionsRef.current['private_clinics'] = e.nativeEvent.layout.y; }}
                   style={{ width: '100%' }}
                 >
-                  <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>ЧАСТНЫЕ КЛИНИКИ</Text></View>
+                  <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>{t('important.clinics')}</Text></View>
                   {(data?.private_clinics || []).slice().sort((a,b)=>a.order-b.order).map(renderCard)}
                 </View>
               )}

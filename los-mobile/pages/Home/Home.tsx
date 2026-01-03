@@ -20,8 +20,8 @@ import EntertainmentScreen from '../../components/Screens/EntertainmentScreen';
 import PlanTripScreen from '../../components/Screens/PlanTripScreen';
 import ImportantTripScreen from '../../components/Screens/ImportantTripScreen';
 import SidebarScreen from '../../components/Screens/SidebarScreen';
-import { MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo } from '@expo/vector-icons';
 import {useTranslation, addLangParam, getCurrentLanguage} from '@/i18n';
+import { MaterialCommunityIcons, MaterialIcons, Entypo } from '@expo/vector-icons';
 import config from '@/config';
 const API_BASE = config.API_BASE;
 
@@ -151,12 +151,19 @@ const HomePage = () => {
   const [sliderWidth, setSliderWidth] = useState<number>(0);
   const effectiveWidth = sliderWidth || windowWidth;
 
-  const getIconForTab = (label: string) => {
-    if (label === t('about.title') || label === t('tabs.abkhazia')) return <MaterialCommunityIcons name="map" size={40} color="#fff" />;
-    if (label === t('entertainment.title') || label.includes('Развлечения') || label.includes('заняться')) return <MaterialCommunityIcons name="party-popper" size={40} color="#fff" />;
-    if (label.includes('Запланируйте') || label.includes('поездку')) return <MaterialIcons name="event-available" size={40} color="#fff" />;
-    if (label.includes('Необходимо') || label.includes('поездке')) return <Entypo name="suitcase" size={40} color="#fff" />;
-    return <FontAwesome5 name="city" size={40} color="#fff" />;
+  const getIconForGroup = (group: HomeData['mobile_tabs'][number]['group']) => {
+    switch (group) {
+      case 'about':
+        return <MaterialCommunityIcons name="map" size={40} color="#fff" />;
+      case 'activities':
+        return <MaterialCommunityIcons name="party-popper" size={40} color="#fff" />;
+      case 'booking':
+        return <MaterialIcons name="event-available" size={40} color="#fff" />;
+      case 'essentials':
+        return <Entypo name="suitcase" size={40} color="#fff" />;
+      default:
+        return <MaterialCommunityIcons name="map" size={40} color="#fff" />;
+    }
   };
 
   const currentLang = getCurrentLanguage();
@@ -190,12 +197,24 @@ const HomePage = () => {
     ?.sort((a, b) => a.order - b.order)
     .map(tab => ({
       title: tab.label,
-      icon: getIconForTab(tab.label),
+      icon: getIconForGroup(tab.group),
       action: () => {
-        if (tab.label.includes('Абхазия') || tab.label === 'Об Абхазии') setAboutVisible(true);
-        if (tab.label.includes('Развлечения') || tab.label.includes('заняться')) setEntertainmentVisible(true);
-        if (tab.label.includes('поездку') || tab.label.includes('Запланируйте')) setPlanTripVisible(true);
-        if (tab.label.includes('Необходимо') || tab.label.includes('поездке')) setImportantTripVisible(true);
+        switch (tab.group) {
+          case 'about':
+            setAboutVisible(true);
+            break;
+          case 'activities':
+            setEntertainmentVisible(true);
+            break;
+          case 'booking':
+            setPlanTripVisible(true);
+            break;
+          case 'essentials':
+            setImportantTripVisible(true);
+            break;
+          default:
+            break;
+        }
       }
     })) || [];
 
