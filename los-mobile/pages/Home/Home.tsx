@@ -47,14 +47,6 @@ interface HomeData {
 
 const toMedia = (url: string) => `${API_BASE}/media/${url}`;
 
-const getIconForTab = (label: string) => {
-  if (label === t('about.title') || label === t('tabs.abkhazia')) return <MaterialCommunityIcons name="map" size={40} color="#fff" />;
-  if (label === t('entertainment.title') || label.includes('Развлечения') || label.includes('заняться')) return <MaterialCommunityIcons name="party-popper" size={40} color="#fff" />;
-  if (label.includes('Запланируйте') || label.includes('поездку')) return <MaterialIcons name="event-available" size={40} color="#fff" />;
-  if (label.includes('Необходимо') || label.includes('поездке')) return <Entypo name="suitcase" size={40} color="#fff" />;
-  return <FontAwesome5 name="city" size={40} color="#fff" />;
-};
-
 const SliderVideo = ({ src, overlayOpen }: { src: string; overlayOpen?: boolean }) => {
   const player = useVideoPlayer(encodeURI(String(src)), (p) => {
     p.loop = true;
@@ -158,6 +150,14 @@ const HomePage = () => {
   const { width: windowWidth } = useWindowDimensions();
   const [sliderWidth, setSliderWidth] = useState<number>(0);
   const effectiveWidth = sliderWidth || windowWidth;
+
+  const getIconForTab = (label: string) => {
+    if (label === t('about.title') || label === t('tabs.abkhazia')) return <MaterialCommunityIcons name="map" size={40} color="#fff" />;
+    if (label === t('entertainment.title') || label.includes('Развлечения') || label.includes('заняться')) return <MaterialCommunityIcons name="party-popper" size={40} color="#fff" />;
+    if (label.includes('Запланируйте') || label.includes('поездку')) return <MaterialIcons name="event-available" size={40} color="#fff" />;
+    if (label.includes('Необходимо') || label.includes('поездке')) return <Entypo name="suitcase" size={40} color="#fff" />;
+    return <FontAwesome5 name="city" size={40} color="#fff" />;
+  };
 
   useEffect(() => {
     const load = async () => {
