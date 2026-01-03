@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
+import { useTranslation } from '@/i18n';
 
 interface Pharmacy {
   id: number;
@@ -39,7 +40,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function PharmacyOchamchiraScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function PharmacyOchamchiraScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<PharmacyPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -48,7 +50,7 @@ export default function PharmacyOchamchiraScreen({ visible, onClose }: { visible
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/pharmacy/page/city_page/${encodeURIComponent('Очамчыра')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/pharmacy/page/city_page/${encodeURIComponent(t('cities.ochamchira'))}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load pharmacies');
         const json = await res.json() as PharmacyPageData;
         setPageData(json);
@@ -80,7 +82,7 @@ export default function PharmacyOchamchiraScreen({ visible, onClose }: { visible
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : 'АПТЕКИ'}</Text>
+            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : t('categories.pharmacies')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -88,7 +90,7 @@ export default function PharmacyOchamchiraScreen({ visible, onClose }: { visible
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             pharmacies.map((pharmacy) => (
@@ -110,7 +112,7 @@ export default function PharmacyOchamchiraScreen({ visible, onClose }: { visible
                   
                   {pharmacy.address && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Адрес:</Text>
+                      <Text style={styles.infoLabel}>{t('common.address')}</Text>
                       {pharmacy.address_link ? (
                         <TouchableOpacity onPress={() => openLink(pharmacy.address_link)}>
                           <Text style={[styles.infoValue, styles.underline]}>{pharmacy.address}</Text>
@@ -123,14 +125,14 @@ export default function PharmacyOchamchiraScreen({ visible, onClose }: { visible
                   
                   {pharmacy.working_hours && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Режим работы:</Text>
+                      <Text style={styles.infoLabel}>{t('common.hours')}</Text>
                       <Text style={styles.infoValue}>{pharmacy.working_hours}</Text>
                     </View>
                   )}
                   
                   {pharmacy.contacts && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Контакты:</Text>
+                      <Text style={styles.infoLabel}>{t('common.contacts')}</Text>
                       <Text style={styles.infoValue}>
                         {parseContactString(pharmacy.contacts).map((segment, index) => {
                           if (segment.type === 'phone' || segment.type === 'email') {

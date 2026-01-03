@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from './phoneUtils';
+import { useTranslation } from '@/i18n';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -32,7 +33,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function BanksScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function BanksScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<BanksPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -72,7 +74,7 @@ export default function BanksScreen({ visible, onClose }: { visible: boolean, on
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>БАНКИ</Text>
+            <Text style={styles.headerTitle}>{t('plan_trip.banks')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -80,7 +82,7 @@ export default function BanksScreen({ visible, onClose }: { visible: boolean, on
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             pageData?.banks && pageData.banks.map((bank) => (
@@ -102,13 +104,13 @@ export default function BanksScreen({ visible, onClose }: { visible: boolean, on
                   
                   {bank.working_hours && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Режим работы:</Text>
+                      <Text style={styles.infoLabel}>{t('common.hours')}</Text>
                       <Text style={styles.infoValue}>{bank.working_hours}</Text>
                     </View>
                   )}
                   
                   <View style={styles.infoBlock}>
-                    <Text style={styles.infoLabel}>Контакты:</Text>
+                    <Text style={styles.infoLabel}>{t('common.contacts')}</Text>
                     <Text style={styles.infoValue}>
                       {parseContactString(bank.contacts).map((segment, index) => {
                         if (segment.type === 'phone' || segment.type === 'email') {
@@ -128,14 +130,14 @@ export default function BanksScreen({ visible, onClose }: { visible: boolean, on
                   </View>
                   
                   <View style={styles.infoBlock}>
-                    <Text style={styles.infoLabel}>Почта:</Text>
+                    <Text style={styles.infoLabel}>{t('common.email')}</Text>
                     <TouchableOpacity onPress={() => openLink(`mailto:${bank.email}`)}>
                       <Text style={[styles.infoValue, styles.link]}>{bank.email}</Text>
                     </TouchableOpacity>
                   </View>
                   
                   <View style={styles.infoBlock}>
-                    <Text style={styles.infoLabel}>Адрес:</Text>
+                    <Text style={styles.infoLabel}>{t('common.address')}</Text>
                     {bank.address_link ? (
                       <TouchableOpacity onPress={() => openLink(bank.address_link)}>
                         <Text style={[styles.infoValue, styles.underline]}>{bank.address}</Text>
@@ -147,7 +149,7 @@ export default function BanksScreen({ visible, onClose }: { visible: boolean, on
                   
                   {bank.name_link && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Сайт:</Text>
+                      <Text style={styles.infoLabel}>{t('common.website')}</Text>
                       <TouchableOpacity onPress={() => openLink(bank.name_link)}>
                         <Text style={[styles.infoValue, styles.link]}>{bank.name_link}</Text>
                       </TouchableOpacity>

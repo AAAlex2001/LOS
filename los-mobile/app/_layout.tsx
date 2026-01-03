@@ -5,6 +5,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SystemUI from 'expo-system-ui';
 import 'react-native-reanimated';
+import '@/i18n';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 

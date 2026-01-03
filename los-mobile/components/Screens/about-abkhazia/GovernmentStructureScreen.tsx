@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions
 import { Ionicons } from '@expo/vector-icons';
 import { Image as ExpoImage } from 'expo-image';
 import config from '@/config';
+import { useTranslation } from '@/i18n';
 
 type GovernmentBlock = {
   id: number;
@@ -18,7 +19,8 @@ type GovernmentPageData = {
 
 const API_BASE = config.API_BASE;
 
-export default function GovernmentStructureScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function GovernmentStructureScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<GovernmentPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -51,14 +53,14 @@ export default function GovernmentStructureScreen({ visible, onClose }: { visibl
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>ГОСУДАРСТВЕННОЕ УСТРОЙСТВО</Text>
+            <Text style={styles.headerTitle}>{t('about.government')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             blocks.map((b) => (

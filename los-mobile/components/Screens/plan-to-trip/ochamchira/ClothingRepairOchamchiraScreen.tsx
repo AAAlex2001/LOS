@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
+import { useTranslation } from '@/i18n';
 
 interface Repair {
   id: number;
@@ -41,7 +42,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function ClothingRepairOchamchiraScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function ClothingRepairOchamchiraScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<ClothingRepairPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -50,7 +52,7 @@ export default function ClothingRepairOchamchiraScreen({ visible, onClose }: { v
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/clothing-repair/page/city_page/${encodeURIComponent('Очамчыра')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/clothing-repair/page/city_page/${encodeURIComponent(t('cities.ochamchira'))}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load clothing repair');
         const json = await res.json() as ClothingRepairPageData;
         setPageData(json);
@@ -82,7 +84,7 @@ export default function ClothingRepairOchamchiraScreen({ visible, onClose }: { v
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : 'РЕМОНТ ОДЕЖДЫ'}</Text>
+            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : t('categories.clothing_repair')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -90,7 +92,7 @@ export default function ClothingRepairOchamchiraScreen({ visible, onClose }: { v
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             repairs.map((repair) => (
@@ -112,7 +114,7 @@ export default function ClothingRepairOchamchiraScreen({ visible, onClose }: { v
                   
                   {repair.address && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Адрес:</Text>
+                      <Text style={styles.infoLabel}>{t('common.address')}</Text>
                       {repair.address_link ? (
                         <TouchableOpacity onPress={() => openLink(repair.address_link)}>
                           <Text style={[styles.infoValue, styles.underline]}>{repair.address}</Text>
@@ -125,14 +127,14 @@ export default function ClothingRepairOchamchiraScreen({ visible, onClose }: { v
                   
                   {repair.working_hours && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Режим работы:</Text>
+                      <Text style={styles.infoLabel}>{t('common.hours')}</Text>
                       <Text style={styles.infoValue}>{repair.working_hours}</Text>
                     </View>
                   )}
                   
                   {repair.contacts && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Контакты:</Text>
+                      <Text style={styles.infoLabel}>{t('common.contacts')}</Text>
                       <Text style={styles.infoValue}>
                         {parseContactString(repair.contacts).map((segment, index) => {
                           if (segment.type === 'phone' || segment.type === 'email') {
@@ -154,14 +156,14 @@ export default function ClothingRepairOchamchiraScreen({ visible, onClose }: { v
                   
                   {repair.description && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Описание:</Text>
+                      <Text style={styles.infoLabel}>{t('common.description')}</Text>
                       <Text style={styles.infoValue}>{repair.description}</Text>
                     </View>
                   )}
                   
                   {repair.services && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Услуги:</Text>
+                      <Text style={styles.infoLabel}>{t('common.services')}</Text>
                       <Text style={styles.infoValue}>{repair.services}</Text>
                     </View>
                   )}

@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
+import { useTranslation } from '@/i18n';
 
 interface ParkingLot {
   id: number;
@@ -38,7 +39,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function ParkingLotsNewAfonScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function ParkingLotsNewAfonScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<ParkingLotsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -47,7 +49,7 @@ export default function ParkingLotsNewAfonScreen({ visible, onClose }: { visible
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/parking-lots/page/city_page/${encodeURIComponent('Новый Афон')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/parking-lots/page/city_page/${encodeURIComponent(t('cities.new_afon'))}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load parking lots');
         const json = await res.json() as ParkingLotsPageData;
         setPageData(json);
@@ -79,7 +81,7 @@ export default function ParkingLotsNewAfonScreen({ visible, onClose }: { visible
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : 'ПАРКОВКИ'}</Text>
+            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : t('categories.parking')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -87,7 +89,7 @@ export default function ParkingLotsNewAfonScreen({ visible, onClose }: { visible
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             parkingLots.map((parking) => (
@@ -103,7 +105,7 @@ export default function ParkingLotsNewAfonScreen({ visible, onClose }: { visible
                   
                   {parking.address && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Адрес:</Text>
+                      <Text style={styles.infoLabel}>{t('common.address')}</Text>
                       {parking.address_link ? (
                         <TouchableOpacity onPress={() => openLink(parking.address_link)}>
                           <Text style={[styles.infoValue, styles.underline]}>{parking.address}</Text>
@@ -116,14 +118,14 @@ export default function ParkingLotsNewAfonScreen({ visible, onClose }: { visible
                   
                   {parking.working_hours && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Режим работы:</Text>
+                      <Text style={styles.infoLabel}>{t('common.hours')}</Text>
                       <Text style={styles.infoValue}>{parking.working_hours}</Text>
                     </View>
                   )}
                   
                   {parking.contacts && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Контакты:</Text>
+                      <Text style={styles.infoLabel}>{t('common.contacts')}</Text>
                       <Text style={styles.infoValue}>
                         {parseContactString(parking.contacts).map((segment, index) => {
                           if (segment.type === 'phone' || segment.type === 'email') {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, Linking, Dimensions } from 'react-native';
 import { Ionicons, FontAwesome, MaterialCommunityIcons, AntDesign, Feather } from '@expo/vector-icons';
 import config from '@/config';
+import { useTranslation } from '@/i18n';
 
 type SocialLink = {
   id: number;
@@ -60,7 +61,8 @@ const getLabelForNetwork = (network: string) => {
   }
 };
 
-export default function ContactsScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function ContactsScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [footerData, setFooterData] = useState<Footer | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -87,14 +89,14 @@ export default function ContactsScreen({ visible, onClose }: { visible: boolean,
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
       <View style={styles.container}>
-        <Text style={styles.title}>НАШИ КОНТАКТЫ</Text>
+        <Text style={styles.title}>{t('footer.contacts')}</Text>
         <TouchableOpacity onPress={onClose} style={styles.backBtn}>
           <Ionicons name="arrow-back" size={28} color="#1129BD" />
         </TouchableOpacity>
         <View style={styles.line} />
         {loading ? (
           <View style={styles.loadingContainer}>
-            <Text style={styles.loadingText}>Загрузка...</Text>
+            <Text style={styles.loadingText}>{t('common.loading')}</Text>
           </View>
         ) : (
           <View style={styles.list}>

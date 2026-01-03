@@ -21,6 +21,7 @@ import PlanTripScreen from '../../components/Screens/PlanTripScreen';
 import ImportantTripScreen from '../../components/Screens/ImportantTripScreen';
 import SidebarScreen from '../../components/Screens/SidebarScreen';
 import { MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo } from '@expo/vector-icons';
+import { useTranslation } from '@/i18n';
 import config from '@/config';
 const API_BASE = config.API_BASE;
 
@@ -47,8 +48,8 @@ interface HomeData {
 const toMedia = (url: string) => `${API_BASE}/media/${url}`;
 
 const getIconForTab = (label: string) => {
-  if (label === 'Об Абхазии' || label === 'Абхазия') return <MaterialCommunityIcons name="map" size={40} color="#fff" />;
-  if (label === 'Развлечения' || label.includes('Развлечения') || label.includes('заняться')) return <MaterialCommunityIcons name="party-popper" size={40} color="#fff" />;
+  if (label === t('about.title') || label === t('tabs.abkhazia')) return <MaterialCommunityIcons name="map" size={40} color="#fff" />;
+  if (label === t('entertainment.title') || label.includes('Развлечения') || label.includes('заняться')) return <MaterialCommunityIcons name="party-popper" size={40} color="#fff" />;
   if (label.includes('Запланируйте') || label.includes('поездку')) return <MaterialIcons name="event-available" size={40} color="#fff" />;
   if (label.includes('Необходимо') || label.includes('поездке')) return <Entypo name="suitcase" size={40} color="#fff" />;
   return <FontAwesome5 name="city" size={40} color="#fff" />;
@@ -144,6 +145,7 @@ const mascotImages = [
 ];
 
 const HomePage = () => {
+  const { t } = useTranslation();
   const [data, setData] = useState<HomeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -218,7 +220,7 @@ const HomePage = () => {
     return (
       <SafeAreaView style={styles.safeArea} edges={['bottom']}>
         <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>Загрузка...</Text>
+          <Text style={styles.loadingText}>{t('common.loading')}</Text>
         </View>
       </SafeAreaView>
     );

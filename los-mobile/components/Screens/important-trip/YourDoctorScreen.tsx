@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../plan-to-trip/phoneUtils';
+import { useTranslation } from '@/i18n';
 
 type CardItem = {
   id: number;
@@ -38,7 +39,8 @@ type YourDoctorPage = {
 const API_BASE = config.API_BASE;
 const toMedia = (p?: string) => (p ? (p.startsWith('http') ? p : `${API_BASE}/media/${p}`) : undefined);
 
-export default function YourDoctorScreen({ visible, onClose }: { visible: boolean; onClose: () => void }) {
+export default function YourDoctorScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean; onClose: () => void }) {
   const [data, setData] = useState<YourDoctorPage | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -62,7 +64,7 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
   const sections = useMemo(() => {
     const arr: { key: string; label: string; has: boolean }[] = [
       { key: 'hospitals', label: 'Больницы', has: (data?.hospitals?.length || 0) > 0 },
-      { key: 'private_clinics', label: 'Частные клиники', has: (data?.private_clinics?.length || 0) > 0 },
+      { key: 'private_clinics', label: t('important.clinics'), has: (data?.private_clinics?.length || 0) > 0 },
       { key: 'dentistries', label: 'Стоматологии', has: (data?.dentistries?.length || 0) > 0 },
       { key: 'vet_clinics', label: 'Ветклиники', has: (data?.vet_clinics?.length || 0) > 0 },
       { key: 'doctors', label: 'Врачи', has: (data?.doctors_groups?.length || 0) > 0 },
@@ -108,13 +110,13 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
         )}
         {!!item.working_hours && (
           <View style={styles.infoBlock}>
-            <Text style={styles.infoLabel}>Режим работы:</Text>
+            <Text style={styles.infoLabel}>{t('common.hours')}</Text>
             <Text style={styles.infoValue}>{item.working_hours}</Text>
           </View>
         )}
         {!!item.address && (
           <View style={styles.infoBlock}>
-            <Text style={styles.infoLabel}>Адрес:</Text>
+            <Text style={styles.infoLabel}>{t('common.address')}</Text>
             {item.address_link ? (
               <TouchableOpacity onPress={() => openLink(item.address_link)}>
                 <Text style={[styles.infoValue, styles.underline]}>{item.address}</Text>
@@ -126,7 +128,7 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
         )}
         {!!item.contacts && (
           <View style={styles.infoBlock}>
-            <Text style={styles.infoLabel}>Контакты:</Text>
+            <Text style={styles.infoLabel}>{t('common.contacts')}</Text>
             <Text style={styles.infoValue}>
               {parseContactString(item.contacts).map((segment, index) => {
                 if (segment.type === 'phone' || segment.type === 'email') {
@@ -165,7 +167,7 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
                 <Image source={{ uri: headerIcon }} style={styles.headerLogo} contentFit="cover" />
               </View>
             )}
-            <Text style={styles.headerTitle}>{(data?.main_title || 'ВАШ ДОКТОР').toUpperCase()}</Text>
+            <Text style={styles.headerTitle}>{(data?.main_title || t('important.your_doctor')).toUpperCase()}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -178,7 +180,7 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
         >
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             <>
@@ -212,7 +214,7 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
                   onLayout={e => { positionsRef.current['hospitals'] = e.nativeEvent.layout.y; }}
                   style={{ width: '100%' }}
                 >
-                  <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>БОЛЬНИЦЫ</Text></View>
+                  <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>{t('important.hospitals')}</Text></View>
                   {(data?.hospitals || []).slice().sort((a,b)=>a.order-b.order).map(renderCard)}
                 </View>
               )}
@@ -236,7 +238,7 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
                   onLayout={e => { positionsRef.current['dentistries'] = e.nativeEvent.layout.y; }}
                   style={{ width: '100%' }}
                 >
-                  <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>СТОМАТОЛОГИИ</Text></View>
+                  <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>{t('important.dentists')}</Text></View>
                   {(data?.dentistries || []).slice().sort((a,b)=>a.order-b.order).map(renderCard)}
                 </View>
               )}
@@ -248,7 +250,7 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
                   onLayout={e => { positionsRef.current['vet_clinics'] = e.nativeEvent.layout.y; }}
                   style={{ width: '100%' }}
                 >
-                  <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>ВЕТКЛИНИКИ</Text></View>
+                  <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>{t('important.vets')}</Text></View>
                   {(data?.vet_clinics || []).slice().sort((a,b)=>a.order-b.order).map(renderCard)}
                 </View>
               )}
@@ -260,7 +262,7 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
                   onLayout={e => { positionsRef.current['doctors'] = e.nativeEvent.layout.y; }}
                   style={{ width: '100%', marginTop: 20 }}
                 >
-                  <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>ВРАЧИ</Text></View>
+                  <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>{t('important.doctors')}</Text></View>
                   <View style={styles.doctorsWrap}>
                     {(data?.doctors_groups || []).slice().sort((a,b)=>a.order-b.order).map((group, idx) => (
                       <View key={group.id} style={styles.hospitalBlock}>

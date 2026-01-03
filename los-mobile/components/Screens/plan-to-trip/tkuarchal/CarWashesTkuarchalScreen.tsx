@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
+import { useTranslation } from '@/i18n';
 
 interface CarWash {
   id: number;
@@ -40,7 +41,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function CarWashesTkuarchalScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function CarWashesTkuarchalScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<CarWashesPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -49,7 +51,7 @@ export default function CarWashesTkuarchalScreen({ visible, onClose }: { visible
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/car-washes/page/city_page/${encodeURIComponent('Ткуарчал')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/car-washes/page/city_page/${encodeURIComponent(t('cities.tkuarchal'))}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load car washes');
         const json = await res.json() as CarWashesPageData;
         setPageData(json);
@@ -81,7 +83,7 @@ export default function CarWashesTkuarchalScreen({ visible, onClose }: { visible
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : 'МОЙКИ'}</Text>
+            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : t('categories.car_washes')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -89,7 +91,7 @@ export default function CarWashesTkuarchalScreen({ visible, onClose }: { visible
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             carWashes.map((carWash) => (
@@ -111,7 +113,7 @@ export default function CarWashesTkuarchalScreen({ visible, onClose }: { visible
                   
                   {carWash.address && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Адрес:</Text>
+                      <Text style={styles.infoLabel}>{t('common.address')}</Text>
                       {carWash.address_link ? (
                         <TouchableOpacity onPress={() => openLink(carWash.address_link)}>
                           <Text style={[styles.infoValue, styles.underline]}>{carWash.address}</Text>
@@ -124,14 +126,14 @@ export default function CarWashesTkuarchalScreen({ visible, onClose }: { visible
                   
                   {carWash.working_hours && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Режим работы:</Text>
+                      <Text style={styles.infoLabel}>{t('common.hours')}</Text>
                       <Text style={styles.infoValue}>{carWash.working_hours}</Text>
                     </View>
                   )}
                   
                   {carWash.contacts && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Контакты:</Text>
+                      <Text style={styles.infoLabel}>{t('common.contacts')}</Text>
                       <Text style={styles.infoValue}>
                         {parseContactString(carWash.contacts).map((segment, index) => {
                           if (segment.type === 'phone' || segment.type === 'email') {
@@ -153,7 +155,7 @@ export default function CarWashesTkuarchalScreen({ visible, onClose }: { visible
                   
                   {carWash.services && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Услуги:</Text>
+                      <Text style={styles.infoLabel}>{t('common.services')}</Text>
                       <Text style={styles.infoValue}>{carWash.services}</Text>
                     </View>
                   )}

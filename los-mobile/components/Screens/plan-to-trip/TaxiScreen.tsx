@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from './phoneUtils';
+import { useTranslation } from '@/i18n';
 
 interface TaxiService {
   id: number;
@@ -29,7 +30,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function TaxiScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function TaxiScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<TaxiPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -77,7 +79,7 @@ export default function TaxiScreen({ visible, onClose }: { visible: boolean, onC
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             <>
@@ -120,7 +122,7 @@ export default function TaxiScreen({ visible, onClose }: { visible: boolean, onC
                       <Text style={styles.workingHours}>Время работы: {service.working_hours}</Text>
                     )}
                     
-                    <Text style={styles.orderLabel}>Заказать такси:</Text>
+                    <Text style={styles.orderLabel}>{t('common.order_taxi')}</Text>
                     
                     {service.phones && service.phones.map((phone, idx) => (
                       <Text key={idx} style={styles.phone}>

@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../plan-to-trip/phoneUtils';
+import { useTranslation } from '@/i18n';
 
 interface Gym {
   id: number;
@@ -29,7 +30,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function SportsGymsScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function SportsGymsScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<SportsGymsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -70,7 +72,7 @@ export default function SportsGymsScreen({ visible, onClose }: { visible: boolea
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>СПОРТИВНЫЕ ЗАЛЫ</Text>
+            <Text style={styles.headerTitle}>{t('entertainment.sports')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -78,7 +80,7 @@ export default function SportsGymsScreen({ visible, onClose }: { visible: boolea
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             gyms.map((gym) => (
@@ -106,14 +108,14 @@ export default function SportsGymsScreen({ visible, onClose }: { visible: boolea
                   
                   {gym.working_hours && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Режим работы:</Text>
+                      <Text style={styles.infoLabel}>{t('common.hours')}</Text>
                       <Text style={styles.infoValue}>{gym.working_hours}</Text>
                     </View>
                   )}
                   
                   {gym.address && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Адрес:</Text>
+                      <Text style={styles.infoLabel}>{t('common.address')}</Text>
                       {gym.address_link ? (
                         <TouchableOpacity onPress={() => openLink(gym.address_link)}>
                           <Text style={[styles.infoValue, styles.underline]}>{gym.address}</Text>
@@ -126,7 +128,7 @@ export default function SportsGymsScreen({ visible, onClose }: { visible: boolea
                   
                   {gym.contacts && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Контакты:</Text>
+                      <Text style={styles.infoLabel}>{t('common.contacts')}</Text>
                       <Text style={styles.infoValue}>
                         {parseContactString(gym.contacts).map((segment, index) => {
                           if (segment.type === 'phone' || segment.type === 'email') {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Image, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
+import { useTranslation } from '@/i18n';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -22,7 +23,8 @@ interface TransportCommunicationsPageData {
 
 const API_BASE = config.API_BASE;
 
-export default function TransportCommunicationsScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function TransportCommunicationsScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [data, setData] = useState<TransportCommunicationsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -56,14 +58,14 @@ export default function TransportCommunicationsScreen({ visible, onClose }: { vi
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>ТРАНСПОРТНОЕ СООБЩЕНИЕ</Text>
+            <Text style={styles.headerTitle}>{t('about.transport')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             <>

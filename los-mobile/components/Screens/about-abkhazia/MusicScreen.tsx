@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
 import { Image } from 'expo-image';
 import config from '@/config';
+import { useTranslation } from '@/i18n';
 
 const { width } = Dimensions.get('window');
 
@@ -25,7 +26,8 @@ interface MusicPageData {
   tracks: Track[];
 }
 
-export default function MusicScreen({ visible, onClose }: { visible: boolean; onClose: () => void }) {
+export default function MusicScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean; onClose: () => void }) {
   const [pageData, setPageData] = useState<MusicPageData | null>(null);
   const [loading, setLoading] = useState(true);
   // Expo Audio player (managed lifecycle)
@@ -191,7 +193,7 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>МУЗЫКА</Text>
+            <Text style={styles.headerTitle}>{t('about.music')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -200,11 +202,11 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
           {loading ? (
             <View style={styles.loadingContainer}>
               <ActivityIndicator size="large" color="#1129BD" />
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : tracks.length === 0 ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Музыка пока не добавлена</Text>
+              <Text style={styles.loadingText}>{t('about.no_music')}</Text>
             </View>
           ) : (
             <>

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(echo \"\" grep -rn \">.*[а-яА-ЯёЁ].*</Text\" los-mobile/pages/ los-mobile/components/Screens/ --include=\"*.tsx\")",
+      "Bash(npm install:*)",
+      "Bash(python scripts/localize.py:*)",
+      "Bash(python3:*)",
+      "Bash(where:*)"
+    ]
+  }
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dimensions, ImageBackground, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
+import { useTranslation } from '@/i18n';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -39,7 +40,8 @@ const parseBoldText = (text: string) => {
   });
 };
 
-export default function HotSpringsScreen({ visible, onClose }: Props) {
+export default function HotSpringsScreen({
+  const { t } = useTranslation(); visible, onClose }: Props) {
   const [data, setData] = useState<SpringsPage | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -79,7 +81,7 @@ export default function HotSpringsScreen({ visible, onClose }: Props) {
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>ГОРЯЧИЕ ИСТОЧНИКИ</Text>
+            <Text style={styles.headerTitle}>{t('entertainment.hot_springs')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -87,7 +89,7 @@ export default function HotSpringsScreen({ visible, onClose }: Props) {
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             <>

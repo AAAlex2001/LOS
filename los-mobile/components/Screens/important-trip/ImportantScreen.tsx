@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../plan-to-trip/phoneUtils';
+import { useTranslation } from '@/i18n';
 
 type ImportantRule = {
   id: number;
@@ -64,7 +65,8 @@ const toImageUrl = (url?: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function ImportantScreen({ visible, onClose }: { visible: boolean; onClose: () => void }) {
+export default function ImportantScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean; onClose: () => void }) {
   const [page, setPage] = useState<ImportantPage | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -242,7 +244,7 @@ export default function ImportantScreen({ visible, onClose }: { visible: boolean
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>{(page?.title || 'ВАЖНО ЗНАТЬ').toUpperCase()}</Text>
+            <Text style={styles.headerTitle}>{(page?.title || t('important.title')).toUpperCase()}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -255,7 +257,7 @@ export default function ImportantScreen({ visible, onClose }: { visible: boolean
         >
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             <>

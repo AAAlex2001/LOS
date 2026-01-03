@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
+import { useTranslation } from '@/i18n';
 
 interface GasStation {
   id: number;
@@ -38,7 +39,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function GasStationsGalScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function GasStationsGalScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<GasStationsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -47,7 +49,7 @@ export default function GasStationsGalScreen({ visible, onClose }: { visible: bo
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/gas-stations/page/city_page/${encodeURIComponent('Гал')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/gas-stations/page/city_page/${encodeURIComponent(t('cities.gal'))}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load gas stations');
         const json = await res.json() as GasStationsPageData;
         setPageData(json);
@@ -79,7 +81,7 @@ export default function GasStationsGalScreen({ visible, onClose }: { visible: bo
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : 'АЗС'}</Text>
+            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : t('categories.gas_stations')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -87,7 +89,7 @@ export default function GasStationsGalScreen({ visible, onClose }: { visible: bo
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             gasStations.map((station) => (
@@ -109,7 +111,7 @@ export default function GasStationsGalScreen({ visible, onClose }: { visible: bo
                   
                   {station.address && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Адрес:</Text>
+                      <Text style={styles.infoLabel}>{t('common.address')}</Text>
                       {station.address_link ? (
                         <TouchableOpacity onPress={() => openLink(station.address_link)}>
                           <Text style={[styles.infoValue, styles.underline]}>{station.address}</Text>
@@ -122,7 +124,7 @@ export default function GasStationsGalScreen({ visible, onClose }: { visible: bo
                   
                   {station.contacts && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Контакты:</Text>
+                      <Text style={styles.infoLabel}>{t('common.contacts')}</Text>
                       <Text style={styles.infoValue}>
                         {parseContactString(station.contacts).map((segment, index) => {
                           if (segment.type === 'phone' || segment.type === 'email') {

@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
+import { useTranslation } from '@/i18n';
 
 interface Church {
   id: number;
@@ -39,7 +40,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function ChurchesSukhumScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function ChurchesSukhumScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<ChurchesPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -48,7 +50,7 @@ export default function ChurchesSukhumScreen({ visible, onClose }: { visible: bo
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/churches/page/city_page/${encodeURIComponent('Сухум')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/churches/page/city_page/${encodeURIComponent(t('cities.sukhum'))}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load churches');
         const json = await res.json() as ChurchesPageData;
         setPageData(json);
@@ -81,7 +83,7 @@ export default function ChurchesSukhumScreen({ visible, onClose }: { visible: bo
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : 'ЦЕРКВИ И ХРАМЫ'}</Text>
+            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : t('categories.churches')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -89,7 +91,7 @@ export default function ChurchesSukhumScreen({ visible, onClose }: { visible: bo
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             churches.map((church) => (
@@ -119,7 +121,7 @@ export default function ChurchesSukhumScreen({ visible, onClose }: { visible: bo
                   
                   {church.address && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Адрес:</Text>
+                      <Text style={styles.infoLabel}>{t('common.address')}</Text>
                       {church.address_link ? (
                         <TouchableOpacity onPress={() => openLink(church.address_link)}>
                           <Text style={[styles.infoValue, styles.underline]}>{church.address}</Text>
@@ -132,21 +134,21 @@ export default function ChurchesSukhumScreen({ visible, onClose }: { visible: bo
                   
                   {church.working_hours && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Режим работы:</Text>
+                      <Text style={styles.infoLabel}>{t('common.hours')}</Text>
                       <Text style={styles.infoValue}>{church.working_hours}</Text>
                     </View>
                   )}
                   
                   {church.description && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Описание:</Text>
+                      <Text style={styles.infoLabel}>{t('common.description')}</Text>
                       <Text style={styles.infoValue}>{church.description}</Text>
                     </View>
                   )}
                   
                   {church.services && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Богослужения:</Text>
+                      <Text style={styles.infoLabel}>{t('common.service_hours')}</Text>
                       <Text style={styles.infoValue}>{church.services}</Text>
                     </View>
                   )}

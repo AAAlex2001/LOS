@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
+import { useTranslation } from '@/i18n';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -28,7 +29,8 @@ type CuisinePageData = {
 
 const API_BASE = config.API_BASE;
 
-export default function AbkhazianCuizineScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function AbkhazianCuizineScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [data, setData] = useState<CuisinePageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -62,14 +64,14 @@ export default function AbkhazianCuizineScreen({ visible, onClose }: { visible: 
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>АБХАЗСКАЯ КУХНЯ</Text>
+            <Text style={styles.headerTitle}>{t('about.cuisine')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             <>
@@ -83,7 +85,7 @@ export default function AbkhazianCuizineScreen({ visible, onClose }: { visible: 
                 </View>
               ))}
               <View style={styles.textBlock}>
-                <Text style={styles.sectionTitleBlue}>ОСНОВНЫЕ БЛЮДА И ИХ ОСОБЕННОСТИ</Text>
+                <Text style={styles.sectionTitleBlue}>{t('about.cuisine_details')}</Text>
                 <View style={styles.dishList}>
                   {data?.main_dishes && data.main_dishes.length > 0 ? (
                     data.main_dishes.map((dish) => (
@@ -92,7 +94,7 @@ export default function AbkhazianCuizineScreen({ visible, onClose }: { visible: 
                       </Text>
                     ))
                   ) : (
-                    <Text style={styles.dishItem}>Нет данных о блюдах</Text>
+                    <Text style={styles.dishItem}>{t('about.no_dishes')}</Text>
                   )}
                 </View>
               </View>

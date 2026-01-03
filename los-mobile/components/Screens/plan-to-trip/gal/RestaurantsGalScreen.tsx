@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
+import { useTranslation } from '@/i18n';
 
 interface Restaurant {
   id: number;
@@ -40,7 +41,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function RestaurantsGalScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function RestaurantsGalScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<RestaurantsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -49,7 +51,7 @@ export default function RestaurantsGalScreen({ visible, onClose }: { visible: bo
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/restaurants/page/city_page/${encodeURIComponent('Гал')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/restaurants/page/city_page/${encodeURIComponent(t('cities.gal'))}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load restaurants');
         const json = await res.json() as RestaurantsPageData;
         setPageData(json);
@@ -81,7 +83,7 @@ export default function RestaurantsGalScreen({ visible, onClose }: { visible: bo
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : 'РЕСТОРАНЫ'}</Text>
+            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : t('categories.restaurants')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -89,7 +91,7 @@ export default function RestaurantsGalScreen({ visible, onClose }: { visible: bo
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             restaurants.map((restaurant) => (
@@ -111,7 +113,7 @@ export default function RestaurantsGalScreen({ visible, onClose }: { visible: bo
                   
                   {restaurant.address && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Адрес:</Text>
+                      <Text style={styles.infoLabel}>{t('common.address')}</Text>
                       {restaurant.address_link ? (
                         <TouchableOpacity onPress={() => openLink(restaurant.address_link)}>
                           <Text style={[styles.infoValue, styles.underline]}>{restaurant.address}</Text>
@@ -131,7 +133,7 @@ export default function RestaurantsGalScreen({ visible, onClose }: { visible: bo
                   
                   {restaurant.phone && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Телефон:</Text>
+                      <Text style={styles.infoLabel}>{t('common.phone')}</Text>
                       <Text style={styles.infoValue}>
                         {parseContactString(restaurant.phone).map((segment, index) => {
                           if (segment.type === 'phone' || segment.type === 'email') {
@@ -153,7 +155,7 @@ export default function RestaurantsGalScreen({ visible, onClose }: { visible: bo
                   
                   {restaurant.website && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Сайт:</Text>
+                      <Text style={styles.infoLabel}>{t('common.website')}</Text>
                       <TouchableOpacity onPress={() => openLink(restaurant.website)}>
                         <Text style={[styles.infoValue, styles.underline]}>{restaurant.website}</Text>
                       </TouchableOpacity>

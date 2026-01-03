@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
+import { useTranslation } from '@/i18n';
 
 interface Building {
   id: number;
@@ -39,7 +40,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function AdministrativeBuildingsGagraScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function AdministrativeBuildingsGagraScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<AdministrativeBuildingsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -48,7 +50,7 @@ export default function AdministrativeBuildingsGagraScreen({ visible, onClose }:
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/administrative-buildings/page/city_page/${encodeURIComponent('Гагра')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/administrative-buildings/page/city_page/${encodeURIComponent(t('cities.gagra'))}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load administrative buildings');
         const json = await res.json() as AdministrativeBuildingsPageData;
         setPageData(json);
@@ -81,7 +83,7 @@ export default function AdministrativeBuildingsGagraScreen({ visible, onClose }:
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : 'АДМИНИСТРАТИВНЫЕ ЗДАНИЯ'}</Text>
+            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : t('categories.administrative')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -89,7 +91,7 @@ export default function AdministrativeBuildingsGagraScreen({ visible, onClose }:
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             buildings.map((building) => (
@@ -119,14 +121,14 @@ export default function AdministrativeBuildingsGagraScreen({ visible, onClose }:
                   
                   {building.working_hours && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Режим работы:</Text>
+                      <Text style={styles.infoLabel}>{t('common.hours')}</Text>
                       <Text style={styles.infoValue}>{building.working_hours}</Text>
                     </View>
                   )}
                   
                   {building.address && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Адрес:</Text>
+                      <Text style={styles.infoLabel}>{t('common.address')}</Text>
                       {building.address_link ? (
                         <TouchableOpacity onPress={() => openLink(building.address_link)}>
                           <Text style={[styles.infoValue, styles.underline]}>{building.address}</Text>
@@ -139,7 +141,7 @@ export default function AdministrativeBuildingsGagraScreen({ visible, onClose }:
                   
                   {building.contacts && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Контакты:</Text>
+                      <Text style={styles.infoLabel}>{t('common.contacts')}</Text>
                       <Text style={styles.infoValue}>
                         {parseContactString(building.contacts).map((segment, index) => {
                           if (segment.type === 'phone' || segment.type === 'email') {

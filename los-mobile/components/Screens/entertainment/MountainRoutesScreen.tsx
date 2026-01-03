@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dim
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
 import { parseContactString } from '../plan-to-trip/phoneUtils';
+import { useTranslation } from '@/i18n';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -27,7 +28,8 @@ type MountainRoutesPageData = {
 
 const API_BASE = config.API_BASE;
 
-export default function MountainRoutesScreen({ visible, onClose }: Props) {
+export default function MountainRoutesScreen({
+  const { t } = useTranslation(); visible, onClose }: Props) {
   const [data, setData] = useState<MountainRoutesPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -53,7 +55,7 @@ export default function MountainRoutesScreen({ visible, onClose }: Props) {
 
   const openLink = (url?: string) => {
     if (!url) return;
-    const clean = url.startsWith('http') ? url : url.replace('САЙТ: ', '');
+    const clean = url.startsWith('http') ? url : url.replace(t('footer.website_prefix'), '');
     Linking.openURL(clean).catch(() => {});
   };
 
@@ -107,7 +109,7 @@ export default function MountainRoutesScreen({ visible, onClose }: Props) {
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>ГОРНЫЕ МАРШРУТЫ</Text>
+            <Text style={styles.headerTitle}>{t('entertainment.mountain_routes')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -115,7 +117,7 @@ export default function MountainRoutesScreen({ visible, onClose }: Props) {
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             routes.map(renderCard)

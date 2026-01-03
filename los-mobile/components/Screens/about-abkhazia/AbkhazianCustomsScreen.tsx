@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Image, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
+import { useTranslation } from '@/i18n';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -24,7 +25,8 @@ const API_BASE = config.API_BASE;
 // Hardcoded background image
 const backgroundImage = require('../../../assets/images/IMG_1932.jpg');
 
-export default function AbkhazianCustomsScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function AbkhazianCustomsScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [data, setData] = useState<CustomsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -58,14 +60,14 @@ export default function AbkhazianCustomsScreen({ visible, onClose }: { visible: 
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>АБХАЗСКИЕ ОБЫЧАИ</Text>
+            <Text style={styles.headerTitle}>{t('about.customs')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             <>

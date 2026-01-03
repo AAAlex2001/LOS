@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
+import { useTranslation } from '@/i18n';
 
 interface BeautySalon {
   id: number;
@@ -40,7 +41,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function BeautySalonsOchamchiraScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function BeautySalonsOchamchiraScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<BeautySalonsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -49,7 +51,7 @@ export default function BeautySalonsOchamchiraScreen({ visible, onClose }: { vis
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/beauty-salons/page/city_page/${encodeURIComponent('Очамчыра')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/beauty-salons/page/city_page/${encodeURIComponent(t('cities.ochamchira'))}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load beauty salons');
         const json = await res.json() as BeautySalonsPageData;
         setPageData(json);
@@ -81,7 +83,7 @@ export default function BeautySalonsOchamchiraScreen({ visible, onClose }: { vis
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : 'САЛОНЫ КРАСОТЫ'}</Text>
+            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : t('categories.beauty_salons')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -89,7 +91,7 @@ export default function BeautySalonsOchamchiraScreen({ visible, onClose }: { vis
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             beautySalons.map((salon) => (
@@ -111,7 +113,7 @@ export default function BeautySalonsOchamchiraScreen({ visible, onClose }: { vis
                   
                   {salon.address && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Адрес:</Text>
+                      <Text style={styles.infoLabel}>{t('common.address')}</Text>
                       {salon.address_link ? (
                         <TouchableOpacity onPress={() => openLink(salon.address_link)}>
                           <Text style={[styles.infoValue, styles.underline]}>{salon.address}</Text>
@@ -124,7 +126,7 @@ export default function BeautySalonsOchamchiraScreen({ visible, onClose }: { vis
                   
                   {salon.phone && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Телефон:</Text>
+                      <Text style={styles.infoLabel}>{t('common.phone')}</Text>
                       <Text style={styles.infoValue}>
                         {parseContactString(salon.phone).map((segment, index) => {
                           if (segment.type === 'phone' || segment.type === 'email') {
@@ -146,14 +148,14 @@ export default function BeautySalonsOchamchiraScreen({ visible, onClose }: { vis
                   
                   {salon.working_hours && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Режим работы:</Text>
+                      <Text style={styles.infoLabel}>{t('common.hours')}</Text>
                       <Text style={styles.infoValue}>{salon.working_hours}</Text>
                     </View>
                   )}
                   
                   {salon.services && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Услуги:</Text>
+                      <Text style={styles.infoLabel}>{t('common.services')}</Text>
                       <Text style={styles.infoValue}>{salon.services}</Text>
                     </View>
                   )}

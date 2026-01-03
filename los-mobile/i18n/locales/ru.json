@@ -1,0 +1,153 @@
+{
+  "common": {
+    "loading": "Загрузка...",
+    "more": "Подробнее",
+    "advertisement": "Реклама 0+",
+    "start_exploring": "Начать исследовать",
+    "see_more": "Нажмите, чтобы увидеть больше",
+    "no_data": "Нет данных",
+    "phone": "Телефон:",
+    "address": "Адрес:",
+    "website": "Сайт:",
+    "email": "Почта:",
+    "hours": "Режим работы:",
+    "services": "Услуги:",
+    "price": "Цена:",
+    "description": "Описание:",
+    "contacts": "Контакты:",
+    "service_hours": "Богослужения:",
+    "event_about": "О событии",
+    "event_link": "Ссылка на мероприятие:",
+    "operating_hours": "Время работы:",
+    "order_taxi": "Заказать такси:",
+    "bulletin_board": "Доска объявлений «LOS»"
+  },
+  "navigation": {
+    "home": "Главная",
+    "guide": "Путеводитель",
+    "main_menu": "Главное меню"
+  },
+  "language": {
+    "select": "Выберите язык",
+    "choose_language": "ВЫБЕРИТЕ ЯЗЫК",
+    "russian": "Русский",
+    "abkhazian": "Абхазский",
+    "english": "Английский",
+    "in_russian": "На русском",
+    "in_abkhazian": "На абхазском"
+  },
+  "tabs": {
+    "about_abkhazia": "Об Абхазии",
+    "abkhazia": "Абхазия",
+    "entertainment": "Развлечения",
+    "plan_trip": "Запланируйте поездку",
+    "important": "Необходимо знать в поездке"
+  },
+  "about": {
+    "title": "Об Абхазии",
+    "cuisine": "АБХАЗСКАЯ КУХНЯ",
+    "cuisine_details": "ОСНОВНЫЕ БЛЮДА И ИХ ОСОБЕННОСТИ",
+    "customs": "АБХАЗСКИЕ ОБЫЧАИ",
+    "dictionary": "ЭЛЕМЕНТАРНЫЙ СЛОВАРЬ",
+    "government": "ГОСУДАРСТВЕННОЕ УСТРОЙСТВО",
+    "history": "ИСТОРИЯ И КУЛЬТУРА АБХАЗИИ",
+    "history_title": "История Абхазии",
+    "culture_title": "Культура Абхазии",
+    "music": "МУЗЫКА",
+    "transport": "ТРАНСПОРТНОЕ СООБЩЕНИЕ",
+    "no_dishes": "Нет данных о блюдах",
+    "no_history": "Нет данных о секциях истории",
+    "no_culture": "Нет данных о секциях культуры",
+    "no_music": "Музыка пока не добавлена"
+  },
+  "entertainment": {
+    "title": "Развлечения",
+    "excursions": "ЭКСКУРСИИ",
+    "hot_springs": "ГОРЯЧИЕ ИСТОЧНИКИ",
+    "mountain_routes": "ГОРНЫЕ МАРШРУТЫ",
+    "parties": "ВЕЧЕРИНКИ И ЯРКИЕ ВПЕЧАТЛЕНИЯ",
+    "sports": "СПОРТИВНЫЕ ЗАЛЫ",
+    "no_events": "Нет событий в этом городе"
+  },
+  "plan_trip": {
+    "title": "Запланируйте поездку",
+    "banks": "БАНКИ",
+    "cities": "ГОРОДА АБХАЗИИ",
+    "mobile": "Мобильная связь",
+    "internet": "Интернет",
+    "taxi": "Такси"
+  },
+  "important": {
+    "title": "ВАЖНО ЗНАТЬ",
+    "your_doctor": "ВАШ ДОКТОР",
+    "hospitals": "БОЛЬНИЦЫ",
+    "clinics": "Частные клиники",
+    "vets": "ВЕТКЛИНИКИ",
+    "doctors": "ВРАЧИ",
+    "dentists": "СТОМАТОЛОГИИ"
+  },
+  "cities": {
+    "gagra": "Гагра",
+    "gal": "Гал",
+    "gudauta": "Гудаута",
+    "gulripsh": "Гулрыпш",
+    "new_afon": "Новый Афон",
+    "ochamchira": "Очамчыра",
+    "pitsunda": "Пицунда",
+    "sukhum": "Сухум",
+    "tkuarchal": "Ткуарчал"
+  },
+  "cities_slug": {
+    "gagra": "гагра",
+    "gal": "гал",
+    "gudauta": "гудаута",
+    "gulripsh": "гулрыпшский-район",
+    "new_afon": "новый-афон",
+    "ochamchira": "очамчыра",
+    "pitsunda": "пицунда",
+    "sukhum": "сухум",
+    "tkuarchal": "ткуарчал"
+  },
+  "categories": {
+    "administrative": "АДМИНИСТРАТИВНЫЕ ЗДАНИЯ",
+    "administrative_slug": "административные-здания",
+    "pharmacies": "АПТЕКИ",
+    "pharmacies_slug": "аптеки",
+    "gas_stations": "АЗС",
+    "gas_stations_slug": "азс",
+    "car_washes": "МОЙКИ",
+    "car_washes_slug": "автомойки",
+    "wineries": "ВИНОДЕЛЬНИ",
+    "wineries_slug": "винодельни",
+    "attractions": "КУЛЬТУРНЫЕ ДОСТОПРИМЕЧАТЕЛЬНОСТИ",
+    "attractions_slug": "достопримечательности",
+    "shops": "МАГАЗИНЫ И РЫНКИ",
+    "shops_slug": "магазины-и-рынки",
+    "shops_alt_slug": "рынки-и-магазины",
+    "hotels": "ОТЕЛИ",
+    "hotels_slug": "отели",
+    "parking": "ПАРКОВКИ",
+    "parking_slug": "парковки",
+    "beaches": "ПЛЯЖИ",
+    "beaches_slug": "пляжи",
+    "clothing_repair": "РЕМОНТ ОДЕЖДЫ",
+    "clothing_repair_slug": "ремонт-одежды",
+    "restaurants": "РЕСТОРАНЫ",
+    "restaurants_slug": "рестораны",
+    "beauty_salons": "САЛОНЫ КРАСОТЫ",
+    "beauty_salons_slug": "салоны-красоты",
+    "churches": "ЦЕРКВИ И ХРАМЫ",
+    "churches_slug": "церкви"
+  },
+  "footer": {
+    "contacts": "НАШИ КОНТАКТЫ",
+    "contact_us": "Свяжитесь с нами",
+    "privacy_policy": "Политика обработки данных",
+    "website_prefix": "САЙТ: "
+  },
+  "dictionary": {
+    "word_one": "слово",
+    "word_few": "слова",
+    "word_many": "слов"
+  }
+}

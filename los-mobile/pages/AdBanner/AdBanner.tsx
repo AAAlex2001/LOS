@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import config from '@/config';
+import { useTranslation } from '@/i18n';
 
 interface AdBannerProps {
   visible: boolean;
@@ -32,6 +33,7 @@ interface AdBannerData {
 const API_BASE = config.API_BASE;
 
 const toImageUrl = (url?: string) => {
+  const { t } = useTranslation();
   if (!url) return '';
   if (url.startsWith('http://') || url.startsWith('https://')) return url;
   return `${API_BASE}/media/${url}`;
@@ -132,9 +134,9 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose }) => {
           />
         </View>
 
-        {/* Метка "Реклама 0+" */}
+        {/* Метка t('common.advertisement') */}
         <View style={[styles.adLabel, { top: insets.top + 12, left: 30 }]}>
-          <Text style={styles.adLabelText}>Реклама 0+</Text>
+          <Text style={styles.adLabelText}>{t('common.advertisement')}</Text>
         </View>
 
         {/* Крестик закрытия */}
@@ -151,10 +153,10 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose }) => {
           <Text style={styles.titleText}>{adData.title}</Text>
           <Text style={styles.descriptionText}>{adData.description}</Text>
 
-          {/* Кнопка "Подробнее" */}
+          {/* Кнопка t('common.more') */}
           <TouchableOpacity style={styles.moreButton} onPress={handleOpenLink}>
             <Ionicons name="open-outline" size={20} color="#000000" />
-            <Text style={styles.moreButtonText}>Подробнее</Text>
+            <Text style={styles.moreButtonText}>{t('common.more')}</Text>
           </TouchableOpacity>
         </View>
       </View>

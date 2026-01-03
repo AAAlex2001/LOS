@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
+import { useTranslation } from '@/i18n';
 
 interface Hotel {
   id: number;
@@ -38,7 +39,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function HotelsOchamchiraScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function HotelsOchamchiraScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<HotelsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -47,7 +49,7 @@ export default function HotelsOchamchiraScreen({ visible, onClose }: { visible: 
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/hotels/page/city_page/${encodeURIComponent('Очамчыра')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/hotels/page/city_page/${encodeURIComponent(t('cities.ochamchira'))}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load hotels');
         const json = await res.json() as HotelsPageData;
         setPageData(json);
@@ -79,7 +81,7 @@ export default function HotelsOchamchiraScreen({ visible, onClose }: { visible: 
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : 'ОТЕЛИ'}</Text>
+            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : t('categories.hotels')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -87,7 +89,7 @@ export default function HotelsOchamchiraScreen({ visible, onClose }: { visible: 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             hotels.map((hotel) => (
@@ -103,7 +105,7 @@ export default function HotelsOchamchiraScreen({ visible, onClose }: { visible: 
                   
                   {hotel.address && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Адрес:</Text>
+                      <Text style={styles.infoLabel}>{t('common.address')}</Text>
                       {hotel.address_link ? (
                         <TouchableOpacity onPress={() => openLink(hotel.address_link)}>
                           <Text style={[styles.infoValue, styles.underline]}>{hotel.address}</Text>
@@ -116,7 +118,7 @@ export default function HotelsOchamchiraScreen({ visible, onClose }: { visible: 
                   
                   {hotel.contacts && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Контакты:</Text>
+                      <Text style={styles.infoLabel}>{t('common.contacts')}</Text>
                       <Text style={styles.infoValue}>
                         {parseContactString(hotel.contacts).map((segment, index) => {
                           if (segment.type === 'phone' || segment.type === 'email') {
@@ -138,7 +140,7 @@ export default function HotelsOchamchiraScreen({ visible, onClose }: { visible: 
                   
                   {hotel.price && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Цена:</Text>
+                      <Text style={styles.infoLabel}>{t('common.price')}</Text>
                       <Text style={styles.infoValue}>{hotel.price}</Text>
                     </View>
                   )}

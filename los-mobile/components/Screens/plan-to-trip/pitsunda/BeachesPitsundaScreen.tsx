@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
+import { useTranslation } from '@/i18n';
 
 interface Beach {
   id: number;
@@ -39,7 +40,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function BeachesPitsundaScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function BeachesPitsundaScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<BeachesPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -48,7 +50,7 @@ export default function BeachesPitsundaScreen({ visible, onClose }: { visible: b
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/beaches/page/city_page/${encodeURIComponent('Пицунда')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/beaches/page/city_page/${encodeURIComponent(t('cities.pitsunda'))}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load beaches');
         const json = await res.json() as BeachesPageData;
         setPageData(json);
@@ -80,7 +82,7 @@ export default function BeachesPitsundaScreen({ visible, onClose }: { visible: b
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : 'ПЛЯЖИ'}</Text>
+            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : t('categories.beaches')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -88,7 +90,7 @@ export default function BeachesPitsundaScreen({ visible, onClose }: { visible: b
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             beaches.map((beach) => (
@@ -110,7 +112,7 @@ export default function BeachesPitsundaScreen({ visible, onClose }: { visible: b
                   
                   {beach.address && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Адрес:</Text>
+                      <Text style={styles.infoLabel}>{t('common.address')}</Text>
                       {beach.address_link ? (
                         <TouchableOpacity onPress={() => openLink(beach.address_link)}>
                           <Text style={[styles.infoValue, styles.underline]}>{beach.address}</Text>
@@ -123,7 +125,7 @@ export default function BeachesPitsundaScreen({ visible, onClose }: { visible: b
                   
                   {beach.phone && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Телефон:</Text>
+                      <Text style={styles.infoLabel}>{t('common.phone')}</Text>
                       <Text style={styles.infoValue}>
                         {parseContactString(beach.phone).map((segment, index) => {
                           if (segment.type === 'phone' || segment.type === 'email') {
@@ -145,7 +147,7 @@ export default function BeachesPitsundaScreen({ visible, onClose }: { visible: b
                   
                   {beach.description && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Описание:</Text>
+                      <Text style={styles.infoLabel}>{t('common.description')}</Text>
                       <Text style={styles.infoValue}>{beach.description}</Text>
                     </View>
                   )}

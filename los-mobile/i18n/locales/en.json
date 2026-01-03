@@ -1,0 +1,153 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "more": "Learn more",
+    "advertisement": "Advertisement 0+",
+    "start_exploring": "Start exploring",
+    "see_more": "Click to see more",
+    "no_data": "No data",
+    "phone": "Phone:",
+    "address": "Address:",
+    "website": "Website:",
+    "email": "Email:",
+    "hours": "Working hours:",
+    "services": "Services:",
+    "price": "Price:",
+    "description": "Description:",
+    "contacts": "Contacts:",
+    "service_hours": "Service hours:",
+    "event_about": "About the event",
+    "event_link": "Event link:",
+    "operating_hours": "Operating hours:",
+    "order_taxi": "Order a taxi:",
+    "bulletin_board": "LOS Bulletin Board"
+  },
+  "navigation": {
+    "home": "Home",
+    "guide": "Guide",
+    "main_menu": "Main Menu"
+  },
+  "language": {
+    "select": "Select language",
+    "choose_language": "CHOOSE LANGUAGE",
+    "russian": "Russian",
+    "abkhazian": "Abkhazian",
+    "english": "English",
+    "in_russian": "In Russian",
+    "in_abkhazian": "In Abkhazian"
+  },
+  "tabs": {
+    "about_abkhazia": "About Abkhazia",
+    "abkhazia": "Abkhazia",
+    "entertainment": "Entertainment",
+    "plan_trip": "Plan your trip",
+    "important": "Important for your trip"
+  },
+  "about": {
+    "title": "About Abkhazia",
+    "cuisine": "ABKHAZIAN CUISINE",
+    "cuisine_details": "MAIN DISHES AND THEIR FEATURES",
+    "customs": "ABKHAZIAN CUSTOMS",
+    "dictionary": "ELEMENTARY DICTIONARY",
+    "government": "GOVERNMENT STRUCTURE",
+    "history": "HISTORY AND CULTURE OF ABKHAZIA",
+    "history_title": "History of Abkhazia",
+    "culture_title": "Culture of Abkhazia",
+    "music": "MUSIC",
+    "transport": "TRANSPORTATION",
+    "no_dishes": "No dishes data",
+    "no_history": "No history sections data",
+    "no_culture": "No culture sections data",
+    "no_music": "Music not yet added"
+  },
+  "entertainment": {
+    "title": "Entertainment",
+    "excursions": "EXCURSIONS",
+    "hot_springs": "HOT SPRINGS",
+    "mountain_routes": "MOUNTAIN ROUTES",
+    "parties": "PARTIES AND BRIGHT IMPRESSIONS",
+    "sports": "SPORTS GYMS",
+    "no_events": "No events in this city"
+  },
+  "plan_trip": {
+    "title": "Plan your trip",
+    "banks": "BANKS",
+    "cities": "CITIES OF ABKHAZIA",
+    "mobile": "Mobile communication",
+    "internet": "Internet",
+    "taxi": "Taxi"
+  },
+  "important": {
+    "title": "IMPORTANT TO KNOW",
+    "your_doctor": "YOUR DOCTOR",
+    "hospitals": "HOSPITALS",
+    "clinics": "Private clinics",
+    "vets": "VETERINARY CLINICS",
+    "doctors": "DOCTORS",
+    "dentists": "DENTAL CLINICS"
+  },
+  "cities": {
+    "gagra": "Gagra",
+    "gal": "Gal",
+    "gudauta": "Gudauta",
+    "gulripsh": "Gulripsh",
+    "new_afon": "New Athos",
+    "ochamchira": "Ochamchira",
+    "pitsunda": "Pitsunda",
+    "sukhum": "Sukhum",
+    "tkuarchal": "Tkuarchal"
+  },
+  "cities_slug": {
+    "gagra": "gagra",
+    "gal": "gal",
+    "gudauta": "gudauta",
+    "gulripsh": "gulripsh-district",
+    "new_afon": "new-athos",
+    "ochamchira": "ochamchira",
+    "pitsunda": "pitsunda",
+    "sukhum": "sukhum",
+    "tkuarchal": "tkuarchal"
+  },
+  "categories": {
+    "administrative": "ADMINISTRATIVE BUILDINGS",
+    "administrative_slug": "administrative-buildings",
+    "pharmacies": "PHARMACIES",
+    "pharmacies_slug": "pharmacies",
+    "gas_stations": "GAS STATIONS",
+    "gas_stations_slug": "gas-stations",
+    "car_washes": "CAR WASHES",
+    "car_washes_slug": "car-washes",
+    "wineries": "WINERIES",
+    "wineries_slug": "wineries",
+    "attractions": "CULTURAL ATTRACTIONS",
+    "attractions_slug": "attractions",
+    "shops": "SHOPS AND MARKETS",
+    "shops_slug": "shops-and-markets",
+    "shops_alt_slug": "markets-and-shops",
+    "hotels": "HOTELS",
+    "hotels_slug": "hotels",
+    "parking": "PARKING LOTS",
+    "parking_slug": "parking",
+    "beaches": "BEACHES",
+    "beaches_slug": "beaches",
+    "clothing_repair": "CLOTHING REPAIR",
+    "clothing_repair_slug": "clothing-repair",
+    "restaurants": "RESTAURANTS",
+    "restaurants_slug": "restaurants",
+    "beauty_salons": "BEAUTY SALONS",
+    "beauty_salons_slug": "beauty-salons",
+    "churches": "CHURCHES AND TEMPLES",
+    "churches_slug": "churches"
+  },
+  "footer": {
+    "contacts": "OUR CONTACTS",
+    "contact_us": "Contact us",
+    "privacy_policy": "Privacy Policy",
+    "website_prefix": "WEBSITE: "
+  },
+  "dictionary": {
+    "word_one": "word",
+    "word_few": "words",
+    "word_many": "words"
+  }
+}

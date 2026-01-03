@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dim
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
 import { parseContactString } from '../plan-to-trip/phoneUtils';
+import { useTranslation } from '@/i18n';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -17,7 +18,8 @@ type ExcursionCard = {
 
 const API_BASE = config.API_BASE;
 
-export default function ExcursionsScreen({ visible, onClose }: Props) {
+export default function ExcursionsScreen({
+  const { t } = useTranslation(); visible, onClose }: Props) {
   const [services, setServices] = useState<ExcursionCard[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -83,7 +85,7 @@ export default function ExcursionsScreen({ visible, onClose }: Props) {
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>ЭКСКУРСИИ</Text>
+            <Text style={styles.headerTitle}>{t('entertainment.excursions')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -91,7 +93,7 @@ export default function ExcursionsScreen({ visible, onClose }: Props) {
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             services.map(renderCard)

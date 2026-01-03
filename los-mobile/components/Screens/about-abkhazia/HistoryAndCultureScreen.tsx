@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
+import { useTranslation } from '@/i18n';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -23,7 +24,8 @@ type CultureSection = {
 
 const API_BASE = config.API_BASE;
 
-export default function HistoryAndCultureScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function HistoryAndCultureScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const scrollRef = useRef<ScrollView>(null);
   const historyRef = useRef<View>(null);
   const cultureRef = useRef<View>(null);
@@ -80,23 +82,23 @@ export default function HistoryAndCultureScreen({ visible, onClose }: { visible:
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>ИСТОРИЯ И КУЛЬТУРА АБХАЗИИ</Text>
+            <Text style={styles.headerTitle}>{t('about.history')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
         {/* Tabs */}
         <View style={styles.tabsContainer}>
           <TouchableOpacity style={styles.tabItem} onPress={() => scrollToSection('history')}>
-            <Text style={styles.tabText}>История Абхазии</Text>
+            <Text style={styles.tabText}>{t('about.history_title')}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.tabItem} onPress={() => scrollToSection('culture')}>
-            <Text style={styles.tabText}>Культура Абхазии</Text>
+            <Text style={styles.tabText}>{t('about.culture_title')}</Text>
           </TouchableOpacity>
         </View>
         <ScrollView ref={scrollRef} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             <>
@@ -106,7 +108,7 @@ export default function HistoryAndCultureScreen({ visible, onClose }: { visible:
           </View>
               {historySections.length === 0 ? (
                 <View style={styles.noDataContainer}>
-                  <Text style={styles.noDataText}>Нет данных о секциях истории</Text>
+                  <Text style={styles.noDataText}>{t('about.no_history')}</Text>
             </View>
               ) : (
                 historySections.map((section) => (
@@ -132,7 +134,7 @@ export default function HistoryAndCultureScreen({ visible, onClose }: { visible:
           </View>
               {cultureSections.length === 0 ? (
                 <View style={styles.noDataContainer}>
-                  <Text style={styles.noDataText}>Нет данных о секциях культуры</Text>
+                  <Text style={styles.noDataText}>{t('about.no_culture')}</Text>
                 </View>
               ) : (
                 cultureSections.map((section) => (

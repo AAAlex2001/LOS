@@ -134,12 +134,13 @@ import ParkingLotsOchamchiraScreen from './ochamchira/ParkingLotsOchamchiraScree
 import BeachesOchamchiraScreen from './ochamchira/BeachesOchamchiraScreen';
 import ClothingRepairOchamchiraScreen from './ochamchira/ClothingRepairOchamchiraScreen';
 import RestaurantsOchamchiraScreen from './ochamchira/RestaurantsOchamchiraScreen';
+import { useTranslation } from '@/i18n';
 
 type ScreenComp = React.ComponentType<{ visible: boolean; onClose: () => void }>;
 
 export const screensRegistry: Record<string, Record<string, ScreenComp>> = {
   // citySlug -> categorySlug -> Component
-  'сухум': {
+  t('cities_slug.sukhum'): {
     'administrative-buildings': AdministrativeBuildingsSukhumScreen,
     'churches': ChurchesSukhumScreen,
     'beauty-salons': BeautySalonsSukhumScreen,
@@ -155,7 +156,7 @@ export const screensRegistry: Record<string, Record<string, ScreenComp>> = {
     'clothing-repair': ClothingRepairSukhumScreen,
     'restaurants': RestaurantsSukhumScreen,
   },
-  'гагра': {
+  t('cities_slug.gagra'): {
     'administrative-buildings': AdministrativeBuildingsGagraScreen,
     'churches': ChurchesGagraScreen,
     'beauty-salons': BeautySalonsGagraScreen,
@@ -171,7 +172,7 @@ export const screensRegistry: Record<string, Record<string, ScreenComp>> = {
     'clothing-repair': ClothingRepairGagraScreen,
     'restaurants': RestaurantsGagraScreen,
   },
-  'гал': {
+  t('cities_slug.gal'): {
     'administrative-buildings': AdministrativeBuildingsGalScreen,
     'churches': ChurchesGalScreen,
     'beauty-salons': BeautySalonsGalScreen,
@@ -187,7 +188,7 @@ export const screensRegistry: Record<string, Record<string, ScreenComp>> = {
     'clothing-repair': ClothingRepairGalScreen,
     'restaurants': RestaurantsGalScreen,
   },
-  'гудаута': {
+  t('cities_slug.gudauta'): {
     'administrative-buildings': AdministrativeBuildingsGudautaScreen,
     'churches': ChurchesGudautaScreen,
     'beauty-salons': BeautySalonsGudautaScreen,
@@ -203,7 +204,7 @@ export const screensRegistry: Record<string, Record<string, ScreenComp>> = {
     'clothing-repair': ClothingRepairGudautaScreen,
     'restaurants': RestaurantsGudautaScreen,
   },
-  'гулрыпшский-район': {
+  t('cities_slug.gulripsh'): {
     'administrative-buildings': AdministrativeBuildingsGulripshScreen,
     'churches': ChurchesGulripshScreen,
     'beauty-salons': BeautySalonsGulripshScreen,
@@ -219,7 +220,7 @@ export const screensRegistry: Record<string, Record<string, ScreenComp>> = {
     'clothing-repair': ClothingRepairGulripshScreen,
     'restaurants': RestaurantsGulripshScreen,
   },
-  'новый-афон': {
+  t('cities_slug.new_afon'): {
     'administrative-buildings': AdministrativeBuildingsNewAfonScreen,
     'churches': ChurchesNewAfonScreen,
     'beauty-salons': BeautySalonsNewAfonScreen,
@@ -235,7 +236,7 @@ export const screensRegistry: Record<string, Record<string, ScreenComp>> = {
     'clothing-repair': ClothingRepairNewAfonScreen,
     'restaurants': RestaurantsNewAfonScreen,
   },
-  'пицунда': {
+  t('cities_slug.pitsunda'): {
     'administrative-buildings': AdministrativeBuildingsPitsundaScreen,
     'churches': ChurchesPitsundaScreen,
     'beauty-salons': BeautySalonsPitsundaScreen,
@@ -251,7 +252,7 @@ export const screensRegistry: Record<string, Record<string, ScreenComp>> = {
     'clothing-repair': ClothingRepairPitsundaScreen,
     'restaurants': RestaurantsPitsundaScreen,
   },
-  'ткуарчал': {
+  t('cities_slug.tkuarchal'): {
     'administrative-buildings': AdministrativeBuildingsTkuarchalScreen,
     'churches': ChurchesTkuarchalScreen,
     'beauty-salons': BeautySalonsTkuarchalScreen,
@@ -267,7 +268,7 @@ export const screensRegistry: Record<string, Record<string, ScreenComp>> = {
     'clothing-repair': ClothingRepairTkuarchalScreen,
     'restaurants': RestaurantsTkuarchalScreen,
   },
-  'очамчыра': {
+  t('cities_slug.ochamchira'): {
     'administrative-buildings': AdministrativeBuildingsOchamchiraScreen,
     'churches': ChurchesOchamchiraScreen,
     'beauty-salons': BeautySalonsOchamchiraScreen,

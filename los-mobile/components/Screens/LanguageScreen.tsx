@@ -1,31 +1,40 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation, changeLanguage } from '@/i18n';
 
 const languages = [
-  { label: 'Русский' },
-  { label: 'Абхазский' },
-  { label: 'Английский' },
+  { label: 'language.russian', code: 'ru' },
+  { label: 'language.abkhazian', code: 'ab' },
+  { label: 'language.english', code: 'en' },
 ];
 
 const { width: screenWidth } = Dimensions.get('window');
 
 export default function LanguageScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const { t } = useTranslation();
+
+  const handleLanguageChange = async (code: string) => {
+    await changeLanguage(code);
+    onClose();
+  };
+
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
       <View style={styles.container}>
-        {/* Заголовок и кнопка назад */}
-        <Text style={styles.title}>ВЫБЕРИТЕ ЯЗЫК</Text>
+        <Text style={styles.title}>{t('language.choose_language')}</Text>
         <TouchableOpacity onPress={onClose} style={styles.backBtn}>
           <Ionicons name="arrow-back" size={28} color="#1129BD" />
         </TouchableOpacity>
-        {/* Линия */}
         <View style={styles.line} />
-        {/* Языки */}
         <View style={styles.langList}>
           {languages.map((item, idx) => (
-            <TouchableOpacity key={idx} style={styles.langBtn}>
-              <Text style={styles.langLabel}>{item.label}</Text>
+            <TouchableOpacity
+              key={idx}
+              style={styles.langBtn}
+              onPress={() => handleLanguageChange(item.code)}
+            >
+              <Text style={styles.langLabel}>{t(item.label)}</Text>
             </TouchableOpacity>
           ))}
         </View>

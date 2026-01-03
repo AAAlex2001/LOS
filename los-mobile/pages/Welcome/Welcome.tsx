@@ -6,6 +6,7 @@ import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { Image } from 'expo-image';
 import config from '../../config';
+import { useTranslation } from '@/i18n';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const API_BASE = config.API_BASE;
@@ -33,6 +34,7 @@ const iconPositions = [
 ];
 
 export default function WelcomeScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [content, setContent] = useState<WelcomeContent | null>(null);
   const [titleY, setTitleY] = useState(0);
@@ -135,7 +137,7 @@ export default function WelcomeScreen() {
           <Text style={styles.heading}>{content?.subtitle}</Text>
           <Text style={styles.description}>{content?.description}</Text>
           <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
-            <Text style={styles.buttonText}>Начать исследовать</Text>
+            <Text style={styles.buttonText}>{t('common.start_exploring')}</Text>
             <Ionicons name="arrow-forward" size={31} color="#FFFFFF" />
           </TouchableOpacity>
 

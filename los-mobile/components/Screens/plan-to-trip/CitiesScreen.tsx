@@ -15,6 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
 import { screensRegistry } from './screensRegistry';
 import { slugify } from './helpers/slug';
+import { useTranslation } from '@/i18n';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -45,7 +46,8 @@ type CitiesPageData = {
 
 const API_BASE = config.API_BASE;
 
-export default function CitiesScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function CitiesScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [data, setData] = useState<CitiesPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [expandedCity, setExpandedCity] = useState<number[]>([]);
@@ -97,21 +99,21 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
     if (!screensRegistry[citySlug]?.[categorySlug]) {
       const nameSlug = slugify(category.name);
       const alias: Record<string, string> = {
-        'административные-здания': 'administrative-buildings',
-        'церкви': 'churches',
-        'салоны-красоты': 'beauty-salons',
-        'аптеки': 'pharmacy',
-        'винодельни': 'wineries',
-        'азс': 'gas-stations',
-        'достопримечательности': 'cultural-attractions',
-        'магазины-и-рынки': 'shops-and-markets',
-        'рынки-и-магазины': 'shops-and-markets',
-        'автомойки': 'car-washes',
-        'отели': 'hotels',
-        'парковки': 'parking-lots',
-        'пляжи': 'beaches',
-        'ремонт-одежды': 'clothing-repair',
-        'рестораны': 'restaurants',
+        t('categories.administrative_slug'): 'administrative-buildings',
+        t('categories.churches_slug'): 'churches',
+        t('categories.beauty_salons_slug'): 'beauty-salons',
+        t('categories.pharmacies_slug'): 'pharmacy',
+        t('categories.wineries_slug'): 'wineries',
+        t('categories.gas_stations_slug'): 'gas-stations',
+        t('categories.attractions_slug'): 'cultural-attractions',
+        t('categories.shops_slug'): 'shops-and-markets',
+        t('categories.shops_alt_slug'): 'shops-and-markets',
+        t('categories.car_washes_slug'): 'car-washes',
+        t('categories.hotels_slug'): 'hotels',
+        t('categories.parking_slug'): 'parking-lots',
+        t('categories.beaches_slug'): 'beaches',
+        t('categories.clothing_repair_slug'): 'clothing-repair',
+        t('categories.restaurants_slug'): 'restaurants',
       };
       categorySlug = alias[nameSlug] || nameSlug;
     }
@@ -144,14 +146,14 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>ГОРОДА АБХАЗИИ</Text>
+            <Text style={styles.headerTitle}>{t('plan_trip.cities')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
 
         {loading ? (
           <View style={styles.centerContent}>
-            <Text style={styles.loadingText}>Загрузка...</Text>
+            <Text style={styles.loadingText}>{t('common.loading')}</Text>
           </View>
         ) : (
           <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -172,7 +174,7 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
                       {!expandedCity.includes(city.id) && <View style={styles.darkOverlay} />}
                       {!expandedCity.includes(city.id) && (
                         <View style={styles.bottomTextContainer}>
-                          <Text style={styles.bottomText}>Нажмите, чтобы увидеть больше</Text>
+                          <Text style={styles.bottomText}>{t('common.see_more')}</Text>
                         </View>
                       )}
                     </ImageBackground>

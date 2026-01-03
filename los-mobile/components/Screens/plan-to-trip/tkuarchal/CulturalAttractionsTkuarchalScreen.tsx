@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
+import { useTranslation } from '@/i18n';
 
 interface CulturalAttraction {
   id: number;
@@ -38,7 +39,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function CulturalAttractionsTkuarchalScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function CulturalAttractionsTkuarchalScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<CulturalAttractionsPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -47,7 +49,7 @@ export default function CulturalAttractionsTkuarchalScreen({ visible, onClose }:
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/cultural-attractions/page/city_page/${encodeURIComponent('Ткуарчал')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/cultural-attractions/page/city_page/${encodeURIComponent(t('cities.tkuarchal'))}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load cultural attractions');
         const json = await res.json() as CulturalAttractionsPageData;
         setPageData(json);
@@ -79,7 +81,7 @@ export default function CulturalAttractionsTkuarchalScreen({ visible, onClose }:
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : 'КУЛЬТУРНЫЕ ДОСТОПРИМЕЧАТЕЛЬНОСТИ'}</Text>
+            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : t('categories.attractions')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -87,7 +89,7 @@ export default function CulturalAttractionsTkuarchalScreen({ visible, onClose }:
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             attractions.map((attraction) => (

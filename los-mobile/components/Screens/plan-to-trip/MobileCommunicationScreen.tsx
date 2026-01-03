@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from './phoneUtils';
+import { useTranslation } from '@/i18n';
 
 interface Provider {
   id: number;
@@ -32,7 +33,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function MobileCommunicationScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function MobileCommunicationScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<MobileCommunicationPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -80,7 +82,7 @@ export default function MobileCommunicationScreen({ visible, onClose }: { visibl
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             <>
@@ -100,7 +102,7 @@ export default function MobileCommunicationScreen({ visible, onClose }: { visibl
               {/* Mobile Providers Section */}
               {pageData?.mobile_providers && pageData.mobile_providers.length > 0 && (
                 <>
-                  <Text style={styles.sectionTitle}>{pageData.mobile_section_title || 'Мобильная связь'}</Text>
+                  <Text style={styles.sectionTitle}>{pageData.mobile_section_title || t('plan_trip.mobile')}</Text>
                   
                   {pageData.mobile_providers.map((provider) => (
                     <View key={provider.id} style={styles.card}>
@@ -148,7 +150,7 @@ export default function MobileCommunicationScreen({ visible, onClose }: { visibl
               {/* Internet Providers Section */}
               {pageData?.internet_providers && pageData.internet_providers.length > 0 && (
                 <>
-                  <Text style={styles.sectionTitle}>{pageData.internet_section_title || 'Интернет'}</Text>
+                  <Text style={styles.sectionTitle}>{pageData.internet_section_title || t('plan_trip.internet')}</Text>
                   
                   {pageData.internet_providers.map((provider) => (
                     <View key={provider.id} style={styles.card}>

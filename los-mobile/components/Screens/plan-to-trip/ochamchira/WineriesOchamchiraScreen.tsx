@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
+import { useTranslation } from '@/i18n';
 
 interface Winery {
   id: number;
@@ -38,7 +39,8 @@ const toImageUrl = (url: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-export default function WineriesOchamchiraScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function WineriesOchamchiraScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const [pageData, setPageData] = useState<WineriesPageData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -47,7 +49,7 @@ export default function WineriesOchamchiraScreen({ visible, onClose }: { visible
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/wineries/page/city_page/${encodeURIComponent('Очамчыра')}/`, { cache: 'no-store' });
+        const res = await fetch(`${API_BASE}/api/wineries/page/city_page/${encodeURIComponent(t('cities.ochamchira'))}/`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load wineries');
         const json = await res.json() as WineriesPageData;
         setPageData(json);
@@ -79,7 +81,7 @@ export default function WineriesOchamchiraScreen({ visible, onClose }: { visible
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : 'ВИНОДЕЛЬНИ'}</Text>
+            <Text style={styles.headerTitle}>{pageData?.title ? pageData.title.toUpperCase() : t('categories.wineries')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -87,7 +89,7 @@ export default function WineriesOchamchiraScreen({ visible, onClose }: { visible
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : (
             wineries.map((winery) => (
@@ -103,7 +105,7 @@ export default function WineriesOchamchiraScreen({ visible, onClose }: { visible
                   
                   {winery.address && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Адрес:</Text>
+                      <Text style={styles.infoLabel}>{t('common.address')}</Text>
                       {winery.address_link ? (
                         <TouchableOpacity onPress={() => openLink(winery.address_link)}>
                           <Text style={[styles.infoValue, styles.underline]}>{winery.address}</Text>
@@ -116,14 +118,14 @@ export default function WineriesOchamchiraScreen({ visible, onClose }: { visible
                   
                   {winery.working_hours && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Режим работы:</Text>
+                      <Text style={styles.infoLabel}>{t('common.hours')}</Text>
                       <Text style={styles.infoValue}>{winery.working_hours}</Text>
                     </View>
                   )}
                   
                   {winery.contacts && (
                     <View style={styles.infoBlock}>
-                      <Text style={styles.infoLabel}>Контакты:</Text>
+                      <Text style={styles.infoLabel}>{t('common.contacts')}</Text>
                       <Text style={styles.infoValue}>
                         {parseContactString(winery.contacts).map((segment, index) => {
                           if (segment.type === 'phone' || segment.type === 'email') {

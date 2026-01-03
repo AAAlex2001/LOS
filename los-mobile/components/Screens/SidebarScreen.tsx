@@ -4,20 +4,22 @@ import { Ionicons } from '@expo/vector-icons';
 import SideBarLogo from '../../assets/images/SideBarLogo.svg';
 import ContactsScreen from './ContactsScreen';
 import LanguageScreen from './LanguageScreen';
-
-const menuItems = [
-  { label: 'Главное меню', icon: <Ionicons name="home-outline" size={24} color="#1129BD" /> },
-  { label: 'Свяжитесь с нами', icon: <Ionicons name="chatbubble-ellipses-outline" size={24} color="#1129BD" /> },
-  { label: 'Политика обработки данных', icon: <Ionicons name="document-outline" size={24} color="#1129BD" />},
-  { label: 'Выберите язык', icon: <Ionicons name="language-outline" size={24} color="#1129BD" /> },
-];
+import { useTranslation } from '@/i18n';
 
 const { width: screenWidth } = Dimensions.get('window');
 
 export default function SidebarScreen({ visible, onClose, onNavigateHome }: { visible: boolean, onClose: () => void, onNavigateHome?: () => void }) {
+  const { t } = useTranslation();
   const [contactsVisible, setContactsVisible] = useState(false);
   const [languageVisible, setLanguageVisible] = useState(false);
   const slideAnim = useRef(new Animated.Value(-screenWidth)).current;
+
+  const menuItems = [
+    { label: t('navigation.main_menu'), icon: <Ionicons name="home-outline" size={24} color="#1129BD" /> },
+    { label: t('footer.contact_us'), icon: <Ionicons name="chatbubble-ellipses-outline" size={24} color="#1129BD" /> },
+    { label: t('footer.privacy_policy'), icon: <Ionicons name="document-outline" size={24} color="#1129BD" />},
+    { label: t('language.select'), icon: <Ionicons name="language-outline" size={24} color="#1129BD" /> },
+  ];
 
   useEffect(() => {
     if (visible) {
@@ -49,7 +51,7 @@ export default function SidebarScreen({ visible, onClose, onNavigateHome }: { vi
           <View style={styles.line} />
           {/* Кнопки */}
           <TouchableOpacity style={styles.boardBtn}>
-            <Text style={styles.boardBtnText}>Доска объявлений «LOS»</Text>
+            <Text style={styles.boardBtnText}>{t('common.bulletin_board')}</Text>
           </TouchableOpacity>
           {/* Меню */}
           <View style={styles.menuList}>

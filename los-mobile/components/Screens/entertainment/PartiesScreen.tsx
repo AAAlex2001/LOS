@@ -20,6 +20,7 @@ import ArrowIcon from '../../../assets/images/VectorParties1.svg';
 import CalendarIcon from '../../../assets/images/VectorParties2.svg';
 import LocationIcon from '../../../assets/images/VectorParties3.svg';
 import config from '@/config';
+import { useTranslation } from '@/i18n';
 
 // inline video: always create player (hooks order stable), control play/pause by visibility
 const InlineAdVideo = ({ uri, style, active }: { uri: string; style: any; active: boolean }) => {
@@ -116,7 +117,8 @@ const parseBoldText = (text: string) => {
   });
 };
 
-export default function PartiesScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function PartiesScreen({
+  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
   const { width } = useWindowDimensions();
   const bannerHeight = React.useMemo(() => Math.round(Math.min(360, Math.max(260, width * 0.62))), [width]);
   const [data, setData] = useState<PartiesPageData | null>(null);
@@ -194,7 +196,7 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>ВЕЧЕРИНКИ И ЯРКИЕ ВПЕЧАТЛЕНИЯ</Text>
+            <Text style={styles.headerTitle}>{t('entertainment.parties')}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
@@ -209,7 +211,7 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
         >
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Загрузка...</Text>
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : ([
             // Tabs (sticky header)
@@ -333,11 +335,11 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                             )}
                             {event.description && (
                               <View style={styles.eventDescription}>
-                                <Text style={styles.descriptionTitle}>О событии</Text>
+                                <Text style={styles.descriptionTitle}>{t('common.event_about')}</Text>
                                 <Text style={styles.descriptionText}>{parseBoldText(event.description)}</Text>
                                 {event.event_url && (
                                   <Text style={styles.linkText}>
-                                    <Text style={styles.linkLabel}>Ссылка на мероприятие: </Text>
+                                    <Text style={styles.linkLabel}>{t('common.event_link')}</Text>
                                     <Text style={styles.linkUrl} onPress={() => openLink(event.event_url!)}>{event.event_url}</Text>
                                   </Text>
                                 )}
@@ -346,7 +348,7 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
                           </View>
                         ))
                       ) : (
-                        <Text style={styles.emptyText}>Нет событий в этом городе</Text>
+                        <Text style={styles.emptyText}>{t('entertainment.no_events')}</Text>
                       )}
 
                       {/* Ad Slider - after events */}
