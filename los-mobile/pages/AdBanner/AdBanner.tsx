@@ -33,13 +33,13 @@ interface AdBannerData {
 const API_BASE = config.API_BASE;
 
 const toImageUrl = (url?: string) => {
-  const { t } = useTranslation();
   if (!url) return '';
   if (url.startsWith('http://') || url.startsWith('https://')) return url;
   return `${API_BASE}/media/${url}`;
 };
 
 const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose }) => {
+  const { t } = useTranslation();
   const progressAnim = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
   const [adData, setAdData] = useState<AdBannerData | null>(null);
