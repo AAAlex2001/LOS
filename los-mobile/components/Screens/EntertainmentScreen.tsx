@@ -7,6 +7,7 @@ import MountainRoutesScreen from './entertainment/MountainRoutesScreen';
 import ExcursionsScreen from './entertainment/ExcursionsScreen';
 import HotSpringsScreen from './entertainment/HotSpringsScreen';
 import SportsGymsScreen from './entertainment/SportsGymsScreen';
+import { addLangParam } from '@/i18n';
 import config from '@/config';
 
 const API_BASE = config.API_BASE;

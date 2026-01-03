@@ -4,6 +4,7 @@ import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-ico
 import config from '@/config';
 import ImportantScreen from './important-trip/ImportantScreen';
 import YourDoctorScreen from './important-trip/YourDoctorScreen';
+import { addLangParam } from '@/i18n';
 
 const API_BASE = config.API_BASE;
 const { width: screenWidth } = Dimensions.get('window');

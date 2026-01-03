@@ -21,7 +21,7 @@ import PlanTripScreen from '../../components/Screens/PlanTripScreen';
 import ImportantTripScreen from '../../components/Screens/ImportantTripScreen';
 import SidebarScreen from '../../components/Screens/SidebarScreen';
 import { MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo } from '@expo/vector-icons';
-import {useTranslation, addLangParam} from '@/i18n';
+import {useTranslation, addLangParam, getCurrentLanguage} from '@/i18n';
 import config from '@/config';
 const API_BASE = config.API_BASE;
 
@@ -159,6 +159,8 @@ const HomePage = () => {
     return <FontAwesome5 name="city" size={40} color="#fff" />;
   };
 
+  const currentLang = getCurrentLanguage();
+
   useEffect(() => {
     const load = async () => {
       try {
@@ -173,7 +175,7 @@ const HomePage = () => {
       }
     };
     load();
-  }, []);
+  }, [currentLang]);
 
   const sliderItems: SliderItem[] = data?.slider_items
     ?.sort((a, b) => a.order - b.order)

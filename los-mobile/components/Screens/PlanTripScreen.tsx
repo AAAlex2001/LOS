@@ -6,6 +6,7 @@ import TaxiScreen from './plan-to-trip/TaxiScreen';
 import CitiesScreen from './plan-to-trip/CitiesScreen';
 import MobileCommunicationScreen from './plan-to-trip/MobileCommunicationScreen';
 import config from '@/config';
+import { addLangParam } from '@/i18n';
 
 const API_BASE = config.API_BASE;
 const { width: screenWidth } = Dimensions.get('window');

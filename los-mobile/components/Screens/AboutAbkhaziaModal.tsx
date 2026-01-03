@@ -10,6 +10,7 @@ import AbkhazianCustomsScreen from './about-abkhazia/AbkhazianCustomsScreen';
 import ElementaryDictionaryScreen from './about-abkhazia/ElementaryDictionaryScreen';
 import MusicScreen from './about-abkhazia/MusicScreen';
 import config from '@/config';
+import { addLangParam } from '@/i18n';
 
 const API_BASE = config.API_BASE;
 const { width: screenWidth } = Dimensions.get('window');
