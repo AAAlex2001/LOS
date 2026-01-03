@@ -19,13 +19,13 @@ class AbkhazianCuisinePageViewSet(viewsets.ReadOnlyModelViewSet):
         Получить полное содержимое страницы абхазской кухни
         """
         try:
-                page = AbkhazianCuisinePage.objects.order_by('-updated_at', '-id').first()
+            page = AbkhazianCuisinePage.objects.order_by('-updated_at', '-id').first()
             if not page:
                 return Response({"error": "Страница абхазской кухни не найдена"}, status=404)
-            
+
             serializer = self.get_serializer(page)
             return Response(serializer.data)
-            
+
         except Exception as e:
             return Response({"error": str(e)}, status=500)
 
