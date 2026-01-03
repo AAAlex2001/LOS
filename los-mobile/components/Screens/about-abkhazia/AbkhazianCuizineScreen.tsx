@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -39,7 +39,7 @@ export default function AbkhazianCuizineScreen({ visible, onClose }: { visible: 
     
     const loadData = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/abkhazian-cuisine/page/content/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/abkhazian-cuisine/page/content/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load');
         const json = await res.json();
         setData(json);

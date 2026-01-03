@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 interface Hotel {
   id: number;
@@ -49,7 +49,7 @@ export default function HotelsGudautaScreen({ visible, onClose }: { visible: boo
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/hotels/page/city_page/${encodeURIComponent(t('cities.gudauta'))}/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/hotels/page/city_page/${encodeURIComponent(t('cities.gudauta'))}/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load hotels');
         const json = await res.json() as HotelsPageData;
         setPageData(json);

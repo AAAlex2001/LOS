@@ -3,7 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dim
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
 import { parseContactString } from '../plan-to-trip/phoneUtils';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -28,7 +28,7 @@ export default function ExcursionsScreen({ visible, onClose }: Props) {
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/excursions/page/content/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/excursions/page/content/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load excursions');
         const json = await res.json();
         const srv = (json?.services || []).map((s: any): ExcursionCard => ({

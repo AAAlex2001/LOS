@@ -46,7 +46,7 @@ export default function PlanTripScreen({ visible, onClose, categories }: { visib
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/home/page/content/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/home/page/content/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load homepage');
         const json = await res.json();
         const bookingTab = json?.mobile_tabs?.find((tab: any) => tab.group === 'booking');

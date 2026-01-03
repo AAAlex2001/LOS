@@ -20,7 +20,7 @@ import ArrowIcon from '../../../assets/images/VectorParties1.svg';
 import CalendarIcon from '../../../assets/images/VectorParties2.svg';
 import LocationIcon from '../../../assets/images/VectorParties3.svg';
 import config from '@/config';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 // inline video: always create player (hooks order stable), control play/pause by visibility
 const InlineAdVideo = ({ uri, style, active }: { uri: string; style: any; active: boolean }) => {
@@ -132,7 +132,7 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/parties/page/content/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/parties/page/content/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load parties page');
         const json = await res.json() as PartiesPageData;
         setData(json);

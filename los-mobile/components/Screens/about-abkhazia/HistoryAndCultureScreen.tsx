@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -39,13 +39,13 @@ export default function HistoryAndCultureScreen({ visible, onClose }: { visible:
 
     const loadData = async () => {
       try {
-        const historyRes = await fetch(`${API_BASE}/api/history-and-culture/history-sections/`, { cache: 'no-store' });
+        const historyRes = await fetch(addLangParam(`${API_BASE}/api/history-and-culture/history-sections/`), { cache: 'no-store' });
         if (historyRes.ok) {
           const historyData = await historyRes.json();
           setHistorySections(historyData);
         }
 
-        const cultureRes = await fetch(`${API_BASE}/api/history-and-culture/culture-sections/`, { cache: 'no-store' });
+        const cultureRes = await fetch(addLangParam(`${API_BASE}/api/history-and-culture/culture-sections/`), { cache: 'no-store' });
         if (cultureRes.ok) {
           const cultureData = await cultureRes.json();
           setCultureSections(cultureData);

@@ -3,7 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 interface Church {
   id: number;
@@ -50,7 +50,7 @@ export default function ChurchesNewAfonScreen({ visible, onClose }: { visible: b
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/churches/page/city_page/${encodeURIComponent(t('cities.new_afon'))}/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/churches/page/city_page/${encodeURIComponent(t('cities.new_afon'))}/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load churches');
         const json = await res.json() as ChurchesPageData;
         setPageData(json);

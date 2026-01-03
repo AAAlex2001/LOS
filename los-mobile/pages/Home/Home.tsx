@@ -21,7 +21,7 @@ import PlanTripScreen from '../../components/Screens/PlanTripScreen';
 import ImportantTripScreen from '../../components/Screens/ImportantTripScreen';
 import SidebarScreen from '../../components/Screens/SidebarScreen';
 import { MaterialCommunityIcons, FontAwesome5, MaterialIcons, Entypo } from '@expo/vector-icons';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 import config from '@/config';
 const API_BASE = config.API_BASE;
 
@@ -162,7 +162,7 @@ const HomePage = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/home/page/content/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/home/page/content/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load homepage');
         const json = await res.json();
         setData(json);

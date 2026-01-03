@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
 import { Image } from 'expo-image';
 import config from '@/config';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 const { width } = Dimensions.get('window');
 
@@ -73,7 +73,7 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
           interruptionModeAndroid: 'duckOthers',
         });
 
-        const res = await fetch(`${API_BASE}/api/music/page/content/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/music/page/content/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load music');
         const json = await res.json() as MusicPageData;
         setPageData(json);

@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../plan-to-trip/phoneUtils';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 interface Gym {
   id: number;
@@ -40,7 +40,7 @@ export default function SportsGymsScreen({ visible, onClose }: { visible: boolea
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/sports-gyms/page/content/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/sports-gyms/page/content/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load sports gyms');
         const json = await res.json() as SportsGymsPageData;
         setPageData(json);

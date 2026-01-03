@@ -14,7 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import config from '@/config';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 interface AdBannerProps {
   visible: boolean;
@@ -62,7 +62,7 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose }) => {
     const loadAdData = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${API_BASE}/api/ad-banner/content/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/ad-banner/content/`), { cache: 'no-store' });
         if (!res.ok) {
           // Если нет данных, используем пустые значения и не показываем баннер
           setAdData(null);

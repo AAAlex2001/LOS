@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, Linking, Dimensions } from 'react-native';
 import { Ionicons, FontAwesome, MaterialCommunityIcons, AntDesign, Feather } from '@expo/vector-icons';
 import config from '@/config';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 type SocialLink = {
   id: number;
@@ -70,7 +70,7 @@ export default function ContactsScreen({ visible, onClose }: { visible: boolean,
     if (!visible) return;
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/footer/footer/footer_data/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/footer/footer/footer_data/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load footer');
         const json = (await res.json()) as Footer;
         setFooterData(json);

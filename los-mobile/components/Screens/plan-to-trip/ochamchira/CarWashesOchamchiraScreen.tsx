@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 interface CarWash {
   id: number;
@@ -51,7 +51,7 @@ export default function CarWashesOchamchiraScreen({ visible, onClose }: { visibl
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/car-washes/page/city_page/${encodeURIComponent(t('cities.ochamchira'))}/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/car-washes/page/city_page/${encodeURIComponent(t('cities.ochamchira'))}/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load car washes');
         const json = await res.json() as CarWashesPageData;
         setPageData(json);

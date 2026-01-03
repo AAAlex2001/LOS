@@ -15,7 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
 import { screensRegistry } from './screensRegistry';
 import { slugify } from './helpers/slug';
-import { useTranslation } from '@/i18n';
+import { useTranslation, addLangParam } from '@/i18n';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -56,10 +56,11 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
 
   useEffect(() => {
     if (!visible) return;
-    
+
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/cities/page/content/`, { cache: 'no-store' });
+        const url = addLangParam(`${API_BASE}/api/cities/page/content/`);
+        const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load cities page');
         const json = await res.json() as CitiesPageData;
         setData(json);

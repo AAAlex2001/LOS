@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from './phoneUtils';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 interface Provider {
   id: number;
@@ -43,7 +43,7 @@ export default function MobileCommunicationScreen({ visible, onClose }: { visibl
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/mobile-communication/page/content/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/mobile-communication/page/content/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load mobile communication');
         const json = await res.json() as MobileCommunicationPageData;
         setPageData(json);

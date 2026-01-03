@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from './phoneUtils';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 interface TaxiService {
   id: number;
@@ -40,7 +40,7 @@ export default function TaxiScreen({ visible, onClose }: { visible: boolean, onC
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/taxi/page/content/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/taxi/page/content/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load taxi');
         const json = await res.json() as TaxiPageData;
         setPageData(json);

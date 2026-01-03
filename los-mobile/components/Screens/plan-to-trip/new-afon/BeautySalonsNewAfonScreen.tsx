@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 interface BeautySalon {
   id: number;
@@ -51,7 +51,7 @@ export default function BeautySalonsNewAfonScreen({ visible, onClose }: { visibl
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/beauty-salons/page/city_page/${encodeURIComponent(t('cities.new_afon'))}/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/beauty-salons/page/city_page/${encodeURIComponent(t('cities.new_afon'))}/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load beauty salons');
         const json = await res.json() as BeautySalonsPageData;
         setPageData(json);

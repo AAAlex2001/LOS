@@ -3,7 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } 
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 interface CulturalAttraction {
   id: number;
@@ -49,7 +49,7 @@ export default function CulturalAttractionsSukhumScreen({ visible, onClose }: { 
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/cultural-attractions/page/city_page/${encodeURIComponent(t('cities.sukhum'))}/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/cultural-attractions/page/city_page/${encodeURIComponent(t('cities.sukhum'))}/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load cultural attractions');
         const json = await res.json() as CulturalAttractionsPageData;
         setPageData(json);

@@ -6,7 +6,7 @@ import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { Image } from 'expo-image';
 import config from '../../config';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const API_BASE = config.API_BASE;
@@ -58,7 +58,7 @@ export default function WelcomeScreen() {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/welcome/page/content/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/welcome/page/content/`), { cache: 'no-store' });
         if (!res.ok) return;
         const json = (await res.json()) as WelcomeContent;
         setContent(json);

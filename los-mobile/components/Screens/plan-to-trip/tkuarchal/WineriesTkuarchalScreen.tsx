@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 interface Winery {
   id: number;
@@ -49,7 +49,7 @@ export default function WineriesTkuarchalScreen({ visible, onClose }: { visible:
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/wineries/page/city_page/${encodeURIComponent(t('cities.tkuarchal'))}/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/wineries/page/city_page/${encodeURIComponent(t('cities.tkuarchal'))}/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load wineries');
         const json = await res.json() as WineriesPageData;
         setPageData(json);

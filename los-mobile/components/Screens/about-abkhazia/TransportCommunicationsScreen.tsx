@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Image, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -33,7 +33,7 @@ export default function TransportCommunicationsScreen({ visible, onClose }: { vi
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/transport-communications/page/content/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/transport-communications/page/content/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load transport communications');
         const json = await res.json() as TransportCommunicationsPageData;
         setData(json);

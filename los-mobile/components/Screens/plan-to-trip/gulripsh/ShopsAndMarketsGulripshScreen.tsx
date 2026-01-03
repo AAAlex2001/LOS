@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
-import { useTranslation } from '@/i18n';
+import {useTranslation, addLangParam} from '@/i18n';
 
 interface ShopOrMarket {
   id: number;
@@ -49,7 +49,7 @@ export default function ShopsAndMarketsGulripshScreen({ visible, onClose }: { vi
     
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/shops-and-markets/page/city_page/${encodeURIComponent(t('cities.gulripsh'))}/`, { cache: 'no-store' });
+        const res = await fetch(addLangParam(`${API_BASE}/api/shops-and-markets/page/city_page/${encodeURIComponent(t('cities.gulripsh'))}/`), { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load shops and markets');
         const json = await res.json() as ShopsAndMarketsPageData;
         setPageData(json);
