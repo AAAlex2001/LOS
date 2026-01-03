@@ -11,7 +11,7 @@ class TransportCommunicationsPageViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=['get'])
     def content(self, request):
-        page = TransportCommunicationsPage.objects.first()
+        page = TransportCommunicationsPage.objects.order_by('-updated_at', '-id').first()
         if page is None:
             page = TransportCommunicationsPage.objects.create(
                 main_title='Транспортное сообщение республики Абхазия',

@@ -45,6 +45,27 @@ class MobileCommunicationPageSerializer(serializers.ModelSerializer):
             'updated_at'
         ]
 
+    main_title = serializers.SerializerMethodField()
+    mobile_section_title = serializers.SerializerMethodField()
+    internet_section_title = serializers.SerializerMethodField()
+
+    def pick(self, obj, field_base, request):
+        lang = None
+        if request is not None:
+            lang = getattr(request, 'LANGUAGE_CODE', None) or request.GET.get('lang')
+        if lang and lang.startswith('en'):
+            return getattr(obj, field_base + '_en', None) or getattr(obj, field_base, '')
+        return getattr(obj, field_base + '_ru', None) or getattr(obj, field_base, '')
+
+    def get_main_title(self, obj):
+        return self.pick(obj, 'main_title', self.context.get('request'))
+
+    def get_mobile_section_title(self, obj):
+        return self.pick(obj, 'mobile_section_title', self.context.get('request'))
+
+    def get_internet_section_title(self, obj):
+        return self.pick(obj, 'internet_section_title', self.context.get('request'))
+
 
 
 

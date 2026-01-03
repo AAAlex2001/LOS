@@ -11,7 +11,7 @@ class MountainRoutesPageViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=['get'])
     def content(self, request):
-        page = MountainRoutesPage.objects.first()
+        page = MountainRoutesPage.objects.order_by('-updated_at', '-id').first()
         if page is None:
             page = MountainRoutesPage.objects.create(
                 main_title='Горные маршруты',

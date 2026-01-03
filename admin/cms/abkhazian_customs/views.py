@@ -19,7 +19,7 @@ class AbkhazianCustomsPageViewSet(viewsets.ReadOnlyModelViewSet):
         Получить полное содержимое страницы абхазских обычаев
         """
         try:
-            page = self.get_queryset().first()
+            page = AbkhazianCustomsPage.objects.order_by('-updated_at', '-id').first()
             if not page:
                 return Response({"error": "Страница абхазских обычаев не найдена"}, status=404)
             

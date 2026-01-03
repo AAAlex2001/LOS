@@ -54,6 +54,7 @@ class ImportantSectionSerializer(serializers.ModelSerializer):
 
 class ImportantPageSerializer(serializers.ModelSerializer):
     sections = ImportantSectionSerializer(many=True, read_only=True)
+    title = serializers.SerializerMethodField()
     
     class Meta:
         model = ImportantPage
@@ -65,3 +66,13 @@ class ImportantPageSerializer(serializers.ModelSerializer):
             'twitter_title', 'twitter_description', 'twitter_image',
             'sections'
         ]
+
+    def get_title(self, obj):
+        request = self.context.get('request')
+        lang = None
+        if request is not None:
+            lang = getattr(request, 'LANGUAGE_CODE', None) or request.GET.get('lang')
+        if lang and lang.startswith('en'):
+            return getattr(obj, 'title_en', None) or getattr(obj, 'title', '')
+        # default to Russian
+        return getattr(obj, 'title_ru', None) or getattr(obj, 'title', '')

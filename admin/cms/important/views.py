@@ -12,7 +12,7 @@ class ImportantPageViewSet(viewsets.ReadOnlyModelViewSet):
     @action(detail=False, methods=['get'])
     def content(self, request):
         """Получить контент страницы"""
-        page = ImportantPage.objects.first()
+        page = ImportantPage.objects.order_by('-updated_at', '-id').first()
         if not page:
             return Response({'error': 'Страница не найдена'}, status=404)
         

@@ -12,7 +12,7 @@ class MobileCommunicationPageViewSet(viewsets.ReadOnlyModelViewSet):
     @action(detail=False, methods=["get"])
     def content(self, request):
         """Вернуть контент страницы 'Мобильная связь'"""
-        page = MobileCommunicationPage.objects.first()
+        page = MobileCommunicationPage.objects.order_by('-updated_at', '-id').first()
         if page is None:
             # Создаем запись по умолчанию, чтобы админам было проще стартовать
             page = MobileCommunicationPage.objects.create(

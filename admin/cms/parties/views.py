@@ -11,7 +11,7 @@ class PartiesPageViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=['get'])
     def content(self, request):
-        page = PartiesPage.objects.first()
+        page = PartiesPage.objects.order_by('-updated_at', '-id').first()
         if page is None:
             page = PartiesPage.objects.create(
                 main_title='Вечеринки и яркие впечатления',
