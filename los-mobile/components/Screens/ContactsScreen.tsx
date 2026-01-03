@@ -61,8 +61,8 @@ const getLabelForNetwork = (network: string) => {
   }
 };
 
-export default function ContactsScreen({
-  const { t } = useTranslation(); visible, onClose }: { visible: boolean, onClose: () => void }) {
+export default function ContactsScreen({ visible, onClose }: { visible: boolean, onClose: () => void }) {
+  const { t } = useTranslation();
   const [footerData, setFooterData] = useState<Footer | null>(null);
   const [loading, setLoading] = useState(true);
 
