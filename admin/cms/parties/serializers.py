@@ -68,9 +68,18 @@ class PartyCitySerializer(serializers.ModelSerializer):
 
         fields = [
 
-            'id', 'name', 'slug', 'city_image', 'events', 'slider_items', 'order'
+            'id', 'name', 'slug', 'city_image', 'events', 'slider_items', 'order', 'main_title'
 
         ]
+
+    def get_main_title(self, obj):
+        request = self.context.get('request')
+        lang = None
+        if request is not None:
+            lang = getattr(request, 'LANGUAGE_CODE', None) or request.GET.get('lang')
+        if lang and lang.startswith('en'):
+            return getattr(obj, 'name_en', None) or getattr(obj, 'name', '')
+        return getattr(obj, 'name_ru', None) or getattr(obj, 'name', '')
 
 
 
