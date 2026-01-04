@@ -73,13 +73,16 @@ class PartyCitySerializer(serializers.ModelSerializer):
         ]
 
     def get_main_title(self, obj):
-        request = self.context.get('request')
+        return self.pick(obj, 'name', self.context.get('request'))
+
+    def pick(self, obj, field_base, request):
         lang = None
         if request is not None:
-            lang = getattr(request, 'LANGUAGE_CODE', None) or request.GET.get('lang')
+            # prefer explicit ?lang= over request.LANGUAGE_CODE
+            lang = request.GET.get('lang') or getattr(request, 'LANGUAGE_CODE', None)
         if lang and lang.startswith('en'):
-            return getattr(obj, 'name_en', None) or getattr(obj, 'name', '')
-        return getattr(obj, 'name_ru', None) or getattr(obj, 'name', '')
+            return getattr(obj, field_base + '_en', None) or getattr(obj, field_base, '')
+        return getattr(obj, field_base + '_ru', None) or getattr(obj, field_base, '')
 
 
 
@@ -92,6 +95,8 @@ class PartiesPageSerializer(serializers.ModelSerializer):
     events = PartyEventSerializer(many=True, read_only=True)
 
     slider_items = PartySliderItemSerializer(many=True, read_only=True)
+
+    main_title = serializers.SerializerMethodField()
 
 
 
@@ -124,18 +129,13 @@ class PartiesPageSerializer(serializers.ModelSerializer):
 
 
     def get_main_title(self, obj):
+        return self.pick(obj, 'main_title', self.context.get('request'))
 
-        request = self.context.get('request')
-
+    def pick(self, obj, field_base, request):
         lang = None
-
         if request is not None:
-
-            lang = getattr(request, 'LANGUAGE_CODE', None) or request.GET.get('lang')
-
+            lang = request.GET.get('lang') or getattr(request, 'LANGUAGE_CODE', None)
         if lang and lang.startswith('en'):
-
-            return getattr(obj, 'main_title_en', None) or getattr(obj, 'main_title', '')
-
-        return getattr(obj, 'main_title_ru', None) or getattr(obj, 'main_title', '')
+            return getattr(obj, field_base + '_en', None) or getattr(obj, field_base, '')
+        return getattr(obj, field_base + '_ru', None) or getattr(obj, field_base, '')
 

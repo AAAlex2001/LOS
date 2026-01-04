@@ -164,9 +164,17 @@ class PrivacyPolicyPageViewSet(viewsets.ModelViewSet):
 
         
 
-        serializer = self.get_serializer(page)
+        serializer = self.get_serializer(page, context={'request': request})
 
         data = serializer.data
+
+        lang = None
+        if request is not None:
+            lang = getattr(request, 'LANGUAGE_CODE', None) or request.GET.get('lang')
+        if lang and lang.startswith('en'):
+            data['title'] = getattr(page, 'title_en', None) or getattr(page, 'title', '')
+        else:
+            data['title'] = getattr(page, 'title_ru', None) or getattr(page, 'title', '')
 
         data['content'] = content
 
@@ -204,7 +212,7 @@ class AccessibilityAndTermsPageViewSet(viewsets.ModelViewSet):
 
         
 
-        serializer = self.get_serializer(page)
+        serializer = self.get_serializer(page, context={'request': request})
 
         data = serializer.data
 
