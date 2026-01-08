@@ -44,15 +44,23 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose }) => {
   const insets = useSafeAreaInsets();
   const [adData, setAdData] = useState<AdBannerData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [canClose, setCanClose] = useState(false);
 
   useEffect(() => {
     if (visible) {
+      setCanClose(false);
       progressAnim.setValue(0);
       Animated.timing(progressAnim, {
         toValue: 1,
         duration: 5000,
         useNativeDriver: false,
       }).start();
+      
+      const timer = setTimeout(() => {
+        setCanClose(true);
+      }, 5000);
+      
+      return () => clearTimeout(timer);
     }
   }, [visible]);
 
@@ -139,13 +147,15 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose }) => {
           <Text style={styles.adLabelText}>{t('common.advertisement')}</Text>
         </View>
 
-        {/* Крестик закрытия */}
-        <TouchableOpacity 
-          style={[styles.closeButton, { top: insets.top + 12, right: 30 }]} 
-          onPress={onClose}
-        >
-          <Ionicons name="close" size={24} color="#FFFFFF" />
-        </TouchableOpacity>
+        {/* Крестик закрытия - показываем только через 5 секунд */}
+        {canClose && (
+          <TouchableOpacity 
+            style={[styles.closeButton, { top: insets.top + 12, right: 30 }]} 
+            onPress={onClose}
+          >
+            <Ionicons name="close" size={24} color="#FFFFFF" />
+          </TouchableOpacity>
+        )}
 
         {/* Нижняя часть с текстом */}
         <View style={[styles.contentContainer, { paddingBottom: Math.max(24, insets.bottom + 16) }]}>
