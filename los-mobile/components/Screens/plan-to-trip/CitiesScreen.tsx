@@ -92,14 +92,13 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
   const handleCategoryClick = (category: CityCategory, cityName: string) => {
     if (!category.is_active || !category.url) return;
 
-    // Map Russian city names to English slugs
     const cityAlias: Record<string, string> = {
       'сухум': 'sukhum',
       'гагра': 'gagra',
       'гал': 'gal',
       'гудаута': 'gudauta',
       'гулрыпш': 'gulripsh',
-      'новый-афон': 'new-afon',
+      'новый афон': 'new afon',
       'пицунда': 'pitsunda',
       'ткуарчал': 'tkuarchal',
       'очамчыра': 'ochamchira',
@@ -107,11 +106,7 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
 
     let citySlug = slugify(cityName);
     citySlug = cityAlias[citySlug] || citySlug;
-    
-    // Primary: take slug from URL (expected english kebab-case)
     let categorySlug = slugify(category.url.split('/')[0] || '');
-
-    // Fallback: if registry doesn't have this key (e.g., URL in Russian), try from name and alias map
     if (!screensRegistry[citySlug]?.[categorySlug]) {
       const nameSlug = slugify(category.name);
       const alias: Record<string, string> = {
@@ -135,7 +130,6 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
     }
 
     if (!screensRegistry[citySlug]?.[categorySlug]) {
-      // No matching screen; do nothing
       return;
     }
 
@@ -148,7 +142,6 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
     setActiveCity(null);
   };
 
-  // Get the active screen component from registry
   const ActiveScreen = useMemo(() => {
     if (!activeCity || !activeCategory) return null;
     return screensRegistry[activeCity]?.[activeCategory] ?? null;
