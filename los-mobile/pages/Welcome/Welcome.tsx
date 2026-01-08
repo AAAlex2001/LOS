@@ -24,13 +24,13 @@ type WelcomeContent = {
   icons?: { image: string; order?: number }[];
 };
 
-// Позиции иконок относительно центра экрана
+// Позиции иконок относительно центра экрана (уменьшены и сдвинуты к центру)
 const iconPositions = [
-  { width: 100, height: 100, left: -200, top: -340, rotation: 6, delay: 0 },
-  { width: 100, height: 100, left: 100, top: -340, rotation: -15, delay: 150 },
-  { width: 100, height: 100, left: -200, top: 225, rotation: 10, delay: 300 },
-  { width: 90, height: 90, left: -60, top: 125, rotation: -5, delay: 450 },
-  { width: 80, height: 80, left: 100, top: 45, rotation: 7, delay: 600 },
+  { width: 75, height: 75, left: -140, top: -300, rotation: 6, delay: 0 },
+  { width: 75, height: 75, left: 80, top: -300, rotation: -15, delay: 150 },
+  { width: 75, height: 75, left: -140, top: 180, rotation: 10, delay: 300 },
+  { width: 70, height: 70, left: -40, top: 100, rotation: -5, delay: 450 },
+  { width: 65, height: 65, left: 80, top: 40, rotation: 7, delay: 600 },
 ];
 
 export default function WelcomeScreen() {
