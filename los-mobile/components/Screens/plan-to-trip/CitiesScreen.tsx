@@ -92,7 +92,22 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
   const handleCategoryClick = (category: CityCategory, cityName: string) => {
     if (!category.is_active || !category.url) return;
 
-    const citySlug = slugify(cityName);
+    // Map Russian city names to English slugs
+    const cityAlias: Record<string, string> = {
+      'сухум': 'sukhum',
+      'гагра': 'gagra',
+      'гал': 'gal',
+      'гудаута': 'gudauta',
+      'гулрыпш': 'gulripsh',
+      'новый-афон': 'new-afon',
+      'пицунда': 'pitsunda',
+      'ткуарчал': 'tkuarchal',
+      'очамчыра': 'ochamchira',
+    };
+
+    let citySlug = slugify(cityName);
+    citySlug = cityAlias[citySlug] || citySlug;
+    
     // Primary: take slug from URL (expected english kebab-case)
     let categorySlug = slugify(category.url.split('/')[0] || '');
 
