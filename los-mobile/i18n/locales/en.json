@@ -75,7 +75,8 @@
     "cities": "CITIES OF ABKHAZIA",
     "mobile": "Mobile communication",
     "internet": "Internet",
-    "taxi": "Taxi"
+    "taxi": "Taxi services",
+    "communication": "Mobile communication and internet"
   },
   "important": {
     "title": "IMPORTANT TO KNOW",

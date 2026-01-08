@@ -167,7 +167,7 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
                 <Image source={{ uri: headerIcon }} style={styles.headerLogo} contentFit="cover" />
               </View>
             )}
-            <Text style={styles.headerTitle}>{(data?.main_title || t('important.your_doctor')).toUpperCase()}</Text>
+            <Text style={styles.headerTitle}>{t('important.your_doctor').toUpperCase()}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>

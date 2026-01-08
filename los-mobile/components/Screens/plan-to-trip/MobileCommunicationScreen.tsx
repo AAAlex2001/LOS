@@ -74,7 +74,7 @@ export default function MobileCommunicationScreen({ visible, onClose }: { visibl
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <View style={styles.headerTitleWrap}>
-            <Text style={styles.headerTitle}>МОБИЛЬНАЯ СВЯЗЬ</Text>
+            <Text style={styles.headerTitle}>{t('plan_trip.communication').toUpperCase()}</Text>
           </View>
           <View style={{ width: 36 }} />
         </View>
