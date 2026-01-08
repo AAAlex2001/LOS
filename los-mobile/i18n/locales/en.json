@@ -80,11 +80,11 @@
   "important": {
     "title": "IMPORTANT TO KNOW",
     "your_doctor": "YOUR DOCTOR",
-    "hospitals": "HOSPITALS",
-    "clinics": "PRIVATE CLINICS",
-    "vets": "VETERINARY CLINICS",
-    "doctors": "DOCTORS",
-    "dentists": "DENTAL CLINICS"
+    "hospitals": "Hospitals",
+    "clinics": "Private clinics",
+    "vets": "Veterinary clinics",
+    "doctors": "Doctors",
+    "dentists": "Dental clinics"
   },
   "cities": {
     "gagra": "Gagra",

@@ -80,11 +80,11 @@
   "important": {
     "title": "ВАЖНО ЗНАТЬ",
     "your_doctor": "ВАШ ДОКТОР",
-    "hospitals": "БОЛЬНИЦЫ",
-    "clinics": "ЧАСТНЫЕ КЛИНИКИ",
-    "vets": "ВЕТКЛИНИКИ",
-    "doctors": "ВРАЧИ",
-    "dentists": "СТОМАТОЛОГИИ"
+    "hospitals": "Больницы",
+    "clinics": "Частные клиники",
+    "vets": "Ветклиники",
+    "doctors": "Врачи",
+    "dentists": "Стоматологии"
   },
   "cities": {
     "gagra": "Гагра",

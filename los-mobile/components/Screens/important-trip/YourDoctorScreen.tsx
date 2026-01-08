@@ -309,8 +309,6 @@ const styles = StyleSheet.create({
   tabsContent: { paddingLeft: 20, paddingRight: 20, alignItems: 'center', gap: 10 },
   tab: { justifyContent: 'center', alignItems: 'center', height: 30 },
   tabText: { fontFamily: 'Inter', fontWeight: '700', fontSize: 12, lineHeight: 15, color: '#000', textAlign: 'center' },
-
-  // Card (like administrative buildings)
   card: { flexDirection: 'column', alignItems: 'flex-start', marginBottom: 20, backgroundColor: '#fff', gap: 8, width: '100%' },
   imageContainer: { width: '100%', height: 226, borderRadius: 15, overflow: 'hidden', borderWidth: 1, borderColor: 'rgba(185, 185, 185, 0.85)', backgroundColor: '#fff' },
   cardImage: { width: '100%', height: '100%' },
