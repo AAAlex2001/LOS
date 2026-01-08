@@ -84,13 +84,13 @@ class MusicTrack(TimestampedModel):
     Музыкальный трек
     """
 
-    page = models.ForeignKey(MusicPage, on_delete=models.CASCADE, related_name="tracks")
+    page = models.ForeignKey(MusicPage, on_delete=models.CASCADE, related_name="tracks", null=True, blank=True)
 
-    title = models.CharField("Название трека", max_length=255)
+    title = models.CharField("Название трека", max_length=255, blank=True, null=True)
 
-    artist = models.CharField("Исполнитель", max_length=255)
+    artist = models.CharField("Исполнитель", max_length=255, blank=True, null=True)
 
-    audio_file = models.FileField("Аудио файл", upload_to="music/tracks/%Y/%m/%d", help_text="MP3 файл")
+    audio_file = models.FileField("Аудио файл", upload_to="music/tracks/%Y/%m/%d", help_text="MP3 файл", blank=True, null=True)
 
     order = models.PositiveIntegerField(default=0)
 
