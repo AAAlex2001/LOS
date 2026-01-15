@@ -24,25 +24,28 @@ type WelcomeContent = {
   icons?: { image: string; order?: number }[];
 };
 
-// Позиции иконок относительно центра экрана (уменьшены и сдвинуты к центру)
-const iconPositions = [
-  { width: 75, height: 75, left: -140, top: -300, rotation: 6, delay: 0 },
-  { width: 75, height: 75, left: 80, top: -300, rotation: -15, delay: 150 },
-  { width: 75, height: 75, left: -140, top: 180, rotation: 10, delay: 300 },
-  { width: 70, height: 70, left: -40, top: 100, rotation: -5, delay: 450 },
-  { width: 65, height: 65, left: 80, top: 40, rotation: 7, delay: 600 },
+// Конфигурация иконок: размеры, горизонтальное смещение от центра, вращение, задержка анимации
+// Иконки 0,1 — верхние (между заголовками), иконки 2,3,4 — нижние (после кнопки)
+const iconConfigs = [
+  { width: 85, height: 85, offsetX: -120, rotation: 6, delay: 0 },      // мандарин (слева)
+  { width: 75, height: 75, offsetX: 120, rotation: -15, delay: 150 },   // правая верхняя (симметрично мандарину)
+  { width: 75, height: 75, offsetX: -130, rotation: 10, delay: 300 },   // левая нижняя
+  { width: 70, height: 70, offsetX: 0, rotation: -5, delay: 450 },      // центр нижняя
+  { width: 65, height: 65, offsetX: 110, rotation: 7, delay: 600 },     // правая нижняя
 ];
 
 export default function WelcomeScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const [content, setContent] = useState<WelcomeContent | null>(null);
-  const [titleY, setTitleY] = useState(0);
+  const [titleBottomY, setTitleBottomY] = useState(0);       // нижняя граница верхнего заголовка
+  const [subtitleTopY, setSubtitleTopY] = useState(0);       // верхняя граница subtitle
+  const [buttonBottomY, setButtonBottomY] = useState(0);     // нижняя граница кнопки
   
   // X для верхних (0,1), Y для нижних (2,3,4)
-  const translateXAnims = useRef(iconPositions.map(() => new Animated.Value(0))).current;
-  const translateYAnims = useRef(iconPositions.map(() => new Animated.Value(0))).current;
-  const fadeAnims = useRef(iconPositions.map(() => new Animated.Value(0))).current;
+  const translateXAnims = useRef(iconConfigs.map(() => new Animated.Value(0))).current;
+  const translateYAnims = useRef(iconConfigs.map(() => new Animated.Value(0))).current;
+  const fadeAnims = useRef(iconConfigs.map(() => new Animated.Value(0))).current;
 
   useEffect(() => {
     const vibrate = async () => {
@@ -71,7 +74,7 @@ export default function WelcomeScreen() {
 
   useEffect(() => {
     // Стартовые позиции для анимации
-    iconPositions.forEach((icon, index) => {
+    iconConfigs.forEach((icon, index) => {
       fadeAnims[index].setValue(0);
       if (index === 0) {
         // Слева
@@ -88,7 +91,7 @@ export default function WelcomeScreen() {
       }
     });
 
-    const animations = iconPositions.map((icon, index) =>
+    const animations = iconConfigs.map((icon, index) =>
       Animated.parallel([
         index <= 1
           ? Animated.spring(translateXAnims[index], {
@@ -129,14 +132,29 @@ export default function WelcomeScreen() {
             style={styles.title}
             onLayout={(e) => {
               const { y, height } = e.nativeEvent.layout;
-              setTitleY(y + height);
+              setTitleBottomY(y + height);
             }}
           >
             {content?.title}
           </Text>
-          <Text style={styles.heading}>{content?.subtitle}</Text>
+          <Text 
+            style={styles.heading}
+            onLayout={(e) => {
+              const { y } = e.nativeEvent.layout;
+              setSubtitleTopY(y);
+            }}
+          >
+            {content?.subtitle}
+          </Text>
           <Text style={styles.description}>{content?.description}</Text>
-          <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
+          <TouchableOpacity 
+            style={styles.button} 
+            onPress={handleGetStarted}
+            onLayout={(e) => {
+              const { y, height } = e.nativeEvent.layout;
+              setButtonBottomY(y + height);
+            }}
+          >
             <Text style={styles.buttonText}>{t('common.start_exploring')}</Text>
             <Ionicons name="arrow-forward" size={31} color="#FFFFFF" />
           </TouchableOpacity>
@@ -144,18 +162,23 @@ export default function WelcomeScreen() {
           {/* Floating Icons */}
           <View style={styles.iconsContainer}>
             {content?.icons?.slice(0, 5).map((iconData, index) => {
-              const pos = iconPositions[index];
-              if (!pos) return null;
+              const cfg = iconConfigs[index];
+              if (!cfg) return null;
               const opacity = fadeAnims[index];
               
-              // Для первых двух иконок позиционируем относительно заголовка
-              let topPosition;
+              // Вычисляем позицию Y
+              let topPosition: number;
               if (index <= 1) {
-                // Позиция под заголовком + небольшой отступ
-                topPosition = titleY > 0 ? titleY + 20 : SCREEN_HEIGHT / 2 + pos.top;
+                // Верхние иконки: между title и subtitle (по центру этого промежутка)
+                const gapCenter = titleBottomY + (subtitleTopY - titleBottomY) / 2;
+                topPosition = gapCenter - cfg.height / 2;
               } else {
-                // Для остальных иконок используем центр экрана
-                topPosition = SCREEN_HEIGHT / 2 + pos.top;
+                // Нижние иконки: после кнопки (лесенкой)
+                const baseY = buttonBottomY + 30 + 35; // отступ от кнопки для правой (+35px сдвиг)
+                const bottomY = baseY + 100;      // самая нижняя (левая)
+                if (index === 2) topPosition = bottomY;                    // левая - самая нижняя
+                else if (index === 3) topPosition = baseY + (bottomY - baseY) / 2;  // центр - посередине
+                else topPosition = baseY;                                  // правая - 65px от кнопки
               }
               
               return (
@@ -164,12 +187,12 @@ export default function WelcomeScreen() {
                   style={[
                     styles.icon,
                     {
-                      width: pos.width,
-                      height: pos.height,
-                      left: SCREEN_WIDTH / 2 + pos.left,
+                      width: cfg.width,
+                      height: cfg.height,
+                      left: SCREEN_WIDTH / 2 + cfg.offsetX - cfg.width / 2,
                       top: topPosition,
                       transform: [
-                        { rotate: `${pos.rotation}deg` },
+                        { rotate: `${cfg.rotation}deg` },
                         { translateX: translateXAnims[index] },
                         { translateY: translateYAnims[index] },
                       ],

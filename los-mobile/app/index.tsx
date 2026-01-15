@@ -6,11 +6,33 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
 import AdBanner from '../pages/AdBanner/AdBanner';
 import WelcomeScreen from '../pages/Welcome/Welcome';
+import config from '../config';
+import { addLangParam } from '@/i18n';
 
 export default function IndexScreen() {
   const [showSplash, setShowSplash] = useState(true);
   const [showAd, setShowAd] = useState(false);
+  const [prefetchedAd, setPrefetchedAd] = useState<any>(null);
+  const [adLoaded, setAdLoaded] = useState(false);
   const fadeAnim = useRef(new Animated.Value(1)).current;
+
+  // Загружаем рекламу сразу при монтировании (во время сплэша)
+  useEffect(() => {
+    const loadAd = async () => {
+      try {
+        const res = await fetch(addLangParam(`${config.API_BASE}/api/ad-banner/content/`), { cache: 'no-store' });
+        if (res.ok) {
+          const json = await res.json();
+          if (json?.is_active !== false) setPrefetchedAd(json);
+        }
+      } catch (e) {
+        console.error('Prefetch ad error', e);
+      } finally {
+        setAdLoaded(true);
+      }
+    };
+    loadAd();
+  }, []);
 
   useEffect(() => {
     // Устанавливаем синий фон для системных баров во время сплэша
@@ -26,7 +48,7 @@ export default function IndexScreen() {
         setShowSplash(false);
         // Меняем фон системных баров на белый
         await SystemUI.setBackgroundColorAsync('#FFFFFF');
-        // Показываем рекламу
+        // Показываем рекламу (данные уже загружены)
         setShowAd(true);
         // Сердцебиение: два импакта с небольшой задержкой
         try {
@@ -56,11 +78,22 @@ export default function IndexScreen() {
     );
   }
 
+  // Если реклама ещё не загружена — показываем белый экран (ждём)
+  if (!adLoaded) {
+    return (
+      <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+        <StatusBar style="dark" />
+      </View>
+    );
+  }
+
   return (
     <>
       <StatusBar style="dark" />
-      <WelcomeScreen />
-      <AdBanner visible={showAd} onClose={() => setShowAd(false)} />
+      {/* Сначала показываем рекламу поверх Welcome */}
+      <AdBanner visible={showAd && !!prefetchedAd} onClose={() => setShowAd(false)} prefetchedAd={prefetchedAd} />
+      {/* Welcome показывается только когда реклама закрыта или её нет */}
+      {(!showAd || !prefetchedAd) && <WelcomeScreen />}
     </>
   );
 }

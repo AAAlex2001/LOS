@@ -12,6 +12,7 @@
     "address": "Address",
     "email": "Email",
     "website": "Website",
+    "price": "Price:",
     "services": "Services",
     "scrollToTop": "Back to top",
     "languageRussian": "Русский",

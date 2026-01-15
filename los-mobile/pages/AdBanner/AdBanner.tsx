@@ -19,6 +19,7 @@ import {useTranslation, addLangParam} from '@/i18n';
 interface AdBannerProps {
   visible: boolean;
   onClose: () => void;
+  prefetchedAd?: AdBannerData | null;
 }
 
 interface AdBannerData {
@@ -38,7 +39,7 @@ const toImageUrl = (url?: string) => {
   return `${API_BASE}/media/${url}`;
 };
 
-const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose }) => {
+const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose, prefetchedAd }) => {
   const { t } = useTranslation();
   const progressAnim = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
@@ -70,14 +71,20 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose }) => {
     const loadAdData = async () => {
       try {
         setLoading(true);
+
+        if (prefetchedAd) {
+          if (prefetchedAd.is_active !== false) setAdData(prefetchedAd as AdBannerData);
+          else setAdData(null);
+          setLoading(false);
+          return;
+        }
+
         const res = await fetch(addLangParam(`${API_BASE}/api/ad-banner/content/`), { cache: 'no-store' });
         if (!res.ok) {
-          // Если нет данных, используем пустые значения и не показываем баннер
           setAdData(null);
           return;
         }
         const json = await res.json() as AdBannerData;
-        // Показываем баннер только если он активен
         if (json.is_active !== false) {
           setAdData(json);
         } else {
@@ -92,7 +99,7 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose }) => {
     };
 
     loadAdData();
-  }, [visible]);
+  }, [visible, prefetchedAd]);
 
   const handleOpenLink = async () => {
     if (!adData?.url) return;

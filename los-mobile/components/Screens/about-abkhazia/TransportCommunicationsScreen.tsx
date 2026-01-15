@@ -10,6 +10,7 @@ interface TransportBlock {
   id: number;
   title: string;
   location_link?: string;
+  website?: string;
   image_1?: string;
   image_2?: string;
   order: number;
@@ -94,6 +95,14 @@ export default function TransportCommunicationsScreen({ visible, onClose }: { vi
                       />
                     )}
                   </View>
+                  {block.website && (
+                    <View style={styles.infoBlock}>
+                      <Text style={styles.infoLabel}>{t('common.website')}</Text>
+                      <TouchableOpacity onPress={() => Linking.openURL(block.website!)}>
+                        <Text style={[styles.websiteLink, styles.underline]}>{block.website}</Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
                 </View>
               ))}
             </>
@@ -188,4 +197,26 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#666',
   },
+  infoBlock: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    width: '100%',
+    gap: 4,
+    paddingTop: 6,
+  },
+  infoLabel: {
+    fontFamily: 'Inter',
+    fontWeight: '700',
+    fontSize: 14,
+    lineHeight: 17,
+    color: '#1129BD',
+  },
+  websiteLink: {
+    fontFamily: 'Inter',
+    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 17,
+    color: '#1129BD',
+  },
+  underline: { textDecorationLine: 'underline' },
 });

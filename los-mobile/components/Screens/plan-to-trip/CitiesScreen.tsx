@@ -98,7 +98,7 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
       'гал': 'gal',
       'гудаута': 'gudauta',
       'гулрыпш': 'gulripsh',
-      'новый афон': 'new afon',
+      'новый-афон': 'new-afon',
       'пицунда': 'pitsunda',
       'ткуарчал': 'tkuarchal',
       'очамчыра': 'ochamchira',
