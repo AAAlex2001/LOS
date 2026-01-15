@@ -18,7 +18,7 @@ class TransportBlockInline(TranslationTabularInline):
 
     extra = 0
 
-    fields = ("title", "location_link", "image_1", "image_1_preview", "image_2", "image_2_preview", "order")
+    fields = ("title", "location_link", "website", "image_1", "image_1_preview", "image_2", "image_2_preview", "order")
 
     readonly_fields = ("image_1_preview", "image_2_preview")
 

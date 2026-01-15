@@ -14,7 +14,7 @@ class TransportBlockSerializer(serializers.ModelSerializer):
 
         fields = [
 
-            'id', 'title', 'location_link', 'image_1', 'image_2', 'order'
+            'id', 'title', 'location_link', 'website', 'image_1', 'image_2', 'order'
 
         ]
 

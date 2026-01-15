@@ -108,6 +108,8 @@ class Hotel(TimestampedModel):
 
     contacts = models.CharField("Контакты", max_length=255, blank=True)
 
+    website = models.URLField("Сайт", blank=True)
+
     price = models.CharField("Цена", max_length=255, blank=True)
 
     image = models.ImageField("Изображение", upload_to="hotels/images/", blank=True)

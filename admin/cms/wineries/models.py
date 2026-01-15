@@ -110,6 +110,8 @@ class Winery(TimestampedModel):
 
     contacts = models.CharField("Контакты", max_length=255, blank=True)
 
+    website = models.URLField("Сайт", blank=True)
+
     image = models.ImageField("Изображение", upload_to="wineries/images/", blank=True)
 
     order = models.PositiveIntegerField(default=0)

@@ -14,6 +14,7 @@ interface Winery {
   address_link: string;
   working_hours: string;
   contacts: string;
+  website?: string;
   image_url: string;
   order: number;
 }
@@ -151,6 +152,15 @@ export default function WineriesSukhumScreen({ visible, onClose }: { visible: bo
                           return <Text key={index}>{segment.value}</Text>;
                         })}
                       </Text>
+                    </View>
+                  )}
+
+                  {winery.website && (
+                    <View style={styles.infoBlock}>
+                      <Text style={styles.infoLabel}>{t('common.website')}</Text>
+                      <TouchableOpacity onPress={() => openLink(winery.website!)}>
+                        <Text style={[styles.infoValue, styles.underline]}>{winery.website}</Text>
+                      </TouchableOpacity>
                     </View>
                   )}
                 </View>

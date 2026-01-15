@@ -19,6 +19,7 @@ type Winery = {
   address: string;
   address_link?: string;
   phone?: string;
+  website?: string;
   working_hours?: string;
   image_url: string;
   order: number;
@@ -153,6 +154,15 @@ const WineriesTkuarchal: React.FC = () => {
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>{t('common.phone')}:</span>
                       <span className={styles.infoValue}>{winery.phone}</span>
+                    </div>
+                  )}
+
+                  {winery.website && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>{t('common.website')}:</span>
+                      <span className={`${styles.infoValue} ${styles.addressLink}`}>
+                        <a href={winery.website} target="_blank" rel="noopener noreferrer">{winery.website}</a>
+                      </span>
                     </div>
                   )}
                 </div>

@@ -34,7 +34,7 @@ class HotelSerializer(serializers.ModelSerializer):
 
             "id", "city", "name", "address", "address_link",
 
-            "contacts", "price", "image_url", "order"
+            "contacts", "website", "price", "image_url", "order"
 
         ]
 

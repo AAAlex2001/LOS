@@ -18,7 +18,7 @@ class HotelInline(TranslationTabularInline):
 
     extra = 1
 
-    fields = ("city", "name", "address", "address_link", "contacts", "price", "image", "order", "preview")
+    fields = ("city", "name", "address", "address_link", "contacts", "website", "price", "image", "order", "preview")
 
     readonly_fields = ("preview",)
 

@@ -13,6 +13,7 @@ interface Hotel {
   address: string;
   address_link: string;
   contacts: string;
+  website?: string;
   price: string;
   image_url: string;
   order: number;
@@ -138,6 +139,15 @@ export default function HotelsGulripshScreen({ visible, onClose }: { visible: bo
                     </View>
                   )}
                   
+                  {hotel.website && (
+                    <View style={styles.infoBlock}>
+                      <Text style={styles.infoLabel}>{t('common.website')}</Text>
+                      <TouchableOpacity onPress={() => openLink(hotel.website!)}>
+                        <Text style={[styles.infoValue, styles.underline]}>{hotel.website}</Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+
                   {hotel.price && (
                     <View style={styles.infoBlock}>
                       <Text style={styles.infoLabel}>{t('common.price')}</Text>

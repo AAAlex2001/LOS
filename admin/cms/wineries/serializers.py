@@ -34,7 +34,7 @@ class WinerySerializer(serializers.ModelSerializer):
 
             "id", "city", "name", "working_hours", "address", "address_link",
 
-            "contacts", "image_url", "order"
+            "contacts", "website", "image_url", "order"
 
         ]
 

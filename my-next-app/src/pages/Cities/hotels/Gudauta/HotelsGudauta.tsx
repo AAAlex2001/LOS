@@ -18,6 +18,7 @@ type Hotel = {
   address: string;
   address_link?: string;
   contacts?: string;
+  website?: string;
   price?: string;
   image_url: string;
   order: number;
@@ -139,7 +140,16 @@ const HotelsGudauta: React.FC = () => {
                       <span className={styles.infoValue}>{hotel.contacts}</span>
                     </div>
                   )}
-                  
+
+                  {hotel.website && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>{t('common.website')}:</span>
+                      <span className={`${styles.infoValue} ${styles.addressLink}`}>
+                        <a href={hotel.website} target="_blank" rel="noopener noreferrer">{hotel.website}</a>
+                      </span>
+                    </div>
+                  )}
+
                   {hotel.price && (
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>{t('common.price')}:</span>

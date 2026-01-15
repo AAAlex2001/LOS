@@ -13,6 +13,7 @@ interface TransportBlock {
   id: number;
   title: string;
   location_link?: string;
+  website?: string;
   image_1?: string;
   image_2?: string;
   order: number;
@@ -97,6 +98,14 @@ const TransportCommunications = () => {
               </h2>
             ) : (
               <h2 className={styles.blockTitle}>{block.title}</h2>
+            )}
+            {block.website && (
+              <div className={styles.websiteLink}>
+                <span>{t('common.website')}: </span>
+                <a href={block.website} target="_blank" rel="noopener noreferrer">
+                  {block.website}
+                </a>
+              </div>
             )}
             <div className={styles.imagesContainer}>
               {block.image_1 && (

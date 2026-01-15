@@ -80,6 +80,8 @@ class TransportBlock(TimestampedModel):
 
     location_link = models.URLField("Ссылка на геолокацию", blank=True, help_text="Ссылка на карту для заголовка")
 
+    website = models.URLField("Сайт", blank=True)
+
     image_1 = models.ImageField("Первое изображение", upload_to="transport_communications/blocks/", blank=True)
 
     image_2 = models.ImageField("Второе изображение", upload_to="transport_communications/blocks/", blank=True)

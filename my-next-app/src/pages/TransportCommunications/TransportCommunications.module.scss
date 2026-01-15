@@ -48,6 +48,23 @@ $color-background: #ffffff;
   margin: 0 auto 32px;
 }
 
+.websiteLink {
+  font-family: $font-family;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 24px;
+  color: $color-text-secondary;
+
+  a {
+    color: $color-primary;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
 .imagesContainer {
   display: flex;
   justify-content: center;
