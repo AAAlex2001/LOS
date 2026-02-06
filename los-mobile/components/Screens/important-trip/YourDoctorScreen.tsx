@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
   tab: { justifyContent: 'center', alignItems: 'center', height: 30 },
   tabText: { fontFamily: 'Inter', fontWeight: '700', fontSize: 12, lineHeight: 15, color: '#000', textAlign: 'center' },
   card: { flexDirection: 'column', alignItems: 'flex-start', marginBottom: 20, backgroundColor: '#fff', gap: 8, width: '100%' },
-  imageContainer: { width: '100%', height: 226, borderRadius: 15, overflow: 'hidden', borderWidth: 1, borderColor: 'rgba(185, 185, 185, 0.85)', backgroundColor: '#fff' },
+  imageContainer: { width: '100%', height: 320, borderRadius: 15, overflow: 'hidden', borderWidth: 1, borderColor: 'rgba(185, 185, 185, 0.85)', backgroundColor: '#fff' },
   cardImage: { width: '100%', height: '100%' },
   infoContainer: { flexDirection: 'column', alignItems: 'flex-start', padding: 10, gap: 8, width: '100%', backgroundColor: 'rgba(17, 41, 189, 0.1)', borderWidth: 1, borderColor: '#D5DAEF', borderRadius: 15 },
   itemName: { fontFamily: 'Inter', fontWeight: '800', fontSize: 14, lineHeight: 17, color: '#1129BD' },
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
   hospitalTitle: { width: '100%', fontFamily: 'Inter', fontWeight: '700', fontSize: 14, lineHeight: 17, color: '#1129BD' },
   hospitalDoctors: { width: '100%', fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, color: '#000' },
 
-  heroImage: { width: '100%', height: 226, borderRadius: 15 },
+  heroImage: { width: '100%', height: 420, borderRadius: 15 },
 });
 
 

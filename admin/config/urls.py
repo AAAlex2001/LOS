@@ -12,7 +12,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
 
-    path("admin/", admin.site.urls),
+    path("core/v2/internal/9F4dKp/", admin.site.urls),
 
     path("api/", include("cms.urls")),
 
