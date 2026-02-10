@@ -1,10 +1,7 @@
 from rest_framework import serializers
 
 
-
 from .models import WineriesPage, WineryCity, Winery
-
-
 
 
 
@@ -19,10 +16,10 @@ class CitySerializer(serializers.ModelSerializer):
 
 
 
-
 class WinerySerializer(serializers.ModelSerializer):
 
     image_url = serializers.SerializerMethodField()
+    phone = serializers.SerializerMethodField()
 
 
 
@@ -34,7 +31,7 @@ class WinerySerializer(serializers.ModelSerializer):
 
             "id", "city", "name", "working_hours", "address", "address_link",
 
-            "contacts", "website", "image_url", "order"
+            "contacts", "phone", "website", "image_url", "order"
 
         ]
 
@@ -48,7 +45,8 @@ class WinerySerializer(serializers.ModelSerializer):
 
         return obj.image.url.replace('/media/', '')
 
-
+    def get_phone(self, obj: Winery) -> str:
+        return obj.contacts
 
 
 
@@ -75,6 +73,3 @@ class WineriesPageSerializer(serializers.ModelSerializer):
             "cities", "wineries"
 
         ]
-
-
-

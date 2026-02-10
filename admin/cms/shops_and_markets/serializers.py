@@ -23,6 +23,7 @@ class CitySerializer(serializers.ModelSerializer):
 class ShopSerializer(serializers.ModelSerializer):
 
     image_url = serializers.SerializerMethodField()
+    phone = serializers.SerializerMethodField()
 
 
 
@@ -34,7 +35,7 @@ class ShopSerializer(serializers.ModelSerializer):
 
             "id", "city", "name", "working_hours", "address", "address_link",
 
-            "contacts", "image_url", "order"
+            "contacts", "phone", "image_url", "order"
 
         ]
 
@@ -47,6 +48,10 @@ class ShopSerializer(serializers.ModelSerializer):
             return ""
 
         return obj.image.url.replace('/media/', '')
+    
+    def get_phone(self, obj: ShopOrMarket) -> str:
+        # alias for frontend which expects `phone`
+        return obj.contacts
 
 
 
