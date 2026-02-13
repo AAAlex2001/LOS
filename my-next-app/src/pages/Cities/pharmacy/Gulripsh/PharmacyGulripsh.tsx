@@ -44,11 +44,13 @@ const PharmacyGulripsh: React.FC = () => {
       try {
         const url = getApiUrl(`/api/pharmacy/page/city_page/${encodeURIComponent('Гулрыпш')}/`, locale);
         const res = await fetch(url, { cache: 'no-store' });
-        
         if (!res.ok) {
           if (res.status === 404) {
-            const errorData = await res.json();
-            throw new Error(errorData.error || t('common.pageNotFound'));
+            const cityName = "Гулрыпш";
+            // Treat 404 as empty page: set minimal data so UI shows empty lists
+            setData({ title: "Гулрыпш",
+  pharmacies: [] });
+            return;
           }
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }
@@ -132,7 +134,7 @@ const PharmacyGulripsh: React.FC = () => {
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>{t('address')}</span>
+                    <span className={styles.infoLabel}>{t('common.address')}:</span>
                     <span className={`${styles.infoValue} ${pharmacy.address_link ? styles.addressLink : ''}`}>
                       {pharmacy.address_link ? (
                         <a href={pharmacy.address_link} target="_blank" rel="noopener noreferrer">{pharmacy.address}</a>
@@ -144,14 +146,14 @@ const PharmacyGulripsh: React.FC = () => {
                   
                   {pharmacy.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>{t('workingHours')}</span>
+                      <span className={styles.infoLabel}>{t('common.workingHours')}:</span>
                       <span className={styles.infoValue}>{pharmacy.working_hours}</span>
                     </div>
                   )}
                   
                   {pharmacy.phone && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>{t('phone')}</span>
+                      <span className={styles.infoLabel}>{t('common.phone')}:</span>
                       <span className={styles.infoValue}>{pharmacy.phone}</span>
                     </div>
                   )}

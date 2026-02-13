@@ -23,6 +23,7 @@ class CitySerializer(serializers.ModelSerializer):
 class PharmacySerializer(serializers.ModelSerializer):
 
     image_url = serializers.SerializerMethodField()
+    phone = serializers.SerializerMethodField()
 
 
 
@@ -34,7 +35,7 @@ class PharmacySerializer(serializers.ModelSerializer):
 
             "id", "city", "name", "name_link", "working_hours", "address", "address_link",
 
-            "contacts", "image_url", "order"
+            "contacts", "phone", "image_url", "order"
 
         ]
 
@@ -47,6 +48,9 @@ class PharmacySerializer(serializers.ModelSerializer):
             return ""
 
         return obj.image.url.replace('/media/', '')
+
+    def get_phone(self, obj: PharmacyItem) -> str:
+        return obj.contacts
 
 
 

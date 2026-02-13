@@ -19,6 +19,7 @@ type CarWash = {
   address: string;
   address_link?: string;
   contacts?: string;
+  phone?: string;
   working_hours?: string;
   services?: string;
   image_url: string;
@@ -46,11 +47,12 @@ const CarWashesSukhum: React.FC = () => {
         const cityName = t('cities.sukhum');
         const url = getApiUrl(`/api/car-washes/page/city_page/${encodeURIComponent(cityName)}/`, locale);
         const res = await fetch(url, { cache: 'no-store' });
-        
         if (!res.ok) {
           if (res.status === 404) {
-            const errorData = await res.json();
-            throw new Error(errorData.error || t('common.pageNotFound'));
+            // Treat 404 as empty page: set minimal data so UI shows empty lists
+            setData({ title: cityName,
+  car_washes: [] });
+            return;
           }
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }
@@ -106,7 +108,12 @@ const CarWashesSukhum: React.FC = () => {
 
           {/* Карточки моек */}
           <section className={styles.cardsSection}>
-          {carWashes.map((carWash) => (
+          {carWashes.length === 0 ? (
+            <div style={{color:'#999', fontSize:'clamp(24px, 6vw, 64px)', textAlign:'center', padding:'clamp(60px, 15vw, 200px) 20px', lineHeight:1.2}}>
+              {t('noInfo')}
+            </div>
+          ) : (
+            carWashes.map((carWash) => (
             <div key={carWash.id} className={styles.buildingCard}>
               {/* Изображение */}
               <div className={styles.imageContainer}>
@@ -144,10 +151,10 @@ const CarWashesSukhum: React.FC = () => {
                     </span>
                   </div>
                   
-                  {carWash.contacts && (
+                  {(carWash.phone || carWash.contacts) && (
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>{t('common.contacts')}:</span>
-                      <span className={styles.infoValue}>{carWash.contacts}</span>
+                      <span className={styles.infoValue}>{carWash.phone || carWash.contacts}</span>
                     </div>
                   )}
                   
@@ -167,7 +174,8 @@ const CarWashesSukhum: React.FC = () => {
                 </div>
               </div>
             </div>
-          ))}
+          )))
+          }
           </section>
         </div>
       </main>

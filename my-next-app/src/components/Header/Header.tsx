@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Header.module.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from '@/i18n/LocaleContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher';
 
@@ -13,6 +13,41 @@ const Header = () => {
   const t = useTranslations('header');
   const { locale } = useLocale();
 
+  useEffect(() => {
+    const applyPlaceholder = () => {
+      const sections = Array.from(document.querySelectorAll('[class*="cardsSection"]'));
+      sections.forEach((el) => {
+        const hasItems = el.querySelectorAll('[class*="buildingCard"]').length > 0 || Array.from(el.children).some(c => c.textContent && c.textContent.trim().length > 0 && !c.className.includes('noInfoPlaceholder'));
+        const existing = el.querySelector('.noInfoPlaceholder');
+        if (!hasItems) {
+          if (!existing) {
+            const div = document.createElement('div');
+            div.className = 'noInfoPlaceholder';
+            div.style.color = '#999';
+            div.style.fontSize = 'clamp(24px, 6vw, 64px)';
+            div.style.textAlign = 'center';
+            div.style.padding = 'clamp(60px, 15vw, 200px) 20px';
+            div.style.lineHeight = '1.2';
+            try {
+              // @ts-ignore
+              const txt = (window as any).__NEXT_LOCALE === 'en' ? 'No information available yet' : undefined;
+              div.textContent = txt || (document.documentElement.lang === 'en' ? 'No information available yet' : 'Пока нет информации');
+            } catch (e) {
+              div.textContent = 'Пока нет информации';
+            }
+            el.appendChild(div);
+          }
+        } else if (existing) {
+          existing.remove();
+        }
+      });
+    };
+
+    applyPlaceholder();
+    const mo = new MutationObserver(() => applyPlaceholder());
+    mo.observe(document.body, { childList: true, subtree: true });
+    return () => mo.disconnect();
+  }, [locale]);
   return (
     <>
       {/* Overlay */}

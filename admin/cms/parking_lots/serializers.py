@@ -23,6 +23,7 @@ class CitySerializer(serializers.ModelSerializer):
 class ParkingLotSerializer(serializers.ModelSerializer):
 
     image_url = serializers.SerializerMethodField()
+    phone = serializers.SerializerMethodField()
 
 
 
@@ -34,7 +35,7 @@ class ParkingLotSerializer(serializers.ModelSerializer):
 
             "id", "city", "name", "address", "address_link",
 
-            "working_hours", "contacts", "image_url", "order"
+            "working_hours", "contacts", "phone", "image_url", "order"
 
         ]
 
@@ -47,6 +48,9 @@ class ParkingLotSerializer(serializers.ModelSerializer):
             return ""
 
         return obj.image.url.replace('/media/', '')
+
+    def get_phone(self, obj: ParkingLot) -> str:
+        return obj.contacts
 
 
 

@@ -45,11 +45,13 @@ const WineriesGal: React.FC = () => {
       try {
         const url = getApiUrl(`/api/wineries/page/city_page/${encodeURIComponent('Гал')}/`, locale);
         const res = await fetch(url, { cache: 'no-store' });
-        
         if (!res.ok) {
           if (res.status === 404) {
-            const errorData = await res.json();
-            throw new Error(errorData.error || t('common.pageNotFound'));
+            const cityName = "Гал";
+            // Treat 404 as empty page: set minimal data so UI shows empty lists
+            setData({ title: "Гал",
+  wineries: [] });
+            return;
           }
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }

@@ -44,11 +44,13 @@ const BeachesPitsunda: React.FC = () => {
       try {
         const url = getApiUrl(`/api/beaches/page/city_page/${encodeURIComponent('Пицунда')}/`, locale);
         const res = await fetch(url, { cache: 'no-store' });
-        
         if (!res.ok) {
           if (res.status === 404) {
-            const errorData = await res.json();
-            throw new Error(errorData.error || t('common.pageNotFound'));
+            const cityName = "Пицунда";
+            // Treat 404 as empty page: set minimal data so UI shows empty lists
+            setData({ title: "Пицунда",
+  beaches: [] });
+            return;
           }
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }

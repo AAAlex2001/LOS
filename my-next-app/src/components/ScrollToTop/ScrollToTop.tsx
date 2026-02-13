@@ -9,14 +9,27 @@ const SCROLL_THRESHOLD = 200; // px
 const ScrollToTop: React.FC = () => {
   const [visible, setVisible] = useState(false);
   
-  // Try to get locale context, but don't fail if it's not available
-  let ariaLabel = 'Scroll to top';
-  try {
-    const { locale } = useLocale();
-    ariaLabel = locale === 'ru' ? 'Наверх' : 'Scroll to top';
-  } catch {
-    // Provider not available, use default
-  }
+  const [ariaLabel, setAriaLabel] = useState('Scroll to top');
+
+  React.useEffect(() => {
+    try {
+      const htmlLang = document.documentElement.lang;
+      if (htmlLang && htmlLang.startsWith('ru')) {
+        setAriaLabel('Наверх');
+        return;
+      }
+
+      const segments = window.location.pathname.split('/');
+      if (segments[1] === 'ru') {
+        setAriaLabel('Наверх');
+        return;
+      }
+
+      setAriaLabel('Scroll to top');
+    } catch {
+      setAriaLabel('Scroll to top');
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,6 +48,7 @@ const ScrollToTop: React.FC = () => {
 
   return (
     <button
+      suppressHydrationWarning
       className={`scroll-to-top-btn${visible ? ' show' : ''}`}
       onClick={scrollToTop}
       aria-label={ariaLabel}

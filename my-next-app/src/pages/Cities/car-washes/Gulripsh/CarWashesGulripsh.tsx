@@ -19,6 +19,7 @@ type CarWash = {
   address: string;
   address_link?: string;
   contacts?: string;
+  phone?: string;
   working_hours?: string;
   services?: string;
   image_url: string;
@@ -45,11 +46,13 @@ const CarWashesGulripsh: React.FC = () => {
       try {
         const url = getApiUrl(`/api/car-washes/page/city_page/${encodeURIComponent('Гулрыпш')}/`, locale);
         const res = await fetch(url, { cache: 'no-store' });
-        
         if (!res.ok) {
           if (res.status === 404) {
-            const errorData = await res.json();
-            throw new Error(errorData.error || t('common.pageNotFound'));
+            const cityName = "Гулрыпш";
+            // Treat 404 as empty page: set minimal data so UI shows empty lists
+            setData({ title: "Гулрыпш",
+  car_washes: [] });
+            return;
           }
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }

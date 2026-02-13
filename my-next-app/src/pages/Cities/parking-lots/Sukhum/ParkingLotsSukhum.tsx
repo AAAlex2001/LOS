@@ -20,6 +20,7 @@ type ParkingLot = {
   address_link?: string;
   working_hours?: string;
   contacts?: string;
+  phone?: string;
   image_url: string;
   order: number;
 };
@@ -45,15 +46,16 @@ const ParkingLotsSukhum: React.FC = () => {
         const cityName = t('cities.sukhum');
         const url = getApiUrl(`/api/parking-lots/page/city_page/${encodeURIComponent(cityName)}/`, locale);
         const res = await fetch(url, { cache: 'no-store' });
-        
         if (!res.ok) {
           if (res.status === 404) {
-            const errorData = await res.json();
-            throw new Error(errorData.error || t('common.pageNotFound'));
+            // Treat 404 as empty page: set minimal data so UI shows empty lists
+            setData({ title: cityName,
+  parking_lots: [] });
+            return;
           }
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }
-        
+
         const json = (await res.json()) as CityPageData;
         setData(json);
       } catch (e) {
@@ -105,7 +107,12 @@ const ParkingLotsSukhum: React.FC = () => {
 
           {/* Карточки парковок */}
           <section className={styles.cardsSection}>
-          {parkingLots.map((lot) => (
+          {parkingLots.length === 0 ? (
+            <div style={{color:'#999', fontSize:'clamp(24px, 6vw, 64px)', textAlign:'center', padding:'clamp(60px, 15vw, 200px) 20px', lineHeight:1.2}}>
+              {t('noInfo')}
+            </div>
+          ) : (
+            parkingLots.map((lot) => (
             <div key={lot.id} className={styles.buildingCard}>
               {/* Изображение */}
               <div className={styles.imageContainer}>
@@ -133,7 +140,7 @@ const ParkingLotsSukhum: React.FC = () => {
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>{t('address')}</span>
+                    <span className={styles.infoLabel}>{t('common.address')}:</span>
                     <span className={`${styles.infoValue} ${lot.address_link ? styles.addressLink : ''}`}>
                       {lot.address_link ? (
                         <a href={lot.address_link} target="_blank" rel="noopener noreferrer">{lot.address}</a>
@@ -145,21 +152,22 @@ const ParkingLotsSukhum: React.FC = () => {
                   
                   {lot.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>{t('workingHours')}</span>
+                      <span className={styles.infoLabel}>{t('common.workingHours')}:</span>
                       <span className={styles.infoValue}>{lot.working_hours}</span>
                     </div>
                   )}
                   
-                  {lot.contacts && (
+                  {(lot.phone || lot.contacts) && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>{t('contacts')}</span>
-                      <span className={styles.infoValue}>{lot.contacts}</span>
+                      <span className={styles.infoLabel}>{t('common.contacts')}:</span>
+                      <span className={styles.infoValue}>{lot.phone || lot.contacts}</span>
                     </div>
                   )}
                 </div>
               </div>
             </div>
-          ))}
+          )))
+          }
           </section>
         </div>
       </main>

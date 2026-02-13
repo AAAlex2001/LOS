@@ -45,11 +45,12 @@ const HotelsSukhum: React.FC = () => {
         const cityName = t('cities.sukhum');
         const url = getApiUrl(`/api/hotels/page/city_page/${encodeURIComponent(cityName)}/`, locale);
         const res = await fetch(url, { cache: 'no-store' });
-        
         if (!res.ok) {
           if (res.status === 404) {
-            const errorData = await res.json();
-            throw new Error(errorData.error || t('common.pageNotFound'));
+            // Treat 404 as empty page: set minimal data so UI shows empty lists
+            setData({ title: cityName,
+  hotels: [] });
+            return;
           }
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }

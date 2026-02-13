@@ -44,11 +44,13 @@ const HotelsNewAfon: React.FC = () => {
       try {
         const url = getApiUrl(`/api/hotels/page/city_page/${encodeURIComponent('Новый Афон')}/`, locale);
         const res = await fetch(url, { cache: 'no-store' });
-        
         if (!res.ok) {
           if (res.status === 404) {
-            const errorData = await res.json();
-            throw new Error(errorData.error || t('common.pageNotFound'));
+            const cityName = "Новый Афон";
+            // Treat 404 as empty page: set minimal data so UI shows empty lists
+            setData({ title: "Новый Афон",
+  hotels: [] });
+            return;
           }
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }

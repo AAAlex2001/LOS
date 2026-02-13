@@ -43,11 +43,13 @@ const GasStationsOchamchira: React.FC = () => {
       try {
         const url = getApiUrl(`/api/gas-stations/page/city_page/${encodeURIComponent('Очамчыра')}/`, locale);
         const res = await fetch(url, { cache: 'no-store' });
-        
         if (!res.ok) {
           if (res.status === 404) {
-            const errorData = await res.json();
-            throw new Error(errorData.error || t('common.pageNotFound'));
+            const cityName = "Очамчыра";
+            // Treat 404 as empty page: set minimal data so UI shows empty lists
+            setData({ title: "Очамчыра",
+  gas_stations: [] });
+            return;
           }
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }

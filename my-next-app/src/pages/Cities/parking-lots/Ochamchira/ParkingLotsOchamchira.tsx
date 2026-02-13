@@ -20,6 +20,7 @@ type ParkingLot = {
   address_link?: string;
   working_hours?: string;
   contacts?: string;
+  phone?: string;
   image_url: string;
   order: number;
 };
@@ -44,11 +45,13 @@ const ParkingLotsOchamchira: React.FC = () => {
       try {
         const url = getApiUrl(`/api/parking-lots/page/city_page/${encodeURIComponent('Очамчыра')}/`, locale);
         const res = await fetch(url, { cache: 'no-store' });
-        
         if (!res.ok) {
           if (res.status === 404) {
-            const errorData = await res.json();
-            throw new Error(errorData.error || t('common.pageNotFound'));
+            const cityName = "Очамчыра";
+            // Treat 404 as empty page: set minimal data so UI shows empty lists
+            setData({ title: "Очамчыра",
+  parking_lots: [] });
+            return;
           }
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }

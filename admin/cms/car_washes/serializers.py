@@ -23,6 +23,7 @@ class CitySerializer(serializers.ModelSerializer):
 class CarWashSerializer(serializers.ModelSerializer):
 
     image_url = serializers.SerializerMethodField()
+    phone = serializers.SerializerMethodField()
 
 
 
@@ -34,7 +35,7 @@ class CarWashSerializer(serializers.ModelSerializer):
 
             "id", "city", "name", "name_link", "address", "address_link",
 
-            "contacts", "working_hours", "services", "image_url", "order"
+            "contacts", "phone", "working_hours", "services", "image_url", "order"
 
         ]
 
@@ -47,6 +48,9 @@ class CarWashSerializer(serializers.ModelSerializer):
             return ""
 
         return obj.image.url.replace('/media/', '')
+
+    def get_phone(self, obj: CarWash) -> str:
+        return obj.contacts
 
 
 
