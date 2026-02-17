@@ -135,7 +135,7 @@ const ParkingLotsGagra: React.FC = () => {
                 
                 <div className={styles.infoBlock}>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>{t('address')}</span>
+                    <span className={styles.infoLabel}>{t('common.address')}</span>
                     <span className={`${styles.infoValue} ${lot.address_link ? styles.addressLink : ''}`}>
                       {lot.address_link ? (
                         <a href={lot.address_link} target="_blank" rel="noopener noreferrer">{lot.address}</a>
@@ -147,14 +147,14 @@ const ParkingLotsGagra: React.FC = () => {
                   
                   {lot.working_hours && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>{t('workingHours')}</span>
+                      <span className={styles.infoLabel}>{t('common.workingHours')}</span>
                       <span className={styles.infoValue}>{lot.working_hours}</span>
                     </div>
                   )}
                   
                   {lot.contacts && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>{t('contacts')}</span>
+                      <span className={styles.infoLabel}>{t('common.contacts')}</span>
                       <span className={styles.infoValue}>{lot.contacts}</span>
                     </div>
                   )}
