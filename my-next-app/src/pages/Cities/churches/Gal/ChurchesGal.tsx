@@ -154,7 +154,7 @@ const ChurchesGal: React.FC = () => {
                   
                   {church.description && (
                     <div className={styles.infoItem}>
-                      <span className={styles.infoLabel}>{t('categories.description')}:</span>
+                      <span className={styles.infoLabel}>{t('common.description')}:</span>
                       <span className={styles.infoValue}>{church.description}</span>
                     </div>
                   )}
