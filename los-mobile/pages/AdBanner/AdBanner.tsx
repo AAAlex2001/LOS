@@ -47,6 +47,11 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose, prefetchedAd }) =
   const [loading, setLoading] = useState(true);
   const [canClose, setCanClose] = useState(false);
 
+  const isAdPayloadValid = (payload: AdBannerData | null | undefined) => {
+    if (!payload || payload.is_active !== true) return false;
+    return Boolean(payload.image || payload.title || payload.description || payload.site || payload.url);
+  };
+
   useEffect(() => {
     if (visible) {
       setCanClose(false);
@@ -73,7 +78,7 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose, prefetchedAd }) =
         setLoading(true);
 
         if (prefetchedAd) {
-          if (prefetchedAd.is_active !== false) setAdData(prefetchedAd as AdBannerData);
+          if (isAdPayloadValid(prefetchedAd as AdBannerData)) setAdData(prefetchedAd as AdBannerData);
           else setAdData(null);
           setLoading(false);
           return;
@@ -85,7 +90,7 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose, prefetchedAd }) =
           return;
         }
         const json = await res.json() as AdBannerData;
-        if (json.is_active !== false) {
+        if (isAdPayloadValid(json)) {
           setAdData(json);
         } else {
           setAdData(null);

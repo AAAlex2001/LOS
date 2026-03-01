@@ -16,6 +16,11 @@ export default function IndexScreen() {
   const [adLoaded, setAdLoaded] = useState(false);
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
+  const isAdPayloadValid = (payload: any) => {
+    if (!payload || payload.is_active !== true) return false;
+    return Boolean(payload.image || payload.title || payload.description || payload.site || payload.url);
+  };
+
   // Загружаем рекламу сразу при монтировании (во время сплэша)
   useEffect(() => {
     const loadAd = async () => {
@@ -23,7 +28,8 @@ export default function IndexScreen() {
         const res = await fetch(addLangParam(`${config.API_BASE}/api/ad-banner/content/`), { cache: 'no-store' });
         if (res.ok) {
           const json = await res.json();
-          if (json?.is_active !== false) setPrefetchedAd(json);
+          if (isAdPayloadValid(json)) setPrefetchedAd(json);
+          else setPrefetchedAd(null);
         }
       } catch (e) {
         console.error('Prefetch ad error', e);

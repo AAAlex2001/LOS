@@ -5,7 +5,6 @@ import { useTranslation, changeLanguage } from '@/i18n';
 
 const languages = [
   { label: 'language.russian', code: 'ru' },
-  { label: 'language.abkhazian', code: 'ab' },
   { label: 'language.english', code: 'en' },
 ];
 
