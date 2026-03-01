@@ -7,6 +7,7 @@ import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
+import { saveScrollPosition } from '@/hooks/useScrollRestoration';
 
 const API_BASE = config.API_BASE;
 
@@ -54,7 +55,7 @@ const CitiesGal: React.FC = () => {
 
   if (loading) {
     return (
-      <div className={styles.galWrapper}>
+      <div className={styles.galWrapper} data-city-anchor="gal">
         <main className={styles.galContent}>
           <h1 className={styles.galTitle}>{t('common.loading')}</h1>
         </main>
@@ -64,7 +65,7 @@ const CitiesGal: React.FC = () => {
 
   if (error || !data) {
     return (
-      <div className={styles.galWrapper}>
+      <div className={styles.galWrapper} data-city-anchor="gal">
         <main className={styles.galContent}>
           <h1 className={styles.galTitle}>{error || t('common.error')}</h1>
         </main>
@@ -78,11 +79,12 @@ const CitiesGal: React.FC = () => {
 
   const handleItemClick = (category: Category) => {
     if (!category.is_active || !category.url) return;
+    saveScrollPosition('gal');
     router.push(category.url);
   };
 
   return (
-    <div className={styles.galWrapper}>
+    <div id="city-gal" className={styles.galWrapper}>
       <main className={styles.galContent}>
         <h1 className={styles.galTitle}>{data?.title || t('cities.galTitle')}</h1>
 

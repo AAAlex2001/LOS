@@ -7,6 +7,7 @@ import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
+import { saveScrollPosition } from '@/hooks/useScrollRestoration';
 
 const API_BASE = config.API_BASE;
 
@@ -79,11 +80,12 @@ const CitiesGudauta: React.FC = () => {
   const categories: Category[] = (data?.city?.categories || []).slice().sort((a, b) => a.order - b.order || a.id - b.id);
   const handleItemClick = (category: Category) => {
     if (!category.is_active || !category.url) return;
+    saveScrollPosition('gudauta');
     router.push(category.url);
   };
 
   return (
-    <div className={styles.gudautaWrapper}>
+    <div id="city-gudauta" className={styles.gudautaWrapper}>
       <main className={styles.gudautaContent}>
         <h1 className={styles.gudautaTitle}>{data?.title || t('cities.gudautaTitle')}</h1>
 

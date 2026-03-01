@@ -7,6 +7,7 @@ import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
+import { saveScrollPosition } from '@/hooks/useScrollRestoration';
 
 const API_BASE = config.API_BASE;
 
@@ -77,11 +78,12 @@ const categories: Category[] = (data?.city?.categories || []).slice().sort((a, b
   const handleItemClick = (category: Category) => {
     if (!category.is_active) return;
     if (!category.url) return;
+    saveScrollPosition('gagra');
     router.push(category.url);
   };
 
   return (
-    <div className={styles.gagraWrapper}>
+    <div id="city-gagra" className={styles.gagraWrapper}>
       <main className={styles.gagraContent}>
         <h1 className={styles.gagraTitle}>{data?.title || t('cities.gagraTitle')}</h1>
 

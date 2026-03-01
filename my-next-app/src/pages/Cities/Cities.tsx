@@ -15,9 +15,11 @@ import CitiesTkuarchal from './CitiesTkuarchal';
 import CitiesGal from './CitiesGal';
 import styles from './Cities.module.scss';
 import { useTranslations } from '@/i18n/LocaleContext';
+import { useRestoreScroll } from '@/hooks/useScrollRestoration';
 
 const Cities: React.FC = () => {
   const t = useTranslations('cities');
+  useRestoreScroll();
 
   return (
     <div className={styles.pageWrapper}>

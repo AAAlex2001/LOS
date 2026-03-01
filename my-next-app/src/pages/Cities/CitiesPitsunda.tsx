@@ -7,6 +7,7 @@ import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
+import { saveScrollPosition } from '@/hooks/useScrollRestoration';
 
 const API_BASE = config.API_BASE;
 
@@ -78,11 +79,12 @@ const CitiesPitsunda: React.FC = () => {
 
   const handleItemClick = (category: Category) => {
     if (!category.is_active || !category.url) return;
+    saveScrollPosition('pitsunda');
     router.push(category.url);
   };
 
   return (
-    <div className={styles.pitsundaWrapper}>
+    <div id="city-pitsunda" className={styles.pitsundaWrapper}>
       <main className={styles.pitsundaContent}>
         <h1 className={styles.pitsundaTitle}>{data?.title || t('cities.pitsundaTitle')}</h1>
 

@@ -7,6 +7,7 @@ import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
+import { saveScrollPosition } from '@/hooks/useScrollRestoration';
 
 const API_BASE = config.API_BASE;
 
@@ -77,12 +78,13 @@ const CitiesSukhum: React.FC = () => {
   const categories: Category[] = (data?.city?.categories || []).slice().sort((a, b) => a.order - b.order || a.id - b.id);
 
   const handleItemClick = (category: Category) => {
+    saveScrollPosition('sukhum');
     if (!category.is_active || !category.url) return;
     router.push(category.url);
   };
 
   return (
-    <div className={styles.pageWrapper}>
+    <div id="city-sukhum" className={styles.pageWrapper}>
       <main className={styles.mainContent}>
         <h1 className={styles.pageTitle}>{data?.title || t('cities.sukhumTitle')}</h1>
 

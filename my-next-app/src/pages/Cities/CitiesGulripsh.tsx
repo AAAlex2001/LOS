@@ -7,6 +7,7 @@ import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
+import { saveScrollPosition } from '@/hooks/useScrollRestoration';
 
 const API_BASE = config.API_BASE;
 
@@ -78,11 +79,12 @@ const CitiesGulripsh: React.FC = () => {
 
   const handleItemClick = (category: Category) => {
     if (!category.is_active || !category.url) return;
+    saveScrollPosition('gulripsh');
     router.push(category.url);
   };
 
   return (
-    <div className={styles.gulripshWrapper}>
+    <div id="city-gulripsh" className={styles.gulripshWrapper}>
       <main className={styles.gulripshContent}>
         <h1 className={styles.gulripshTitle}>{data?.title || t('cities.gulripshTitle')}</h1>
 

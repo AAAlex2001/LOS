@@ -7,6 +7,7 @@ import config from '@/config';
 import { useLocale } from '@/i18n/LocaleContext';
 import { useTranslations } from '@/i18n/TranslationsContext';
 import { getApiUrl } from '@/utils/api';
+import { saveScrollPosition } from '@/hooks/useScrollRestoration';
 
 const API_BASE = config.API_BASE;
 
@@ -78,11 +79,12 @@ const CitiesTkuarchal: React.FC = () => {
 
   const handleItemClick = (category: Category) => {
     if (!category.is_active || !category.url) return;
+    saveScrollPosition('tkuarchal');
     router.push(category.url);
   };
 
   return (
-    <div className={styles.tkuarchalWrapper}>
+    <div id="city-tkuarchal" className={styles.tkuarchalWrapper}>
       <main className={styles.tkuarchalContent}>
         <h1 className={styles.tkuarchalTitle}>{data?.title || t('cities.tkuarchalTitle')}</h1>
 
