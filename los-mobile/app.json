@@ -14,14 +14,16 @@
       "backgroundColor": "#010E59"
     },
     "ios": {
+      "icon": "./assets/images/icon.png",
       "supportsTablet": true,
       "bundleIdentifier": "ru.landofsoulapsny.losmobile",
-      "buildNumber": "7",
+      "buildNumber": "8",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
+      "icon": "./assets/images/icon.png",
       "splash": {
         "image": "./assets/images/logo_splash.png",
         "resizeMode": "contain",
