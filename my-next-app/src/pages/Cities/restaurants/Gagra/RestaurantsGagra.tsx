@@ -16,6 +16,7 @@ type Restaurant = {
   city: number;
   name: string;
   name_link?: string;
+  website?: string;
   address: string;
   address_link?: string;
   description?: string;
@@ -156,6 +157,15 @@ const RestaurantsGagra: React.FC = () => {
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>{t('common.workingHours')}:</span>
                       <span className={styles.infoValue}>{restaurant.working_hours}</span>
+                    </div>
+                  )}
+
+                  {restaurant.website && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>{t('common.website')}:</span>
+                      <span className={styles.infoValue}>
+                        <a href={restaurant.website} target="_blank" rel="noopener noreferrer">{restaurant.website}</a>
+                      </span>
                     </div>
                   )}
                   
