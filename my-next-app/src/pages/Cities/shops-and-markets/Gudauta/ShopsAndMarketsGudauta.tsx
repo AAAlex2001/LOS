@@ -16,6 +16,7 @@ type Shop = {
   city: number;
   name: string;
   name_link?: string;
+  website?: string;
   address: string;
   address_link?: string;
   phone?: string;
@@ -155,6 +156,15 @@ const ShopsAndMarketsGudauta: React.FC = () => {
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>{t('common.phone')}:</span>
                       <span className={styles.infoValue}>{shop.phone}</span>
+                    </div>
+                  )}
+
+                  {shop.website && (
+                    <div className={styles.infoItem}>
+                      <span className={styles.infoLabel}>{t('common.website')}:</span>
+                      <span className={styles.infoValue}>
+                        <a href={shop.website} target="_blank" rel="noopener noreferrer">{shop.website}</a>
+                      </span>
                     </div>
                   )}
                 </div>

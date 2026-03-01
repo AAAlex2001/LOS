@@ -35,7 +35,7 @@ class ShopSerializer(serializers.ModelSerializer):
 
             "id", "city", "name", "working_hours", "address", "address_link",
 
-            "contacts", "phone", "image_url", "order"
+            "website", "contacts", "phone", "image_url", "order"
 
         ]
 

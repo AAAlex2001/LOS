@@ -108,6 +108,8 @@ class ShopOrMarket(TimestampedModel):
 
     address_link = models.URLField("Ссылка на карту", blank=True)
 
+    website = models.URLField("Сайт", blank=True)
+
     contacts = models.CharField("Контакты", max_length=255, blank=True)
 
     image = models.ImageField("Изображение", upload_to="shops_and_markets/images/", blank=True)

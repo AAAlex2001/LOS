@@ -10,6 +10,7 @@ interface ShopOrMarket {
   id: number;
   city: number;
   name: string;
+  website?: string;
   address: string;
   address_link: string;
   working_hours: string;
@@ -142,6 +143,15 @@ export default function ShopsAndMarketsOchamchiraScreen({ visible, onClose }: { 
                           return <Text key={index}>{segment.value}</Text>;
                         })}
                       </Text>
+                    </View>
+                  )}
+
+                  {shop.website && (
+                    <View style={styles.infoBlock}>
+                      <Text style={styles.infoLabel}>{t('common.website')}</Text>
+                      <TouchableOpacity onPress={() => openLink(shop.website!)}>
+                        <Text style={[styles.infoValue, styles.underline]}>{shop.website}</Text>
+                      </TouchableOpacity>
                     </View>
                   )}
                 </View>

@@ -18,7 +18,7 @@ class ShopOrMarketInline(TranslationTabularInline):
 
     extra = 1
 
-    fields = ("city", "name", "working_hours", "address", "address_link", "contacts", "image", "order", "preview")
+    fields = ("city", "name", "working_hours", "address", "address_link", "website", "contacts", "image", "order", "preview")
 
     readonly_fields = ("preview",)
 
