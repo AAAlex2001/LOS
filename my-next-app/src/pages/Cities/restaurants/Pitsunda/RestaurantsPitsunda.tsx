@@ -163,7 +163,7 @@ const RestaurantsPitsunda: React.FC = () => {
                   {restaurant.website && (
                     <div className={styles.infoItem}>
                       <span className={styles.infoLabel}>{t('common.website')}:</span>
-                      <span className={styles.infoValue}>
+                      <span className={`${styles.infoValue} ${styles.addressLink}`}>
                         <a href={restaurant.website} target="_blank" rel="noopener noreferrer">{restaurant.website}</a>
                       </span>
                     </div>
