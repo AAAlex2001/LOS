@@ -12,11 +12,15 @@ from .models import AdBanner
 
 class AdBannerAdmin(TranslationAdmin):
 
-    list_display = ('__str__', 'is_active', 'title', 'site', 'notes')
+    list_display = ('__str__', 'is_active', 'title', 'age_restriction', 'site', 'notes')
 
     list_editable = ('is_active',)
 
-    fields = ('image', 'title', 'description', 'site', 'url', 'is_active', 'notes')
+    fields = (
+        'image', 'video',
+        'title', 'description', 'site', 'url',
+        'age_restriction', 'is_active', 'notes',
+    )
 
 
 
