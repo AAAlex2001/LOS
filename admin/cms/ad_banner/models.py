@@ -2,12 +2,28 @@ from __future__ import annotations
 
 
 
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from ..models import TimestampedModel
 
 
+def validate_image_size(value):
+    limit_mb = 2
+    if value.size > limit_mb * 1024 * 1024:
+        raise ValidationError(f'Максимальный размер изображения: {limit_mb} МБ')
 
+def validate_video_size(value):
+    limit_mb = 5
+    if value.size > limit_mb * 1024 * 1024:
+        raise ValidationError(f'Максимальный размер видео: {limit_mb} МБ')
+
+def validate_video_extension(value):
+    import os
+    ext = os.path.splitext(value.name)[1].lower()
+    valid_extensions = ['.mp4', '.mov']
+    if ext not in valid_extensions:
+        raise ValidationError('Неподдерживаемый формат видео. Допустимы: MP4, MOV.')
 
 
 class AdBanner(TimestampedModel):
@@ -16,6 +32,7 @@ class AdBanner(TimestampedModel):
         upload_to='ad_banner/',
         verbose_name='Изображение',
         blank=True, null=True,
+        validators=[validate_image_size],
         help_text=(
             'Формат: JPEG или PNG. '
             'Рекомендуемый размер — 600×1200 пкс (мин. 300×600 пкс). '
@@ -29,6 +46,7 @@ class AdBanner(TimestampedModel):
         upload_to='ad_banner/videos/',
         verbose_name='Видео',
         blank=True, null=True,
+        validators=[validate_video_size, validate_video_extension],
         help_text=(
             'Формат: MP4 или MOV, вертикальная ориентация 9:16. '
             'Разрешение: 720×1280 (HD) или 1080×1920 (Full HD). '

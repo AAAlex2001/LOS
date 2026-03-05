@@ -10,11 +10,12 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Image } from 'expo-image';
+import { VideoView, useVideoPlayer } from 'expo-video';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import config from '@/config';
-import {useTranslation, addLangParam} from '@/i18n';
+import { useTranslation, addLangParam } from '@/i18n';
 
 interface AdBannerProps {
   visible: boolean;
@@ -23,17 +24,20 @@ interface AdBannerProps {
 }
 
 interface AdBannerData {
-  image: string;
+  image?: string;
+  video?: string;
   title: string;
   description: string;
   site: string;
   url: string;
+  age_restriction?: string;
   is_active?: boolean;
 }
 
 const API_BASE = config.API_BASE;
+const CLOSE_DELAY_MS = 5000;
 
-const toImageUrl = (url?: string) => {
+const toMediaUrl = (url?: string | null) => {
   if (!url) return '';
   if (url.startsWith('http://') || url.startsWith('https://')) return url;
   return `${API_BASE}/media/${url}`;
@@ -46,29 +50,41 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose, prefetchedAd }) =
   const [adData, setAdData] = useState<AdBannerData | null>(null);
   const [loading, setLoading] = useState(true);
   const [canClose, setCanClose] = useState(false);
+  const [mediaReady, setMediaReady] = useState(false);
 
   const isAdPayloadValid = (payload: AdBannerData | null | undefined) => {
     if (!payload || payload.is_active !== true) return false;
-    return Boolean(payload.image || payload.title || payload.description || payload.site || payload.url);
+    return Boolean(payload.image || payload.video || payload.title || payload.description || payload.site || payload.url);
   };
+
+  const videoUrl = adData?.video ? toMediaUrl(adData.video) : null;
+  const player = useVideoPlayer(videoUrl, (p) => {
+    p.loop = true;
+  });
 
   useEffect(() => {
     if (visible) {
       setCanClose(false);
+      setMediaReady(false);
       progressAnim.setValue(0);
-      Animated.timing(progressAnim, {
-        toValue: 1,
-        duration: 5000,
-        useNativeDriver: false,
-      }).start();
-      
-      const timer = setTimeout(() => {
-        setCanClose(true);
-      }, 5000);
-      
-      return () => clearTimeout(timer);
     }
   }, [visible]);
+
+  useEffect(() => {
+    if (!mediaReady || !visible) return;
+
+    Animated.timing(progressAnim, {
+      toValue: 1,
+      duration: CLOSE_DELAY_MS,
+      useNativeDriver: false,
+    }).start();
+
+    const timer = setTimeout(() => setCanClose(true), CLOSE_DELAY_MS);
+    return () => {
+      clearTimeout(timer);
+      progressAnim.stopAnimation();
+    };
+  }, [mediaReady, visible]);
 
   useEffect(() => {
     if (!visible) return;
@@ -90,11 +106,8 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose, prefetchedAd }) =
           return;
         }
         const json = await res.json() as AdBannerData;
-        if (isAdPayloadValid(json)) {
-          setAdData(json);
-        } else {
-          setAdData(null);
-        }
+        if (isAdPayloadValid(json)) setAdData(json);
+        else setAdData(null);
       } catch (error) {
         console.error('Error loading ad banner:', error);
         setAdData(null);
@@ -106,13 +119,22 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose, prefetchedAd }) =
     loadAdData();
   }, [visible, prefetchedAd]);
 
+  useEffect(() => {
+    if (!adData?.video || !player) return;
+    const subscription = player.addListener('statusChange', ({ status }: { status: string }) => {
+      if (status === 'readyToPlay') {
+        setMediaReady(true);
+        player.play();
+      }
+    });
+    return () => subscription.remove();
+  }, [player, adData?.video]);
+
   const handleOpenLink = async () => {
     if (!adData?.url) return;
     try {
       const supported = await Linking.canOpenURL(adData.url);
-      if (supported) {
-        await Linking.openURL(adData.url);
-      }
+      if (supported) await Linking.openURL(adData.url);
     } catch (error) {
       console.error('Error opening link:', error);
     }
@@ -123,10 +145,11 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose, prefetchedAd }) =
     outputRange: ['0%', '100%'],
   });
 
-  // Не показываем баннер, если нет данных или загрузка не завершена
   if (!visible || loading || !adData) {
     return null;
   }
+
+  const isVideo = Boolean(adData.video);
 
   return (
     <Modal
@@ -138,49 +161,58 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, onClose, prefetchedAd }) =
     >
       <StatusBar style="light" />
       <View style={styles.container}>
-        {/* Картинка на весь фон */}
-        <View style={styles.imageContainer}>
-          <Image
-            source={{ uri: toImageUrl(adData.image) }}
-            style={styles.image}
-            contentFit="cover"
-          />
+        <View style={styles.mediaContainer}>
+          {isVideo ? (
+            <VideoView
+              player={player}
+              style={styles.media}
+              contentFit="cover"
+              nativeControls={false}
+            />
+          ) : (
+            <Image
+              source={{ uri: toMediaUrl(adData.image) }}
+              style={styles.media}
+              contentFit="cover"
+              onLoad={() => setMediaReady(true)}
+            />
+          )}
         </View>
-
-        {/* Прогресс бар */}
-        <View style={[styles.progressBarContainer, { top: insets.top }]}>
-          <Animated.View
-            style={[styles.progressBar, { width: progressWidth }]}
-          />
-        </View>
-
-        {/* Метка t('common.advertisement') */}
+        {!mediaReady && (
+          <View style={styles.loadingOverlay}>
+            <ActivityIndicator size="large" color="#FFFFFF" />
+          </View>
+        )}
+        {mediaReady && (
+          <View style={[styles.progressBarContainer, { top: insets.top }]}>
+            <Animated.View style={[styles.progressBar, { width: progressWidth }]} />
+          </View>
+        )}
         <View style={[styles.adLabel, { top: insets.top + 12, left: 30 }]}>
-          <Text style={styles.adLabelText}>{t('common.advertisement')}</Text>
+          <Text style={styles.adLabelText}>
+            {t('common.advertisement')}
+            {adData.age_restriction ? `  ${adData.age_restriction}` : ''}
+          </Text>
         </View>
-
-        {/* Крестик закрытия - показываем только через 5 секунд */}
         {canClose && (
-          <TouchableOpacity 
-            style={[styles.closeButton, { top: insets.top + 12, right: 30 }]} 
+          <TouchableOpacity
+            style={[styles.closeButton, { top: insets.top + 12, right: 30 }]}
             onPress={onClose}
           >
             <Ionicons name="close" size={24} color="#FFFFFF" />
           </TouchableOpacity>
         )}
-
-        {/* Нижняя часть с текстом */}
         <View style={[styles.contentContainer, { paddingBottom: Math.max(24, insets.bottom + 16) }]}>
           <Text style={styles.siteText}>{adData.site}</Text>
           <Text style={styles.titleText}>{adData.title}</Text>
           <Text style={styles.descriptionText}>{adData.description}</Text>
 
-          {/* Кнопка t('common.more') */}
           <TouchableOpacity style={styles.moreButton} onPress={handleOpenLink}>
             <Ionicons name="open-outline" size={20} color="#000000" />
             <Text style={styles.moreButtonText}>{t('common.more')}</Text>
           </TouchableOpacity>
         </View>
+
       </View>
     </Modal>
   );
@@ -190,16 +222,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: 'relative',
-    backgroundColor: 'transparent',
+    backgroundColor: '#000000',
   },
-  imageContainer: {
+  mediaContainer: {
     ...StyleSheet.absoluteFillObject,
     width: '100%',
     height: '100%',
   },
-  image: {
+  media: {
     width: '100%',
     height: '100%',
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 30,
   },
   progressBarContainer: {
     height: 2,
