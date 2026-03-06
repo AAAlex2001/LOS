@@ -35,7 +35,6 @@
       },
       "edgeToEdgeEnabled": true,
       "package": "com.anonymous.losmobile",
-      "versionCode": 11,
       "newArchEnabled": true
     },
     "androidStatusBar": {
