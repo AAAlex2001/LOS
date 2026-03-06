@@ -125,6 +125,7 @@ export default function WelcomeScreen() {
   };
 
   return (
+    <View style={styles.screenWrapper}>
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       <View style={styles.contentWrapper}>
         <View style={styles.content}>
@@ -212,10 +213,15 @@ export default function WelcomeScreen() {
         </View>
       </View>
     </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  screenWrapper: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',

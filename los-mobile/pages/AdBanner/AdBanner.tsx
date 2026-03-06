@@ -76,8 +76,8 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, prepare = false, onClose, 
 
       Animated.timing(slideAnim, {
         toValue: 0,
-        duration: 420,
-        easing: Easing.out(Easing.cubic),
+        duration: 500,
+        easing: Easing.out(Easing.quad),
         useNativeDriver: true,
       }).start();
     }
@@ -222,8 +222,6 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, prepare = false, onClose, 
       style={[
         styles.overlay,
         {
-          top: -insets.top,
-          bottom: -insets.bottom,
           transform: [{ translateY: slideAnim }],
         },
       ]}
@@ -273,8 +271,8 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, prepare = false, onClose, 
             <Text style={styles.moreButtonText}>{t('common.more')}</Text>
           </TouchableOpacity>
         </View>
-      </View>
-    </Animated.View>
+        </View>
+      </Animated.View>
   );
 };
 

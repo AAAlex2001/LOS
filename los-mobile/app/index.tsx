@@ -1,8 +1,7 @@
 import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
-import * as SystemUI from 'expo-system-ui';
-import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Modal, StyleSheet, View } from 'react-native';
 import AdBanner from '../pages/AdBanner/AdBanner';
 import WelcomeScreen from '../pages/Welcome/Welcome';
 import config from '../config';
@@ -64,13 +63,16 @@ export default function IndexScreen() {
   }, []);
 
   useEffect(() => {
-    SystemUI.setBackgroundColorAsync('#010E59');
-
     const timer = setTimeout(() => {
       setReadyToReveal(true);
     }, 2000);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  const revealWelcome = useCallback(() => {
+    setShowWelcome(true);
+    setShowSplash(false);
   }, []);
 
   useEffect(() => {
@@ -85,70 +87,49 @@ export default function IndexScreen() {
       return;
     }
 
-    const openWelcome = async () => {
-      setShowSplash(false);
-      setShowWelcome(true);
-      await SystemUI.setBackgroundColorAsync('#FFFFFF');
-    };
-
-    openWelcome();
-  }, [adPrepared, adRequestDone, prefetchedAd, readyToReveal, showSplash]);
-
-  useEffect(() => {
-    if (!showAd || !prefetchedAd || showWelcome) {
-      return;
-    }
-
-    const timer = setTimeout(() => {
-      setShowSplash(false);
-      setShowWelcome(true);
-      SystemUI.setBackgroundColorAsync('#FFFFFF');
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [prefetchedAd, showAd, showWelcome]);
+    revealWelcome();
+  }, [adPrepared, adRequestDone, prefetchedAd, readyToReveal, revealWelcome, showSplash]);
 
   return (
-    <View style={[styles.root, { backgroundColor: showSplash ? '#010E59' : '#FFFFFF' }]}>
+    <View style={styles.root}>
       <StatusBar
         hidden={showAd && !!prefetchedAd}
         animated={false}
         translucent
         backgroundColor="transparent"
-        style={showSplash ? 'light' : 'dark'}
-      />
-      <AdBanner
-        visible={showAd && !!prefetchedAd}
-        prepare={Boolean(prefetchedAd)}
-        prefetchedAd={prefetchedAd}
-        onPrepared={() => setAdPrepared(true)}
-        onClosing={() => {
-          setShowWelcome(true);
-        }}
-        onClose={async () => {
-          if (adClosedRef.current) {
-            return;
-          }
-          adClosedRef.current = true;
-          setShowAd(false);
-          setShowSplash(false);
-          setShowWelcome(true);
-          await SystemUI.setBackgroundColorAsync('#FFFFFF');
-        }}
+        style={showSplash && !showWelcome ? 'light' : 'dark'}
       />
       {showWelcome && <WelcomeScreen />}
-
-      {showSplash && (
-        <View style={styles.splashContainer} pointerEvents="none">
-          <View style={styles.splashContent}>
-            <Image
-              source={require('../assets/images/logo_splash.png')}
-              style={{ width: 150, height: 150 }}
-              contentFit="contain"
-            />
-          </View>
+      <Modal
+        visible={showSplash}
+        animationType="fade"
+        transparent={true}
+        statusBarTranslucent={true}
+      >
+        <View style={styles.splashFullScreen}>
+          <Image
+            source={require('../assets/images/logo_splash.png')}
+            style={{ width: 150, height: 150 }}
+            contentFit="contain"
+          />
         </View>
-      )}
+        <AdBanner
+          visible={showAd && !!prefetchedAd}
+          prepare={Boolean(prefetchedAd)}
+          prefetchedAd={prefetchedAd}
+          onPrepared={() => setAdPrepared(true)}
+          onClosing={() => {
+            revealWelcome();
+          }}
+          onClose={() => {
+            if (adClosedRef.current) return;
+            adClosedRef.current = true;
+            setShowAd(false);
+            setShowSplash(false);
+            setShowWelcome(true);
+          }}
+        />
+      </Modal>
     </View>
   );
 }
@@ -158,18 +139,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-  splashContainer: {
+  splashFullScreen: {
     flex: 1,
     backgroundColor: '#010E59',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 9999,
-  },
-  splashContent: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
