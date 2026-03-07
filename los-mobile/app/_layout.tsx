@@ -2,11 +2,15 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
 import * as SystemUI from 'expo-system-ui';
 import 'react-native-reanimated';
+
 import '@/i18n';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+
+SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -15,8 +19,7 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    // Keep system bars white by default
-    SystemUI.setBackgroundColorAsync('#FFFFFF');
+    SystemUI.setBackgroundColorAsync('#010E59');
   }, []);
 
   if (!loaded) {

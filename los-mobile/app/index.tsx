@@ -1,5 +1,7 @@
 import { Image } from 'expo-image';
+import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
+import * as SystemUI from 'expo-system-ui';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import AdBanner from '../pages/AdBanner/AdBanner';
@@ -70,7 +72,12 @@ export default function IndexScreen() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    SplashScreen.hideAsync().catch(() => {});
+  }, []);
+
   const revealWelcome = useCallback(() => {
+    SystemUI.setBackgroundColorAsync('#FFFFFF');
     setShowWelcome(true);
     setShowSplash(false);
   }, []);
@@ -102,7 +109,7 @@ export default function IndexScreen() {
       {showWelcome && <WelcomeScreen />}
       <Modal
         visible={showSplash}
-        animationType="fade"
+        animationType="none"
         transparent={true}
         statusBarTranslucent={true}
       >
@@ -137,7 +144,7 @@ export default function IndexScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#010E59',
   },
   splashFullScreen: {
     flex: 1,
