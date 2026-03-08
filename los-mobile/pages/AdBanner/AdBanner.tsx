@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -49,7 +49,6 @@ const toMediaUrl = (url?: string | null) => {
 
 const AdBanner: React.FC<AdBannerProps> = ({ visible, prepare = false, onClose, onClosing, prefetchedAd, onPrepared }) => {
   const { t } = useTranslation();
-  const progressAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
   const insets = useSafeAreaInsets();
   const [adData, setAdData] = useState<AdBannerData | null>(null);
@@ -57,6 +56,24 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, prepare = false, onClose, 
   const [mediaReady, setMediaReady] = useState(false);
   const preparedRef = useRef(false);
   const closingRef = useRef(false);
+
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timerStartRef = useRef<number>(0);
+  const timerRemainingRef = useRef<number>(CLOSE_DELAY_MS);
+
+  const startCloseTimer = useCallback(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerStartRef.current = Date.now();
+    timerRef.current = setTimeout(() => setCanClose(true), timerRemainingRef.current);
+  }, []);
+
+  const pauseCloseTimer = useCallback(() => {
+    if (!timerRef.current) return;
+    clearTimeout(timerRef.current);
+    timerRef.current = null;
+    const elapsed = Date.now() - timerStartRef.current;
+    timerRemainingRef.current = Math.max(0, timerRemainingRef.current - elapsed);
+  }, []);
 
   const isAdPayloadValid = (payload: AdBannerData | null | undefined) => {
     if (!payload || payload.is_active !== true) return false;
@@ -73,7 +90,6 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, prepare = false, onClose, 
       closingRef.current = false;
       slideAnim.setValue(SCREEN_HEIGHT);
       setCanClose(false);
-      progressAnim.setValue(0);
 
       Animated.timing(slideAnim, {
         toValue: 0,
@@ -87,18 +103,14 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, prepare = false, onClose, 
   useEffect(() => {
     if (!mediaReady || !visible) return;
 
-    Animated.timing(progressAnim, {
-      toValue: 1,
-      duration: CLOSE_DELAY_MS,
-      useNativeDriver: false,
-    }).start();
+    timerRemainingRef.current = CLOSE_DELAY_MS;
+    startCloseTimer();
 
-    const timer = setTimeout(() => setCanClose(true), CLOSE_DELAY_MS);
     return () => {
-      clearTimeout(timer);
-      progressAnim.stopAnimation();
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = null;
     };
-  }, [mediaReady, visible]);
+  }, [mediaReady, visible, startCloseTimer]);
 
   useEffect(() => {
     if (!prepare && !visible) return;
@@ -177,18 +189,20 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, prepare = false, onClose, 
   }, [adData?.video, mediaReady, player, visible]);
 
   useEffect(() => {
-    if (!player || !adData?.video || !visible || !mediaReady) return;
+    if (!visible || !mediaReady) return;
 
     const subscription = AppState.addEventListener('change', (nextState) => {
       if (nextState === 'active') {
-        player.play();
+        if (player && adData?.video) player.play();
+        startCloseTimer();
       } else {
-        player.pause();
+        if (player && adData?.video) player.pause();
+        pauseCloseTimer();
       }
     });
 
     return () => subscription.remove();
-  }, [adData?.video, mediaReady, player, visible]);
+  }, [adData?.video, mediaReady, player, visible, startCloseTimer, pauseCloseTimer]);
 
   const handleOpenLink = async () => {
     if (!adData?.url) return;
@@ -220,11 +234,6 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, prepare = false, onClose, 
       }
     });
   };
-
-  const progressWidth = progressAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0%', '100%'],
-  });
 
   if (!visible || !adData || !mediaReady) {
     return null;
@@ -258,9 +267,6 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, prepare = false, onClose, 
               onLoad={() => setMediaReady(true)}
             />
           )}
-        </View>
-        <View style={[styles.progressBarContainer, { top: insets.top }]}>
-          <Animated.View style={[styles.progressBar, { width: progressWidth }]} />
         </View>
         <View style={[styles.adLabel, { top: insets.top + 12, left: 30 }]}>
           <Text style={styles.adLabelText}>
@@ -309,19 +315,6 @@ const styles = StyleSheet.create({
   media: {
     width: '100%',
     height: '100%',
-  },
-  progressBarContainer: {
-    height: 2,
-    backgroundColor: '#E0E0E0',
-    width: '100%',
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    zIndex: 20,
-  },
-  progressBar: {
-    height: '100%',
-    backgroundColor: '#1129BD',
   },
   adLabel: {
     position: 'absolute',
@@ -402,4 +395,3 @@ const styles = StyleSheet.create({
 });
 
 export default AdBanner;
-
