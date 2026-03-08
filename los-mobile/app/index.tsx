@@ -1,5 +1,4 @@
 import { Image } from 'expo-image';
-import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import * as SystemUI from 'expo-system-ui';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -72,10 +71,6 @@ export default function IndexScreen() {
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    SplashScreen.hideAsync().catch(() => {});
-  }, []);
-
   const revealWelcome = useCallback(() => {
     SystemUI.setBackgroundColorAsync('#FFFFFF');
     setShowWelcome(true);
@@ -113,7 +108,9 @@ export default function IndexScreen() {
         transparent={true}
         statusBarTranslucent={true}
       >
-        <View style={styles.splashFullScreen}>
+        <View
+          style={styles.splashFullScreen}
+        >
           <Image
             source={require('../assets/images/logo_splash.png')}
             style={{ width: 150, height: 150 }}

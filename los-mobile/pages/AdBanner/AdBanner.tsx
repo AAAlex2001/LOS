@@ -8,6 +8,7 @@ import {
   Animated,
   Easing,
   Dimensions,
+  AppState,
 } from 'react-native';
 import { Image } from 'expo-image';
 import { VideoView, useVideoPlayer } from 'expo-video';
@@ -166,13 +167,27 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, prepare = false, onClose, 
   }, [adData?.video, onPrepared, player, visible]);
 
   useEffect(() => {
-    if (!player || !adData?.video) return;
+    if (!player || !adData?.video || !visible || !mediaReady) return;
 
     if (visible && mediaReady) {
       player.play();
     } else {
       player.pause();
     }
+  }, [adData?.video, mediaReady, player, visible]);
+
+  useEffect(() => {
+    if (!player || !adData?.video || !visible || !mediaReady) return;
+
+    const subscription = AppState.addEventListener('change', (nextState) => {
+      if (nextState === 'active') {
+        player.play();
+      } else {
+        player.pause();
+      }
+    });
+
+    return () => subscription.remove();
   }, [adData?.video, mediaReady, player, visible]);
 
   const handleOpenLink = async () => {
