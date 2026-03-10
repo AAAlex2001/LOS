@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "los-mobile",
-    "slug": "los-mobile",
+    "name": "Land of Soul",
+    "slug": "Land of Soul",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icons/icon.png",
@@ -17,7 +17,7 @@
       "icon": "./assets/icons/icon.png",
       "supportsTablet": true,
       "bundleIdentifier": "ru.landofsoulapsny.losmobile",
-      "buildNumber": "13",
+      "buildNumber": "14",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
