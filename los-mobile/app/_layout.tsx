@@ -17,6 +17,7 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
+    SplashScreen.setOptions({ fade: false });
     SystemUI.setBackgroundColorAsync('#010E59');
     SplashScreen.hideAsync().catch(() => {});
   }, []);

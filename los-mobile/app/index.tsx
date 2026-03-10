@@ -105,7 +105,8 @@ export default function IndexScreen() {
       <Modal
         visible={showSplash}
         animationType="none"
-        transparent={true}
+        transparent={false}
+        presentationStyle="fullScreen"
         statusBarTranslucent={true}
       >
         <View
