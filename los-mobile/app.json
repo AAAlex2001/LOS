@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Land of Soul",
-    "slug": "Land of Soul",
+    "slug": "land-of-soul",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icons/icon.png",
@@ -66,7 +66,7 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "9a51edae-0ab8-4856-ac5d-844332f005d5"
+        "projectId": "37c45080-d3fd-4e5c-a6c3-b34211546ce0"
       }
     }
   }
