@@ -41,7 +41,8 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (!fontsLoaded) return;
-    SplashScreen.hideAsync().catch(() => {});
+    // Splash screen is now hidden from inside the index.tsx
+    // precisely when the React splash Modal actually appears.
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {

@@ -1,6 +1,7 @@
 import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
 import * as SystemUI from 'expo-system-ui';
+import * as SplashScreen from 'expo-splash-screen';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import AdBanner from '../pages/AdBanner/AdBanner';
@@ -108,6 +109,7 @@ export default function IndexScreen() {
         transparent={false}
         presentationStyle="fullScreen"
         statusBarTranslucent={true}
+        onShow={() => SplashScreen.hideAsync().catch(() => {})}
       >
         <View
           style={styles.splashFullScreen}
