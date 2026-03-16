@@ -1,7 +1,6 @@
 import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
 import * as SystemUI from 'expo-system-ui';
-import * as SplashScreen from 'expo-splash-screen';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import AdBanner from '../pages/AdBanner/AdBanner';
@@ -24,7 +23,6 @@ export default function IndexScreen() {
     return Boolean(payload.image || payload.video || payload.title || payload.description || payload.site || payload.url);
   };
 
-  // Загружаем рекламу сразу при монтировании (во время сплэша)
   useEffect(() => {
     const loadAd = async () => {
       try {
@@ -68,7 +66,6 @@ export default function IndexScreen() {
     const timer = setTimeout(() => {
       setReadyToReveal(true);
     }, 2000);
-
     return () => clearTimeout(timer);
   }, []);
 
@@ -83,9 +80,7 @@ export default function IndexScreen() {
       return;
     }
 
-    const hasAd = Boolean(prefetchedAd);
-
-    if (hasAd) {
+    if (Boolean(prefetchedAd)) {
       setShowAd(true);
       return;
     }
@@ -109,16 +104,20 @@ export default function IndexScreen() {
         transparent={false}
         presentationStyle="fullScreen"
         statusBarTranslucent={true}
-        onShow={() => SplashScreen.hideAsync().catch(() => {})}
       >
         <View
-          style={styles.splashFullScreen}
+          style={[
+            styles.splashFullScreen,
+            showWelcome && { backgroundColor: '#FFFFFF' },
+          ]}
         >
-          <Image
-            source={require('../assets/images/logo_splash.png')}
-            style={{ width: 150, height: 150 }}
-            contentFit="contain"
-          />
+          {!showWelcome && (
+            <Image
+              source={require('../assets/images/logo_splash.png')}
+              style={{ width: 150, height: 150 }}
+              contentFit="contain"
+            />
+          )}
         </View>
         <AdBanner
           visible={showAd && !!prefetchedAd}
@@ -126,14 +125,14 @@ export default function IndexScreen() {
           prefetchedAd={prefetchedAd}
           onPrepared={() => setAdPrepared(true)}
           onClosing={() => {
-            revealWelcome();
+            SystemUI.setBackgroundColorAsync('#FFFFFF');
+            setShowWelcome(true);
           }}
           onClose={() => {
             if (adClosedRef.current) return;
             adClosedRef.current = true;
-            setShowAd(false);
             setShowSplash(false);
-            setShowWelcome(true);
+            setShowAd(false);
           }}
         />
       </Modal>

@@ -179,7 +179,7 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, prepare = false, onClose, 
   }, [adData?.video, onPrepared, player, visible]);
 
   useEffect(() => {
-    if (!player || !adData?.video || !visible || !mediaReady) return;
+    if (!player || !adData?.video) return;
 
     if (visible && mediaReady) {
       player.play();

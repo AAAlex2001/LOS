@@ -11,6 +11,7 @@ import '@/i18n';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
+SystemUI.setBackgroundColorAsync('#010E59');
 
 const LosTheme = {
   ...DefaultTheme,
@@ -35,14 +36,12 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    SplashScreen.setOptions({ fade: false });
-    SystemUI.setBackgroundColorAsync('#010E59');
+    SplashScreen.setOptions({ fade: true, duration: 200 });
   }, []);
 
   useEffect(() => {
     if (!fontsLoaded) return;
-    // Splash screen is now hidden from inside the index.tsx
-    // precisely when the React splash Modal actually appears.
+    SplashScreen.hideAsync().catch(() => {});
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
