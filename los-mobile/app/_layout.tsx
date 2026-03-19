@@ -37,7 +37,7 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    SplashScreen.setOptions({ fade: true, duration: 200 });
+    SplashScreen.setOptions({ fade: false });
   }, []);
 
   if (!fontsLoaded) {
