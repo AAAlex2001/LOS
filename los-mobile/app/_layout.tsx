@@ -1,5 +1,6 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { View } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { Stack } from 'expo-router';
@@ -31,6 +32,7 @@ const LosDarkTheme = {
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const splashHiddenRef = useRef(false);
   const [fontsLoaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
@@ -39,21 +41,26 @@ export default function RootLayout() {
     SplashScreen.setOptions({ fade: true, duration: 200 });
   }, []);
 
-  useEffect(() => {
-    if (!fontsLoaded) return;
-    SplashScreen.hideAsync().catch(() => {});
-  }, [fontsLoaded]);
-
+  // Пока шрифты грузятся — синий экран, НЕ null (null = белый корневой View)
   if (!fontsLoaded) {
-    return null;
+    return <View style={{ flex: 1, backgroundColor: '#010E59' }} />;
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? LosDarkTheme : LosTheme}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="index" />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+    <View
+      style={{ flex: 1 }}
+      onLayout={() => {
+        if (splashHiddenRef.current) return;
+        splashHiddenRef.current = true;
+        SplashScreen.hideAsync().catch(() => {});
+      }}
+    >
+      <ThemeProvider value={colorScheme === 'dark' ? LosDarkTheme : LosTheme}>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="index" />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </ThemeProvider>
+    </View>
   );
 }

@@ -15,7 +15,7 @@
       "icon": "./assets/icons/icon.png",
       "supportsTablet": true,
       "bundleIdentifier": "ru.landofsoulapsny.losmobile",
-      "buildNumber": "19",
+      "buildNumber": "20",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -48,9 +48,12 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#010E59"
+          "backgroundColor": "#010E59",
+          "image": "./assets/images/logo_splash.png",
+          "imageWidth": 150
         }
       ],
+      ["expo-system-ui", { "backgroundColor": "#010E59" }],
       "expo-font"
     ],
     "experiments": {

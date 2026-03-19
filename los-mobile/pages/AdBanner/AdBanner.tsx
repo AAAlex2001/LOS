@@ -220,6 +220,7 @@ const AdBanner: React.FC<AdBannerProps> = ({ visible, prepare = false, onClose, 
     }
 
     closingRef.current = true;
+    if (player) player.pause();
     onClosing?.();
     Animated.timing(slideAnim, {
       toValue: SCREEN_HEIGHT,
