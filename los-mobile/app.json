@@ -51,7 +51,12 @@
           "backgroundColor": "#010E59"
         }
       ],
-      ["expo-system-ui", { "backgroundColor": "#010E59" }],
+      [
+        "expo-system-ui",
+        {
+          "backgroundColor": "#010E59"
+        }
+      ],
       "expo-font"
     ],
     "experiments": {
@@ -60,8 +65,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "37c45080-d3fd-4e5c-a6c3-b34211546ce0"
+        "projectId": "8601fec5-9ea4-4585-8136-3ad236ea27fe"
       }
-    }
+    },
+    "owner": "glisttt"
   }
 }
