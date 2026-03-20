@@ -15,7 +15,7 @@
       "icon": "./assets/icons/icon.png",
       "supportsTablet": true,
       "bundleIdentifier": "ru.landofsoulapsny.losmobile",
-      "buildNumber": "24",
+      "buildNumber": "25",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }

@@ -3,7 +3,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import * as SystemUI from 'expo-system-ui';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Modal, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import AdBanner from '../pages/AdBanner/AdBanner';
 import WelcomeScreen from '../pages/Welcome/Welcome';
 import config from '../config';
@@ -40,18 +40,15 @@ export default function IndexScreen() {
           setAdPrepared(true);
           return;
         }
-
         const json = await res.json();
         if (isAdPayloadValid(json)) {
           setPrefetchedAd(json);
-
           if (!json.video && json.image) {
             const imageUrl = json.image.startsWith('http')
               ? json.image
               : `${config.API_BASE}/media/${json.image}`;
             await Image.prefetch(imageUrl).catch(() => {});
           }
-
           if (!json.video) {
             setAdPrepared(true);
           }
@@ -60,7 +57,6 @@ export default function IndexScreen() {
           setAdPrepared(true);
         }
       } catch (e) {
-        console.error('Prefetch ad error', e);
         setPrefetchedAd(null);
         setAdPrepared(true);
       } finally {
@@ -71,9 +67,7 @@ export default function IndexScreen() {
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setReadyToReveal(true);
-    }, 2000);
+    const timer = setTimeout(() => setReadyToReveal(true), 2000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -84,15 +78,11 @@ export default function IndexScreen() {
   }, []);
 
   useEffect(() => {
-    if (!readyToReveal || !adRequestDone || !adPrepared || !showSplash) {
-      return;
-    }
-
+    if (!readyToReveal || !adRequestDone || !adPrepared || !showSplash) return;
     if (Boolean(prefetchedAd)) {
       setShowAd(true);
       return;
     }
-
     revealWelcome();
   }, [adPrepared, adRequestDone, prefetchedAd, readyToReveal, revealWelcome, showSplash]);
 
@@ -105,17 +95,16 @@ export default function IndexScreen() {
         backgroundColor="transparent"
         style={showSplash && !showWelcome ? 'light' : 'dark'}
       />
+
       {showWelcome && <WelcomeScreen />}
-      <Modal
-        visible={showSplash}
-        animationType="none"
-        transparent={false}
-        presentationStyle="fullScreen"
-        statusBarTranslucent={true}
-      >
+
+      {/* Сплеш — обычный View поверх всего, без Modal.
+          Modal имеет задержку presentation на iOS — в этот момент видно белый фон.
+          absoluteFillObject рендерится синхронно, нет никакой задержки. */}
+      {showSplash && (
         <View
           style={[
-            styles.splashFullScreen,
+            styles.splashOverlay,
             showWelcome && { backgroundColor: '#FFFFFF' },
           ]}
         >
@@ -128,23 +117,24 @@ export default function IndexScreen() {
             />
           )}
         </View>
-        <AdBanner
-          visible={showAd && !!prefetchedAd}
-          prepare={Boolean(prefetchedAd)}
-          prefetchedAd={prefetchedAd}
-          onPrepared={() => setAdPrepared(true)}
-          onClosing={() => {
-            SystemUI.setBackgroundColorAsync('#FFFFFF');
-            setShowWelcome(true);
-          }}
-          onClose={() => {
-            if (adClosedRef.current) return;
-            adClosedRef.current = true;
-            setShowSplash(false);
-            setShowAd(false);
-          }}
-        />
-      </Modal>
+      )}
+
+      <AdBanner
+        visible={showAd && !!prefetchedAd}
+        prepare={Boolean(prefetchedAd)}
+        prefetchedAd={prefetchedAd}
+        onPrepared={() => setAdPrepared(true)}
+        onClosing={() => {
+          SystemUI.setBackgroundColorAsync('#FFFFFF');
+          setShowWelcome(true);
+        }}
+        onClose={() => {
+          if (adClosedRef.current) return;
+          adClosedRef.current = true;
+          setShowSplash(false);
+          setShowAd(false);
+        }}
+      />
     </View>
   );
 }
@@ -154,10 +144,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#010E59',
   },
-  splashFullScreen: {
-    flex: 1,
+  splashOverlay: {
+    ...StyleSheet.absoluteFillObject,
     backgroundColor: '#010E59',
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 100,
   },
 });
