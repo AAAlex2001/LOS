@@ -15,7 +15,7 @@
       "icon": "./assets/icons/icon.png",
       "supportsTablet": true,
       "bundleIdentifier": "ru.landofsoulapsny.losmobile",
-      "buildNumber": "28",
+      "buildNumber": "29",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -58,8 +58,7 @@
         }
       ],
       "expo-font",
-      ["./plugins/withIOSBackgroundColor", "#010E59"],
-      ["./plugins/withIOSWindowSwizzle", "#010E59"]
+      ["./plugins/withIOSBackgroundColor", "#010E59"]
     ],
     "experiments": {
       "typedRoutes": true

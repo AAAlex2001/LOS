@@ -1,26 +1,19 @@
 const { withAppDelegate } = require("expo/config-plugins");
 
 /**
- * Expo config plugin: устанавливает UIWindow.backgroundColor
- * и rootViewController.view.backgroundColor СРАЗУ в AppDelegate,
- * до того как React Native покажет белый рутовый View.
+ * Агрессивный фикс белого мерцания на iOS.
  *
- * Зачем: с newArchEnabled:true, RCTRootViewFactory хардкодит
- * rootView.backgroundColor = [UIColor systemBackgroundColor] (белый).
- * Info.plist RCTRootViewBackgroundColor игнорируется.
- * expo-system-ui ставит цвет, но ПОСЛЕ создания окна (слишком поздно).
- *
- * Этот плагин вставляет код в didFinishLaunchingWithOptions ПОСЛЕ
- * super-вызова (который создаёт UIWindow), устанавливая оба фона
- * на нужный цвет.
+ * Вставляет код прямо в AppDelegate.mm:
+ * 1. Устанавливает UIWindow.backgroundColor в didFinishLaunching
+ * 2. Добавляет observer который красит view после React Native инициализации
  */
+
 function withIOSBackgroundColor(config, backgroundColor) {
   return withAppDelegate(config, (config) => {
     let contents = config.modResults.contents;
-    const language = config.modResults.language;
 
-    if (contents.includes("self.window.backgroundColor")) {
-      return config;
+    if (contents.includes("LOSSetupBackgroundColor")) {
+      return config; // Already patched
     }
 
     const hex = backgroundColor.replace("#", "");
@@ -28,36 +21,74 @@ function withIOSBackgroundColor(config, backgroundColor) {
     const g = (parseInt(hex.substring(2, 4), 16) / 255.0).toFixed(6);
     const b = (parseInt(hex.substring(4, 6), 16) / 255.0).toFixed(6);
 
-    if (language === "swift") {
-      const superCall =
-        "return super.application(application, didFinishLaunchingWithOptions: launchOptions)";
-      if (contents.includes(superCall)) {
-        contents = contents.replace(
-          superCall,
-          [
-            "let result = super.application(application, didFinishLaunchingWithOptions: launchOptions)",
-            `    self.window?.backgroundColor = UIColor(red: ${r}, green: ${g}, blue: ${b}, alpha: 1.0)`,
-            `    self.window?.rootViewController?.view.backgroundColor = UIColor(red: ${r}, green: ${g}, blue: ${b}, alpha: 1.0)`,
-            "    return result",
-          ].join("\n")
-        );
-      }
-    } else {
-      // Objective-C / Objective-C++
-      const superCall =
-        "[super application:application didFinishLaunchingWithOptions:launchOptions]";
-      const returnSuperCall = `return ${superCall};`;
-      if (contents.includes(returnSuperCall)) {
-        contents = contents.replace(
-          returnSuperCall,
-          [
-            `BOOL result = ${superCall};`,
-            `  self.window.backgroundColor = [UIColor colorWithRed:${r} green:${g} blue:${b} alpha:1.0];`,
-            `  self.window.rootViewController.view.backgroundColor = [UIColor colorWithRed:${r} green:${g} blue:${b} alpha:1.0];`,
-            "  return result;",
-          ].join("\n")
-        );
-      }
+    // Helper function to set background recursively
+    const helperCode = `
+// LOS: Fix white flash on iOS with new architecture
+static UIColor *_losBackgroundColor = nil;
+
+static void LOSSetBackgroundRecursively(UIView *view, int depth) {
+    if (depth > 15 || view == nil) return;
+    UIColor *c = view.backgroundColor;
+    if (c == nil || [c isEqual:[UIColor whiteColor]] ||
+        [c isEqual:[UIColor systemBackgroundColor]] || [c isEqual:[UIColor clearColor]]) {
+        view.backgroundColor = _losBackgroundColor;
+    }
+    for (UIView *sub in view.subviews) {
+        LOSSetBackgroundRecursively(sub, depth + 1);
+    }
+}
+
+static void LOSSetupBackgroundColor(UIWindow *window) {
+    if (_losBackgroundColor == nil) {
+        _losBackgroundColor = [UIColor colorWithRed:${r} green:${g} blue:${b} alpha:1.0];
+    }
+    window.backgroundColor = _losBackgroundColor;
+    if (window.rootViewController) {
+        window.rootViewController.view.backgroundColor = _losBackgroundColor;
+        LOSSetBackgroundRecursively(window.rootViewController.view, 0);
+    }
+}
+`;
+
+    // Code to add after super call in didFinishLaunching
+    const afterSuperCode = `
+  // LOS: Set background immediately
+  LOSSetupBackgroundColor(self.window);
+
+  // LOS: Also set after React Native initializes (multiple times to be safe)
+  dispatch_async(dispatch_get_main_queue(), ^{
+    LOSSetupBackgroundColor(self.window);
+  });
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    LOSSetupBackgroundColor(self.window);
+  });
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    LOSSetupBackgroundColor(self.window);
+  });
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    LOSSetupBackgroundColor(self.window);
+  });`;
+
+    // Add helper functions at the top (after imports)
+    const importEnd = contents.lastIndexOf("#import");
+    if (importEnd !== -1) {
+      const importLineEnd = contents.indexOf("\n", importEnd);
+      contents =
+        contents.slice(0, importLineEnd + 1) +
+        helperCode +
+        contents.slice(importLineEnd + 1);
+    }
+
+    // Modify the return statement in didFinishLaunching
+    const superCall =
+      "[super application:application didFinishLaunchingWithOptions:launchOptions]";
+    const returnSuperCall = `return ${superCall};`;
+
+    if (contents.includes(returnSuperCall)) {
+      contents = contents.replace(
+        returnSuperCall,
+        `BOOL result = ${superCall};${afterSuperCode}\n  return result;`
+      );
     }
 
     config.modResults.contents = contents;
