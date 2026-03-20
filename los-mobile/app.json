@@ -15,7 +15,7 @@
       "icon": "./assets/icons/icon.png",
       "supportsTablet": true,
       "bundleIdentifier": "ru.landofsoulapsny.losmobile",
-      "buildNumber": "29",
+      "buildNumber": "30",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -31,7 +31,7 @@
       },
       "edgeToEdgeEnabled": true,
       "package": "com.anonymous.losmobile",
-      "newArchEnabled": true
+      "newArchEnabled": false
     },
     "androidStatusBar": {
       "backgroundColor": "#010E59",
@@ -48,7 +48,9 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#010E59"
+          "backgroundColor": "#010E59",
+          "image": "./assets/images/logo_splash.png",
+          "imageWidth": 150
         }
       ],
       [
