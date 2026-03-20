@@ -1,8 +1,6 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useEffect } from 'react';
 import { View } from 'react-native';
 import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
 import { Stack } from 'expo-router';
 import * as SystemUI from 'expo-system-ui';
 import 'react-native-reanimated';
@@ -11,7 +9,8 @@ import '@/i18n';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-SplashScreen.preventAutoHideAsync().catch(() => {});
+// Нативный корневой View — синий (асинхронно, но expo-system-ui плагин
+// делает это на нативном уровне при сборке, этот вызов — страховка)
 SystemUI.setBackgroundColorAsync('#010E59');
 
 const LosTheme = {
@@ -36,17 +35,18 @@ export default function RootLayout() {
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
-  useEffect(() => {
-    SplashScreen.setOptions({ fade: false });
-  }, []);
-
   if (!fontsLoaded) {
     return <View style={{ flex: 1, backgroundColor: '#010E59' }} />;
   }
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? LosDarkTheme : LosTheme}>
-      <Stack screenOptions={{ headerShown: false }}>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: { backgroundColor: '#010E59' },
+        }}
+      >
         <Stack.Screen name="index" />
         <Stack.Screen name="+not-found" />
       </Stack>

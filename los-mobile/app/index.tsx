@@ -1,5 +1,4 @@
 import { Image } from 'expo-image';
-import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import * as SystemUI from 'expo-system-ui';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -18,13 +17,6 @@ export default function IndexScreen() {
   const [adPrepared, setAdPrepared] = useState(false);
   const [readyToReveal, setReadyToReveal] = useState(false);
   const adClosedRef = useRef(false);
-  const splashHiddenRef = useRef(false);
-
-  const hideSplash = () => {
-    if (splashHiddenRef.current) return;
-    splashHiddenRef.current = true;
-    SplashScreen.hideAsync().catch(() => {});
-  };
 
   const isAdPayloadValid = (payload: any) => {
     if (!payload || payload.is_active !== true) return false;
@@ -98,9 +90,6 @@ export default function IndexScreen() {
 
       {showWelcome && <WelcomeScreen />}
 
-      {/* Сплеш — обычный View поверх всего, без Modal.
-          Modal имеет задержку presentation на iOS — в этот момент видно белый фон.
-          absoluteFillObject рендерится синхронно, нет никакой задержки. */}
       {showSplash && (
         <View
           style={[
@@ -113,7 +102,6 @@ export default function IndexScreen() {
               source={require('../assets/images/logo_splash.png')}
               style={{ width: 150, height: 150 }}
               contentFit="contain"
-              onLoad={hideSplash}
             />
           )}
         </View>
