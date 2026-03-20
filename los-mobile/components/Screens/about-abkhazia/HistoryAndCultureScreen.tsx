@@ -3,6 +3,8 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -97,9 +99,9 @@ export default function HistoryAndCultureScreen({ visible, onClose }: { visible:
         </View>
         <ScrollView ref={scrollRef} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-            </View>
+            <Loader />
+          ) : historySections.length === 0 && cultureSections.length === 0 ? (
+            <EmptyState />
           ) : (
             <>
           {/* История */}
@@ -107,9 +109,7 @@ export default function HistoryAndCultureScreen({ visible, onClose }: { visible:
             <Text style={styles.contentTitle}>{t('about.history_title')}</Text>
           </View>
               {historySections.length === 0 ? (
-                <View style={styles.noDataContainer}>
-                  <Text style={styles.noDataText}>{t('about.no_history')}</Text>
-            </View>
+                <EmptyState />
               ) : (
                 historySections.map((section) => (
                   <View key={section.id}>
@@ -133,9 +133,7 @@ export default function HistoryAndCultureScreen({ visible, onClose }: { visible:
             <Text style={[styles.contentTitle, styles.spacedTitle]}>{t('about.culture_title')}</Text>
           </View>
               {cultureSections.length === 0 ? (
-                <View style={styles.noDataContainer}>
-                  <Text style={styles.noDataText}>{t('about.no_culture')}</Text>
-                </View>
+                <EmptyState />
               ) : (
                 cultureSections.map((section) => (
                   <View key={section.id}>
@@ -262,23 +260,4 @@ const styles = StyleSheet.create({
     lineHeight: 17,
     color: '#000',
   },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 100,
-  },
-  loadingText: {
-    fontSize: 18,
-    color: '#666',
-  },
-  noDataContainer: {
-    padding: 40,
-    alignItems: 'center',
-  },
-  noDataText: {
-    fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
-  },
-}); 
+});

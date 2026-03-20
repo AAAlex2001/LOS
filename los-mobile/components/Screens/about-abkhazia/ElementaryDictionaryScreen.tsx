@@ -3,6 +3,8 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -87,9 +89,9 @@ export default function ElementaryDictionaryScreen({ visible, onClose }: { visib
         </View>
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-                </View>
+            <Loader />
+          ) : (pageData?.categories || []).length === 0 ? (
+            <EmptyState />
           ) : (
             pageData?.categories && pageData.categories.map((category) => {
               const words = category.words || [];
@@ -209,14 +211,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#000',
   },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 100,
-  },
-  loadingText: {
-    fontSize: 18,
-    color: '#666',
-  },
-}); 
+});

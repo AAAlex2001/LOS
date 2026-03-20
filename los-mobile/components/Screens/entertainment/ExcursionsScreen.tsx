@@ -4,6 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
 import { parseContactString } from '../plan-to-trip/phoneUtils';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -95,9 +97,9 @@ export default function ExcursionsScreen({ visible, onClose }: Props) {
 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-            </View>
+            <Loader />
+          ) : services.length === 0 ? (
+            <EmptyState />
           ) : (
             services.map(renderCard)
           )}
@@ -123,14 +125,4 @@ const styles = StyleSheet.create({
   cardContacts: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: '#1129BD' },
   link: { fontFamily: 'Inter', fontWeight: '400', fontSize: 14, lineHeight: 17, textAlign: 'center', color: '#1129BD', textDecorationLine: 'underline' },
   underline: { textDecorationLine: 'underline' },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 100,
-  },
-  loadingText: {
-    fontSize: 18,
-    color: '#666',
-  },
 });

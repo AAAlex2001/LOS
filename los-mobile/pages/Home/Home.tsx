@@ -23,6 +23,7 @@ import SidebarScreen from '../../components/Screens/SidebarScreen';
 import {useTranslation, addLangParam, getCurrentLanguage} from '@/i18n';
 import { MaterialCommunityIcons, MaterialIcons, Entypo } from '@expo/vector-icons';
 import config from '@/config';
+import Loader from '@/components/Loader';
 const API_BASE = config.API_BASE;
 
 interface SliderItem {
@@ -240,9 +241,7 @@ const HomePage = () => {
   if (loading) {
     return (
       <SafeAreaView style={styles.safeArea} edges={['bottom']}>
-        <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>{t('common.loading')}</Text>
-        </View>
+        <Loader />
       </SafeAreaView>
     );
   }
@@ -503,10 +502,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  loadingText: {
-    fontSize: 18,
-    color: '#666',
   },
 });
 

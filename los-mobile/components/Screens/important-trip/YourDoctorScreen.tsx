@@ -5,6 +5,8 @@ import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../plan-to-trip/phoneUtils';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 type CardItem = {
   id: number;
@@ -179,9 +181,9 @@ export default function YourDoctorScreen({ visible, onClose }: { visible: boolea
           showsVerticalScrollIndicator={false}
         >
           {loading ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-            </View>
+            <Loader />
+          ) : sections.length === 0 ? (
+            <EmptyState />
           ) : (
             <>
               {/* Tabs like Parties */}
@@ -292,9 +294,6 @@ const styles = StyleSheet.create({
 
   scroll: { flex: 1 },
   scrollContent: { paddingHorizontal: 20, paddingBottom: 40 },
-  loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 100 },
-  loadingText: { fontSize: 18, color: '#666' },
-
   tabsBar: {
     height: 46,
     backgroundColor: '#FFFFFF',

@@ -3,6 +3,8 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -66,9 +68,9 @@ export default function AbkhazianCustomsScreen({ visible, onClose }: { visible: 
         </View>
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-            </View>
+            <Loader />
+          ) : (data?.sections || []).length === 0 ? (
+            <EmptyState />
           ) : (
             <>
               {/* Основное изображение */}
@@ -215,15 +217,5 @@ const styles = StyleSheet.create({
     color: 'rgba(0,0,0,0.85)',
     textAlign: 'center',
       width: '100%'
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 100,
-  },
-  loadingText: {
-    fontSize: 18,
-    color: '#666',
   },
 });

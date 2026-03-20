@@ -4,6 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 interface CulturalAttraction {
   id: number;
@@ -90,9 +92,9 @@ export default function CulturalAttractionsOchamchiraScreen({ visible, onClose }
 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-            </View>
+            <Loader />
+          ) : attractions.length === 0 ? (
+            <EmptyState />
           ) : (
             attractions.map((attraction) => (
               <View key={attraction.id} style={styles.card}>
@@ -156,7 +158,6 @@ const styles = StyleSheet.create({
   headerTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 16, color: '#000', textTransform: 'uppercase', letterSpacing: 0.2, marginTop: 24 },
   scrollContent: { padding: 20, paddingBottom: 40 },
   loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 100 },
-  loadingText: { fontSize: 18, color: '#666' },
   card: { flexDirection: 'column', alignItems: 'flex-start', marginBottom: 40, backgroundColor: '#fff', gap: 8, width: '100%' },
   imageContainer: { width: '100%', height: 287, borderRadius: 15, overflow: 'hidden' },
   cardImage: { width: '100%', height: '100%' },

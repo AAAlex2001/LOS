@@ -21,6 +21,8 @@ import CalendarIcon from '../../../assets/images/VectorParties2.svg';
 import LocationIcon from '../../../assets/images/VectorParties3.svg';
 import config from '@/config';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 // inline video: always create player (hooks order stable), control play/pause by visibility
 const InlineAdVideo = ({ uri, style, active }: { uri: string; style: any; active: boolean }) => {
@@ -210,9 +212,9 @@ export default function PartiesScreen({ visible, onClose }: { visible: boolean, 
           showsVerticalScrollIndicator={false}
         >
           {loading ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-            </View>
+            <Loader />
+          ) : cities.length === 0 ? (
+            <EmptyState />
           ) : ([
             // Tabs (sticky header)
             (
@@ -661,17 +663,6 @@ const styles = StyleSheet.create({
     color: '#999',
     textAlign: 'center',
   },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 100,
-  },
-  loadingText: {
-    fontSize: 18,
-    color: '#666',
-  },
-
   adBlock: {
     width: '100%',
     height: 200,

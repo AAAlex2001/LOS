@@ -5,6 +5,8 @@ import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 interface Pharmacy {
   id: number;
@@ -90,9 +92,9 @@ export default function PharmacySukhumScreen({ visible, onClose }: { visible: bo
 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-            </View>
+            <Loader />
+          ) : pharmacies.length === 0 ? (
+            <EmptyState />
           ) : (
             pharmacies.map((pharmacy) => (
               <View key={pharmacy.id} style={styles.card}>
@@ -216,10 +218,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 100,
-  },
-  loadingText: {
-    fontSize: 18,
-    color: '#666',
   },
   card: {
     flexDirection: 'column',

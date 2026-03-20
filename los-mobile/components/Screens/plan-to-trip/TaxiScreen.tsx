@@ -5,6 +5,8 @@ import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from './phoneUtils';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 interface TaxiService {
   id: number;
@@ -78,9 +80,9 @@ export default function TaxiScreen({ visible, onClose }: { visible: boolean, onC
 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-            </View>
+            <Loader />
+          ) : (pageData?.services ?? []).length === 0 ? (
+            <EmptyState />
           ) : (
             <>
               {/* Banner */}
@@ -199,10 +201,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 100,
-  },
-  loadingText: {
-    fontSize: 18,
-    color: '#666',
   },
   bannerContainer: {
     marginBottom: 20,

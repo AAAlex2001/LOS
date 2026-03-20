@@ -5,6 +5,8 @@ import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 interface BeautySalon {
   id: number;
@@ -91,9 +93,9 @@ export default function BeautySalonsSukhumScreen({ visible, onClose }: { visible
 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-            </View>
+            <Loader />
+          ) : beautySalons.length === 0 ? (
+            <EmptyState />
           ) : (
             beautySalons.map((salon) => (
               <View key={salon.id} style={styles.card}>
@@ -224,10 +226,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 100,
-  },
-  loadingText: {
-    fontSize: 18,
-    color: '#666',
   },
   card: {
     flexDirection: 'column',

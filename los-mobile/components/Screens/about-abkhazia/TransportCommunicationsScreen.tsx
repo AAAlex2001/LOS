@@ -3,6 +3,8 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -65,9 +67,9 @@ export default function TransportCommunicationsScreen({ visible, onClose }: { vi
         </View>
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-            </View>
+            <Loader />
+          ) : transportBlocks.length === 0 ? (
+            <EmptyState />
           ) : (
             <>
               {transportBlocks.map((block) => (
@@ -186,16 +188,6 @@ const styles = StyleSheet.create({
     height: 230,
     borderRadius: 0,
     marginBottom: 20,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 100,
-  },
-  loadingText: {
-    fontSize: 18,
-    color: '#666',
   },
   infoBlock: {
     flexDirection: 'column',

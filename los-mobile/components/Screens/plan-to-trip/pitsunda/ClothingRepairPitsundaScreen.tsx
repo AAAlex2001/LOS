@@ -5,6 +5,8 @@ import { Image } from 'expo-image';
 import config from '@/config';
 import { parseContactString } from '../phoneUtils';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 interface Repair {
   id: number;
@@ -91,9 +93,9 @@ export default function ClothingRepairPitsundaScreen({ visible, onClose }: { vis
 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-            </View>
+            <Loader />
+          ) : repairs.length === 0 ? (
+            <EmptyState />
           ) : (
             repairs.map((repair) => (
               <View key={repair.id} style={styles.card}>
@@ -185,7 +187,6 @@ const styles = StyleSheet.create({
   headerTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 16, color: '#000', textTransform: 'uppercase', letterSpacing: 0.2, marginTop: 24 },
   scrollContent: { padding: 20, paddingBottom: 40 },
   loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 100 },
-  loadingText: { fontSize: 18, color: '#666' },
   card: { flexDirection: 'column', alignItems: 'flex-start', marginBottom: 20, backgroundColor: '#fff', gap: 8, width: '100%' },
   imageContainer: { width: '100%', height: 226, borderRadius: 15, overflow: 'hidden', borderWidth: 1, borderColor: 'rgba(185, 185, 185, 0.85)', backgroundColor: '#fff' },
   cardImage: { width: '100%', height: '100%' },

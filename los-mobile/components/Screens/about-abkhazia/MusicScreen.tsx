@@ -5,6 +5,8 @@ import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-au
 import { Image } from 'expo-image';
 import config from '@/config';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 const { width } = Dimensions.get('window');
 
@@ -200,14 +202,9 @@ export default function MusicScreen({ visible, onClose }: { visible: boolean; on
 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false} scrollEnabled={isScrollEnabled}>
           {loading ? (
-            <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color="#1129BD" />
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-            </View>
+            <Loader />
           ) : tracks.length === 0 ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('about.no_music')}</Text>
-            </View>
+            <EmptyState />
           ) : (
             <>
               {pageData?.intro_text_field && (
@@ -386,8 +383,6 @@ const styles = StyleSheet.create({
   headerTitleWrap: { flex: 1, flexDirection: 'row', alignItems: 'center', marginLeft: 20 },
   headerTitle: { fontFamily: 'Inter', fontWeight: '700', fontSize: 16, color: '#000', textTransform: 'uppercase', letterSpacing: 0.2, marginTop: 24 },
   scrollContent: { padding: 20, paddingBottom: 40 },
-  loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 100 },
-  loadingText: { fontSize: 18, color: '#666', marginTop: 10 },
   trackCard: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'rgba(17, 41, 189, 0.1)', borderRadius: 10, paddingVertical: 8, paddingHorizontal: 24, gap: 8, marginBottom: 15, width: '100%', height: 48},
   trackCardExpanded: { flexDirection: 'column', alignItems: 'flex-start', paddingVertical: 8, paddingHorizontal: 24, gap: 8, height: 91, width: '100%' },
   trackInfo: { flex: 1, gap: 0 },

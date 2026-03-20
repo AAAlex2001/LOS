@@ -3,6 +3,8 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dim
 import { Ionicons } from '@expo/vector-icons';
 import config from '@/config';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -88,9 +90,9 @@ export default function HotSpringsScreen({ visible, onClose }: Props) {
 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-            </View>
+            <Loader />
+          ) : springs.length === 0 ? (
+            <EmptyState />
           ) : (
             <>
               {data?.hero_text && heroBg && (
@@ -181,15 +183,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 17,
     color: '#000',
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 100,
-  },
-  loadingText: {
-    fontSize: 18,
-    color: '#666',
   },
 });

@@ -4,6 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import config from '@/config';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 interface CulturalAttraction {
   id: number;
@@ -91,9 +93,9 @@ export default function CulturalAttractionsSukhumScreen({ visible, onClose }: { 
 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-            </View>
+            <Loader />
+          ) : attractions.length === 0 ? (
+            <EmptyState />
           ) : (
             attractions.map((attraction) => (
               <View key={attraction.id} style={styles.card}>
@@ -205,10 +207,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 100,
-  },
-  loadingText: {
-    fontSize: 18,
-    color: '#666',
   },
   card: {
     flexDirection: 'column',

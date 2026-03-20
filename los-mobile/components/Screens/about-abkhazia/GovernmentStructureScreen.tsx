@@ -5,6 +5,8 @@ import { Image as ExpoImage } from 'expo-image';
 import ImageViewing from 'react-native-image-viewing';
 import config from '@/config';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 type GovernmentBlock = {
   id: number;
@@ -67,9 +69,9 @@ export default function GovernmentStructureScreen({ visible, onClose }: { visibl
         </View>
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {loading ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-            </View>
+            <Loader />
+          ) : blocks.length === 0 ? (
+            <EmptyState />
           ) : (
             blocks.map((b) => (
               <View key={b.id} style={styles.textBlock}>
@@ -230,14 +232,4 @@ const styles = StyleSheet.create({
     lineHeight: 17,
     color: '#000',
   },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 50,
-  },
-  loadingText: {
-    fontSize: 18,
-    color: '#666',
-  },
-}); 
+});

@@ -3,6 +3,8 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, Linking, Dimensions } 
 import { Ionicons, FontAwesome, MaterialCommunityIcons, AntDesign, Feather } from '@expo/vector-icons';
 import config from '@/config';
 import {useTranslation, addLangParam} from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 type SocialLink = {
   id: number;
@@ -95,9 +97,9 @@ export default function ContactsScreen({ visible, onClose }: { visible: boolean,
         </TouchableOpacity>
         <View style={styles.line} />
         {loading ? (
-          <View style={styles.loadingContainer}>
-            <Text style={styles.loadingText}>{t('common.loading')}</Text>
-          </View>
+          <Loader />
+        ) : socialLinks.length === 0 ? (
+          <EmptyState />
         ) : (
           <View style={styles.list}>
             {socialLinks.map((item) => (
@@ -190,10 +192,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 100,
-  },
-  loadingText: {
-    fontSize: 18,
-    color: '#666',
   },
   underline: {
     textDecorationLine: 'underline',

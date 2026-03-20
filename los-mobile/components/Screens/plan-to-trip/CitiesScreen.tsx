@@ -16,6 +16,8 @@ import config from '@/config';
 import { screensRegistry } from './screensRegistry';
 import { slugify } from './helpers/slug';
 import { useTranslation, addLangParam } from '@/i18n';
+import Loader from '@/components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -161,9 +163,9 @@ export default function CitiesScreen({ visible, onClose }: { visible: boolean, o
         </View>
 
         {loading ? (
-          <View style={styles.centerContent}>
-            <Text style={styles.loadingText}>{t('common.loading')}</Text>
-          </View>
+          <Loader />
+        ) : cities.length === 0 ? (
+          <EmptyState />
         ) : (
           <ScrollView contentContainerStyle={styles.scrollContent}>
             {cities.map((city) => (
@@ -267,10 +269,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  loadingText: {
-    fontSize: 16,
-    color: '#666',
   },
   scrollContent: {
     padding: 20,
