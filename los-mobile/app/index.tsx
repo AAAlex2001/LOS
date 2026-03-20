@@ -18,6 +18,13 @@ export default function IndexScreen() {
   const [adPrepared, setAdPrepared] = useState(false);
   const [readyToReveal, setReadyToReveal] = useState(false);
   const adClosedRef = useRef(false);
+  const splashHiddenRef = useRef(false);
+
+  const hideSplash = () => {
+    if (splashHiddenRef.current) return;
+    splashHiddenRef.current = true;
+    SplashScreen.hideAsync().catch(() => {});
+  };
 
   const isAdPayloadValid = (payload: any) => {
     if (!payload || payload.is_active !== true) return false;
@@ -105,7 +112,6 @@ export default function IndexScreen() {
         transparent={false}
         presentationStyle="fullScreen"
         statusBarTranslucent={true}
-        onShow={() => SplashScreen.hideAsync().catch(() => {})}
       >
         <View
           style={[
@@ -118,6 +124,7 @@ export default function IndexScreen() {
               source={require('../assets/images/logo_splash.png')}
               style={{ width: 150, height: 150 }}
               contentFit="contain"
+              onLoad={hideSplash}
             />
           )}
         </View>
