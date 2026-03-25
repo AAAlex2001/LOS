@@ -21,6 +21,7 @@
   "description": "Description",
   "header": {
     "classifieds": "Classifieds",
+    "contacts": "Contacts",
     "soon": "soon",
     "selectLanguage": "Select language"
   },
@@ -192,6 +193,17 @@
     "parkingLots": "Parking Lots",
     "pharmacy": "Pharmacies",
     "wineries": "Wineries"
+  },
+  "contactsPage": {
+    "title": "Contacts",
+    "eyebrow": "Land of Soul",
+    "emailRole": "Email",
+    "telegramRole": "Telegram",
+    "description": "If you have a question, idea or proposal, write to us. The fastest ways to reach us are collected here.",
+    "panelTitle": "Contact us",
+    "panelText": "Email for general questions, Telegram for fast communication.",
+    "emailHint": "Email",
+    "telegramHint": "Telegram"
   },
   "metadata": {
     "title": "Vacation in Abkhazia | LANDOFSOUL-APSNY.RU – Your Guide to the Land of Soul",

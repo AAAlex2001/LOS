@@ -20,8 +20,7 @@
     ,"description": "Описание"
   },
   "header": {
-    "classifieds": "Доска объявлений",
-    "soon": "скоро",
+    "classifieds": "Доска объявлений",    "contacts": "Контакты",    "soon": "скоро",
     "selectLanguage": "Выберите язык"
   },
   "footer": {
@@ -192,6 +191,17 @@
     "parkingLots": "Парковки",
     "pharmacy": "Аптеки",
     "wineries": "Винодельни"
+  },
+  "contactsPage": {
+    "title": "Контакты",
+    "eyebrow": "Land of Soul",
+    "emailRole": "Почта",
+    "telegramRole": "Telegram",
+    "description": "Если у вас есть вопрос, идея или предложение, напишите нам. Самые быстрые способы связи собраны здесь.",
+    "panelTitle": "Связаться с нами",
+    "panelText": "Почта для общих вопросов, Telegram — для быстрой связи.",
+    "emailHint": "Электронная почта",
+    "telegramHint": "Telegram"
   },
   "metadata": {
     "title": "Отдых в Абхазии | LANDOFSOUL-APSNY.RU – Ваш гид по стране души",

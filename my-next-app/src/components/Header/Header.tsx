@@ -59,6 +59,9 @@ const Header = () => {
       {/* Mobile menu */}
       <div className={`${styles.mobileMenu} ${menuOpen ? styles.active : ''}`}>
         <nav className={styles.mobileNavList}>
+          <Link href={`/${locale}/contacts`} className={`${styles.mobileNavButton} ${styles.blueOutline}`} onClick={closeMenu}>
+            {t('contacts')}
+          </Link>
           <Link href="#" className={`${styles.mobileNavButton} ${styles.blueOutline}`} onClick={closeMenu}>
             {t('classifieds')}
             <span className={styles.soonBadge}>{t('soon')}</span>
@@ -96,6 +99,9 @@ const Header = () => {
 
         {/* Center navigation buttons */}
         <nav className={styles.nav}>
+          <Link href={`/${locale}/contacts`} className={`${styles.navButton} ${styles.blueOutline}`}>
+            {t('contacts')}
+          </Link>
           <Link href="#" className={`${styles.navButton} ${styles.blueOutline}`}>
             {t('classifieds')}
             <span className={styles.soonBadge}>{t('soon')}</span>
