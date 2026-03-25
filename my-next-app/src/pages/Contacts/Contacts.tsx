@@ -25,8 +25,8 @@ const Contacts: React.FC = () => {
     },
     {
       role: t('telegramRole'),
-      value: '@LOS_Abkhazia',
-      href: 'https://t.me/LOS_Abkhazia',
+      value: '@Sasha_200121',
+      href: 'https://t.me/Sasha_200121',
       kind: 'person' as const,
     },
   ];
