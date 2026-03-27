@@ -30,7 +30,8 @@
         "backgroundColor": "#010E59"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.losmobile",
+      "package": "ru.landofsoulapsny.losmobile",
+      "versionCode": 31,
       "newArchEnabled": true
     },
     "androidStatusBar": {
