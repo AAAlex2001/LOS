@@ -78,6 +78,8 @@ urlpatterns = [
 
     path("ad-banner/", include("cms.ad_banner.urls")),
 
+    path("contacts/", include("cms.contacts.urls")),
+
 ]
 
 

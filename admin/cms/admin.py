@@ -110,6 +110,8 @@ from .parties.admin import PartiesPageAdmin
 
 from .privacy_policy.admin import PrivacyPolicyPageAdmin, AccessibilityAndTermsPageAdmin
 
+from .contacts.admin import ContactsPageAdmin
+
 from .footer.admin import FooterAdmin
 
 from .music.admin import MusicPageAdmin

@@ -152,6 +152,13 @@
   height: 22px;
 }
 
+.customIcon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  display: block;
+}
+
 .contactMeta {
   min-width: 0;
   display: flex;

@@ -138,6 +138,8 @@ class CmsConfig(AppConfig):
 
             'music',
 
+            'contacts',
+
         ):
 
             try:
