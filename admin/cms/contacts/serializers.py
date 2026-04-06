@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import ContactsPage
+from .models import ContactItem, ContactsPage
 
 
 def media_relative_path(image_field) -> str:
@@ -16,6 +16,7 @@ class ContactsPageSerializer(serializers.ModelSerializer):
         model = ContactsPage
         fields = [
             "id",
+            "eyebrow",
             "title",
             "description",
             "panel_title",
@@ -26,25 +27,17 @@ class ContactsPageSerializer(serializers.ModelSerializer):
 
     def get_items(self, obj: ContactsPage) -> list[dict]:
         out: list[dict] = []
-        if obj.email:
+        for item in obj.items.all():
+            href = (item.href or "").strip()
+            if not href and item.kind == ContactItem.KIND_EMAIL and item.value:
+                href = f"mailto:{item.value}"
             out.append(
                 {
-                    "kind": "email",
-                    "role": obj.email_role or "",
-                    "value": str(obj.email),
-                    "href": f"mailto:{obj.email}",
-                    "icon_url": media_relative_path(obj.email_image),
-                }
-            )
-        if obj.telegram:
-            display = (obj.telegram_display or "").strip() or obj.telegram
-            out.append(
-                {
-                    "kind": "telegram",
-                    "role": obj.telegram_role or "",
-                    "value": display,
-                    "href": obj.telegram,
-                    "icon_url": media_relative_path(obj.telegram_image),
+                    "kind": item.kind,
+                    "role": item.role or "",
+                    "value": item.value or "",
+                    "href": href,
+                    "icon_url": media_relative_path(item.icon),
                 }
             )
         return out

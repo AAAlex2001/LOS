@@ -1,14 +1,29 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from modeltranslation.admin import TranslationAdmin
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
-from .models import ContactsPage
+from .models import ContactItem, ContactsPage
+
+
+class ContactItemInline(TranslationTabularInline):
+    model = ContactItem
+    extra = 1
+    fields = ("kind", "role", "value", "href", "icon", "order", "preview")
+    readonly_fields = ("preview",)
+
+    def preview(self, obj):
+        if obj and obj.icon:
+            return format_html('<img src="{}" style="height:60px;" />', obj.icon.url)
+        return "—"
+
+    preview.short_description = "Предпросмотр"
 
 
 @admin.register(ContactsPage)
 class ContactsPageAdmin(TranslationAdmin):
-    list_display = ("id", "title", "updated_at")
-    readonly_fields = ("seo_preview", "email_image_preview", "telegram_image_preview")
+    list_display = ("id", "updated_at")
+    inlines = [ContactItemInline]
+    readonly_fields = ("seo_preview",)
 
     def has_add_permission(self, request):
         if ContactsPage.objects.exists():
@@ -20,26 +35,11 @@ class ContactsPageAdmin(TranslationAdmin):
             "Контент страницы",
             {
                 "fields": (
+                    "eyebrow",
                     "title",
                     "description",
                     "panel_title",
                     "panel_text",
-                )
-            },
-        ),
-        (
-            "Контакты",
-            {
-                "fields": (
-                    "email_role",
-                    "email",
-                    "email_image",
-                    "email_image_preview",
-                    "telegram_role",
-                    "telegram",
-                    "telegram_display",
-                    "telegram_image",
-                    "telegram_image_preview",
                 )
             },
         ),
@@ -75,23 +75,3 @@ class ContactsPageAdmin(TranslationAdmin):
         return format_html(preview)
 
     seo_preview.short_description = "SEO предпросмотр"
-
-    def email_image_preview(self, obj):
-        if obj and obj.email_image:
-            return format_html(
-                '<img src="{}" style="max-height: 60px; max-width: 120px;"/>',
-                obj.email_image.url,
-            )
-        return "—"
-
-    email_image_preview.short_description = "Превью иконки email"
-
-    def telegram_image_preview(self, obj):
-        if obj and obj.telegram_image:
-            return format_html(
-                '<img src="{}" style="max-height: 60px; max-width: 120px;"/>',
-                obj.telegram_image.url,
-            )
-        return "—"
-
-    telegram_image_preview.short_description = "Превью иконки Telegram"

@@ -26,6 +26,7 @@ export type ContactsPageItem = {
 };
 
 export type ContactsPageData = {
+  eyebrow: string;
   title: string;
   description: string;
   panel_title: string;
@@ -69,6 +70,7 @@ const Contacts: React.FC = () => {
   const heroDescription = data?.description?.trim() || tPage("description");
   const panelTitle = data?.panel_title?.trim() || tPage("panelTitle");
   const panelText = data?.panel_text?.trim() || tPage("panelText");
+  const eyebrow = data?.eyebrow?.trim() || tPage("eyebrow");
   const items = data?.items ?? [];
 
   if (loading) {
@@ -108,7 +110,7 @@ const Contacts: React.FC = () => {
 
           <div className={styles.heroContent}>
             <div className={styles.infoPane}>
-              <span className={styles.badge}>{tPage("eyebrow")}</span>
+              <span className={styles.badge}>{eyebrow}</span>
               <h1 className={styles.title}>{heroTitle}</h1>
               <p className={styles.description}>{heroDescription}</p>
             </div>
@@ -172,7 +174,13 @@ const Contacts: React.FC = () => {
 
                       <span className={styles.contactMeta}>
                         <span className={styles.contactRole}>{item.role}</span>
-                        <span className={styles.contactValue}>{item.value}</span>
+                        <span
+                          className={`${styles.contactValue} ${
+                            item.kind === "email" ? styles.contactValueEmail : ""
+                          }`}
+                        >
+                          {item.value}
+                        </span>
                       </span>
                     </a>
                   ))

@@ -91,7 +91,7 @@ from cms.privacy_policy.models import PrivacyPolicyPage, AccessibilityAndTermsPa
 
 from cms.ad_banner.models import AdBanner
 
-from cms.contacts.models import ContactsPage
+from cms.contacts.models import ContactsPage, ContactItem
 
 
 
@@ -1113,6 +1113,8 @@ class ContactsPageTranslationOptions(TranslationOptions):
 
     fields = (
 
+        'eyebrow',
+
         'title',
 
         'description',
@@ -1120,12 +1122,6 @@ class ContactsPageTranslationOptions(TranslationOptions):
         'panel_title',
 
         'panel_text',
-
-        'email_role',
-
-        'telegram_role',
-
-        'telegram_display',
 
         'seo_title',
 
@@ -1143,6 +1139,16 @@ class ContactsPageTranslationOptions(TranslationOptions):
 
     )
 
+
+class ContactItemTranslationOptions(TranslationOptions):
+
+    fields = (
+
+        'role',
+
+        'value',
+
+    )
 
 
 class AccessibilityAndTermsPageTranslationOptions(TranslationOptions):
@@ -1448,6 +1454,8 @@ translator.register(TransportBlock, TransportBlockTranslationOptions)
 translator.register(PrivacyPolicyPage, PrivacyPolicyPageTranslationOptions)
 
 translator.register(ContactsPage, ContactsPageTranslationOptions)
+
+translator.register(ContactItem, ContactItemTranslationOptions)
 
 translator.register(AccessibilityAndTermsPage, AccessibilityAndTermsPageTranslationOptions)
 
