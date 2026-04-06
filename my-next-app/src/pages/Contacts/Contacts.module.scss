@@ -1,8 +1,8 @@
 .main {
   position: relative;
   overflow: hidden;
-  min-height: calc(100vh - 220px);
-  padding: 48px 20px 96px;
+  min-height: 100vh;
+  padding: 170px 20px 130px;
   background:
     linear-gradient(135deg, rgba(74, 28, 120, 0.74) 0%, rgba(17, 41, 189, 0.72) 100%),
     url('/assets/city_sukhum.jpg') center/cover no-repeat;
@@ -35,7 +35,7 @@
 .heroCard {
   position: relative;
   max-width: 1240px;
-  min-height: 680px;
+  min-height: 0;
   margin: 0 auto;
   z-index: 1;
 }
@@ -52,11 +52,12 @@
 .heroContent {
   position: relative;
   z-index: 1;
-  min-height: 680px;
+  min-height: 0;
   padding: 0;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(360px, 460px);
-  align-items: end;
+  align-items: start;
+  align-content: start;
   gap: 28px;
 }
 
@@ -66,7 +67,7 @@
 }
 
 .title {
-  margin: 18px 0 12px;
+  margin: 0;
   color: #ffffff;
   font-size: clamp(3.2rem, 7vw, 5.8rem);
   line-height: 0.92;
@@ -83,7 +84,7 @@
 }
 
 .contactPane {
-  padding: 10px;
+  padding: 20px;
   border-radius: 28px;
   background: rgba(10, 16, 56, 0.34);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -204,7 +205,7 @@
 
 @media (max-width: 640px) {
   .main {
-    padding: 24px 16px 72px;
+    padding: 116px 16px 96px;
   }
 
   .heroCard {
@@ -214,7 +215,7 @@
   .heroContent {
     min-height: 0;
     padding: 0;
-    gap: 22px;
+    gap: 36px;
   }
 
   .title {
@@ -231,7 +232,7 @@
   }
 
   .contactPane {
-    padding: 10px;
+    padding: 20px;
     border-radius: 22px;
   }
 
