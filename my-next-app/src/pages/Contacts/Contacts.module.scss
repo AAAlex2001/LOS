@@ -53,7 +53,7 @@
   position: relative;
   z-index: 1;
   min-height: 680px;
-  padding: 48px;
+  padding: 0;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(360px, 460px);
   align-items: end;
@@ -83,7 +83,7 @@
 }
 
 .contactPane {
-  padding: 28px;
+  padding: 10px;
   border-radius: 28px;
   background: rgba(10, 16, 56, 0.34);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -213,7 +213,7 @@
 
   .heroContent {
     min-height: 0;
-    padding: 22px;
+    padding: 0;
     gap: 22px;
   }
 
@@ -231,7 +231,7 @@
   }
 
   .contactPane {
-    padding: 18px;
+    padding: 10px;
     border-radius: 22px;
   }
 
