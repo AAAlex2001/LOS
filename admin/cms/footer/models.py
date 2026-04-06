@@ -30,6 +30,9 @@ class Footer(TimestampedModel):
 
     copyright_text = models.CharField(max_length=255, blank=True, default="", help_text="Текст копирайта")
 
+    app_store_url = models.URLField(blank=True, default="", help_text="Ссылка на App Store")
+    google_play_url = models.URLField(blank=True, default="", help_text="Ссылка на Google Play")
+
     
 
     class Meta:

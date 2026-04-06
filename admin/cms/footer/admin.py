@@ -72,6 +72,14 @@ class FooterAdmin(TranslationAdmin):
 
         }),
 
+        ('Ссылки на приложения', {
+
+            'fields': ('app_store_url', 'google_play_url'),
+
+            'description': 'Если поле пустое, соответствующая иконка в футере не показывается'
+
+        }),
+
     )
 
     inlines = [FooterLinkInline, SocialLinkInline]

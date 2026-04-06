@@ -29,6 +29,8 @@ interface FooterData {
   contact_info: string;
   email: string;
   copyright_text: string;
+  app_store_url: string;
+  google_play_url: string;
   links: FooterLink[];
   social_links: SocialLink[];
 }
@@ -120,6 +122,10 @@ const Footer = () => {
         }))
       : defaultSocialIcons;
 
+  const appStoreUrl = (footerData?.app_store_url || '').trim();
+  const googlePlayUrl = (footerData?.google_play_url || '').trim();
+  const hasAppLinks = Boolean(appStoreUrl || googlePlayUrl);
+
   return (
     <footer className={styles.footer}>
       <div className={styles.footerContent}>
@@ -189,25 +195,35 @@ const Footer = () => {
         </div>
 
         {/* Download badges block */}
-        <div className={styles.appBlock}>
-          <h3 className={styles.appBlockTitle}>{t('downloadApp')}</h3>
-          <div className={styles.appBadges}>
-            <Image
-              src="/assets/appstore.svg"
-              alt="Download on App Store"
-              width={180}
-              height={52}
-              style={{ width: '100%', height: 'auto', maxWidth: '180px' }}
-            />
-            <Image
-              src="/assets/googleplay.svg"
-              alt="Get it on Google Play"
-              width={180}
-              height={52}
-              style={{ width: '100%', height: 'auto', maxWidth: '180px' }}
-            />
+        {hasAppLinks && (
+          <div className={styles.appBlock}>
+            <h3 className={styles.appBlockTitle}>{t('downloadApp')}</h3>
+            <div className={styles.appBadges}>
+              {appStoreUrl && (
+                <Link href={appStoreUrl} target="_blank" rel="noopener noreferrer" aria-label="Download on App Store">
+                  <Image
+                    src="/assets/appstore.svg"
+                    alt="Download on App Store"
+                    width={180}
+                    height={52}
+                    style={{ width: '100%', height: 'auto', maxWidth: '180px' }}
+                  />
+                </Link>
+              )}
+              {googlePlayUrl && (
+                <Link href={googlePlayUrl} target="_blank" rel="noopener noreferrer" aria-label="Get it on Google Play">
+                  <Image
+                    src="/assets/googleplay.svg"
+                    alt="Get it on Google Play"
+                    width={180}
+                    height={52}
+                    style={{ width: '100%', height: 'auto', maxWidth: '180px' }}
+                  />
+                </Link>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Divider */}

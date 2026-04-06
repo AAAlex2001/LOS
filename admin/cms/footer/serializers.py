@@ -42,7 +42,11 @@ class FooterSerializer(serializers.ModelSerializer):
 
         model = Footer
 
-        fields = ['id', 'description', 'contact_info', 'email', 'copyright_text', 'links', 'social_links', 'created_at', 'updated_at']
+        fields = [
+            'id', 'description', 'contact_info', 'email', 'copyright_text',
+            'app_store_url', 'google_play_url',
+            'links', 'social_links', 'created_at', 'updated_at'
+        ]
 
 
 
