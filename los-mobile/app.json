@@ -2,7 +2,7 @@
   "expo": {
     "name": "Land of Soul",
     "slug": "land-of-soul",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icons/icon.png",
     "scheme": "losmobile",
@@ -15,7 +15,7 @@
       "icon": "./assets/icons/icon.png",
       "supportsTablet": true,
       "bundleIdentifier": "ru.landofsoulapsny.losmobile",
-      "buildNumber": "33",
+      "buildNumber": "34",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -31,7 +31,7 @@
       },
       "edgeToEdgeEnabled": true,
       "package": "ru.landofsoulapsny.losmobile",
-      "versionCode": 33,
+      "versionCode": 34,
       "newArchEnabled": true
     },
     "androidStatusBar": {
