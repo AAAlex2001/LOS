@@ -62,10 +62,15 @@ const Header = () => {
           <Link href={`/${locale}/contacts`} className={`${styles.mobileNavButton} ${styles.blueOutline}`} onClick={closeMenu}>
             {t('contacts')}
           </Link>
-          <Link href="#" className={`${styles.mobileNavButton} ${styles.blueOutline}`} onClick={closeMenu}>
+          <a
+            href="https://landofsoul-apsny-daily.ru/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${styles.mobileNavButton} ${styles.blueOutline}`}
+            onClick={closeMenu}
+          >
             {t('classifieds')}
-            <span className={styles.soonBadge}>{t('soon')}</span>
-          </Link>
+          </a>
         </nav>
 
         <div className={styles.figureWrapper}>
@@ -102,10 +107,14 @@ const Header = () => {
           <Link href={`/${locale}/contacts`} className={`${styles.navButton} ${styles.blueOutline}`}>
             {t('contacts')}
           </Link>
-          <Link href="#" className={`${styles.navButton} ${styles.blueOutline}`}>
+          <a
+            href="https://landofsoul-apsny-daily.ru/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${styles.navButton} ${styles.blueOutline}`}
+          >
             {t('classifieds')}
-            <span className={styles.soonBadge}>{t('soon')}</span>
-          </Link>
+          </a>
         </nav>
 
         {/* Decorative image (Guy) */}

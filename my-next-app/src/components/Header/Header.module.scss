@@ -224,24 +224,6 @@ $break-xxl: 1920px;
   margin-top: 0;
 }
 
-// Global badge style
-.soonBadge {
-  position: absolute;
-  top: -8px;
-  right: -20px;
-  background: #1129BD;
-  color: #FFFFFF;
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 12px;
-  text-transform: uppercase;
-  font-style: italic;
-  padding: 4px 8px;
-  border-radius: 50px;
-  pointer-events: none;
-}
-
 // --- Tablet and smaller desktops ---
 @media (min-width: $break-md) { // 768px+
   .header {
@@ -332,21 +314,6 @@ $break-xxl: 1920px;
       color: #FFFFFF;
       border-color: #1129BD;
     }
-  }
-
-  .soonBadge {
-    position: absolute;
-    top: -8px;
-    right: -20px;
-    background: #1129BD;
-    color: #FFFFFF;
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 12px;
-    line-height: 12px;
-    padding: 4px 8px;
-    border-radius: 50px;
-    pointer-events: none;
   }
 
   .orangeOutline {
