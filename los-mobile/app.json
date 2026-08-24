@@ -15,7 +15,7 @@
       "icon": "./assets/icons/icon.png",
       "supportsTablet": true,
       "bundleIdentifier": "ru.landofsoulapsny.losmobile",
-      "buildNumber": "36",
+      "buildNumber": "37",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -31,7 +31,7 @@
       },
       "edgeToEdgeEnabled": true,
       "package": "ru.landofsoulapsny.losmobile",
-      "versionCode": 36,
+      "versionCode": 37,
       "newArchEnabled": true
     },
     "androidStatusBar": {

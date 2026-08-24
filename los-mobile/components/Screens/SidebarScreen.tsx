@@ -50,7 +50,7 @@ export default function SidebarScreen({ visible, onClose, onNavigateHome }: { vi
           {/* Линия */}
           <View style={styles.line} />
           {/* Кнопки */}
-          <TouchableOpacity style={styles.boardBtn}>
+          <TouchableOpacity style={styles.boardBtn} onPress={() => Linking.openURL('https://landofsoul-apsny-daily.ru/')}>
             <Text style={styles.boardBtnText}>{t('common.bulletin_board')}</Text>
           </TouchableOpacity>
           {/* Меню */}
