@@ -19,6 +19,7 @@ type TaxiService = {
 };
 
 type TaxiPageData = {
+  main_title: string;
   services: TaxiService[];
   intro_text: string;
   hero_image_url: string;
@@ -88,7 +89,7 @@ const Taxi: React.FC = () => {
     <div className={styles.pageWrapper}>
       <Header />
       <main className={styles.mainContent}>
-        <h1 className={styles.mainTitle}>{t('title')}</h1>
+        <h1 className={styles.mainTitle}>{pageData.main_title || t('title')}</h1>
 
         <div className={styles.fullWidthSection}>
           <div
